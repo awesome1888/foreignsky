@@ -21,40 +21,102 @@ export default class HomePage extends BasePage {
 		props.markers = props.markers || [];
 
 		return (
-			<ScriptjsLoader
-
-				hostname={"maps.googleapis.com"}
-				pathname={"/maps/api/js"}
-				query={{
-					v: '3',
-					key: 'AIzaSyD2sbLti6b29JE3nZjUUk-LAav4BIH2vK0',
-					libraries: "geometry,drawing,places"
-				}}
-				loadingElement={
-					<div>
-						Loading
+			<div className="another-stupid-wrapper">
+				<div className="article-panel">
+					<div className="article-panel__filter">
+					    Filter here:
 					</div>
-				}
-				containerElement={
-					<div className="map-container" />
-				}
-				googleMapElement={
-					<GoogleMap
-						ref={(map) => {this.map = map}}
-						defaultZoom={3}
-						defaultCenter={{ lat: -25.363882, lng: 131.044922 }}
-						onClick={props.onMapClick}
-					>
-						{props.markers.map((marker, index) => {
-							return (
-								<Marker
-									{...marker}
-									onRightclick={() => props.onMarkerRightclick(index)} />
-							);
-						})}
-					</GoogleMap>
-				}
-			/>
+					<div className="article-panel__list">
+						<div className="article-panel__list__inner">
+						    <div className="article-panel__list__item">
+								Item Item!!!
+						    </div>
+							<div className="article-panel__list__item">
+								Item Item!!!
+							</div>
+							<div className="article-panel__list__item">
+								Item Item!!!
+							</div>
+							<div className="article-panel__list__item">
+								Item Item!!!
+							</div>
+							<div className="article-panel__list__item">
+								Item Item!!!
+							</div>
+							<div className="article-panel__list__item">
+								Item Item!!!
+							</div>
+							<div className="article-panel__list__item">
+								Item Item!!!
+							</div>
+							<div className="article-panel__list__item">
+								Item Item!!!
+							</div>
+							<div className="article-panel__list__item">
+								Item Item!!!
+							</div>
+							<div className="article-panel__list__item">
+								Item Item!!!
+							</div>
+							<div className="article-panel__list__item">
+								Item Item!!!
+							</div>
+							<div className="article-panel__list__item">
+								Item Item!!!
+							</div>
+							<div className="article-panel__list__item">
+								Item Item!!!
+							</div>
+							<div className="article-panel__list__item">
+								Item Item!!!
+							</div>
+							<div className="article-panel__list__item">
+								Item Item!!!
+							</div>
+							<div className="article-panel__list__item">
+								Item Item!!!
+							</div>
+							<div className="article-panel__list__item">
+								Item Item!!!
+							</div>
+						</div>
+					</div>
+				</div>
+				<ScriptjsLoader
+
+					hostname={"maps.googleapis.com"}
+					pathname={"/maps/api/js"}
+					query={{
+						v: '3',
+						key: 'AIzaSyD2sbLti6b29JE3nZjUUk-LAav4BIH2vK0',
+						libraries: "geometry,drawing,places"
+					}}
+					loadingElement={
+						<div>
+							Loading
+						</div>
+					}
+					containerElement={
+						<div className="map-container" />
+					}
+					googleMapElement={
+						<GoogleMap
+							ref={(map) => {this.map = map}}
+							defaultZoom={3}
+							defaultCenter={{ lat: -25.363882, lng: 131.044922 }}
+							onClick={props.onMapClick}
+						>
+							{props.markers.map((marker, index) => {
+								return (
+									<Marker
+										{...marker}
+										onRightclick={() => props.onMarkerRightclick(index)} />
+								);
+							})}
+						</GoogleMap>
+					}
+				/>
+			</div>
 		);
 	}
 }

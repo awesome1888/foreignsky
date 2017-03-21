@@ -21,17 +21,17 @@ export default class BasePage extends React.Component {
 		};
 	}
 
-	get html()
+	getHtml(props)
 	{
 		return ('');
 	}
 
-	render()
+	render(props)
 	{
 		return (
 			<div>
 				<DocumentMeta {...this.meta} />
-				{this.html}
+				{this.getHtml(props)}
 			</div>
 		);
 	}

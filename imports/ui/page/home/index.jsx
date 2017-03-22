@@ -24,7 +24,17 @@ export default class HomePage extends BasePage {
 			<div className="another-stupid-wrapper">
 				<div className="article-panel">
 					<div className="article-panel__filter">
-					    Filter here:
+						<div className="article-panel__filter__button-set">
+							<div className="button button-tag">
+								# Быт
+							</div>
+							<div className="button button-tag">
+								# Место
+							</div>
+							<div className="button button-tag">
+								# Событие
+							</div>
+						</div>
 					</div>
 					<div className="article-panel__list">
 						<div className="article-panel__list__inner">
@@ -102,8 +112,8 @@ export default class HomePage extends BasePage {
 					googleMapElement={
 						<GoogleMap
 							ref={(map) => {this.map = map}}
-							defaultZoom={3}
-							defaultCenter={{ lat: -25.363882, lng: 131.044922 }}
+							defaultZoom={14}
+							defaultCenter={{ lat: 52.5252094, lng: 13.4125535 }}
 							onClick={props.onMapClick}
 						>
 							{props.markers.map((marker, index) => {

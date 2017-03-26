@@ -1,11 +1,11 @@
 import { Mongo } from 'meteor/mongo';
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 
-class ArticleCollection extends Mongo.Collection
+class TypeCollection extends Mongo.Collection
 {
 	constructor()
 	{
-		super('article');
+		super('article.type');
 		this.attachSchema(this.schema);
 	}
 
@@ -17,26 +17,16 @@ class ArticleCollection extends Mongo.Collection
 				regEx: SimpleSchema.RegEx.Id,
 				optional: false,
 			},
-			title: {
+			tagTitle: {
 				type: String,
 				optional: false,
 			},
-			date: {
-				type: Date,
-				optional: false,
-			},
-			html: {
-				type: String,
-				optional: false,
-			},
-			location: {
-				type: [Number],
+			sort: {
+				type: Number,
 				optional: true,
-			},
-
-			// todo: + Link to Type via grapher
+			}
 		});
 	}
 }
 
-export const Article = new ArticleCollection();
+export const Type = new TypeCollection();

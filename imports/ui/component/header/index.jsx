@@ -18,7 +18,7 @@ export default class Header extends React.Component {
 							B_
 						</div>
 						<div className="header__logo-text">
-							Hach Berlin!
+							Nach Berlin!
 						</div>
 					</div>
 					{/*<div className="header__buttons">*/}

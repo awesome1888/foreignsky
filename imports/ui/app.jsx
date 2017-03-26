@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
-import {createContainer} from 'meteor/react-meteor-data';
+import React from 'react';
 
-export default class App extends Component {
+import Header from '/imports/ui/component/header/index.jsx';
+
+export default class App extends React.Component {
 
 	render() {
 
@@ -9,6 +10,7 @@ export default class App extends Component {
 
 		return (
 			<div id="app">
+				<Header />
 				{React.createElement(main, {
 					route: routeProps,
 					//user: user
@@ -17,9 +19,3 @@ export default class App extends Component {
 		);
 	}
 }
-
-// export default createContainer(props => ({
-// 	user: Meteor.user(),
-// 	isLoggingIn: Meteor.loggingIn(),
-// 	...props
-// }), App);

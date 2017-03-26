@@ -1,11 +1,10 @@
 @import "../theme.less";
 
 .button {
-	padding: 5px 10px;
+	padding: @std-offset-quarter @std-offset-half;
 	font-size: 16px;
 	cursor: pointer;
-
-	transition: all 200ms;
+	.transition-all();
 }
 
 .button-tag {

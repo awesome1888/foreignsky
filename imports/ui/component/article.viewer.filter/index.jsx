@@ -2,6 +2,7 @@
 
 import React from 'react';
 import {createContainer} from 'meteor/react-meteor-data';
+import { TAPi18n } from 'meteor/tap:i18n';
 
 import {Type as ArticleType} from '/imports/api/collection/article/type.js';
 
@@ -32,7 +33,7 @@ class ArticleViewerFilter extends React.Component {
 		return (
 			<div className="article-panel__filter">
 				<div className="article-panel__filter-search">
-				    <input className="input article-panel__filter-input" type="text" placeholder="Искать статью" />
+				    <input className="input article-panel__filter-input" type="text" placeholder={TAPi18n.__('component.article.viewer.filter.searchPlaceholder')} />
 				</div>
 				<div className="article-panel__filter-button-set">
 					{items.map(item => {

@@ -4,6 +4,7 @@ import React from 'react';
 import {GoogleMap, Marker} from 'react-google-maps';
 import {default as ScriptjsLoader} from "react-google-maps/lib/async/ScriptjsLoader";
 import ArticleViewerFilter from '/imports/ui/component/article.viewer.filter/index.jsx';
+import ArticleViewerList from '/imports/ui/component/article.viewer.list/index.jsx';
 
 import './style.less';
 
@@ -17,19 +18,7 @@ export default class ArticleViewer extends React.Component {
 			<div className="another-stupid-wrapper">
 				<div className="article-panel">
 					<ArticleViewerFilter />
-					<div className="article-panel__list">
-						<div className="article-panel__list__inner">
-							<a href="/100" className="article-panel__list__item">
-								Про парковку
-							</a>
-							<a href="/200" className="article-panel__list__item">
-								Про наклейку на лобовое стекло машины
-							</a>
-							<a href="/200" className="article-panel__list__item">
-								Воскресенье в Германии
-							</a>
-						</div>
-					</div>
+					<ArticleViewerList />
 				</div>
 				<div className="map-container" />
 				{/*<ScriptjsLoader*/}

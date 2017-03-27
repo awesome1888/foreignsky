@@ -1,7 +1,18 @@
 {
-	"type": {
-		"event": "Событие",
-		"place": "Место",
-		"life": "Быт"
+	"article": {
+		"type": {
+			"event": "Событие",
+			"place": "Место",
+			"life": "Быт"
+		}
+	},
+	"component": {
+		"article": {
+			"viewer": {
+				"filter": {
+					"searchPlaceholder": "Искать статью"
+				}
+			}
+		}
 	}
 }

@@ -26,3 +26,4 @@ aldeed:collection2
 aldeed:simple-schema
 shell-server
 react-meteor-data
+tap:i18n

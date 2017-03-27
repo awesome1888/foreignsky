@@ -1,0 +1,28 @@
+@import "/client/style/theme.less";
+
+.article-panel__list {
+	background-color: white;
+	padding: @std-offset-3-of-4;
+	overflow-x: hidden;
+}
+.article-panel__list__inner {
+}
+.article-panel__list__item {
+	margin-bottom: @std-offset-quarter;
+	padding: @std-offset-half;
+	display: block;
+	text-decoration: none;
+	color: gray;
+
+	background-color: rgba(217, 219, 223, .2);
+
+	&:hover {
+		background-color: darken(rgba(217, 219, 223, .2), 10);
+	}
+
+	&:last-of-type {
+		margin-bottom: 0;
+	}
+
+	.transition-all();
+}

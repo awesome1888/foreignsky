@@ -21,8 +21,13 @@ export default class ArticleViewer extends React.Component {
 					<ArticleViewerList />
 				</div>
 				<div className="article-detail">
-				    <h1 className="h1">Про наклейку на лобовое стекло машины</h1>
+
+					<div className="article-detail__header-image">
+						<h1 className="article-detail__header-h1">Про наклейку на лобовое стекло машины Про наклейку на лобовое стекло машины Про наклейку на лобовое стекло машины</h1>
+					</div>
+
 					<div className="article-detail__body">
+						
 						Короче... Походу я только что получил свой первый штраф в Германии. На лобовое стекло под дворники мне положили такую бумажонку.
 
 						*тут фотка бумажонки*

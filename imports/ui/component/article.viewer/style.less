@@ -27,15 +27,32 @@
 	position: fixed;
 
 	top: 65px;
-	bottom: 25px;
+	bottom: 0;
 	left: calc(25px + 300px + 25px);
 	right: 25px;
 	z-index: 9999;
 	overflow-x: hidden;
+	//padding-right: @std-offset;
+}
 
-	padding: @std-offset;
+.article-detail__header-image {
+	margin: @std-offset-3-of-4;
+	height: 200px;
+	background: url('/img/sample1.jpg') center 65% no-repeat scroll;
+}
+
+.article-detail__header-h1 {
+	max-width: 60%;
+	float: right;
+	padding: @std-offset-3-of-4 @std-offset-1-and-quarter;
+	margin: @std-offset;
+	color: @color-sea-wave;
+	background-color: white;
+	font-size: 20px;
+	text-align: right;
 }
 
 .article-detail__body {
 	white-space: pre-line;
+	padding: @std-offset;
 }

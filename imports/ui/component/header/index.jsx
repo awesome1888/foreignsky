@@ -19,6 +19,9 @@ export default class Header extends React.Component {
 						</div>
 						<div className="header__logo-text">
 							Nach Berlin!
+							<div className="header__logo-funny-desc">
+								Ну или просто еще один блог одной IT-семьи, решившей переехать в Берлин
+							</div>
 						</div>
 					</div>
 					{/*<div className="header__buttons">*/}

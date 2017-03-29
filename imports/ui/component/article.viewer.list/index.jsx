@@ -41,6 +41,61 @@ class ArticleViewerList extends React.Component {
 					<a href="/200" className="article-panel__list__item">
 						Воскресенье в Германии
 					</a>
+					<a href="/100" className="article-panel__list__item">
+						Про парковку
+					</a>
+					<a href="/200" className="article-panel__list__item">
+						Про наклейку на лобовое стекло машины
+					</a>
+					<a href="/200" className="article-panel__list__item">
+						Воскресенье в Германии
+					</a>
+					<a href="/100" className="article-panel__list__item">
+						Про парковку
+					</a>
+					<a href="/200" className="article-panel__list__item">
+						Про наклейку на лобовое стекло машины
+					</a>
+					<a href="/200" className="article-panel__list__item">
+						Воскресенье в Германии
+					</a>
+					<a href="/100" className="article-panel__list__item">
+						Про парковку
+					</a>
+					<a href="/200" className="article-panel__list__item">
+						Про наклейку на лобовое стекло машины
+					</a>
+					<a href="/200" className="article-panel__list__item">
+						Воскресенье в Германии
+					</a>
+					<a href="/100" className="article-panel__list__item">
+						Про парковку
+					</a>
+					<a href="/200" className="article-panel__list__item">
+						Про наклейку на лобовое стекло машины
+					</a>
+					<a href="/200" className="article-panel__list__item">
+						Воскресенье в Германии
+					</a>
+					<a href="/100" className="article-panel__list__item">
+						Про парковку
+					</a>
+					<a href="/200" className="article-panel__list__item">
+						Про наклейку на лобовое стекло машины
+					</a>
+					<a href="/200" className="article-panel__list__item">
+						Воскресенье в Германии
+					</a>
+					<a href="/100" className="article-panel__list__item">
+						Про парковку
+					</a>
+					<a href="/200" className="article-panel__list__item">
+						Про наклейку на лобовое стекло машины
+					</a>
+					<a href="/200" className="article-panel__list__item">
+						Воскресенье в Германии
+					</a>
+
 				</div>
 			</div>
 		);

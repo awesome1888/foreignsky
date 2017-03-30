@@ -40,10 +40,10 @@ class ArticleViewerFilter extends React.Component {
 						return <div
 							key={item._id}
 							data-id={item._id}
-							className="button button-tag article-panel__filter-button"
+							className="tag tag__seagreen tag__button article-panel__filter-button"
 				            onClick={this.handleTypeClick}
 						>
-							# {item.tagTitle}
+							#{item.tagTitle}
 						</div>;
 					})}
 				</div>

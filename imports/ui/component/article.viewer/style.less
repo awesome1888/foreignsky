@@ -60,6 +60,7 @@
 	vertical-align: middle;
 	border: 5px solid @color-mcduck-gold;
 	color: @color-mcduck-gold;
+	cursor: pointer;
 }
 
 .article-detail__inner-scroll {
@@ -80,18 +81,36 @@
 	max-width: 60%;
 	float: right;
 	padding: @std-offset-3-of-4 @std-offset-1-and-quarter;
-	margin: @std-offset;
-	color: @color-sea-wave;
+	margin: @std-offset 0;
+	color: gray;
 	background-color: white;
 	font-size: 20px;
 	text-align: right;
+	border-right: @std-offset-half solid lighten(@color-mcduck-gold, 10%);
 }
 
 .article-detail__body {
-	//white-space: pre-wrap;
+	white-space: pre-line;
 	padding: @std-offset;
 	position: relative;
-	color: rgb(96, 99, 103);
+	color: #606367;
+
+	p {
+		margin-top: 0;
+		margin-bottom: @std-offset;
+	}
+}
+
+.article-detail__body-top-line {
+	display: flex;
+	padding: @std-offset;
+	background-color: lighten(gray, 48%);
+}
+
+.article-detail__body-date {
+	font-size: 13px;
+	color: gray;
+	padding-top: @std-offset-quarter;
 }
 
 //.article-detail__bottom {

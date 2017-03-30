@@ -31,14 +31,21 @@ export default class ArticleViewer extends React.Component {
 								<h1 className="article-detail__header-h1">Про наклейку на лобовое стекло машины, непонятный штраф, почему медведи и еще кусок названия до кучи</h1>
 							</div>
 
-							<div className="article-detail__tag-list">
-								<div className="article-detail__tag">#Быт</div>
-								<div className="article-detail__tag">#Автомобили</div>
-								<div className="article-detail__tag">#Медведи</div>
-								<div className="article-detail__tag">#Разнаяхрень</div>
+							<div className="article-detail__body-top-line">
+								<div className="group-tag">
+									<div className="tag tag__yellow">#Быт</div>
+									<div className="tag tag__blue">#Автомобили</div>
+									<div className="tag tag__seagreen">#Медведи</div>
+									<div className="tag tag__yellow">#Разнаяхрень</div>
+								</div>
+								<div className="article-detail__body-date">
+									23.01.2017
+								</div>
 							</div>
 
 							<div className="article-detail__body">
+
+
 
 								<p>
 									Короче... Походу я только что получил свой первый штраф в Германии. На лобовое стекло под дворники мне положили такую бумажонку.

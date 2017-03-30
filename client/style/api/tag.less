@@ -1,0 +1,55 @@
+@import "../theme.less";
+
+@percent: 5%;
+@percent-hover: 10%;
+
+.tag__button__hover(@color){
+	&.tag__button {
+		&:hover {
+			background-color: lighten(@color, @percent-hover);
+		}
+	}
+}
+
+.tag {
+	padding: @std-offset-quarter @std-offset-half;
+	font-size: 13px;
+	.transition-all();
+}
+
+.tag__button {
+	cursor: pointer;
+}
+
+.tag__yellow {
+	color: white;
+	background-color: lighten(@color-mcduck-gold, @percent);
+
+	.tag__button__hover(@color-mcduck-gold);
+}
+
+.tag__blue {
+	color: white;
+	background-color: lighten(@color-berlin-sky, @percent);
+
+	.tag__button__hover(@color-berlin-sky);
+}
+
+.tag__seagreen {
+	color: white;
+	background-color: lighten(@color-sea-wave, @percent);
+
+	.tag__button__hover(@color-sea-wave);
+}
+
+.group-tag {
+	display: flex;
+
+	& > .tag {
+		margin-right: @std-offset-half;
+
+		&:last-of-type {
+			margin-right: 0;
+		}
+	}
+}

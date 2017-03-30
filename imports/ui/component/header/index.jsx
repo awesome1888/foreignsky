@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 
 import React from 'react';
+import HeaderLoader from '/imports/ui/component/header.loader/index.jsx';
 
 import './style.less';
 
@@ -33,9 +34,7 @@ export default class Header extends React.Component {
 						{/*</div>*/}
 					{/*</div>*/}
 				</div>
-				<div className="header__loading-bar">
-
-				</div>
+				<HeaderLoader />
 			</div>
 		);
 	}

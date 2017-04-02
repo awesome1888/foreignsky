@@ -25,7 +25,7 @@ export default class Map extends React.Component {
 				{
 					this.useFakeMap
 					&&
-					<div className="map-container" />
+					<div className="map-container map-container_faded" />
 				}
 
 				{

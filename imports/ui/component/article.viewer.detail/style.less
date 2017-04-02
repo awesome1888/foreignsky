@@ -66,8 +66,10 @@
 }
 
 .article-detail__body-top-line {
-	display: flex;
-	padding: @std-offset-double;
+	.display-flex();
+	.flex-direction__row();
+	.flex-justify-content__space-between();
+	padding: @std-offset @std-offset-double;
 	background-color: lighten(gray, 48%);
 }
 
@@ -75,5 +77,4 @@
 	font-size: 13px;
 	color: gray;
 	padding-top: @std-offset-quarter;
-	align-self: flex-end;
 }

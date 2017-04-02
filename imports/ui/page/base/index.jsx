@@ -42,9 +42,7 @@ export default class BasePage extends React.Component {
 							{this.getSideHtml(props)}
 						</div>
 						<div className="layout__central-body-right col-xs-9">
-							<div className="layout__central-body-right-scroll">
-								{this.getCentralHtml(props)}
-							</div>
+							{this.getCentralHtml(props)}
 						</div>
 					</div>
 				</div>

@@ -1,8 +1,7 @@
 @import "/client/style/theme.less";
+@import "/client/style/api/etc.less";
 
 .article-detail {
-	z-index: 9990;
-	position: relative;
 	height: inherit;
 	width: 100%;
 	background-color: white;
@@ -10,10 +9,9 @@
 }
 
 .article-detail__close-page {
-	z-index: 9991;
 	position: absolute;
-	top: 0;
-	left: -3px;
+	top: -5px;
+	left: -10px;
 	width: 30px;
 	height: 30px;
 	font-size: 10px;
@@ -77,4 +75,5 @@
 	font-size: 13px;
 	color: gray;
 	padding-top: @std-offset-quarter;
+	align-self: flex-end;
 }

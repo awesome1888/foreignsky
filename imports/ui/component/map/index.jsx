@@ -11,6 +11,7 @@ export default class Map extends React.Component {
 	constructor(params)
 	{
 		super(params);
+		this.useFakeMap = false;
 		this.map = null;
 	}
 
@@ -21,10 +22,17 @@ export default class Map extends React.Component {
 
 		return (
 			<div className="map-wrapper">
-				<div className="map-container" />
-				<a className="test">LALALA</a>
 				{
-					false
+					this.useFakeMap
+					&&
+					[
+						<div className="map-container" />,
+						<a className="test">LALALA</a>
+					]
+				}
+
+				{
+					!this.useFakeMap
 					&&
 					<ScriptjsLoader
 						hostname={"maps.googleapis.com"}

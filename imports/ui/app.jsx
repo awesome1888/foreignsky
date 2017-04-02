@@ -12,12 +12,11 @@ export default class App extends React.Component {
 		return (
 			<div id="app">
 				<Header />
-				<Map />
-
 				{React.createElement(main, {
 					route: routeProps,
 					//user: user
 				})}
+				<Map />
 			</div>
 		);
 	}

@@ -34,7 +34,6 @@ export default class ArticleViewerDetail extends React.Component {
 
 		return (
 			<div className="article-detail">
-
 				<div className="article-detail__close-page">X</div>
 				<div className="article-detail__inner-scroll">
 
@@ -91,8 +90,6 @@ export default class ArticleViewerDetail extends React.Component {
 					</div>
 
 				</div>
-
-				{/*<div className="article-detail__bottom" />*/}
 			</div>
 		);
 	}

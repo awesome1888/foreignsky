@@ -31,72 +31,72 @@ class ArticleViewerList extends React.Component {
 
 		return (
 			<div className="article-panel__list">
-				<div className="article-panel__list__inner">
-					<a href="/100" className="article-panel__list__item">
-						Про парковку
-					</a>
-					<a href="/200" className="article-panel__list__item">
-						Про наклейку на лобовое стекло машины
-					</a>
-					<a href="/200" className="article-panel__list__item">
-						Воскресенье в Германии
-					</a>
-					<a href="/100" className="article-panel__list__item">
-						Про парковку
-					</a>
-					<a href="/200" className="article-panel__list__item">
-						Про наклейку на лобовое стекло машины
-					</a>
-					<a href="/200" className="article-panel__list__item">
-						Воскресенье в Германии
-					</a>
-					<a href="/100" className="article-panel__list__item">
-						Про парковку
-					</a>
-					<a href="/200" className="article-panel__list__item">
-						Про наклейку на лобовое стекло машины
-					</a>
-					<a href="/200" className="article-panel__list__item">
-						Воскресенье в Германии
-					</a>
-					<a href="/100" className="article-panel__list__item">
-						Про парковку
-					</a>
-					<a href="/200" className="article-panel__list__item">
-						Про наклейку на лобовое стекло машины
-					</a>
-					<a href="/200" className="article-panel__list__item">
-						Воскресенье в Германии
-					</a>
-					<a href="/100" className="article-panel__list__item">
-						Про парковку
-					</a>
-					<a href="/200" className="article-panel__list__item">
-						Про наклейку на лобовое стекло машины
-					</a>
-					<a href="/200" className="article-panel__list__item">
-						Воскресенье в Германии
-					</a>
-					<a href="/100" className="article-panel__list__item">
-						Про парковку
-					</a>
-					<a href="/200" className="article-panel__list__item">
-						Про наклейку на лобовое стекло машины
-					</a>
-					<a href="/200" className="article-panel__list__item">
-						Воскресенье в Германии
-					</a>
-					<a href="/100" className="article-panel__list__item">
-						Про парковку
-					</a>
-					<a href="/200" className="article-panel__list__item">
-						Про наклейку на лобовое стекло машины
-					</a>
-					<a href="/200" className="article-panel__list__item">
-						Воскресенье в Германии
-					</a>
+				<div className="article-panel__list-scroll">
+						<a href="/100" className="article-panel__list__item">
+							Про парковку
+						</a>
+						<a href="/200" className="article-panel__list__item">
+							Про наклейку на лобовое стекло машины
+						</a>
+						<a href="/200" className="article-panel__list__item">
+							Воскресенье в Германии
+						</a>
+						<a href="/100" className="article-panel__list__item">
+							Про парковку
+						</a>
+						<a href="/200" className="article-panel__list__item">
+							Про наклейку на лобовое стекло машины
+						</a>
+						<a href="/200" className="article-panel__list__item">
+							Воскресенье в Германии
+						</a>
+						<a href="/100" className="article-panel__list__item">
+							Про парковку
+						</a>
+						<a href="/200" className="article-panel__list__item">
+							Про наклейку на лобовое стекло машины
+						</a>
+						<a href="/200" className="article-panel__list__item">
+							Воскресенье в Германии
+						</a>
+						<a href="/100" className="article-panel__list__item">
+							Про парковку
+						</a>
+						<a href="/200" className="article-panel__list__item">
+							Про наклейку на лобовое стекло машины
+						</a>
+						<a href="/200" className="article-panel__list__item">
+							Воскресенье в Германии
+						</a>
+						<a href="/100" className="article-panel__list__item">
+							Про парковку
+						</a>
+						<a href="/200" className="article-panel__list__item">
+							Про наклейку на лобовое стекло машины
+						</a>
+						<a href="/200" className="article-panel__list__item">
+							Воскресенье в Германии
+						</a>
+						<a href="/100" className="article-panel__list__item">
+							Про парковку
+						</a>
+						<a href="/200" className="article-panel__list__item">
+							Про наклейку на лобовое стекло машины
+						</a>
+						<a href="/200" className="article-panel__list__item">
+							Воскресенье в Германии
+						</a>
+						<a href="/100" className="article-panel__list__item">
+							Про парковку
+						</a>
+						<a href="/200" className="article-panel__list__item">
+							Про наклейку на лобовое стекло машины
+						</a>
+						<a href="/200" className="article-panel__list__item">
+							Воскресенье в Германии
+						</a>
 
-				</div>
+					</div>
 			</div>
 		);
 	}

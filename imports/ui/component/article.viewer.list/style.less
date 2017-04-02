@@ -3,11 +3,14 @@
 
 .article-panel__list {
 	background-color: white;
-	padding: @std-offset-3-of-4;
+	border-top: @std-offset-3-of-4 solid white;
+	border-bottom: @std-offset-3-of-4 solid white;
+	padding: 0 @std-offset-3-of-4;
 	overflow-x: hidden;
+	box-sizing: border-box;
 	.height-inherit();
 }
-.article-panel__list__inner {
+.article-panel__list-scroll {
 	overflow-y: auto;
 }
 .article-panel__list__item {

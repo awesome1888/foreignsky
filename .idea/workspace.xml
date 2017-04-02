@@ -2,19 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="afae9113-23d2-4377-a39d-748ba1bf1aa2" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/imports/ui/component/article.viewer/index.jsx" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/imports/ui/component/article.viewer/style.less" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/style/api/etc.less" afterPath="$PROJECT_DIR$/client/style/api/etc.less" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/style/layout.less" afterPath="$PROJECT_DIR$/client/style/layout.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/transport.md" afterPath="$PROJECT_DIR$/doc/transport.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/app.jsx" afterPath="$PROJECT_DIR$/imports/ui/app.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/component/article.viewer.detail/style.less" afterPath="$PROJECT_DIR$/imports/ui/component/article.viewer.detail/style.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/component/article.viewer.list/index.jsx" afterPath="$PROJECT_DIR$/imports/ui/component/article.viewer.list/index.jsx" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/component/article.viewer.list/style.less" afterPath="$PROJECT_DIR$/imports/ui/component/article.viewer.list/style.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/component/header/index.jsx" afterPath="$PROJECT_DIR$/imports/ui/component/header/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/component/header/style.less" afterPath="$PROJECT_DIR$/imports/ui/component/header/style.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/component/map/index.jsx" afterPath="$PROJECT_DIR$/imports/ui/component/map/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/component/map/style.less" afterPath="$PROJECT_DIR$/imports/ui/component/map/style.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/page/base/index.jsx" afterPath="$PROJECT_DIR$/imports/ui/page/base/index.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/page/home/style.less" afterPath="$PROJECT_DIR$/imports/ui/page/home/style.less" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -77,6 +71,18 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/imports/ui/page/home/index.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="27" column="26" lean-forward="false" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
+              <folding>
+                <element signature="e#45#71#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
@@ -93,8 +99,8 @@
       <file leaf-file-name="layout.less" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/style/layout.less">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="58" column="3" lean-forward="false" selection-start-line="58" selection-start-column="3" selection-end-line="58" selection-end-column="3" />
+            <state relative-caret-position="247">
+              <caret line="55" column="29" lean-forward="true" selection-start-line="55" selection-start-column="29" selection-end-line="55" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -103,8 +109,30 @@
       <file leaf-file-name="style.less" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/imports/ui/page/home/style.less">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="37" />
+            <state relative-caret-position="165">
+              <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/imports/ui/component/article.viewer.list/index.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="256">
+              <caret line="33" column="16" lean-forward="false" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
+              <folding>
+                <element signature="e#631#2844#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="style.less" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/imports/ui/component/article.viewer.list/style.less">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="17" lean-forward="false" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -140,7 +168,11 @@
       <find>article-panel__list__item</find>
       <find>z-index</find>
       <find>height1-100prc</find>
+      <find>article-panel__list__inner</find>
     </findStrings>
+    <replaceStrings>
+      <replace>article-panel__list-scroll</replace>
+    </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/imports</dir>
     </dirStrings>
@@ -173,7 +205,6 @@
         <option value="$PROJECT_DIR$/client/style/api/generic.less" />
         <option value="$PROJECT_DIR$/doc/why_bear.md" />
         <option value="$PROJECT_DIR$/doc/little_metal_bricks.md" />
-        <option value="$PROJECT_DIR$/imports/ui/component/article.viewer.list/index.jsx" />
         <option value="$PROJECT_DIR$/imports/ui/component/article.viewer.filter/index.jsx" />
         <option value="$PROJECT_DIR$/imports/ui/component/header.loader/style.less" />
         <option value="$PROJECT_DIR$/client/style/api/button.less" />
@@ -188,19 +219,20 @@
         <option value="$PROJECT_DIR$/doc/gym.md" />
         <option value="$PROJECT_DIR$/imports/ui/component/article.viewer/style.less" />
         <option value="$PROJECT_DIR$/imports/ui/component/article.viewer.detail/index.jsx" />
-        <option value="$PROJECT_DIR$/imports/ui/page/home/style.less" />
         <option value="$PROJECT_DIR$/doc/passcard.md" />
         <option value="$PROJECT_DIR$/doc/transport.md" />
         <option value="$PROJECT_DIR$/imports/ui/component/map/style.less" />
         <option value="$PROJECT_DIR$/imports/ui/page/base/index.jsx" />
         <option value="$PROJECT_DIR$/imports/ui/component/map/index.jsx" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/imports/ui/component/article.viewer.list/style.less" />
         <option value="$PROJECT_DIR$/imports/ui/component/article.viewer.detail/style.less" />
         <option value="$PROJECT_DIR$/imports/ui/component/header/index.jsx" />
         <option value="$PROJECT_DIR$/client/style/api/etc.less" />
         <option value="$PROJECT_DIR$/imports/ui/component/header/style.less" />
         <option value="$PROJECT_DIR$/imports/ui/app.jsx" />
+        <option value="$PROJECT_DIR$/imports/ui/page/home/style.less" />
+        <option value="$PROJECT_DIR$/imports/ui/component/article.viewer.list/index.jsx" />
+        <option value="$PROJECT_DIR$/imports/ui/component/article.viewer.list/style.less" />
         <option value="$PROJECT_DIR$/client/style/layout.less" />
       </list>
     </option>
@@ -347,32 +379,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="base" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="indaberlin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="indaberlin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="imports" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="component" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="map" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -685,7 +691,7 @@
       <workItem from="1491029956700" duration="6501000" />
       <workItem from="1491120892219" duration="3295000" />
       <workItem from="1491134354840" duration="8698000" />
-      <workItem from="1491157054996" duration="4064000" />
+      <workItem from="1491157054996" duration="4907000" />
     </task>
     <task id="LOCAL-00001" summary="started writing texts">
       <created>1490216885718</created>
@@ -771,11 +777,18 @@
       <option name="project" value="LOCAL" />
       <updated>1491146943290</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="markup almost done">
+      <created>1491161132287</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1491161132287</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="88690000" />
+    <option name="totallyTimeSpent" value="89533000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -830,7 +843,8 @@
     <MESSAGE value="new markup attempt&#10;" />
     <MESSAGE value="gym" />
     <MESSAGE value="design is getting better" />
-    <option name="LAST_COMMIT_MESSAGE" value="design is getting better" />
+    <MESSAGE value="markup almost done" />
+    <option name="LAST_COMMIT_MESSAGE" value="markup almost done" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1083,24 +1097,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/imports/ui/component/article.viewer/style.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="6" lean-forward="false" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/imports/ui/component/article.viewer/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="21" column="39" lean-forward="false" selection-start-line="21" selection-start-column="39" selection-end-line="21" selection-end-column="39" />
-          <folding>
-            <element signature="e#45#71#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/doc/transport.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -1123,16 +1119,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/imports/ui/page/home/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="25" column="40" lean-forward="false" selection-start-line="25" selection-start-column="40" selection-end-line="25" selection-end-column="40" />
-          <folding>
-            <element signature="e#45#71#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/imports/ui/component/map/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -1149,22 +1135,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/imports/ui/page/home/style.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/imports/ui/component/article.viewer.list/style.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/imports/ui/component/article.viewer.detail/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="525">
@@ -1172,14 +1142,6 @@
           <folding>
             <element signature="e#629#3404#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/imports/ui/component/article.viewer.list/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1246,10 +1208,62 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/imports/ui/component/article.viewer/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="17" column="47" lean-forward="true" selection-start-line="17" selection-start-column="47" selection-end-line="17" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imports/ui/component/article.viewer/style.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="11" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imports/ui/page/home/style.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imports/ui/page/home/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="26" lean-forward="false" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
+          <folding>
+            <element signature="e#45#71#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imports/ui/component/article.viewer.list/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="33" column="16" lean-forward="false" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
+          <folding>
+            <element signature="e#631#2844#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imports/ui/component/article.viewer.list/style.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="17" lean-forward="false" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client/style/layout.less">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="58" column="3" lean-forward="false" selection-start-line="58" selection-start-column="3" selection-end-line="58" selection-end-column="3" />
+        <state relative-caret-position="247">
+          <caret line="55" column="29" lean-forward="true" selection-start-line="55" selection-start-column="29" selection-end-line="55" selection-end-column="29" />
           <folding />
         </state>
       </provider>

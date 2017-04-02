@@ -5,7 +5,83 @@ body {
 	padding: 0;
 }
 
-html, body, #react-root, #app, #app > div, .another-stupid-wrapper {
+html, body, #react-root, #app {
 	height: 100%;
 	font-family: 'Arial';
+}
+
+@import './theme.less';
+@import './api/etc.less';
+
+// bootstrap screen size constraints
+@screen-xs-max: 767px;
+@screen-sm-min: 768px;
+@screen-sm-max: 991px;
+@screen-md-min: 992px;
+@screen-md-max: 1199px;
+@screen-lg-min: 1200px;
+
+.application-container {
+}
+
+.layout {
+	padding-top: 75px;
+	box-sizing: border-box;
+	height: 100%;
+	overflow-y: hidden;
+	overflow-x: visible;
+	position: relative;
+	z-index: 100;
+}
+
+// top banner, filter, etc
+//.layout__wide-area {
+//	width: 100%;
+//	position: relative;
+//	display: block;
+//	//text-align: center;
+//}
+
+.layout__central-row {
+	height: inherit;
+}
+
+// centered block
+.layout__central {
+	height: inherit;
+}
+// centered body block
+.layout__central-body {
+	margin-top: @std-offset;
+	height: inherit;
+}
+.layout__central-body-left {
+	height: inherit;
+}
+.layout__central-body-right {
+	height: inherit;
+}
+//.layout__content_centered {
+//	width: 100%;
+//	.display-flex();
+//	.flex-justify-content_center();
+//}
+
+.layout__central-body-right-scroll {
+	height: 100%;
+	//overflow-y: auto; // PREVIOUS
+}
+
+// offsets
+.layout__offset_bottom {
+	margin-bottom: @std-offset;
+}
+.layout__offset_left {
+	margin-left: @std-offset;
+}
+.layout__offset-quarter_bottom {
+	margin-bottom: @std-offset-quarter;
+}
+.layout__offset-3-of-4_bottom {
+	margin-bottom: @std-offset-3-of-4;
 }

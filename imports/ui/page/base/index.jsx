@@ -9,7 +9,7 @@ export default class BasePage extends React.Component {
 	{
 		return  {
 			title: 'InDaBerlin',
-			description: 'You can find there a lot of cool stuff',
+			description: 'You can find here a lot of cool stuff',
 			//canonical: 'http://example.com/path/to/page',
 			meta: {
 				charset: 'utf-8',
@@ -21,7 +21,12 @@ export default class BasePage extends React.Component {
 		};
 	}
 
-	getHtml(props)
+	getCentralHtml(props)
+	{
+		return ('');
+	}
+
+	getSideHtml(props)
 	{
 		return ('');
 	}
@@ -29,9 +34,20 @@ export default class BasePage extends React.Component {
 	render(props)
 	{
 		return (
-			<div>
+			<div className="layout">
 				<DocumentMeta {...this.meta} />
-				{this.getHtml(props)}
+				<div className="layout__central layout__central-body container">
+					<div className="layout__central-row row">
+						<div className="layout__central-body-left col-xs-3">
+							{this.getSideHtml(props)}
+						</div>
+						<div className="layout__central-body-right col-xs-9">
+							<div className="layout__central-body-right-scroll">
+								{this.getCentralHtml(props)}
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		);
 	}

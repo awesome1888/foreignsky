@@ -34,16 +34,14 @@ export default class BasePage extends React.Component {
 	render(props)
 	{
 		return (
-			<div className="layout">
+			<div className="layout__central layout__central-body container">
 				<DocumentMeta {...this.meta} />
-				<div className="layout__central layout__central-body container">
-					<div className="layout__central-row row">
-						<div className="layout__central-body-left col-xs-3">
-							{this.getSideHtml(props)}
-						</div>
-						<div className="layout__central-body-right col-xs-9">
-							{this.getCentralHtml(props)}
-						</div>
+				<div className="layout__central-row row">
+					<div className="layout__central-body-left col-xs-3">
+						{this.getSideHtml(props)}
+					</div>
+					<div className="layout__central-body-right col-xs-9">
+						{this.getCentralHtml(props)}
 					</div>
 				</div>
 			</div>

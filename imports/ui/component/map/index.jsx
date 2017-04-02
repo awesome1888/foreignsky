@@ -11,7 +11,7 @@ export default class Map extends React.Component {
 	constructor(params)
 	{
 		super(params);
-		this.useFakeMap = false;
+		this.useFakeMap = true;
 		this.map = null;
 	}
 
@@ -25,10 +25,7 @@ export default class Map extends React.Component {
 				{
 					this.useFakeMap
 					&&
-					[
-						<div className="map-container" />,
-						<a className="test">LALALA</a>
-					]
+					<div className="map-container" />
 				}
 
 				{

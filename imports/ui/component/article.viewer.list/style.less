@@ -1,11 +1,14 @@
 @import "/client/style/theme.less";
+@import "/client/style/api/etc.less";
 
 .article-panel__list {
 	background-color: white;
 	padding: @std-offset-3-of-4;
 	overflow-x: hidden;
+	.height-inherit();
 }
 .article-panel__list__inner {
+	overflow-y: auto;
 }
 .article-panel__list__item {
 	margin-bottom: @std-offset-quarter;

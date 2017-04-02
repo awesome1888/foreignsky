@@ -11,11 +11,13 @@ export default class App extends React.Component {
 
 		return (
 			<div id="app">
-				<Header />
-				{React.createElement(main, {
-					route: routeProps,
-					//user: user
-				})}
+				<div className="layout">
+					<Header />
+					{React.createElement(main, {
+						route: routeProps,
+						//user: user
+					})}
+				</div>
 				<Map />
 			</div>
 		);

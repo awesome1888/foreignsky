@@ -1,19 +1,25 @@
-.header {
-	height: auto !important;
+@import "/client/style/theme.less";
+@import "/client/style/api/etc.less";
+
+.layout__header {
+	.everest();
+	background-color: white;
 	position: fixed;
 	width: 100%;
-	top: 0;
+}
+
+.header {
+	//height: auto !important;
+	//position: fixed;
 	//z-index: 9999;
-	background-color: white;
 }
 
 .header__inner {
-	padding: 0 25px 10px 25px;
 	display: flex;
 }
 
 .header__logo {
-	margin-top: 10px;
+	margin: 10px 0 10px 0;
 }
 
 .header__logo-img {
@@ -28,6 +34,7 @@
 	margin-left: 45px;
 	min-height: 30px;
 	vertical-align: bottom;
+	line-height: 14px;
 }
 
 .header__logo-funny-desc {

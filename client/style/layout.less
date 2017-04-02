@@ -25,52 +25,38 @@ html, body, #react-root, #app {
 }
 
 .layout {
-	padding-top: 75px;
+	//padding-top: 75px;
 	box-sizing: border-box;
 	height: 100%;
 	overflow-y: hidden;
 	overflow-x: visible;
 	position: relative;
-	//z-index: 100;
 }
 
-// top banner, filter, etc
-//.layout__wide-area {
-//	width: 100%;
-//	position: relative;
-//	display: block;
-//	//text-align: center;
-//}
-
 .layout__central-row {
-	height: inherit;
+	.height-inherit();
 }
 
 // centered block
 .layout__central {
-	height: inherit;
 }
 // centered body block
 .layout__central-body {
-	margin-top: @std-offset;
-	height: inherit;
+	.height-inherit();
+	padding-top: 70px;
+	box-sizing: border-box;
 }
 .layout__central-body-left {
-	height: inherit;
+	.height-inherit();
 }
 .layout__central-body-right {
-	height: inherit;
+	.height-inherit();
 }
 //.layout__content_centered {
 //	width: 100%;
 //	.display-flex();
 //	.flex-justify-content_center();
 //}
-
-.layout__central-body-right-scroll {
-	height: 100%;
-	//overflow-y: auto; // PREVIOUS
-}
 
 // offsets
 .layout__offset_bottom {

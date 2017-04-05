@@ -4,7 +4,7 @@ import React from 'react';
 import {createContainer} from 'meteor/react-meteor-data';
 import { TAPi18n } from 'meteor/tap:i18n';
 
-import {Type as ArticleType} from '/imports/api/collection/article/type.js';
+import {BaseTags} from './query.js';
 
 import './style.less';
 
@@ -15,6 +15,12 @@ class ArticleViewerFilter extends React.Component {
 		super(params);
 
 		this.handleTypeClick = this.handleTypeClick.bind(this);
+
+		// just test
+		BaseTags.fetch((error, response) => {
+			console.dir(error);
+			console.dir(response);
+		});
 	}
 
 	handleTypeClick(e)
@@ -56,10 +62,8 @@ export default createContainer((props = {}) => {
 
 	props = Object.create(props);
 
-	const handle = Meteor.subscribe('article.type.list');
-
-	props.loading = !handle.ready();
-	props.items = ArticleType.find().fetch();
+	props.loading = true;
+	props.items = [];
 
 	return props;
 }, ArticleViewerFilter);

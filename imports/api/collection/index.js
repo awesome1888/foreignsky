@@ -1,2 +1,2 @@
 import './article.js';
-import './article/type.js';
+import './article/tag.js';

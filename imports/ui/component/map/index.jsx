@@ -11,7 +11,7 @@ export default class Map extends React.Component {
 	constructor(params)
 	{
 		super(params);
-		this.useFakeMap = true;
+		this.useFakeMap = false;
 		this.map = null;
 	}
 

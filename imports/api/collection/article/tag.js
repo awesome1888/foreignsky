@@ -1,11 +1,11 @@
 import { Mongo } from 'meteor/mongo';
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 
-class TypeCollection extends Mongo.Collection
+class TagCollection extends Mongo.Collection
 {
 	constructor()
 	{
-		super('article.type');
+		super('article.tag');
 		this.attachSchema(this.schema);
 	}
 
@@ -29,4 +29,4 @@ class TypeCollection extends Mongo.Collection
 	}
 }
 
-export const Type = new TypeCollection();
+export const Tag = new TagCollection();

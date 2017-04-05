@@ -13,7 +13,7 @@
 .article-panel__list-scroll {
 	overflow-y: auto;
 }
-.article-panel__list__item {
+.article-panel__list-item {
 	margin-bottom: @std-offset-quarter;
 	padding: @std-offset-half;
 	display: block;
@@ -22,8 +22,15 @@
 
 	background-color: rgba(217, 219, 223, .2);
 
+	&:focus {
+		text-decoration: none;
+		color: gray;
+	}
+
 	&:hover {
 		background-color: darken(rgba(217, 219, 223, .2), 10);
+		text-decoration: none;
+		color: gray;
 	}
 
 	&:last-of-type {

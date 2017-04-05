@@ -1,5 +1,6 @@
 /* eslint-disable class-methods-use-this */
 
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import {createContainer} from 'meteor/react-meteor-data';
 
@@ -25,74 +26,82 @@ class ArticleViewerList extends React.Component {
 	// 	}
 	// }
 
+	getData()
+	{
+		let res = Meteor.apply('article.find');
+		console.dir(res);
+	}
+
 	render(props = {})
 	{
 		//const {loading, items} = this.props;
 
+		this.getData();
+
 		return (
 			<div className="article-panel__list">
 				<div className="article-panel__list-scroll">
-						<a href="/100" className="article-panel__list__item">
+						<a href="/100" className="article-panel__list-item">
 							Про парковку
 						</a>
-						<a href="/200" className="article-panel__list__item">
+						<a href="/200" className="article-panel__list-item">
 							Про наклейку на лобовое стекло машины
 						</a>
-						<a href="/200" className="article-panel__list__item">
+						<a href="/200" className="article-panel__list-item">
 							Воскресенье в Германии
 						</a>
-						<a href="/100" className="article-panel__list__item">
+						<a href="/100" className="article-panel__list-item">
 							Про парковку
 						</a>
-						<a href="/200" className="article-panel__list__item">
+						<a href="/200" className="article-panel__list-item">
 							Про наклейку на лобовое стекло машины
 						</a>
-						<a href="/200" className="article-panel__list__item">
+						<a href="/200" className="article-panel__list-item">
 							Воскресенье в Германии
 						</a>
-						<a href="/100" className="article-panel__list__item">
+						<a href="/100" className="article-panel__list-item">
 							Про парковку
 						</a>
-						<a href="/200" className="article-panel__list__item">
+						<a href="/200" className="article-panel__list-item">
 							Про наклейку на лобовое стекло машины
 						</a>
-						<a href="/200" className="article-panel__list__item">
+						<a href="/200" className="article-panel__list-item">
 							Воскресенье в Германии
 						</a>
-						<a href="/100" className="article-panel__list__item">
+						<a href="/100" className="article-panel__list-item">
 							Про парковку
 						</a>
-						<a href="/200" className="article-panel__list__item">
+						<a href="/200" className="article-panel__list-item">
 							Про наклейку на лобовое стекло машины
 						</a>
-						<a href="/200" className="article-panel__list__item">
+						<a href="/200" className="article-panel__list-item">
 							Воскресенье в Германии
 						</a>
-						<a href="/100" className="article-panel__list__item">
+						<a href="/100" className="article-panel__list-item">
 							Про парковку
 						</a>
-						<a href="/200" className="article-panel__list__item">
+						<a href="/200" className="article-panel__list-item">
 							Про наклейку на лобовое стекло машины
 						</a>
-						<a href="/200" className="article-panel__list__item">
+						<a href="/200" className="article-panel__list-item">
 							Воскресенье в Германии
 						</a>
-						<a href="/100" className="article-panel__list__item">
+						<a href="/100" className="article-panel__list-item">
 							Про парковку
 						</a>
-						<a href="/200" className="article-panel__list__item">
+						<a href="/200" className="article-panel__list-item">
 							Про наклейку на лобовое стекло машины
 						</a>
-						<a href="/200" className="article-panel__list__item">
+						<a href="/200" className="article-panel__list-item">
 							Воскресенье в Германии
 						</a>
-						<a href="/100" className="article-panel__list__item">
+						<a href="/100" className="article-panel__list-item">
 							Про парковку
 						</a>
-						<a href="/200" className="article-panel__list__item">
+						<a href="/200" className="article-panel__list-item">
 							Про наклейку на лобовое стекло машины
 						</a>
-						<a href="/200" className="article-panel__list__item">
+						<a href="/200" className="article-panel__list-item">
 							Воскресенье в Германии
 						</a>
 

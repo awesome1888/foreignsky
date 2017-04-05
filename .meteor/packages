@@ -27,3 +27,5 @@ aldeed:simple-schema
 shell-server
 react-meteor-data
 tap:i18n
+cultofcoders:grapher
+cultofcoders:grapher-react

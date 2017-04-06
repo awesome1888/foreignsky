@@ -2,8 +2,10 @@
   <library name="meteor-packages-auto-import-browser" type="javaScript">
     <properties>
       <sourceFilesUrls>
+        <item url="file://$USER_HOME$/.meteor/packages/cultofcoders_grapher-react/0.0.5/web.browser/lib/createQueryContainer.js" />
         <item url="file://$USER_HOME$/.meteor/packages/practicalmeteor_chai/2.1.0_1/web.browser/packages/practicalmeteor_chai.js" />
         <item url="file://$USER_HOME$/.meteor/packages/practicalmeteor_loglevel/1.2.0_2/web.browser/packages/practicalmeteor_loglevel.js" />
+        <item url="file://$USER_HOME$/.meteor/packages/cultofcoders_grapher-react/0.0.5/web.browser/grapher-react.js" />
         <item url="file://$USER_HOME$/.meteor/packages/practicalmeteor_mocha/2.4.5_6/web.browser/index.js" />
         <item url="file://$USER_HOME$/.meteor/packages/practicalmeteor_mocha/2.4.5_6/web.browser/mocha.js" />
         <item url="file://$USER_HOME$/.meteor/packages/practicalmeteor_mocha/2.4.5_6/web.browser/bin/options.js" />
@@ -481,8 +483,10 @@
       </sourceFilesUrls>
     </properties>
     <CLASSES>
+      <root url="file://$USER_HOME$/.meteor/packages/cultofcoders_grapher-react/0.0.5/web.browser/lib/createQueryContainer.js" />
       <root url="file://$USER_HOME$/.meteor/packages/practicalmeteor_chai/2.1.0_1/web.browser/packages/practicalmeteor_chai.js" />
       <root url="file://$USER_HOME$/.meteor/packages/practicalmeteor_loglevel/1.2.0_2/web.browser/packages/practicalmeteor_loglevel.js" />
+      <root url="file://$USER_HOME$/.meteor/packages/cultofcoders_grapher-react/0.0.5/web.browser/grapher-react.js" />
       <root url="file://$USER_HOME$/.meteor/packages/practicalmeteor_mocha/2.4.5_6/web.browser/index.js" />
       <root url="file://$USER_HOME$/.meteor/packages/practicalmeteor_mocha/2.4.5_6/web.browser/mocha.js" />
       <root url="file://$USER_HOME$/.meteor/packages/practicalmeteor_mocha/2.4.5_6/web.browser/bin/options.js" />

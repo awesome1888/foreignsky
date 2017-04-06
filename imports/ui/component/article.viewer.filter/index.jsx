@@ -4,7 +4,7 @@ import React from 'react';
 import {createContainer} from 'meteor/react-meteor-data';
 import { TAPi18n } from 'meteor/tap:i18n';
 
-import {BaseTags} from './query.js';
+import TagListComponent from './component/tag.list/index.jsx';
 
 import './style.less';
 
@@ -41,18 +41,9 @@ class ArticleViewerFilter extends React.Component {
 				<div className="article-panel__filter-search">
 				    <input className="input article-panel__filter-input" type="text" placeholder={TAPi18n.__('component.article.viewer.filter.searchPlaceholder')} />
 				</div>
-				<div className="article-panel__filter-button-set">
-					{items.map(item => {
-						return <div
-							key={item._id}
-							data-id={item._id}
-							className="tag tag__seagreen tag__button article-panel__filter-button"
-				            onClick={this.handleTypeClick}
-						>
-							#{item.tagTitle}
-						</div>;
-					})}
-				</div>
+				<TagListComponent
+					onClick={this.handleTypeClick}
+				/>
 			</div>
 		);
 	}

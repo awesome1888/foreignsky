@@ -9,14 +9,7 @@ export default class ArticleCollection extends Mongo.Collection
 	{
 		super('article');
 		this.attachSchema(this.schema);
-		this.addLinks({
-			tag: {
-				type: 'many',
-				collection: ArticleTagCollection.getInstance(),
-				field: 'tagId',
-				index: true,
-			}
-		});
+		this.addLinks(this.links);
 	}
 
 	insert(data, cb)
@@ -48,35 +41,55 @@ export default class ArticleCollection extends Mongo.Collection
 
 	get schema()
 	{
-		return new SimpleSchema({
-			_id: {
-				type: String,
-				regEx: SimpleSchema.RegEx.Id,
-				optional: false,
-			},
-			title: {
-				type: String,
-				optional: false,
-			},
-			date: {
-				type: Date,
-				optional: false,
-			},
-			html: {
-				type: String,
-				optional: false,
-			},
-			tagId: {
-				type: [String],
-				optional: true,
-			},
-			location: {
-				type: [Number],
-				optional: true,
-			},
+		if(!this._schema)
+		{
+			this._schema = new SimpleSchema({
+				_id: {
+					type: String,
+					regEx: SimpleSchema.RegEx.Id,
+					optional: false,
+				},
+				title: {
+					type: String,
+					optional: false,
+				},
+				date: {
+					type: Date,
+					optional: false,
+				},
+				html: {
+					type: String,
+					optional: false,
+				},
+				tagId: {
+					type: [String],
+					optional: true,
+				},
+				location: {
+					type: [Number],
+					optional: true,
+				},
+			});
+		}
 
-			// todo: + Link to Type via grapher
-		});
+		return this._schema;
+	}
+
+	get links()
+	{
+		if(!this._links)
+		{
+			this._links = {
+				tag: {
+					type: 'many',
+					collection: ArticleTagCollection.getInstance(),
+					field: 'tagId',
+					index: true,
+				}
+			};
+		}
+
+		return this._links;
 	}
 
 	static getInstance()

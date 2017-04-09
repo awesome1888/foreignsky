@@ -11,21 +11,26 @@ export default class ArticleTagCollection extends Mongo.Collection
 
 	get schema()
 	{
-		return new SimpleSchema({
-			_id: {
-				type: String,
-				regEx: SimpleSchema.RegEx.Id,
-				optional: false,
-			},
-			title: {
-				type: String,
-				optional: false,
-			},
-			sort: {
-				type: Number,
-				optional: true,
-			}
-		});
+		if(!this._schema)
+		{
+			this._schema = new SimpleSchema({
+				_id: {
+					type: String,
+					regEx: SimpleSchema.RegEx.Id,
+					optional: false,
+				},
+				title: {
+					type: String,
+					optional: false,
+				},
+				sort: {
+					type: Number,
+					optional: true,
+				}
+			});
+		}
+
+		return this._schema;
 	}
 
 	static getInstance()

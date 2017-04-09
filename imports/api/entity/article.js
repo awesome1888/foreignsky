@@ -10,4 +10,4 @@ class ArticleEntity extends BaseEntity
 }
 
 export {ArticleEntity};
-export default new ArticleEntity();
+export default ArticleEntity.getInstance();

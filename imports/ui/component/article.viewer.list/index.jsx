@@ -1,14 +1,12 @@
 /* eslint-disable class-methods-use-this */
 
-import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import {createContainer} from 'meteor/react-meteor-data';
-
-import {Article} from '/imports/api/collection/article.js';
+import {createQueryContainer} from 'meteor/cultofcoders:grapher-react';
+import Article from '/imports/api/entity/article.js';
 
 import './style.less';
 
-class ArticleViewerList extends React.Component {
+class ArticleViewerListComponent extends React.Component {
 
 	constructor(params)
 	{
@@ -28,89 +26,33 @@ class ArticleViewerList extends React.Component {
 
 	render(props = {})
 	{
-		//const {loading, items} = this.props;
+		let {data, loading} = this.props;
+		data = data || [];
 
 		return (
 			<div className="article-panel__list">
 				<div className="article-panel__list-scroll">
-						<a href="/100" className="article-panel__list-item">
-							Про парковку
-						</a>
-						<a href="/200" className="article-panel__list-item">
-							Про наклейку на лобовое стекло машины
-						</a>
-						<a href="/200" className="article-panel__list-item">
-							Воскресенье в Германии
-						</a>
-						<a href="/100" className="article-panel__list-item">
-							Про парковку
-						</a>
-						<a href="/200" className="article-panel__list-item">
-							Про наклейку на лобовое стекло машины
-						</a>
-						<a href="/200" className="article-panel__list-item">
-							Воскресенье в Германии
-						</a>
-						<a href="/100" className="article-panel__list-item">
-							Про парковку
-						</a>
-						<a href="/200" className="article-panel__list-item">
-							Про наклейку на лобовое стекло машины
-						</a>
-						<a href="/200" className="article-panel__list-item">
-							Воскресенье в Германии
-						</a>
-						<a href="/100" className="article-panel__list-item">
-							Про парковку
-						</a>
-						<a href="/200" className="article-panel__list-item">
-							Про наклейку на лобовое стекло машины
-						</a>
-						<a href="/200" className="article-panel__list-item">
-							Воскресенье в Германии
-						</a>
-						<a href="/100" className="article-panel__list-item">
-							Про парковку
-						</a>
-						<a href="/200" className="article-panel__list-item">
-							Про наклейку на лобовое стекло машины
-						</a>
-						<a href="/200" className="article-panel__list-item">
-							Воскресенье в Германии
-						</a>
-						<a href="/100" className="article-panel__list-item">
-							Про парковку
-						</a>
-						<a href="/200" className="article-panel__list-item">
-							Про наклейку на лобовое стекло машины
-						</a>
-						<a href="/200" className="article-panel__list-item">
-							Воскресенье в Германии
-						</a>
-						<a href="/100" className="article-panel__list-item">
-							Про парковку
-						</a>
-						<a href="/200" className="article-panel__list-item">
-							Про наклейку на лобовое стекло машины
-						</a>
-						<a href="/200" className="article-panel__list-item">
-							Воскресенье в Германии
-						</a>
-
-					</div>
+					{
+						data.map(item => {
+							return (
+								<a key={item._id} href={`/${item._id}`} className="article-panel__list-item">
+									{item.title}
+								</a>
+							);
+						})
+					}
+				</div>
 			</div>
 		);
 	}
 }
 
-export default createContainer((props = {}) => {
-
-	props = Object.create(props);
-
-	// const handle = Meteor.subscribe('article.type.list');
-	//
-	// props.loading = !handle.ready();
-	// props.items = ArticleType.find().fetch();
-
-	return props;
-}, ArticleViewerList);
+export default createQueryContainer(Article.createQuery({
+	fields: ['title'],
+	sort: [
+		['date', 'desc'],
+	]
+}, 'ArticleViewerListComponent'), ArticleViewerListComponent, {
+	reactive: false,
+	single: false,
+});

@@ -8,7 +8,7 @@ import TagListComponent from './component/tag.list/index.jsx';
 
 import './style.less';
 
-class ArticleViewerFilter extends React.Component {
+class ArticleViewerFilterComponent extends React.Component {
 
 	constructor(params)
 	{
@@ -51,4 +51,4 @@ export default createContainer((props = {}) => {
 	props.items = [];
 
 	return props;
-}, ArticleViewerFilter);
+}, ArticleViewerFilterComponent);

@@ -1,4 +1,5 @@
 @import "/client/style/theme.less";
+@import "/client/style/api/etc.less";
 
 .article-panel__filter {
 	background-color: white;
@@ -22,8 +23,6 @@
 }
 
 .article-panel__filter-button-set {
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-start;
-	flex-wrap: wrap;
+	.display-flex();
+	.flex-direction__row();
 }

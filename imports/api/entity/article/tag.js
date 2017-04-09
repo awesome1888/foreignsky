@@ -10,4 +10,4 @@ class ArticleTag extends BaseEntity
 }
 
 export {ArticleTag};
-export default new ArticleTag();
+export default ArticleTag.getInstance();

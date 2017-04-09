@@ -1,12 +1,13 @@
 /* eslint-disable class-methods-use-this */
 
 import React from 'react';
-//import {createContainer} from 'meteor/react-meteor-data';
+import {createQueryContainer} from 'meteor/cultofcoders:grapher-react';
+import Article from '/imports/api/entity/article.js';
 import { TAPi18n } from 'meteor/tap:i18n';
 
 import './style.less';
 
-export default class ArticleViewerDetail extends React.Component {
+export default class ArticleViewerDetailComponent extends React.Component {
 
 	constructor(params)
 	{
@@ -30,7 +31,8 @@ export default class ArticleViewerDetail extends React.Component {
 
 	render(props = {})
 	{
-		const {loading, items} = this.props;
+		let {data, loading} = this.props;
+		data = data || [];
 
 		return (
 			<div className="article-detail">
@@ -94,3 +96,13 @@ export default class ArticleViewerDetail extends React.Component {
 		);
 	}
 }
+//
+// export default createQueryContainer(Article.createQuery({
+// 	fields: ['title'],
+// 	sort: [
+// 		{date: -1}
+// 	]
+// }, 'ArticleViewerDetailComponent'), ArticleViewerDetailComponent, {
+// 	reactive: false,
+// 	single: false,
+// });

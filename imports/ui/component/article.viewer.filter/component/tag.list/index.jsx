@@ -25,13 +25,14 @@ class TagListComponent extends React.Component {
 		}
 	}
 
-	render(props = {})
+	render()
 	{
-		let items = [];
+		let {data, loading} = this.props;
+		data = data || [];
 
 		return (
 			<div className="article-panel__filter-button-set">
-				{items.map(item => {
+				{data.map(item => {
 					return <div
 						key={item._id}
 						data-id={item._id}
@@ -46,7 +47,25 @@ class TagListComponent extends React.Component {
 	}
 }
 
+const Tasks = function(data){
+
+	console.dir(data);
+
+	const {data1, loading, error, pool} = this.props;
+
+	console.dir(data1);
+
+	return (
+		<div className="">
+			_.map(data.data, task => <div>{task.title}</div>)
+		</div>
+	);
+};
+
 export default createQueryContainer(Query, TagListComponent, {
-	reactive: false,
-	single: false,
+	// reactive: false,
+	// single: false,
+
+	reactive: true, // defaults to false, will use pub/sub system
+	single: false, // defaults to false, when you expect a single document, like you filter by _id, use this.
 });

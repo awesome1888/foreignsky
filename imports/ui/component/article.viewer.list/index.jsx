@@ -26,17 +26,9 @@ class ArticleViewerList extends React.Component {
 	// 	}
 	// }
 
-	getData()
-	{
-		let res = Meteor.apply('article.find');
-		console.dir(res);
-	}
-
 	render(props = {})
 	{
 		//const {loading, items} = this.props;
-
-		this.getData();
 
 		return (
 			<div className="article-panel__list">

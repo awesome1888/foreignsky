@@ -15,12 +15,6 @@ class ArticleViewerFilter extends React.Component {
 		super(params);
 
 		this.handleTypeClick = this.handleTypeClick.bind(this);
-
-		// just test
-		BaseTags.fetch((error, response) => {
-			console.dir(error);
-			console.dir(response);
-		});
 	}
 
 	handleTypeClick(e)

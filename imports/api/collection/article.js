@@ -1,9 +1,9 @@
 import { Mongo } from 'meteor/mongo';
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 
-import {Tag as ArticleTag} from '/imports/api/collection/article/tag.js'
+import ArticleTagCollection from '/imports/api/collection/article/tag.js'
 
-class ArticleCollection extends Mongo.Collection
+export default class ArticleCollection extends Mongo.Collection
 {
 	constructor()
 	{
@@ -12,7 +12,7 @@ class ArticleCollection extends Mongo.Collection
 		this.addLinks({
 			tag: {
 				type: 'many',
-				collection: ArticleTag,
+				collection: ArticleTagCollection.getInstance(),
 				field: 'tagId',
 				index: true,
 			}
@@ -78,6 +78,14 @@ class ArticleCollection extends Mongo.Collection
 			// todo: + Link to Type via grapher
 		});
 	}
-}
 
-export const Article = new ArticleCollection();
+	static getInstance()
+	{
+		if(!this.instance)
+		{
+			this.instance = new this();
+		}
+
+		return this.instance;
+	}
+}

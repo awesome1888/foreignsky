@@ -1,7 +1,7 @@
-import { Mongo } from 'meteor/mongo';
+import {Mongo} from 'meteor/mongo';
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 
-class TagCollection extends Mongo.Collection
+export default class ArticleTagCollection extends Mongo.Collection
 {
 	constructor()
 	{
@@ -17,7 +17,7 @@ class TagCollection extends Mongo.Collection
 				regEx: SimpleSchema.RegEx.Id,
 				optional: false,
 			},
-			tagTitle: {
+			title: {
 				type: String,
 				optional: false,
 			},
@@ -27,6 +27,14 @@ class TagCollection extends Mongo.Collection
 			}
 		});
 	}
-}
 
-export const Tag = new TagCollection();
+	static getInstance()
+	{
+		if(!this.instance)
+		{
+			this.instance = new this();
+		}
+
+		return this.instance;
+	}
+}

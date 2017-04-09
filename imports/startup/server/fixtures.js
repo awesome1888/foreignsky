@@ -1,39 +1,38 @@
 import { Meteor } from 'meteor/meteor';
 import { TAPi18n } from 'meteor/tap:i18n';
 
-import { Article } from '/imports/api/collection/article.js';
-import { Tag as ArticleTag } from '/imports/api/collection/article/tag.js';
+import Article from '/imports/api/entity/article.js';
+import ArticleTag from '/imports/api/entity/article/tag.js';
 
 Meteor.startup(() => {
 
-	if(!ArticleTag.find().count())
+	if(!ArticleTag.count())
 	{
 		console.dir('Creating article types....');
 
 		[
 			{
-				tagTitle: 'Событие', //TAPi18n.__('article.type.event'),
+				title: 'Событие', //TAPi18n.__('article.type.event'),
 				sort: 100,
 			},
 			{
-				tagTitle: 'Место', //TAPi18n.__('article.type.place'),
+				title: 'Место', //TAPi18n.__('article.type.place'),
 				sort: 200,
 			},
 			{
-				tagTitle: 'Быт', //TAPi18n.__('article.type.life'),
+				title: 'Быт', //TAPi18n.__('article.type.life'),
 				sort: 300,
 			},
-		].forEach(item => ArticleTag.insert(item));
+		].forEach(item => ArticleTag.collection.insert(item));
 
 		console.dir('Article types created');
 	}
 
-	if(!Article.find().count())
+	if(!Article.count())
 	{
-		console.dir('Creating articles........');
+		console.dir('Creating articles..........');
 
-		let tags = ArticleTag.find({}, {fields: {'_id': 1}}).fetch();
-
+		let tags = ArticleTag.find({fields: ['_id', 'title']});
 		let text = "Короче... Походу я только что получил свой первый штраф в Германии. На лобовое стекло под дворники мне положили такую бумажонку.\r\n"+
 				"*тут фотка бумажонки*\r\n"+
 				"Показал я эту бумажку своим друзьям с работы, и оказывается, что на одной ее стороне написано, что это просто \"friendly warning\", а на другой, что это \"fine\". Куда платить - не понятно. Сколько платить - не понятно. За что платить - не понятно. Мне сказали, что мне в Россию должно прийти письмо с описанием и реквизитами, и пока я судорожно думаю, что с этим делать, я решил разобраться, за что может быть штраф.\r\n"+
@@ -64,7 +63,7 @@ Meteor.startup(() => {
 				html: text,
 				tagId: [tags[2]._id, tags[1]._id],
 			},
-		].forEach(item => Article.insert(item));
+		].forEach(item => Article.collection.insert(item));
 
 		console.dir('Articles created');
 	}

@@ -1,4 +1,4 @@
-import {Tag as ArticleTag} from '/imports/api/collection/article/tag.js';
+import {TagCollectionInstance as ArticleTag} from '/imports/api/collection/article/tag.js';
 
 export default ArticleTag.createQuery({
 	tagTitle: 1,

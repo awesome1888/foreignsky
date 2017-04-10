@@ -87,13 +87,17 @@ export default class BaseEntity
 		let qParameters = {};
 		if(_.isObject(parameters.filter))
 		{
-			qParameters.$filter = parameters.filter;
+			qParameters.$filters = parameters.filter;
 		}
 		if(_.isArray(parameters.fields))
 		{
 			parameters.fields.forEach((item) => {
 				qParameters[item] = 1;
 			});
+		}
+		else if(_.isObject(parameters.fields))
+		{
+			qParameters = Object.assign(qParameters, parameters.fields);
 		}
 
 		qParameters.$options = {};

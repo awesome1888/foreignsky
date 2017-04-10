@@ -30,13 +30,11 @@ export default class HomePage extends BasePage {
 
 	componentWillMount()
 	{
-		//console.dir('WM');
 		this.handleIdUpdate(this.props.route.id);
 	}
 
 	componentWillReceiveProps(next)
 	{
-		//console.dir('NP');
 		this.handleIdUpdate(next.route.id);
 	}
 

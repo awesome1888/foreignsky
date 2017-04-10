@@ -57,7 +57,7 @@ export default class ArticleCollection extends Mongo.Collection
 					type: Date,
 					optional: false,
 				},
-				html: {
+				text: {
 					type: String,
 					optional: false,
 				},

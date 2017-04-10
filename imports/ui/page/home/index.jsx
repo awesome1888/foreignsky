@@ -11,13 +11,41 @@ import './style.less';
 
 export default class HomePage extends BasePage {
 
+	constructor(params)
+	{
+		super(params);
+		this.state = {};
+	}
+
 	getCentralHtml()
 	{
 		return (
 			<div className="home__central">
-				<ArticleViewerDetailComponent />
+				<ArticleViewerDetailComponent
+					id={this.state.id}
+				/>
 			</div>
 		);
+	}
+
+	componentWillMount()
+	{
+		//console.dir('WM');
+		this.handleIdUpdate(this.props.route.id);
+	}
+
+	componentWillReceiveProps(next)
+	{
+		//console.dir('NP');
+		this.handleIdUpdate(next.route.id);
+	}
+
+	handleIdUpdate(id)
+	{
+		if(this.state.id !== id)
+		{
+			this.setState({id: id});
+		}
 	}
 
 	getSideHtml()

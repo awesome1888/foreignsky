@@ -21,6 +21,11 @@ export default class BasePage extends React.Component {
 		};
 	}
 
+	get routeParams()
+	{
+		return this.props.route || {};
+	}
+
 	getCentralHtml(props)
 	{
 		return ('');

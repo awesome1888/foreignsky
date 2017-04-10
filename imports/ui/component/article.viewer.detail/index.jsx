@@ -12,12 +12,33 @@ export default class ArticleViewerDetailComponent extends React.Component {
 	constructor(params)
 	{
 		super(params);
-		this.opened = false;
+		this.state = {
+			id: null,
+			opened: false
+		};
 	}
 
-	componentDidMount()
+	componentWillMount()
 	{
-		window.detailPanel = this;
+		//console.dir('componentWillMount!');
+		//console.dir(this.props.id);
+		this.handleIdUpdate(this.props.id);
+	}
+
+	componentWillReceiveProps(next)
+	{
+		//console.dir('componentWillReceiveProps!');
+		//console.dir(next.id);
+		this.handleIdUpdate(next.id);
+	}
+
+	handleIdUpdate(id)
+	{
+		if(id !== this.state.id)
+		{
+			this.setState({id: id});
+			console.dir('ID = '+this.state.id);
+		}
 	}
 
 	open()

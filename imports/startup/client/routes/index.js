@@ -21,4 +21,5 @@ FlowRouter.notFound = {
 };
 
 route('/', HomePage, {});
+route('/:id', HomePage, {});
 route('/not-found', NotFoundPage, {});

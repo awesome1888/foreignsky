@@ -48,13 +48,18 @@ export default class ArticleViewerDetailComponent extends React.Component {
 		}
 	}
 
+	handleClose()
+	{
+		this.state.opened = false;
+	}
+
 	show(id)
 	{
 		Article.createQuery({
 			fields: {
 				title: 1,
 				text: 1,
-				data: 1,
+				date: 1,
 				tag: {
 					title: 1
 				}
@@ -67,6 +72,7 @@ export default class ArticleViewerDetailComponent extends React.Component {
 
 				this.setState({
 					loading: false,
+					opened: true,
 					data: res || {},
 				});
 			}
@@ -90,7 +96,7 @@ export default class ArticleViewerDetailComponent extends React.Component {
 		const data = this.state.data;
 
 		return (
-			<div className="article-detail">
+			<div className="article-detail no-display">
 				<div className="article-detail__inner-scroll">
 
 					<div className="article-detail__header-image">
@@ -130,7 +136,10 @@ export default class ArticleViewerDetailComponent extends React.Component {
 					</div>
 
 				</div>
-				<div className="article-detail__close-page">X</div>
+				<div
+					className="article-detail__close-page"
+				    onClick={this.handleClose}
+				>X</div>
 			</div>
 		);
 	}

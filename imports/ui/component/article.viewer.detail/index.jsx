@@ -5,6 +5,7 @@ import {createQueryContainer} from 'meteor/cultofcoders:grapher-react';
 import Article from '/imports/api/entity/article.js';
 import { TAPi18n } from 'meteor/tap:i18n';
 import moment from 'moment';
+import classnames from 'classnames';
 
 import './style.less';
 
@@ -50,7 +51,10 @@ export default class ArticleViewerDetailComponent extends React.Component {
 
 	handleClose()
 	{
-		this.state.opened = false;
+		this.setState({
+			opened: false
+		});
+		FlowRouter.go('/');
 	}
 
 	show(id)
@@ -81,8 +85,6 @@ export default class ArticleViewerDetailComponent extends React.Component {
 				//Notifier.errorDefault(err);
 			}
 		});
-
-		//.clone({candidateId: this.props.id})
 	}
 
 	close()
@@ -96,7 +98,12 @@ export default class ArticleViewerDetailComponent extends React.Component {
 		const data = this.state.data;
 
 		return (
-			<div className="article-detail no-display">
+			<div
+				className={classnames(
+					'article-detail',
+					{'no-display': !this.state.opened}
+				)}
+			>
 				<div className="article-detail__inner-scroll">
 
 					<div className="article-detail__header-image">
@@ -138,7 +145,7 @@ export default class ArticleViewerDetailComponent extends React.Component {
 				</div>
 				<div
 					className="article-detail__close-page"
-				    onClick={this.handleClose}
+				    onClick={this.handleClose.bind(this)}
 				>X</div>
 			</div>
 		);

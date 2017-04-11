@@ -1,13 +1,15 @@
 @import "/client/style/theme.less";
 @import "/client/style/api/etc.less";
 
-.home__side, .home__central {
+.home__side {
 	position: relative;
 	.everest();
 	.height-inherit();
-}
-
-.home__side {
 	.display-flex();
 	.flex-direction__column();
+}
+
+.home__central {
+	position: relative;
+	.height-inherit();
 }

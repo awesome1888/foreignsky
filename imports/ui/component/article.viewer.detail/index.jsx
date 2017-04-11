@@ -72,8 +72,6 @@ export default class ArticleViewerDetailComponent extends React.Component {
 		}).fetchOne((err, res) => {
 			if (!err)
 			{
-				//console.dir(res);
-
 				this.setState({
 					loading: false,
 					opened: true,
@@ -146,7 +144,7 @@ export default class ArticleViewerDetailComponent extends React.Component {
 				<div
 					className="article-detail__close-page"
 				    onClick={this.handleClose.bind(this)}
-				>X</div>
+				/>
 			</div>
 		);
 	}

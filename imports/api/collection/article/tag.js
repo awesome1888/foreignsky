@@ -30,7 +30,7 @@ export default class ArticleTagCollection extends Mongo.Collection
 				color: {
 					type: String,
 					optional: true,
-					regEx: /^[a-fA-F0-9]{6}$/,
+					regEx: /^[a-z0-9_-]+$/,
 				}
 			});
 		}

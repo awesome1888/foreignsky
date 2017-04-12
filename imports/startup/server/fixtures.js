@@ -14,14 +14,17 @@ Meteor.startup(() => {
 			{
 				title: 'Событие', //TAPi18n.__('article.type.event'),
 				sort: 100,
+				color: 'golden-yellow',
 			},
 			{
 				title: 'Место', //TAPi18n.__('article.type.place'),
 				sort: 200,
+				color: 'lynch',
 			},
 			{
 				title: 'Быт', //TAPi18n.__('article.type.life'),
 				sort: 300,
+				color: 'ecstasy',
 			},
 		].forEach(item => ArticleTag.collection.insert(item));
 
@@ -30,7 +33,7 @@ Meteor.startup(() => {
 
 	if(!Article.count())
 	{
-		console.dir('Creating articles..........');
+		console.dir('Creating articles...........');
 
 		let tags = ArticleTag.find({fields: ['_id', 'title']});
 		let text = "Короче... Походу я только что получил свой первый штраф в Германии. На лобовое стекло под дворники мне положили такую бумажонку.\r\n\r\n"+

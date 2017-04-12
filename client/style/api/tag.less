@@ -1,15 +1,24 @@
 @import "../theme.less";
+@import "../palette.less";
 @import "./etc.less";
 
 @percent: 5%;
 @percent-hover: 10%;
 
-.tag__button__hover(@color){
+.makeTagButtonHover(@color){
 	&.tag__button {
 		&:hover {
 			background-color: lighten(@color, @percent-hover);
 		}
 	}
+}
+
+.makeTagColor(@bgColor, @color: #fff)
+{
+	color: @color;
+	background-color: lighten(@bgColor, @percent);
+
+	.makeTagButtonHover(@bgColor);
 }
 
 .tag {
@@ -27,25 +36,24 @@
 	outline: none;
 }
 
-.tag__yellow {
-	color: white;
-	background-color: lighten(@color-mcduck-gold, @percent);
-
-	.tag__button__hover(@color-mcduck-gold);
+.tag_golden-yellow {
+	.makeTagColor(@color_golden-yellow);
 }
 
-.tag__blue {
-	color: white;
-	background-color: lighten(@color-berlin-sky, @percent);
-
-	.tag__button__hover(@color-berlin-sky);
+.tag_steel-blue {
+	.makeTagColor(@color_steel-blue);
 }
 
-.tag__seagreen {
-	color: white;
-	background-color: lighten(@color-sea-wave, @percent);
+.tag_ecstasy {
+	.makeTagColor(@color_ecstasy);
+}
 
-	.tag__button__hover(@color-sea-wave);
+.tag_lynch {
+	.makeTagColor(@color_lynch);
+}
+
+.tag_silver {
+	.makeTagColor(@color_silver);
 }
 
 .group-tag {

@@ -35,7 +35,7 @@ class TagListComponent extends React.Component {
 					return <div
 						key={item._id}
 						data-id={item._id}
-						className="tag tag__seagreen tag__button article-panel__filter-button"
+						className={`tag tag__button article-panel__filter-button tag_${item.color ? item.color : 'blue'}`}
 						onClick={this.handleTypeClick}
 					>
 						#{item.title.toLowerCase()}
@@ -47,7 +47,7 @@ class TagListComponent extends React.Component {
 }
 
 export default createQueryContainer(ArticleTag.createQuery({
-	fields: ['title'],
+	fields: ['title', 'color'],
 	sort: [
 		['sort', 'asc']
 	]

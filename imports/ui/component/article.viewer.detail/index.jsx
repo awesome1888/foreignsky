@@ -65,7 +65,8 @@ export default class ArticleViewerDetailComponent extends React.Component {
 				text: 1,
 				date: 1,
 				tag: {
-					title: 1
+					title: 1,
+					color: 1,
 				}
 			},
 			filter: {'_id': id}
@@ -114,7 +115,7 @@ export default class ArticleViewerDetailComponent extends React.Component {
 								_.map(data.tag || {}, (tag) => {
 									return (
 										<div
-											className="tag tag__blue"
+											className={`tag tag_${tag.color ? tag.color : 'blue'}`}
 										    key={tag._id}
 										>
 											#{tag.title.toLowerCase()}

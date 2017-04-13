@@ -1,18 +1,43 @@
 /* eslint-disable class-methods-use-this */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import {GoogleMap, Marker} from 'react-google-maps';
 import {default as ScriptjsLoader} from "react-google-maps/lib/async/ScriptjsLoader";
+
+import App from '/imports/ui/app.jsx';
 
 import './style.less';
 
 export default class Map extends React.Component {
+
+	static propTypes = {
+		//app: PropTypes.instanceOf(App),
+	};
+
+	static defaultProps = {
+		app: null
+	};
 
 	constructor(params)
 	{
 		super(params);
 		this.useFakeMap = false;
 		this.map = null;
+	}
+
+	componentWillMount()
+	{
+
+	}
+
+	componentDidMount()
+	{
+		console.dir('Map mounted');
+		if(this.props.app)
+		{
+			this.props.app.overlay.waitMe('map');
+		}
 	}
 
 	render(props = {})

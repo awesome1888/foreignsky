@@ -1,3 +1,5 @@
+@topnav-height: 55px;
+
 .application-container {
 }
 
@@ -20,7 +22,7 @@
 // centered body block
 .layout__central-body {
 	.height-inherit();
-	padding-top: 70px;
+	padding-top: @topnav-height + 20px;
 	box-sizing: border-box;
 }
 .layout__central-body-left {
@@ -30,11 +32,6 @@
 	.height-inherit();
 	padding-left: 0;
 }
-//.layout__content_centered {
-//	width: 100%;
-//	.display-flex();
-//	.flex-justify-content_center();
-//}
 
 // offsets
 .layout__offset_bottom {

@@ -11,6 +11,14 @@ import './style.less';
 
 export default class HomePage extends BasePage {
 
+	static propTypes = {
+		//app: PropTypes.instanceOf(App),
+	};
+
+	static defaultProps = {
+		app: null
+	};
+
 	constructor(params)
 	{
 		super(params);
@@ -23,6 +31,7 @@ export default class HomePage extends BasePage {
 			<div className="home__central">
 				<ArticleViewerDetailComponent
 					id={this.state.id}
+				    app={this.props.app}
 				/>
 			</div>
 		);
@@ -38,6 +47,11 @@ export default class HomePage extends BasePage {
 		this.handleIdUpdate(next.route.id);
 	}
 
+	componentDidMount()
+	{
+		this.props.app.overlay.waitMe('temporal_homepage');
+	}
+
 	handleIdUpdate(id)
 	{
 		if(this.state.id !== id)
@@ -50,8 +64,12 @@ export default class HomePage extends BasePage {
 	{
 		return (
 			<div className="home__side">
-				<ArticleViewerFilterComponent />
-				<ArticleViewerListComponent />
+				<ArticleViewerFilterComponent
+					app={this.props.app}
+				/>
+				<ArticleViewerListComponent
+					app={this.props.app}
+				/>
 			</div>
 		);
 	}

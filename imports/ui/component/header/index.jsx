@@ -1,5 +1,7 @@
 /* eslint-disable class-methods-use-this */
 
+import PropTypes from 'prop-types';
+
 import React from 'react';
 import HeaderLoader from '/imports/ui/component/header.loader/index.jsx';
 
@@ -7,8 +9,18 @@ import './style.less';
 
 export default class Header extends React.Component {
 
+	static propTypes = {
+		//appLoaded: PropTypes.boolean,
+	};
+
+	static defaultProps = {
+		//appLoaded: false
+	};
+
 	render()
 	{
+		//const loading = this.props.appLoaded;
+
 		return (
 			<div className="layout__central layout__header">
 				<div className="container">
@@ -27,14 +39,6 @@ export default class Header extends React.Component {
 										</div>
 									</div>
 								</div>
-								{/*<div className="header__buttons">*/}
-								{/*<div className="button button-tag">*/}
-								{/*О нас*/}
-								{/*</div>*/}
-								{/*<div className="button button-tag">*/}
-								{/*Контакты*/}
-								{/*</div>*/}
-								{/*</div>*/}
 							</div>
 						</div>
 					</div>

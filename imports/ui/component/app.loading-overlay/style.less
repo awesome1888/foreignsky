@@ -1,0 +1,20 @@
+@import (reference) url('/client/style/index.less');
+
+.loading-overlay {
+	position: absolute;
+	top: @topnav-height;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: @color_white;
+	.stratosphere();
+	.display-flex();
+	.flex-direction__row();
+	.flex-align-items__center();
+	.flex-justify-content_center();
+}
+
+.loading-overlay__greeting {
+	top: 30%;
+	position: absolute;
+}

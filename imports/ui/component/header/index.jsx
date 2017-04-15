@@ -27,9 +27,12 @@ export default class Header extends React.Component {
 
 						<div className="header__inner">
 							<div className="header__logo">
-								<div className="header__logo-img">
+								<a
+									href="/"
+									className="header__logo-img"
+								>
 									B_
-								</div>
+								</a>
 								<div className="header__logo-text">
 									Nach Berlin!
 									<div className="header__logo-funny-desc">

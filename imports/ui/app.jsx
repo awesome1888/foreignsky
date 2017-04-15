@@ -84,13 +84,13 @@ export default class App extends React.Component {
 
 	componentWillMount()
 	{
-		console.dir('re-mount!');
+		//console.dir('re-mount!');
 		App._instance = this;
 	}
 
 	componentDidMount()
 	{
-		console.dir('App mounted');
+		//console.dir('App mounted');
 		this.overlay.waitAll();
 	}
 

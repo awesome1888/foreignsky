@@ -47,25 +47,6 @@ export default class HomePage extends BasePage {
 		this.handleIdUpdate(next.route.id);
 	}
 
-	componentDidMount()
-	{
-		if(App.instance)
-		{
-			let p = new Promise(function(resolve, reject){
-
-				setTimeout(function(){
-
-					console.dir('home');
-
-					resolve();
-				}, 1000);
-
-			});
-
-			App.instance.overlay.waitMe(p);
-		}
-	}
-
 	handleIdUpdate(id)
 	{
 		if(this.state.id !== id)

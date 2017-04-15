@@ -31,7 +31,7 @@ export default class ArticleViewerFilterComponent extends React.Component {
 		return (
 			<div className="article-panel__filter">
 				<div className="article-panel__filter-search">
-				    <input className="input article-panel__filter-input" type="text" placeholder={TAPi18n.__('component.article.viewer.filter.searchPlaceholder')} />
+				    <input className="input article-panel__filter-input" type="text" placeholder="Искать статью" />
 				</div>
 				<TagListComponent
 					onClick={this.handleTypeClick}

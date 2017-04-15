@@ -82,7 +82,7 @@ export default class LoadIndicator extends React.Component {
 					this.goNextStep();
 				}
 			},
-			_.random(100, 800)
+			_.random(300, 900)
 		);
 	}
 
@@ -120,7 +120,7 @@ export default class LoadIndicator extends React.Component {
 			value = 0;
 		}
 
-		console.dir(value+'%');
+		//console.dir(value+'%');
 
 		this.setState({
 			percent: value,

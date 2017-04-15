@@ -2,8 +2,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-//import {GoogleMap, Marker} from 'react-google-maps';
-//import {default as ScriptjsLoader} from "react-google-maps/lib/async/ScriptjsLoader";
 import Util from '/imports/lib/util.js';
 
 import App from '/imports/ui/app.jsx';

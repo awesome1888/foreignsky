@@ -2,7 +2,8 @@ import React from 'react';
 
 import Header from '/imports/ui/component/header/index.jsx';
 import Map from '/imports/ui/component/map/index.jsx';
-import AppLoadingOverlay from '/imports/ui/component/app.loading-overlay/index.jsx';
+import LoadOverlay from '/imports/ui/component/load.overlay/index.jsx';
+import LoadIndicator from '/imports/ui/component/load.indicator/index.jsx';
 
 export default class App extends React.Component {
 
@@ -15,6 +16,7 @@ export default class App extends React.Component {
 
 		this._overlay = null;
 		this._map = null;
+		this._indicator = null;
 	}
 
 	get overlay()
@@ -27,6 +29,19 @@ export default class App extends React.Component {
 		if(!this._overlay)
 		{
 			this._overlay = ref;
+		}
+	}
+
+	get indicator()
+	{
+		return this._indicator;
+	}
+
+	set indicator(ref)
+	{
+		if(!this._indicator)
+		{
+			this._indicator = ref;
 		}
 	}
 
@@ -48,6 +63,7 @@ export default class App extends React.Component {
 		if(this.overlay)
 		{
 			this.overlay.waitMe(p);
+			this.indicator.addProcess(p);
 		}
 
 		return p;
@@ -70,12 +86,6 @@ export default class App extends React.Component {
 	{
 		console.dir('re-mount!');
 		App._instance = this;
-
-		// start promise here
-		// wait for:
-		// 1) google map tiles loaded
-		// 2) all data loaded:
-		//      list, tags, article detail
 	}
 
 	componentDidMount()
@@ -91,11 +101,15 @@ export default class App extends React.Component {
 		return (
 			<div id="app">
 				<div className="layout">
-					<AppLoadingOverlay
+					<LoadOverlay
 						ref={(instance) => {this.overlay = instance;}}
 					/>
-
-					<Header />
+					<div className="layout__central layout__header">
+						<Header />
+						<LoadIndicator
+							ref={(instance) => {this.indicator = instance;}}
+						/>
+					</div>
 					{React.createElement(main, {
 						route: routeProps,
 					})}

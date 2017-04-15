@@ -9,11 +9,11 @@ import './style.less';
 export default class AppLoadingOverlay extends React.Component {
 
 	static propTypes = {
-		//appLoaded: PropTypes.boolean,
+		transitionDuration: PropTypes.number,
 	};
 
 	static defaultProps = {
-		//appLoaded: false
+		transitionDuration: 700
 	};
 
 	constructor(props)
@@ -38,7 +38,7 @@ export default class AppLoadingOverlay extends React.Component {
 			this.setState({transparent: true});
 			Meteor.setTimeout(() => {
 				this.setState({shown: false});
-			}, 700);
+			}, this.props.transitionDuration);
 
 		}.bind(this));
 	}
@@ -53,8 +53,6 @@ export default class AppLoadingOverlay extends React.Component {
 
 	render()
 	{
-		//const loading = this.props.loading;
-
 		return (
 			<div
 				className={classnames(

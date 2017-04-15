@@ -18,8 +18,8 @@ export default class Map extends React.Component {
 	};
 
 	static defaultProps = {
-		center: {lat: -25.363, lng: 131.044},
-		zoom: 4,
+		center: {lat: 54.714187, lng: 20.581439},
+		zoom: 14,
 	};
 
 	constructor(params)
@@ -50,16 +50,26 @@ export default class Map extends React.Component {
 		return this._map;
 	}
 
+	static get instance()
+	{
+		if(this._instance)
+		{
+			return this._instance;
+		}
+
+		return null;
+	}
+
 	createMapObject()
 	{
-		return new Promise(function(resolve){
+		return new Promise((resolve) => {
 
 			this._map = new google.maps.Map(this.mapContainer, {
 				zoom: this.props.zoom,
 				center: this.props.center,
 			});
 
-			this.map.addListener('tilesloaded', function(){
+			this.map.addListener('tilesloaded', () => {
 				resolve();
 			});
 
@@ -67,8 +77,7 @@ export default class Map extends React.Component {
 			// 	position: uluru,
 			// 	map: map
 			// });
-
-		}.bind(this));
+		});
 	}
 
 	initializeMap()
@@ -78,28 +87,21 @@ export default class Map extends React.Component {
 			return;
 		}
 
-		const p = new Promise(function(resolve, reject){
-			Util.loadJs(this.mapUrl).then(function(){
+		return App.instance.setLoading(new Promise((resolve, reject) => {
+			Util.loadJs(this.mapUrl).then(() => {
 
-				//console.dir('map loaded');
 				return this.createMapObject();
 
-			}.bind(this)).then(function(){
+			}).then(() => {
 
-				//console.dir('map created');
 				resolve();
 
-			}, function(){
+			}, () => {
 				reject();
-			}).catch(function(){
+			}).catch(() => {
 				reject();
 			});
-		}.bind(this));
-
-		if(App.instance)
-		{
-			App.instance.overlay.waitMe(p);
-		}
+		}));
 	}
 
 	render(props = {})

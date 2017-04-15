@@ -7,6 +7,8 @@ import { TAPi18n } from 'meteor/tap:i18n';
 import moment from 'moment';
 import classnames from 'classnames';
 
+import App from '/imports/ui/app.jsx';
+
 import './style.less';
 
 export default class ArticleViewerDetailComponent extends React.Component {
@@ -17,12 +19,11 @@ export default class ArticleViewerDetailComponent extends React.Component {
 		this.state = {
 			id: null,
 			opened: false,
-			loading: true,
 			data: {},
 		};
 	}
 
-	componentWillMount()
+	componentDidMount()
 	{
 		this.handleIdUpdate(this.props.id);
 	}
@@ -40,7 +41,7 @@ export default class ArticleViewerDetailComponent extends React.Component {
 
 			if(id)
 			{
-				this.show(id);
+				App.instance.setLoading(this.show(id));
 			}
 			else
 			{
@@ -49,7 +50,39 @@ export default class ArticleViewerDetailComponent extends React.Component {
 		}
 	}
 
-	handleClose()
+	show(id)
+	{
+		return new Promise((resolve, reject) => {
+			Article.createQuery({
+				fields: {
+					title: 1,
+					text: 1,
+					date: 1,
+					tag: {
+						title: 1,
+						color: 1,
+					}
+				},
+				filter: {'_id': id}
+			}).fetchOne((err, res) => {
+				if (!err)
+				{
+					this.setState({
+						opened: true,
+						data: res || {},
+					});
+					resolve();
+				}
+				else
+				{
+					reject();
+				}
+			});
+
+		});
+	}
+
+	close()
 	{
 		this.setState({
 			opened: false
@@ -57,43 +90,8 @@ export default class ArticleViewerDetailComponent extends React.Component {
 		FlowRouter.go('/');
 	}
 
-	show(id)
-	{
-		Article.createQuery({
-			fields: {
-				title: 1,
-				text: 1,
-				date: 1,
-				tag: {
-					title: 1,
-					color: 1,
-				}
-			},
-			filter: {'_id': id}
-		}).fetchOne((err, res) => {
-			if (!err)
-			{
-				this.setState({
-					loading: false,
-					opened: true,
-					data: res || {},
-				});
-			}
-			else
-			{
-				//Notifier.errorDefault(err);
-			}
-		});
-	}
-
-	close()
-	{
-
-	}
-
 	render(props = {})
 	{
-		const loading = this.state.loading;
 		const data = this.state.data;
 
 		return (
@@ -144,7 +142,7 @@ export default class ArticleViewerDetailComponent extends React.Component {
 				</div>
 				<div
 					className="article-detail__close-page"
-				    onClick={this.handleClose.bind(this)}
+				    onClick={this.close.bind(this)}
 				/>
 			</div>
 		);

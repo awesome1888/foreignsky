@@ -14,6 +14,7 @@ export default class App extends React.Component {
 		};
 
 		this._overlay = null;
+		this._map = null;
 	}
 
 	get overlay()
@@ -21,23 +22,53 @@ export default class App extends React.Component {
 		return this._overlay;
 	}
 
-	static get instance()
+	set overlay(ref)
 	{
-		return this.getInstance();
+		if(!this._overlay)
+		{
+			this._overlay = ref;
+		}
 	}
 
-	static getInstance()
+	get map()
+	{
+		return this._map;
+	}
+
+	set map(ref)
+	{
+		if(!this._map)
+		{
+			this._map = ref;
+		}
+	}
+
+	setLoading(p)
+	{
+		if(this.overlay)
+		{
+			this.overlay.waitMe(p);
+		}
+
+		return p;
+	}
+
+	static get instance()
 	{
 		if(this._instance)
 		{
 			return this._instance;
 		}
 
-		return null;
+		// return mock
+		return {
+			setLoading: function(){},
+		};
 	}
 
 	componentWillMount()
 	{
+		console.dir('re-mount!');
 		App._instance = this;
 
 		// start promise here
@@ -61,14 +92,18 @@ export default class App extends React.Component {
 			<div id="app">
 				<div className="layout">
 					<AppLoadingOverlay
-						ref={(instance) => {this._overlay = instance;}}
+						ref={(instance) => {this.overlay = instance;}}
 					/>
 					<Header />
 					{React.createElement(main, {
 						route: routeProps,
 					})}
 				</div>
-				<Map />
+				<Map
+					ref={(instance) => {this.map = instance;}}
+				    center={{lat: 52.520764, lng: 13.409161}}
+				    zoom={15}
+				/>
 			</div>
 		);
 	}

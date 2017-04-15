@@ -2,6 +2,7 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
+import classnames from 'classnames';
 
 import './style.less';
 
@@ -32,8 +33,10 @@ export default class AppLoadingOverlay extends React.Component {
 	waitAll()
 	{
 		Promise.all(this.waitPool).then(function(){
-			console.dir('done with it!');
-		});
+
+			this.setState({shown: false});
+
+		}.bind(this));
 	}
 
 	waitMe(promise)
@@ -49,7 +52,12 @@ export default class AppLoadingOverlay extends React.Component {
 		//const loading = this.props.loading;
 
 		return (
-			<div className="loading-overlay">
+			<div
+				className={classnames(
+					'loading-overlay',
+					{'no-display': !this.state.shown}
+				)}
+			>
 				<div className="loading-overlay__greeting">
 					Good morning, and welcome to the Black Mesa.
 				</div>

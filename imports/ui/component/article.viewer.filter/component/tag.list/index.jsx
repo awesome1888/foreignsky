@@ -1,17 +1,21 @@
 /* eslint-disable class-methods-use-this */
 
 import React from 'react';
-import {createQueryContainer} from 'meteor/cultofcoders:grapher-react';
 import ArticleTag from '/imports/api/entity/article/tag.js';
+
+import App from '/imports/ui/app.jsx';
 
 //import './style.less';
 
-class TagListComponent extends React.Component {
+export default class TagListComponent extends React.Component {
 
 	constructor(params)
 	{
 		super(params);
 
+		this.state = {
+			data: [],
+		};
 		this.handleTypeClick = this.handleTypeClick.bind(this);
 	}
 
@@ -24,10 +28,41 @@ class TagListComponent extends React.Component {
 		}
 	}
 
+	componentDidMount()
+	{
+		this.updateData();
+	}
+
+	updateData(params = {})
+	{
+		return App.instance.setLoading(new Promise((resolve, reject) => {
+
+			ArticleTag.createQuery({
+				fields: ['title', 'color'],
+				sort: [
+					['sort', 'asc']
+				]
+			}, 'TagListComponent').fetch((err, data) => {
+				this.setState({
+					data: data || []
+				});
+
+				if(err)
+				{
+					reject();
+				}
+				else
+				{
+					resolve();
+				}
+			});
+
+		}));
+	}
+
 	render()
 	{
-		let {data, loading} = this.props;
-		data = data || [];
+		const data = this.state.data;
 
 		return (
 			<div className="article-panel__filter-button-set">
@@ -45,13 +80,3 @@ class TagListComponent extends React.Component {
 		);
 	}
 }
-
-export default createQueryContainer(ArticleTag.createQuery({
-	fields: ['title', 'color'],
-	sort: [
-		['sort', 'asc']
-	]
-}, 'TagListComponent'), TagListComponent, {
-	reactive: false,
-	single: false,
-});

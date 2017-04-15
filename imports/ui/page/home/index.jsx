@@ -54,8 +54,11 @@ export default class HomePage extends BasePage {
 			let p = new Promise(function(resolve, reject){
 
 				setTimeout(function(){
+
+					console.dir('home');
+
 					resolve();
-				}, 3000);
+				}, 1000);
 
 			});
 

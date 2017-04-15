@@ -6,11 +6,9 @@ import DocumentMeta from 'react-document-meta';
 export default class BasePage extends React.Component {
 
 	static propTypes = {
-		//app: PropTypes.instanceOf(App),
 	};
 
 	static defaultProps = {
-		app: null
 	};
 
 	get meta()

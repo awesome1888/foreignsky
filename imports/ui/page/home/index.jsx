@@ -7,16 +7,16 @@ import ArticleViewerFilterComponent from '/imports/ui/component/article.viewer.f
 import ArticleViewerListComponent from '/imports/ui/component/article.viewer.list/index.jsx';
 import ArticleViewerDetailComponent from  '/imports/ui/component/article.viewer.detail/index.jsx';
 
+import App from '/imports/ui/app.jsx';
+
 import './style.less';
 
 export default class HomePage extends BasePage {
 
 	static propTypes = {
-		//app: PropTypes.instanceOf(App),
 	};
 
 	static defaultProps = {
-		app: null
 	};
 
 	constructor(params)
@@ -49,7 +49,18 @@ export default class HomePage extends BasePage {
 
 	componentDidMount()
 	{
-		this.props.app.overlay.waitMe('temporal_homepage');
+		if(App.instance)
+		{
+			let p = new Promise(function(resolve, reject){
+
+				setTimeout(function(){
+					resolve();
+				}, 3000);
+
+			});
+
+			App.instance.overlay.waitMe(p);
+		}
 	}
 
 	handleIdUpdate(id)

@@ -29,9 +29,11 @@ export default class AppLoadingOverlay extends React.Component {
 	/**
 	 * temporal
 	 */
-	showWait()
+	waitAll()
 	{
-		console.dir(this.waitPool);
+		Promise.all(this.waitPool).then(function(){
+			console.dir('done with it!');
+		});
 	}
 
 	waitMe(promise)

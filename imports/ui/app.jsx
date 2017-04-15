@@ -21,8 +21,25 @@ export default class App extends React.Component {
 		return this._overlay;
 	}
 
+	static get instance()
+	{
+		return this.getInstance();
+	}
+
+	static getInstance()
+	{
+		if(this._instance)
+		{
+			return this._instance;
+		}
+
+		return null;
+	}
+
 	componentWillMount()
 	{
+		App._instance = this;
+
 		// start promise here
 		// wait for:
 		// 1) google map tiles loaded
@@ -33,7 +50,7 @@ export default class App extends React.Component {
 	componentDidMount()
 	{
 		console.dir('App mounted');
-		this.overlay.showWait();
+		this.overlay.waitAll();
 	}
 
 	render() {
@@ -49,12 +66,9 @@ export default class App extends React.Component {
 					<Header />
 					{React.createElement(main, {
 						route: routeProps,
-						app: this,
 					})}
 				</div>
-				<Map
-					app={this}
-				/>
+				<Map />
 			</div>
 		);
 	}

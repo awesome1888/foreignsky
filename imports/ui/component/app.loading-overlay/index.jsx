@@ -22,6 +22,7 @@ export default class AppLoadingOverlay extends React.Component {
 
 		this.state = {
 			shown: true,
+			transparent: false,
 		};
 
 		this.waitPool = [];
@@ -34,7 +35,10 @@ export default class AppLoadingOverlay extends React.Component {
 	{
 		Promise.all(this.waitPool).then(function(){
 
-			this.setState({shown: false});
+			this.setState({transparent: true});
+			Meteor.setTimeout(() => {
+				this.setState({shown: false});
+			}, 700);
 
 		}.bind(this));
 	}
@@ -54,7 +58,9 @@ export default class AppLoadingOverlay extends React.Component {
 		return (
 			<div
 				className={classnames(
-					'loading-overlay',
+					'loading-overlay fade',
+					{'in': !this.state.shown},
+					{'out': this.state.transparent},
 					{'no-display': !this.state.shown}
 				)}
 			>

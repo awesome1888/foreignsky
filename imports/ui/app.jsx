@@ -94,6 +94,7 @@ export default class App extends React.Component {
 					<AppLoadingOverlay
 						ref={(instance) => {this.overlay = instance;}}
 					/>
+
 					<Header />
 					{React.createElement(main, {
 						route: routeProps,

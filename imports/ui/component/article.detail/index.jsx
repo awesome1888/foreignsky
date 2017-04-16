@@ -71,6 +71,7 @@ export default class ArticleDetailComponent extends React.Component {
 						opened: true,
 						data: res || {},
 					});
+					App.instance.map.toggleBlock(true);
 					resolve();
 				}
 				else
@@ -84,9 +85,15 @@ export default class ArticleDetailComponent extends React.Component {
 
 	close()
 	{
+		if(!this.state.opened)
+		{
+			return;
+		}
+
 		this.setState({
 			opened: false
 		});
+		App.instance.map.toggleBlock(false);
 		FlowRouter.go('/');
 	}
 

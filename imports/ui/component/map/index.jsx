@@ -26,11 +26,15 @@ export default class Map extends React.Component {
 		this.useFakeMap = false;
 		this.mapContainer = null;
 		this._map = null;
+
+		this.state = {
+			blocked: false,
+		};
 	}
 
-	componentWillMount()
+	toggleBlock(way)
 	{
-
+		this.setState({blocked: !!way});
 	}
 
 	componentDidMount()
@@ -112,7 +116,7 @@ export default class Map extends React.Component {
 				{
 					this.useFakeMap
 					&&
-					<div className="map__container map__container_faded" />
+					<div className="map__container" />
 				}
 				{
 					!this.useFakeMap
@@ -123,6 +127,11 @@ export default class Map extends React.Component {
 					>
 						Loading
 					</div>
+				}
+				{
+					this.state.blocked
+					&&
+					<div className="map__overlay" />
 				}
 			</div>
 		);

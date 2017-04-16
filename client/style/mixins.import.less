@@ -160,3 +160,12 @@
 		color: lighten(@color, 10%);
 	}
 }
+
+._block-shadow() {
+
+	@opacity: 0.20;
+
+	-webkit-box-shadow: 4px 6px 12px -3px rgba(0, 0, 0, @opacity);
+	-moz-box-shadow: 4px 6px 12px -3px rgba(0, 0, 0, @opacity);
+	box-shadow: 4px 6px 12px -3px rgba(0, 0, 0, @opacity);
+}

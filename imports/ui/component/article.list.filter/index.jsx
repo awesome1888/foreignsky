@@ -75,7 +75,9 @@ export default class ArticleListFilterComponent extends React.Component {
 
 	updateTagData(params = {})
 	{
-		let filter = {};
+		let filter = {
+			primary: true,
+		};
 
 		return App.instance.setLoading(new Promise((resolve, reject) => {
 

@@ -15,16 +15,31 @@ Meteor.startup(() => {
 				title: 'Событие', //TAPi18n.__('article.type.event'),
 				sort: 100,
 				color: 'golden-yellow',
+				primary: true,
 			},
 			{
 				title: 'Место', //TAPi18n.__('article.type.place'),
 				sort: 200,
 				color: 'lynch',
+				primary: true,
 			},
 			{
 				title: 'Быт', //TAPi18n.__('article.type.life'),
 				sort: 300,
 				color: 'ecstasy',
+				primary: true,
+			},
+			{
+				title: 'СССР', //TAPi18n.__('article.type.life'),
+				sort: 400,
+				color: 'monza',
+				primary: false,
+			},
+			{
+				title: 'Архитектурен', //TAPi18n.__('article.type.life'),
+				sort: 500,
+				color: 'hanada',
+				primary: false,
 			},
 		].forEach(item => ArticleTag.collection.insert(item));
 
@@ -33,7 +48,7 @@ Meteor.startup(() => {
 
 	if(!Article.count())
 	{
-		console.dir('Creating articles...........');
+		console.dir('Creating articles............');
 
 		let tags = ArticleTag.find({fields: ['_id', 'title']});
 		let text = "Короче... Походу я только что получил свой первый штраф в Германии. На лобовое стекло под дворники мне положили такую бумажонку.\r\n\r\n"+
@@ -54,7 +69,7 @@ Meteor.startup(() => {
 			{
 				title: 'Про наклейку на лобовое стекло машины',
 				text: text,
-				tagId: [tags[0]._id, tags[2]._id],
+				tagId: [tags[0]._id, tags[2]._id, tags[3]._id, tags[4]._id],
 			},
 			{
 				title: 'Воскресенье в Германии',

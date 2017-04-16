@@ -31,7 +31,11 @@ export default class ArticleTagCollection extends Mongo.Collection
 					type: String,
 					optional: true,
 					regEx: /^[a-z0-9_-]+$/,
-				}
+				},
+				primary: {
+					type: Boolean,
+					optional: true,
+				},
 			});
 		}
 

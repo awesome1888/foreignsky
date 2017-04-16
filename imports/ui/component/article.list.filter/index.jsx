@@ -27,8 +27,13 @@ export default class ArticleListFilterComponent extends React.Component {
 		super(params);
 
 		this.state = {
+			applied: false,
 			tags: [],
 		};
+
+		this.input = null;
+
+		this.onInput = Util.debounce(this.onInput.bind(this), 700);
 	}
 
 	onTagClick(e)
@@ -39,7 +44,28 @@ export default class ArticleListFilterComponent extends React.Component {
 			this.props.onChange({
 				tag: tagId,
 			});
+
+			this.setState({applied: true});
 		}
+	}
+
+	onResetFilterClick()
+	{
+		this.input.value = '';
+
+		this.props.onChange({});
+		this.setState({applied: false});
+	}
+
+	onInput(h, e)
+	{
+		const value = this.input.value;
+
+		this.props.onChange({
+			text: value,
+		});
+
+		this.setState({applied: !!value});
 	}
 
 	componentDidMount()
@@ -82,8 +108,24 @@ export default class ArticleListFilterComponent extends React.Component {
 		return (
 			<div className="article-list__filter">
 				<div className="article-list__filter-search">
-				    <input className="input article-list__filter-input" type="text" placeholder="Искать статью" />
-					<button className="article-list__filter-clear" title="Сбросить фильтрацию" />
+				    <input
+					    className="input article-list__filter-input"
+					    type="text"
+					    placeholder="Искать статью"
+				        onKeyDown={this.onInput}
+				        onInput={this.onInput}
+				        ref={(instance) => {this.input = instance;}}
+				    />
+					{
+						this.state.applied
+						&&
+						<button
+							className="article-list__filter-clear"
+							title="Сбросить фильтрацию"
+
+						    onClick={this.onResetFilterClick.bind(this)}
+						/>
+					}
 				</div>
 				<div className="article-list__filter-button-set">
 					{this.state.tags.map(item => {

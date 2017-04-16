@@ -2,70 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="afae9113-23d2-4377-a39d-748ba1bf1aa2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/component-animations.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/dropdowns.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/forms.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/glyphicons.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/grid.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/index.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/alerts.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/background-variant.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/border-radius.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/buttons.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/center-block.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/clearfix.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/forms.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/gradients.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/grid-framework.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/grid.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/hide-text.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/image.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/labels.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/list-group.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/nav-divider.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/nav-vertical-align.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/opacity.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/pagination.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/panels.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/progress-bar.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/reset-filter.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/reset-text.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/resize.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/responsive-visibility.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/size.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/tab-focus.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/table-row.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/text-emphasis.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/text-overflow.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/mixins/vendor-prefixes.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/modals.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/navbar.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/navs.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/normalize.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/responsive-utilities.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/tooltip.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/type.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/utilities.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/style/bootstrap-slim/variables.import.less" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/style/micro-bootstrap.import.less" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/style/api/button.import.less" afterPath="$PROJECT_DIR$/client/style/api/button.import.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/style/api/input.import.less" afterPath="$PROJECT_DIR$/client/style/api/input.import.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/style/api/tag.import.less" afterPath="$PROJECT_DIR$/client/style/api/tag.import.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/style/default.import.less" afterPath="$PROJECT_DIR$/client/style/default.import.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/style/index.less" afterPath="$PROJECT_DIR$/client/style/index.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/style/layout.import.less" afterPath="$PROJECT_DIR$/client/style/layout.import.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/style/mixins.import.less" afterPath="$PROJECT_DIR$/client/style/mixins.import.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/style/primitive.less" afterPath="$PROJECT_DIR$/client/style/primitive.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/style/theme.import.less" afterPath="$PROJECT_DIR$/client/style/theme.import.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/component/article.detail/style.less" afterPath="$PROJECT_DIR$/imports/ui/component/article.detail/style.less" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/component/article.list.filter/index.jsx" afterPath="$PROJECT_DIR$/imports/ui/component/article.list.filter/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/component/article.list.filter/style.less" afterPath="$PROJECT_DIR$/imports/ui/component/article.list.filter/style.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/component/article.list/style.less" afterPath="$PROJECT_DIR$/imports/ui/component/article.list/style.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/component/header/style.less" afterPath="$PROJECT_DIR$/imports/ui/component/header/style.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/component/load.overlay/index.jsx" afterPath="$PROJECT_DIR$/imports/ui/component/load.overlay/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/component/map/style.less" afterPath="$PROJECT_DIR$/imports/ui/component/map/style.less" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -119,8 +57,8 @@
       <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/imports/ui/component/article.list/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="45" column="27" lean-forward="false" selection-start-line="45" selection-start-column="27" selection-end-line="45" selection-end-column="27" />
+            <state relative-caret-position="315">
+              <caret line="65" column="0" lean-forward="true" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
               <folding>
                 <element signature="e#45#71#0" expanded="true" />
               </folding>
@@ -198,11 +136,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.less" pinned="false" current-in-tab="true">
+      <file leaf-file-name="style.less" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/imports/ui/component/header/style.less">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="20" lean-forward="true" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
+            <state relative-caret-position="255">
+              <caret line="17" column="1" lean-forward="true" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -260,11 +198,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.jsx" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/imports/ui/component/article.list.filter/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="241">
-              <caret line="85" column="93" lean-forward="false" selection-start-line="85" selection-start-column="93" selection-end-line="85" selection-end-column="93" />
+              <caret line="67" column="42" lean-forward="true" selection-start-line="67" selection-start-column="42" selection-end-line="67" selection-end-column="42" />
               <folding>
                 <element signature="e#45#71#0" expanded="true" />
               </folding>
@@ -365,7 +303,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>befo</find>
       <find>clearfix</find>
       <find>@import &quot;</find>
       <find>.less</find>
@@ -395,6 +332,7 @@
       <find>std-offset</find>
       <find>offset-</find>
       <find>_text_weight-normal</find>
+      <find>onInputKeyDown</find>
     </findStrings>
     <replaceStrings>
       <replace>article-panel__list-item</replace>
@@ -481,7 +419,6 @@
         <option value="$PROJECT_DIR$/imports/ui/component/article.detail/style.less" />
         <option value="$PROJECT_DIR$/imports/ui/component/article.list/style.less" />
         <option value="$PROJECT_DIR$/client/style/api/button.import.less" />
-        <option value="$PROJECT_DIR$/imports/ui/component/article.list.filter/index.jsx" />
         <option value="$PROJECT_DIR$/imports/ui/component/article.list.filter/style.less" />
         <option value="$PROJECT_DIR$/imports/ui/component/map/style.less" />
         <option value="$PROJECT_DIR$/imports/ui/component/load.overlay/index.jsx" />
@@ -490,6 +427,7 @@
         <option value="$PROJECT_DIR$/client/style/theme.import.less" />
         <option value="$PROJECT_DIR$/client/style/mixins.import.less" />
         <option value="$PROJECT_DIR$/imports/ui/component/header/style.less" />
+        <option value="$PROJECT_DIR$/imports/ui/component/article.list.filter/index.jsx" />
       </list>
     </option>
   </component>
@@ -570,7 +508,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="client" />
+              <option name="myItemId" value="imports" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -584,11 +526,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="client" />
+              <option name="myItemId" value="imports" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="style" />
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="component" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -602,15 +548,59 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="client" />
+              <option name="myItemId" value="imports" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="style" />
+              <option name="myItemId" value="ui" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="api" />
+              <option name="myItemId" value="component" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="article.list.filter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="indaberlin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="indaberlin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="imports" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="component" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="article.list" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="indaberlin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="indaberlin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="imports" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -787,7 +777,7 @@
       <workItem from="1492204208086" duration="19393000" />
       <workItem from="1492285481696" duration="5663000" />
       <workItem from="1492335187489" duration="6866000" />
-      <workItem from="1492364780654" duration="5684000" />
+      <workItem from="1492364780654" duration="7513000" />
     </task>
     <task id="LOCAL-00001" summary="started writing texts">
       <created>1490216885718</created>
@@ -1041,11 +1031,18 @@
       <option name="project" value="LOCAL" />
       <updated>1492341682621</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="bootstrap removed">
+      <created>1492370973219</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1492370973219</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="197169000" />
+    <option name="totallyTimeSpent" value="198998000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1058,26 +1055,26 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1301" height="744" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31155378" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21912351" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.50928795" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3018576" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3018576" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32817337" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.10438247" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32817337" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1089,7 +1086,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="gym" />
     <MESSAGE value="design is getting better" />
     <MESSAGE value="markup almost done" />
     <MESSAGE value="markup columns are okay" />
@@ -1114,7 +1110,8 @@
     <MESSAGE value="super loader" />
     <MESSAGE value="minor changes" />
     <MESSAGE value="replacements" />
-    <option name="LAST_COMMIT_MESSAGE" value="replacements" />
+    <MESSAGE value="bootstrap removed" />
+    <option name="LAST_COMMIT_MESSAGE" value="bootstrap removed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1322,16 +1319,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/imports/ui/component/article.list/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="45" column="27" lean-forward="false" selection-start-line="45" selection-start-column="27" selection-end-line="45" selection-end-column="27" />
-          <folding>
-            <element signature="e#45#71#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/imports/ui/component/article.detail/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -1411,16 +1398,6 @@
         <state relative-caret-position="60">
           <caret line="4" column="42" lean-forward="false" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/imports/ui/component/article.list.filter/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="85" column="93" lean-forward="false" selection-start-line="85" selection-start-column="93" selection-end-line="85" selection-end-column="93" />
-          <folding>
-            <element signature="e#45#71#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1506,9 +1483,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/imports/ui/component/header/style.less">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="20" lean-forward="true" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
+        <state relative-caret-position="255">
+          <caret line="17" column="1" lean-forward="true" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imports/ui/component/article.list/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="65" column="0" lean-forward="true" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
+          <folding>
+            <element signature="e#45#71#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imports/ui/component/article.list.filter/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="67" column="42" lean-forward="true" selection-start-line="67" selection-start-column="42" selection-end-line="67" selection-end-column="42" />
+          <folding>
+            <element signature="e#45#71#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

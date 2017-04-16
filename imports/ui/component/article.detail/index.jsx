@@ -3,7 +3,7 @@
 import React from 'react';
 import {createQueryContainer} from 'meteor/cultofcoders:grapher-react';
 import Article from '/imports/api/entity/article.js';
-import { TAPi18n } from 'meteor/tap:i18n';
+import {TAPi18n} from 'meteor/tap:i18n';
 import moment from 'moment';
 import classnames from 'classnames';
 
@@ -11,7 +11,7 @@ import App from '/imports/ui/app.jsx';
 
 import './style.less';
 
-export default class ArticleViewerDetailComponent extends React.Component {
+export default class ArticleDetailComponent extends React.Component {
 
 	constructor(params)
 	{

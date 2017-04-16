@@ -1,29 +1,29 @@
 @import (reference) url('/client/style/index.less');
 
-.article-panel__filter {
+.article-list__filter {
 	background-color: white;
 	padding: @std-offset-3-of-4;
 	margin-bottom: @std-offset-half;
 	position: relative;
-	.everest();
+	._everest();
 }
 
-.article-panel__filter-button {
+.article-list__filter-button {
 	margin-right: @std-offset-half;
 	&:last-of-type {
 		margin-right: 0;
 	}
 }
 
-.article-panel__filter-input {
+.article-list__filter-input {
 	width: 100%;
 }
 
-.article-panel__filter-search {
+.article-list__filter-search {
 	margin-bottom: @std-offset-half;
 }
 
-.article-panel__filter-button-set {
-	.display-flex();
-	.flex-direction__row();
+.article-list__filter-button-set {
+	._display-flex();
+	._flex-direction__row();
 }

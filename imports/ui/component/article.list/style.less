@@ -1,6 +1,10 @@
 @import (reference) url('/client/style/index.less');
 
-.article-panel__list {
+.article-list {
+	max-height: 100%;
+}
+
+.article-list__list {
 	background-color: white;
 	border-top: @std-offset-3-of-4 solid white;
 	border-bottom: @std-offset-3-of-4 solid white;
@@ -9,12 +13,12 @@
 	box-sizing: border-box;
 	max-height: 100%;
 	position: relative;
-	.everest();
+	._everest();
 }
-.article-panel__list-scroll {
+.article-list__list-scroll {
 	overflow-y: auto;
 }
-.article-panel__list-item {
+.article-list__list-item {
 	margin-bottom: @std-offset-quarter;
 	padding: @std-offset-half;
 	display: block;

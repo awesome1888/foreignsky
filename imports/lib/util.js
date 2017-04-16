@@ -44,4 +44,9 @@ export default class Util
 			}, timeout || 100);
 		}
 	}
+
+	static noop()
+	{
+		return function(){};
+	}
 }

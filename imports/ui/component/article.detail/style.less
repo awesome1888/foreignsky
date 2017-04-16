@@ -3,7 +3,7 @@
 .article-detail {
 	//max-height: 100%;
 	height: 100%;
-	.everest();
+	._everest();
 	position: relative;
 	width: 100%;
 	background-color: white;
@@ -31,6 +31,12 @@
 	cursor: pointer;
 
 	border-radius: 15px; // todo: crossbrowser mixin here
+
+	._transition(all, 0.7s);
+
+	&:hover {
+		._transform(rotate(90deg));
+	}
 }
 
 .article-detail__inner-scroll {
@@ -80,9 +86,9 @@
 }
 
 .article-detail__body-top-line {
-	.display-flex();
-	.flex-direction__row();
-	.flex-justify-content__space-between();
+	._display-flex();
+	._flex-direction__row();
+	._flex-justify-content__space-between();
 	padding: @std-offset @std-offset-double;
 	background-color: lighten(gray, 48%);
 }

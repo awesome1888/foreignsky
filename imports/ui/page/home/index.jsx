@@ -3,9 +3,8 @@
 import React from 'react';
 import BasePage from '/imports/ui/page/base/index';
 
-import ArticleViewerFilterComponent from '/imports/ui/component/article.viewer.filter/index.jsx';
-import ArticleViewerListComponent from '/imports/ui/component/article.viewer.list/index.jsx';
-import ArticleViewerDetailComponent from  '/imports/ui/component/article.viewer.detail/index.jsx';
+import ArticleListComponent from '/imports/ui/component/article.list/index.jsx';
+import ArticleDetailComponent from  '/imports/ui/component/article.detail/index.jsx';
 
 import App from '/imports/ui/app.jsx';
 
@@ -23,18 +22,6 @@ export default class HomePage extends BasePage {
 	{
 		super(params);
 		this.state = {};
-	}
-
-	getCentralHtml()
-	{
-		return (
-			<div className="home__central">
-				<ArticleViewerDetailComponent
-					id={this.state.id}
-				    app={this.props.app}
-				/>
-			</div>
-		);
 	}
 
 	componentWillMount()
@@ -59,10 +46,19 @@ export default class HomePage extends BasePage {
 	{
 		return (
 			<div className="home__side">
-				<ArticleViewerFilterComponent
+				<ArticleListComponent
 					app={this.props.app}
 				/>
-				<ArticleViewerListComponent
+			</div>
+		);
+	}
+
+	getCentralHtml()
+	{
+		return (
+			<div className="home__central">
+				<ArticleDetailComponent
+					id={this.state.id}
 					app={this.props.app}
 				/>
 			</div>

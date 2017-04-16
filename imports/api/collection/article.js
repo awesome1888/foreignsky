@@ -69,6 +69,12 @@ export default class ArticleCollection extends Mongo.Collection
 					type: [Number],
 					optional: true,
 				},
+				//headerImage: ,
+				headerColor: {
+					type: String,
+					optional: true,
+					regEx: /^[a-z0-9_-]+$/,
+				}
 			});
 		}
 

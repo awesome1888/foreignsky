@@ -63,7 +63,7 @@ export default class AppLoadingOverlay extends React.Component {
 				)}
 			>
 				<div className="loading-overlay__greeting">
-					Good morning, and welcome to the Black Mesa.
+					 Типичный дурацкий текст, который вы читаете, пока ждете загрузку...
 				</div>
 			</div>
 		);

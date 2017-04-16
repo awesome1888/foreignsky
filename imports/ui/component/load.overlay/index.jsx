@@ -57,7 +57,7 @@ export default class AppLoadingOverlay extends React.Component {
 			<div
 				className={classnames(
 					'loading-overlay fade',
-					{'in': !this.state.shown},
+					{'in': !this.state.transparent},
 					{'out': this.state.transparent},
 					{'no-display': !this.state.shown}
 				)}

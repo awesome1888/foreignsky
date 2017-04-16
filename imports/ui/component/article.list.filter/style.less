@@ -2,14 +2,14 @@
 
 .article-list__filter {
 	background-color: white;
-	padding: @std-offset-3-of-4;
-	margin-bottom: @std-offset-half;
+	padding: @offset_3-of-4;
+	margin-bottom: @offset_half;
 	position: relative;
 	._everest();
 }
 
 .article-list__filter-button {
-	margin-right: @std-offset-half;
+	margin-right: @offset_half;
 	&:last-of-type {
 		margin-right: 0;
 	}
@@ -17,13 +17,33 @@
 
 .article-list__filter-input {
 	width: 100%;
+	padding-right: 35px;
+	._text_size-minor();
 }
 
 .article-list__filter-search {
-	margin-bottom: @std-offset-half;
+	position: relative;
+	margin-bottom: @offset_half;
 }
 
 .article-list__filter-button-set {
 	._display-flex();
 	._flex-direction__row();
+}
+
+.article-list__filter-clear {
+
+	.glyphicon;
+	.glyphicon-remove;
+
+	._button-reset();
+
+	._text_color-normal();
+	._text_hover(gray);
+
+	padding: 0.5rem;
+
+	position: absolute;
+	top: 5px;
+	right: 5px;
 }

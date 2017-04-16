@@ -1,3 +1,5 @@
+@import (reference) './theme.import.less';
+
 ._display-flex() {
 	display: -webkit-box;
 	display: -moz-box;
@@ -78,4 +80,83 @@
 
 ._elbrus(){
 	z-index: 99999900;
+}
+
+._text_color-normal() {
+	color: @color-text-normal;
+}
+
+._text_color-dark() {
+	color: @color-text-dark;
+}
+
+//.text_color-gray {
+//	color: @linkDarkerColor;
+//	&:hover, &:focus {
+//		color: @linkDarkerColor;
+//	}
+//}
+//
+//._text_color-blue() {
+//	color: @blueLinkColor;
+//	&:hover, &:focus {
+//		color: @blueLinkColor;
+//	}
+//}
+//
+//._text_color-red() {
+//	color: @redColor;
+//	&:hover, &:focus {
+//		color: @redColor;
+//	}
+//}
+
+.text_weight-light {
+	font-weight: 300;
+}
+
+._text_weight-normal() {
+	font-weight: 400;
+}
+
+.text_weight-bold {
+	font-weight: 700;
+}
+
+.text_size-big {
+	font-size: @offset + @offset_quarter;
+	line-height: 150%; // 150% of (@offset + @offset_quarter), dont remove
+}
+
+.text_size-above-normal {
+	font-size: @offset + 0.1rem;
+	line-height: 150%; // 150% of (@offset + 0.1rem), dont remove
+}
+
+._text_size-normal() {
+	font-size: @offset;
+	line-height: 150%; // 150% of @offset, dont remove
+}
+
+._text_size-minor() {
+	font-size: 0.9rem;
+	line-height: 150%; // 150% of 0.9rem, dont remove
+}
+
+._text_size-small() {
+	font-size: 0.8rem;
+	line-height: 150%; // 150% of 0.8rem, dont remove
+}
+
+._button-reset() {
+	background: none;
+	border: 0 none;
+	outline: none;
+}
+
+._text_hover(@color: gray) {
+	color: @color;
+	&:hover {
+		color: lighten(@color, 10%);
+	}
 }

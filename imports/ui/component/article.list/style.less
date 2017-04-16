@@ -6,9 +6,9 @@
 
 .article-list__list {
 	background-color: white;
-	border-top: @std-offset-3-of-4 solid white;
-	border-bottom: @std-offset-3-of-4 solid white;
-	padding: 0 @std-offset-3-of-4;
+	border-top: @offset_3-of-4 solid white;
+	border-bottom: @offset_3-of-4 solid white;
+	padding: 0 @offset_3-of-4;
 	overflow-x: hidden;
 	box-sizing: border-box;
 	max-height: 100%;
@@ -19,11 +19,12 @@
 	overflow-y: auto;
 }
 .article-list__list-item {
-	margin-bottom: @std-offset-quarter;
-	padding: @std-offset-half;
+	margin-bottom: @offset_quarter;
+	padding: @offset_half;
 	display: block;
 	text-decoration: none;
-	color: gray;
+	._text_size-minor();
+	._text_color-normal();
 
 	background-color: rgba(217, 219, 223, .2);
 

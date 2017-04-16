@@ -83,6 +83,7 @@ export default class ArticleListFilterComponent extends React.Component {
 			<div className="article-list__filter">
 				<div className="article-list__filter-search">
 				    <input className="input article-list__filter-input" type="text" placeholder="Искать статью" />
+					<button className="article-list__filter-clear" title="Сбросить фильтрацию" />
 				</div>
 				<div className="article-list__filter-button-set">
 					{this.state.tags.map(item => {

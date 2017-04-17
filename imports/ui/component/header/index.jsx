@@ -30,6 +30,7 @@ export default class Header extends React.Component {
 								<a
 									href="/"
 									className="header__logo-img"
+								    title="Однажды тут будет красивый логотип"
 								>
 									B_
 								</a>

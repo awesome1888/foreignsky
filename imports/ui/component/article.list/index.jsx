@@ -23,8 +23,6 @@ export default class ArticleListComponent extends React.Component {
 
 	onFilterChange(params)
 	{
-		console.dir(params);
-
 		this.updateItemListData(params);
 	}
 

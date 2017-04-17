@@ -27,7 +27,7 @@ export default class ArticleListFilterComponent extends React.Component {
 		super(params);
 
 		this.state = {
-			applied: false,
+			filter: {},
 			tags: [],
 		};
 
@@ -41,31 +41,37 @@ export default class ArticleListFilterComponent extends React.Component {
 		const tagId = e.target.dataset['id'];
 		if(tagId)
 		{
-			this.props.onChange({
+			this.mergeFilter({
 				tag: tagId,
 			});
-
-			this.setState({applied: true});
 		}
 	}
 
 	onResetFilterClick()
 	{
+		this.resetFilter();
+	}
+
+	mergeFilter(filter)
+	{
+		this.setState({filter: Object.assign(this.state.filter, filter)});
+		this.props.onChange(this.state.filter);
+	}
+
+	resetFilter()
+	{
 		this.input.value = '';
 
-		this.props.onChange({});
-		this.setState({applied: false});
+		this.state.filter = {};
+		this.setState(this.state);
+		this.props.onChange(this.state.filter);
 	}
 
 	onInput(h, e)
 	{
-		const value = this.input.value;
-
-		this.props.onChange({
-			text: value,
+		this.mergeFilter({
+			text: this.input.value,
 		});
-
-		this.setState({applied: !!value});
 	}
 
 	componentDidMount()
@@ -117,9 +123,10 @@ export default class ArticleListFilterComponent extends React.Component {
 				        onKeyDown={this.onInput}
 				        onInput={this.onInput}
 				        ref={(instance) => {this.input = instance;}}
+				        //value={this.state.filter.text || ''}
 				    />
 					{
-						this.state.applied
+						_.keys(this.state.filter).length > 0
 						&&
 						<button
 							className="article-list__filter-clear"

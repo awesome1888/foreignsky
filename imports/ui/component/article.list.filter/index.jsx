@@ -144,6 +144,11 @@ export default class ArticleListFilterComponent extends React.Component {
 							className={`tag tag__button article-list__filter-button tag_${item.color ? item.color : 'blue'}`}
 							onClick={this.onTagClick.bind(this)}
 						>
+							{
+								item._id === this.state.filter.tag
+								&&
+								<div className="tag__corner" />
+							}
 							#{item.title.toLowerCase()}
 						</div>;
 					})}

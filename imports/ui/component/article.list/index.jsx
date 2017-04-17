@@ -33,6 +33,8 @@ export default class ArticleListComponent extends React.Component {
 
 	updateItemListData(params = {})
 	{
+		console.dir(params);
+
 		const filter = {};
 		if('tag' in params)
 		{

@@ -40,9 +40,20 @@ export default class ArticleListComponent extends React.Component {
 		{
 			filter.tagId = params.tag;
 		}
+		if('text' in params && _.isString(params.text))
+		{
+			params.text = params.text.trim();
+			if(params.text)
+			{
+				filter.$text = {
+					$search: params.text,
+					//$diacriticSensitive: false,
+					//$caseSensitive: true,
+				};
+			}
+		}
 
 		return App.instance.setLoading(new Promise((resolve, reject) => {
-
 			Article.createQuery({
 				filter: filter,
 				fields: ['title'],
@@ -63,7 +74,6 @@ export default class ArticleListComponent extends React.Component {
 					resolve();
 				}
 			});
-
 		}));
 	}
 

@@ -10,6 +10,7 @@ export default class ArticleCollection extends Mongo.Collection
 		super('article');
 		this.attachSchema(this.schema);
 		this.addLinks(this.links);
+		this.ensureIndexesExist();
 	}
 
 	insert(data, cb)
@@ -96,6 +97,19 @@ export default class ArticleCollection extends Mongo.Collection
 		}
 
 		return this._links;
+	}
+
+	ensureIndexesExist()
+	{
+		if(Meteor.isServer)
+		{
+			this.rawCollection().createIndex({
+				title: "text",
+				text: "text"
+			}, {
+				name: 'search',
+			});
+		}
 	}
 
 	static getInstance()

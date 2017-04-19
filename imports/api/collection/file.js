@@ -24,7 +24,7 @@ export default class FileCollection extends Mongo.Collection
 					optional: false,
 				},
 				url: {
-					type: Number,
+					type: String,
 					optional: true,
 				},
 			});

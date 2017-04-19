@@ -3,6 +3,7 @@ import { TAPi18n } from 'meteor/tap:i18n';
 
 import Article from '/imports/api/entity/article.js';
 import ArticleTag from '/imports/api/entity/article/tag.js';
+import File from '/imports/api/entity/file.js';
 
 Meteor.startup(() => {
 
@@ -46,11 +47,38 @@ Meteor.startup(() => {
 		console.dir('Article types created');
 	}
 
+	if(!File.count())
+	{
+		console.dir('Creating demo files............');
+
+		[
+			{
+				title: 'Sony Center',
+				url: '/img/sample1.jpg',
+			},
+			{
+				title: 'Potsdamer Platz',
+				url: '/img/sample2.jpg',
+			},
+			{
+				title: 'Reichstag',
+				url: '/img/sample3.jpg',
+			},
+			{
+				title: 'Elephant',
+				url: '/img/sample4.jpg',
+			},
+		].forEach(item => File.collection.insert(item));
+
+		console.dir('Demo files created');
+	}
+
 	if(!Article.count())
 	{
 		console.dir('Creating articles............');
 
 		let tags = ArticleTag.find({fields: ['_id', 'title']});
+		let files = File.find({fields: ['_id']});
 		let text = "Короче... Походу я только что получил свой первый штраф в Германии. На лобовое стекло под дворники мне положили такую бумажонку.\r\n\r\n"+
 				"*тут фотка бумажонки*\r\n\r\n"+
 				"Показал я эту бумажку своим друзьям с работы, и оказывается, что на одной ее стороне написано, что это просто \"friendly warning\", а на другой, что это \"fine\". Куда платить - не понятно. Сколько платить - не понятно. За что платить - не понятно. Мне сказали, что мне в Россию должно прийти письмо с описанием и реквизитами, и пока я судорожно думаю, что с этим делать, я решил разобраться, за что может быть штраф.\r\n\r\n"+
@@ -71,17 +99,20 @@ Meteor.startup(() => {
 				text: text,
 				tagId: [tags[0]._id, tags[2]._id, tags[3]._id, tags[4]._id],
 				headerColor: 'silver',
+				headerImage: files[0]._id,
 			},
 			{
 				title: 'Воскресенье в Германии',
 				text: text,
 				tagId: [tags[1]._id],
 				headerColor: 'fresh-onion',
+				headerImage: files[1]._id,
 			},
 			{
 				title: 'Про парковку',
 				text: text,
 				tagId: [tags[2]._id, tags[1]._id],
+				headerImage: files[2]._id,
 			},
 		].forEach(item => Article.collection.insert(item));
 

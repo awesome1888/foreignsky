@@ -59,6 +59,10 @@ export default class ArticleDetailComponent extends React.Component {
 					text: 1,
 					date: 1,
 					headerColor: 1,
+					headerImage: {
+						title: 1,
+						url: 1,
+					},
 					tag: {
 						title: 1,
 						color: 1,
@@ -102,6 +106,13 @@ export default class ArticleDetailComponent extends React.Component {
 	{
 		const data = this.state.data;
 
+		if(!data._id)
+		{
+			return null;
+		}
+
+		console.dir(data.headerImage);
+
 		return (
 			<div
 				className={classnames(
@@ -112,7 +123,12 @@ export default class ArticleDetailComponent extends React.Component {
 			>
 				<div className="article-detail__inner-scroll">
 
-					<div className="article-detail__header-image">
+					<div
+						className="article-detail__header-image"
+					    style={{
+					    	backgroundImage: `url(${data.headerImage.url})`,
+					    }}
+					>
 						<h1 className="article-detail__header-h1">{data.title}</h1>
 					</div>
 

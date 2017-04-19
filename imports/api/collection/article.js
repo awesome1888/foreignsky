@@ -2,6 +2,7 @@ import { Mongo } from 'meteor/mongo';
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 
 import ArticleTagCollection from '/imports/api/collection/article/tag.js'
+import FileCollection from '/imports/api/collection/file.js'
 
 export default class ArticleCollection extends Mongo.Collection
 {
@@ -27,6 +28,13 @@ export default class ArticleCollection extends Mongo.Collection
 			delete(data.tagId);
 		}
 
+		let headerImage = null;
+		if('headerImage' in data)
+		{
+			headerImage = data.headerImage;
+			delete(data.headerImage);
+		}
+
 		data.search = '';
 		if(_.isString(data.title))
 		{
@@ -46,6 +54,12 @@ export default class ArticleCollection extends Mongo.Collection
 			_.map(tags, (tag) => {
 				tagLink.add(tag);
 			});
+		}
+
+		if(_id && headerImage)
+		{
+			let headerImageLink = this.getLink(_id, 'headerImage');
+			headerImageLink.set(headerImage);
 		}
 
 		return _id;
@@ -81,7 +95,10 @@ export default class ArticleCollection extends Mongo.Collection
 					type: [Number],
 					optional: true,
 				},
-				//headerImage: ,
+				headerImageId: {
+					type: [String],
+					optional: true,
+				},
 				headerColor: {
 					type: String,
 					optional: true,
@@ -107,6 +124,12 @@ export default class ArticleCollection extends Mongo.Collection
 					collection: ArticleTagCollection.getInstance(),
 					field: 'tagId',
 					index: true,
+				},
+				headerImage: {
+					type: 'one',
+					collection: FileCollection.getInstance(),
+					field: 'headerImageId',
+					index: false,
 				}
 			};
 		}

@@ -27,6 +27,17 @@ export default class ArticleCollection extends Mongo.Collection
 			delete(data.tagId);
 		}
 
+		data.search = '';
+		if(_.isString(data.title))
+		{
+			data.search += data.title.toUpperCase();
+		}
+		if(_.isString(data.text))
+		{
+			// todo: also remove possible special constructions
+			data.search += ' '+data.text.toUpperCase();
+		}
+
 		let _id = super.insert(data, cb);
 
 		if(_id && tags)
@@ -75,6 +86,10 @@ export default class ArticleCollection extends Mongo.Collection
 					type: String,
 					optional: true,
 					regEx: /^[a-z0-9_-]+$/,
+				},
+				search: {
+					type: String,
+					optional: false,
 				}
 			});
 		}
@@ -104,8 +119,7 @@ export default class ArticleCollection extends Mongo.Collection
 		if(Meteor.isServer)
 		{
 			this.rawCollection().createIndex({
-				title: "text",
-				text: "text"
+				search: "text",
 			}, {
 				name: 'search',
 			});

@@ -33,8 +33,6 @@ export default class ArticleListComponent extends React.Component {
 
 	updateItemListData(params = {})
 	{
-		console.dir(params);
-
 		const filter = {};
 		if('tag' in params)
 		{
@@ -42,7 +40,7 @@ export default class ArticleListComponent extends React.Component {
 		}
 		if('text' in params && _.isString(params.text))
 		{
-			params.text = params.text.trim();
+			params.text = params.text.trim().toUpperCase();
 			if(params.text)
 			{
 				filter.$text = {

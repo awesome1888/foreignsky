@@ -63,7 +63,7 @@ export default class AppLoadingOverlay extends React.Component {
 				)}
 			>
 				<div className="loading-overlay__greeting">
-					 Типичный дурацкий текст, который вы читаете, пока ждете загрузку...
+					 Типичный текст, который вы читаете, пока ждете загрузку...
 				</div>
 			</div>
 		);

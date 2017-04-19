@@ -70,11 +70,13 @@ Meteor.startup(() => {
 				title: 'Про наклейку на лобовое стекло машины',
 				text: text,
 				tagId: [tags[0]._id, tags[2]._id, tags[3]._id, tags[4]._id],
+				headerColor: 'silver',
 			},
 			{
 				title: 'Воскресенье в Германии',
 				text: text,
 				tagId: [tags[1]._id],
+				headerColor: 'fresh-onion',
 			},
 			{
 				title: 'Про парковку',

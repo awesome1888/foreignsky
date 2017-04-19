@@ -58,6 +58,7 @@ export default class ArticleDetailComponent extends React.Component {
 					title: 1,
 					text: 1,
 					date: 1,
+					headerColor: 1,
 					tag: {
 						title: 1,
 						color: 1,
@@ -105,7 +106,8 @@ export default class ArticleDetailComponent extends React.Component {
 			<div
 				className={classnames(
 					'article-detail',
-					{'no-display': !this.state.opened}
+					{'no-display': !this.state.opened},
+					`article-detail_${data.headerColor}`
 				)}
 			>
 				<div className="article-detail__inner-scroll">

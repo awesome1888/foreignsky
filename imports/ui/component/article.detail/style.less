@@ -1,7 +1,5 @@
 @import (reference) url('/client/style/index.less');
 
-@article-detail-header-color: @color_mcduck-gold;
-
 .article-detail {
 	//max-height: 100%;
 	height: 100%;
@@ -53,12 +51,9 @@
 }
 
 .article-detail__header-image {
-	//margin: @offset_3-of-4 0;
-	height: 200px;
-
-	// todo: remove this
-	background: url('/img/sample1.jpg') center 65% no-repeat scroll;
+	.image;
 	position: relative;
+	height: 200px;
 }
 
 .article-detail__header-h1 {
@@ -71,7 +66,6 @@
 	//float: right;
 	padding: @offset_3-of-4 @offset_1-and-quarter;
 	margin: @offset 0;
-	color: gray;
 	background-color: white;
 	font-size: 20px;
 	text-align: right;
@@ -82,9 +76,8 @@
 
 .article-detail__body {
 	white-space: pre-line;
-	padding: @offset @offset_1-and-quarter;
+	padding: @detail-v-padding @detail-h-padding;
 	position: relative;
-	color: #606367;
 
 	p {
 		margin-top: 0;
@@ -123,6 +116,10 @@
 	}
 
 	.article-detail__header-h1 {
+		border-color: @color;
+	}
+
+	.embed__label {
 		border-color: @color;
 	}
 }

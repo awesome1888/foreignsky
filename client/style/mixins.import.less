@@ -90,27 +90,6 @@
 	color: @color-text-dark;
 }
 
-//.text_color-gray {
-//	color: @linkDarkerColor;
-//	&:hover, &:focus {
-//		color: @linkDarkerColor;
-//	}
-//}
-//
-//._text_color-blue() {
-//	color: @blueLinkColor;
-//	&:hover, &:focus {
-//		color: @blueLinkColor;
-//	}
-//}
-//
-//._text_color-red() {
-//	color: @redColor;
-//	&:hover, &:focus {
-//		color: @redColor;
-//	}
-//}
-
 .text_weight-light {
 	font-weight: 300;
 }
@@ -123,12 +102,12 @@
 	font-weight: 700;
 }
 
-.text_size-big {
+._text_size-big() {
 	font-size: @offset + @offset_quarter;
 	line-height: 150%; // 150% of (@offset + @offset_quarter), dont remove
 }
 
-.text_size-above-normal {
+._text_size-above-normal() {
 	font-size: @offset + 0.1rem;
 	line-height: 150%; // 150% of (@offset + 0.1rem), dont remove
 }
@@ -180,4 +159,15 @@
 
 ._border(@color: @color_white, @thickness: 1px) {
 	border: @thickness solid @color;
+}
+
+._background_cover() {
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-attachment: scroll;
+
+	//background-position: 50% 50%, 0 0;
+	//background-size: cover, auto;
+	//background-repeat: no-repeat, repeat;
 }

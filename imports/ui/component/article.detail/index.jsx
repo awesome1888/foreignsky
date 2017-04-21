@@ -111,8 +111,6 @@ export default class ArticleDetailComponent extends React.Component {
 			return null;
 		}
 
-		console.dir(data.headerImage);
-
 		return (
 			<div
 				className={classnames(
@@ -159,6 +157,50 @@ export default class ArticleDetailComponent extends React.Component {
 					</div>
 
 					<div className="article-detail__body">
+
+						{data.text}
+
+						<div
+							className="embed embed_static"
+						    style={{
+							    backgroundImage: 'url(/img/sample3.jpg)',
+						    }}
+						>
+							<div className="embed__label embed__label_medium embed__label_left embed__label_top">
+								<div className="embed__label-line">
+									Вид на Рейхстаг из окна SonyCenter
+								</div>
+								<div className="embed__label-line">
+									Памятник коммунистам и победе
+								</div>
+								<div className="embed__label-line">
+									Ну и еще заголовок до кучи!
+								</div>
+							</div>
+						</div>
+
+
+						<div
+							className="embed embed_static"
+							style={{
+								backgroundImage: 'url(/img/sample3.jpg)',
+							}}
+						>
+							<div className="embed__label embed__label_right embed__label_bottom">
+								<div className="embed__label-line">
+									Вид на Рейхстаг из окна SonyCenter
+								</div>
+								<div className="embed__label-line">
+									Сломанные велосипеды
+								</div>
+								<div className="embed__label-line">
+									Памятник коммунистам и победе
+								</div>
+								<div className="embed__label-line">
+									Ну и еще заголовок до кучи!
+								</div>
+							</div>
+						</div>
 
 						{data.text}
 

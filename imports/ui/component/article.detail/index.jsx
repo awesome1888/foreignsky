@@ -7,6 +7,7 @@ import {TAPi18n} from 'meteor/tap:i18n';
 import moment from 'moment';
 import classnames from 'classnames';
 
+import EmbedImageComponent from '/imports/ui/component/general/embedimage/index.js';
 import App from '/imports/ui/app.jsx';
 
 import './style.less';
@@ -122,12 +123,21 @@ export default class ArticleDetailComponent extends React.Component {
 				<div className="article-detail__inner-scroll">
 
 					<div
-						className="article-detail__header-image"
-					    style={{
-					    	backgroundImage: `url(${data.headerImage.url})`,
-					    }}
+						className="embed article-detail__header-embed"
 					>
-						<h1 className="article-detail__header-h1">{data.title}</h1>
+						<div
+							className="embed__image embed__image_static article-detail__header-image-embed"
+							style={{
+								backgroundImage: `url(${data.headerImage.url})`,
+							}}
+						>
+							<div className="embed__label embed__label-br">
+								<div className="embed__label-line">
+									{data.title}
+								</div>
+							</div>
+						</div>
+
 					</div>
 
 					<div className="article-detail__body-top-line">
@@ -160,32 +170,13 @@ export default class ArticleDetailComponent extends React.Component {
 
 						{data.text}
 
-						<div
-							className="embed"
-						>
-							<div
-								className="embed__image embed__image_static"
-								style={{
-									backgroundImage: 'url(/img/sample3.jpg)',
-								}}
-							>
-								<div className="embed__label embed__label_medium embed__label-tl">
-									<div className="embed__label-line">
-										Вид на Рейхстаг из окна SonyCenter
-									</div>
-									<div className="embed__label-line">
-										Памятник коммунистам и победе
-									</div>
-									<div className="embed__label-line">
-										Ну и еще заголовок до кучи!
-									</div>
-								</div>
-							</div>
-							<div className="embed__label_bottom">
-								Вид на Рейхстаг из окна SonyCenter, Памятник коммунистам и победе, Ну и еще заголовок до кучи!
-							</div>
-
-						</div>
+						<EmbedImageComponent
+							image="/img/sample3.jpg"
+						    label={{
+						    	text: "Вид на Рейхстаг из окна SonyCenter\r\nПамятник коммунистам и победе\r\nНу и еще заголовок до кучи!",
+						        position: 'bl',
+						    }}
+						/>
 
 						{data.text}
 

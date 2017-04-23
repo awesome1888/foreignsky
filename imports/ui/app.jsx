@@ -4,6 +4,8 @@ import Header from '/imports/ui/component/header/index.jsx';
 import Map from '/imports/ui/component/map/index.jsx';
 import LoadOverlay from '/imports/ui/component/load.overlay/index.jsx';
 import LoadIndicator from '/imports/ui/component/load.indicator/index.jsx';
+import ImageViewComponent from '/imports/ui/component/general/image-view/index.jsx';
+import Util from '/imports/lib/util.js';
 
 export default class App extends React.Component {
 
@@ -17,6 +19,7 @@ export default class App extends React.Component {
 		this._overlay = null;
 		this._map = null;
 		this._indicator = null;
+		this._imageView = null;
 	}
 
 	get overlay()
@@ -55,6 +58,26 @@ export default class App extends React.Component {
 		if(!this._map)
 		{
 			this._map = ref;
+		}
+	}
+
+	get imageView()
+	{
+		if(!this._imageView)
+		{
+			return {
+				open: Util.noop,
+			};
+		}
+
+		return this._imageView;
+	}
+
+	set imageView(ref)
+	{
+		if(!this._imageView)
+		{
+			this._imageView = ref;
 		}
 	}
 
@@ -118,6 +141,9 @@ export default class App extends React.Component {
 					ref={(instance) => {this.map = instance;}}
 				    center={{lat: 52.520764, lng: 13.409161}}
 				    zoom={15}
+				/>
+				<ImageViewComponent
+					ref={(instance) => {this.imageView = instance;}}
 				/>
 			</div>
 		);

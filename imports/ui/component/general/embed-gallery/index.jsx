@@ -4,7 +4,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-//import './style.less';
+import App from '/imports/ui/app.jsx';
+
+import './style.less';
 
 export default class EmbedGalleryComponent extends React.Component {
 
@@ -70,6 +72,8 @@ export default class EmbedGalleryComponent extends React.Component {
 	{
 		console.dir('click!');
 		e.preventDefault();
+
+		App.instance.imageView.open('/img/sample4.jpg');
 	}
 
 	render(props = {})

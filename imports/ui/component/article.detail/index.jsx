@@ -7,7 +7,9 @@ import {TAPi18n} from 'meteor/tap:i18n';
 import moment from 'moment';
 import classnames from 'classnames';
 
-import EmbedImageComponent from '/imports/ui/component/general/embedimage/index.js';
+import EmbedImageComponent from '/imports/ui/component/general/embed-image/index.js';
+import EmbedGalleryComponent from '/imports/ui/component/general/embed-gallery/index.js';
+
 import App from '/imports/ui/app.jsx';
 
 import './style.less';
@@ -123,16 +125,16 @@ export default class ArticleDetailComponent extends React.Component {
 				<div className="article-detail__inner-scroll">
 
 					<div
-						className="embed article-detail__header-embed"
+						className="embed-image article-detail__header-embed"
 					>
 						<div
-							className="embed__image embed__image_static article-detail__header-image-embed"
+							className="embed-image__image embed-image__image_static article-detail__header-image-embed"
 							style={{
 								backgroundImage: `url(${data.headerImage.url})`,
 							}}
 						>
-							<div className="embed__label embed__label-br">
-								<div className="embed__label-line">
+							<div className="embed-image__label embed-image__label-br">
+								<div className="embed-image__label-line">
 									{data.title}
 								</div>
 							</div>
@@ -170,6 +172,49 @@ export default class ArticleDetailComponent extends React.Component {
 
 						{data.text}
 
+						<EmbedGalleryComponent
+							items={
+								[
+									{
+										image: '/img/sample1.jpg',
+										label: 'Это слон. Просто. Восковой. Мать его. Слон. Это слон.',
+									},
+									{
+										image: '/img/sample2.jpg',
+										label: 'Это слон. Просто. Восковой. Мать его. Слон. Это слон.',
+									},
+									{
+										image: '/img/sample3.jpg',
+										label: 'Это слон. Просто. Восковой. Мать его. Слон. Это слон.',
+									},
+									{
+										image: '/img/sample4.jpg',
+										label: 'Это слон. Просто. Восковой. Мать его. Слон. Это слон.',
+									},
+									{
+										image: '/img/sample1.jpg',
+										label: 'Это слон. Просто. Восковой. Мать его. Слон. Это слон.',
+									},
+									{
+										image: '/img/sample2.jpg',
+										label: 'Это слон. Просто. Восковой. Мать его. Слон. Это слон.',
+									},
+									{
+										image: '/img/sample3.jpg',
+										label: 'Это слон. Просто. Восковой. Мать его. Слон. Это слон.',
+									},
+									{
+										image: '/img/sample4.jpg',
+										label: 'Это слон. Просто. Восковой. Мать его. Слон. Это слон.',
+									},
+									{
+										image: '/img/sample1.jpg',
+										label: 'Это слон. Просто. Восковой. Мать его. Слон. Это слон.',
+									},
+								]
+							}
+						/>
+
 						<EmbedImageComponent
 							image="/img/sample3.jpg"
 						    label={{
@@ -177,8 +222,6 @@ export default class ArticleDetailComponent extends React.Component {
 						        position: 'bl',
 						    }}
 						/>
-
-						{data.text}
 
 					</div>
 

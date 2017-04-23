@@ -1,0 +1,61 @@
+@import (reference) '/client/style/index.less';
+
+@image-offset: @offset_quarter;
+@image-offset-both: 2*@image-offset;
+
+.embed-gallery {
+	//._display-flex();
+	//._flex-direction__row();
+	//._flex-justify-content__start();
+	//._flex-wrap__wrap();
+
+	margin: -@image-offset;
+	padding: @offset 0;
+
+	.clearfix();
+}
+
+.embed-gallery__image,
+.embed-gallery__image-2x1,
+.embed-gallery__image-1x2 {
+	.image;
+
+	display: inline-block;
+	float: left;
+
+	width: calc(~"25% - @{image-offset-both}");
+	padding-bottom: calc(~"25% - @{image-offset-both}");
+	margin: @image-offset;
+	position: relative;
+	overflow: hidden;
+
+	&:hover {
+		.embed-gallery__image-label {
+			bottom: 0;
+		}
+	}
+}
+
+.embed-gallery__image-2x1 {
+	width: calc(~"50% - @{image-offset-both}");
+}
+
+.embed-gallery__image-1x2 {
+	padding-bottom: calc(~"50% - @{image-offset-both}");
+}
+
+.embed-gallery__image-label {
+	position: absolute;
+	bottom: -50%;
+	right: 0;
+	left: 0;
+	padding: 2px 5px 5px 5px;
+	background-color: fade(@color_asphalt, 70%);
+	color: white;
+	height: 50%;
+
+	text-decoration: none;
+	text-overflow: ellipsis;
+	._text_size-small();
+	._transition(bottom);
+}

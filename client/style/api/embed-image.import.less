@@ -1,19 +1,19 @@
 @import (reference) '/client/style/index.less';
 
-.embed {
+.embed-image {
 	margin: @detail-v-padding -@detail-h-padding;
 }
 
-.embed__image {
+.embed-image__image {
 	.image;
 	height: 300px;
 	position: relative;
 }
 
-.embed__image_static {
+.embed-image__image_static {
 }
 
-.embed__label {
+.embed-image__label {
 	position: absolute;
 	max-width: 60%;
 	color: @color-header;
@@ -21,63 +21,60 @@
 	._transition(border-color, 0.7s);
 }
 
-.embed__label-line {
+.embed-image__label-line {
 	background-color: white;
 	padding: 2px 10px 5px 12px;
 	display: inline-block;
 }
 
-.embed__label_medium {
+.embed-image__label_medium {
 	._text_size-above-normal();
 }
 
-.embed__label_bottom {
-	._display-flex();
-	._flex-direction__row();
-	._flex-justify-content__space-between();
+.embed-image__label_bottom {
 	padding: @offset @offset_1-and-quarter;
 	background-color: @color_cloudy-sky;
 	color: @color-text-dark;
 	._text_size-minor();
 }
 
-._embed__label_right() {
+._embed-image__label_right() {
 	//._flex-align-items__end();
 	border-right: @offset_half solid @article-detail-header-color;
 	text-align: right;
 	right: 0;
 }
 
-._embed__label_left() {
+._embed-image__label_left() {
 	border-left: @offset_half solid @article-detail-header-color;
 	text-align: left;
 	left: 0;
 }
 
-._embed__label_top() {
+._embed-image__label_top() {
 	top: 30px;
 }
 
-._embed__label_bottom() {
+._embed-image__label_bottom() {
 	bottom: 30px;
 }
 
-.embed__label-tl {
-	._embed__label_left();
-	._embed__label_top();
+.embed-image__label-tl {
+	._embed-image__label_left();
+	._embed-image__label_top();
 }
 
-.embed__label-tr {
-	._embed__label_right();
-	._embed__label_top();
+.embed-image__label-tr {
+	._embed-image__label_right();
+	._embed-image__label_top();
 }
 
-.embed__label-bl {
-	._embed__label_left();
-	._embed__label_bottom();
+.embed-image__label-bl {
+	._embed-image__label_left();
+	._embed-image__label_bottom();
 }
 
-.embed__label-br {
-	._embed__label_right();
-	._embed__label_bottom();
+.embed-image__label-br {
+	._embed-image__label_right();
+	._embed-image__label_bottom();
 }

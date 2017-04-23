@@ -24,15 +24,6 @@ export default class EmbedImageComponent extends React.Component {
 		height: 300,
 	};
 
-	constructor(params)
-	{
-		super(params);
-
-		this.state = {
-			data: [],
-		};
-	}
-
 	get image()
 	{
 		return this.props.image;
@@ -69,10 +60,10 @@ export default class EmbedImageComponent extends React.Component {
 
 		return (
 			<div
-				className="embed"
+				className="embed-image"
 			>
 				<div
-					className="embed__image embed__image_static"
+					className="embed-image__image embed-image__image_static"
 					style={{
 						backgroundImage: `url(${this.image})`,
 						height: `${this.height}px`,
@@ -82,13 +73,13 @@ export default class EmbedImageComponent extends React.Component {
 						!this.isLabelTypeBottom()
 						&&
 						<div className={classnames([
-							'embed__label embed__label_medium',
-							`embed__label-${this.labelPosition}`,
+							'embed-image__label embed-image__label_medium',
+							`embed-image__label-${this.labelPosition}`,
 						])}>
 							{
 								this.labelTextFragments.map((fragment) => {
 									return (<div
-										className="embed__label-line"
+										className="embed-image__label-line"
 									    key={fragment}
 									>
 										{fragment}
@@ -102,7 +93,7 @@ export default class EmbedImageComponent extends React.Component {
 				{
 					this.isLabelTypeBottom()
 					&&
-					<div className="embed__label_bottom">
+					<div className="embed-image__label_bottom">
 						{this.labelText}
 					</div>
 				}

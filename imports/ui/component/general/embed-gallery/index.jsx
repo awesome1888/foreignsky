@@ -66,12 +66,19 @@ export default class EmbedGalleryComponent extends React.Component {
 		window.removeEventListener("resize", this.onWindowResize);
 	}
 
+	showImage(e)
+	{
+		console.dir('click!');
+		e.preventDefault();
+	}
+
 	render(props = {})
 	{
 		return (
 			<div
 				className="embed-gallery"
 			    ref={(instance) => {this._scope = instance;}}
+				onClick={this.showImage.bind(this)}
 			>
 				{
 					this.props.items.map((item) => {
@@ -83,6 +90,8 @@ export default class EmbedGalleryComponent extends React.Component {
 								style={{
 									backgroundImage: `url(${item.image})`
 								}}
+							    key={item.image+item.label}
+								target="_blank"
 							>
 								{
 									item.label

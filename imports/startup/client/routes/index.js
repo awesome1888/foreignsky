@@ -20,6 +20,11 @@ FlowRouter.notFound = {
 	}
 };
 
+FlowRouter.triggers.exit(() => {
+	console.dir('here');
+	console.dir(arguments);
+});
+
 route('/', HomePage, {});
 route('/:id', HomePage, {});
 route('/not-found', NotFoundPage, {});

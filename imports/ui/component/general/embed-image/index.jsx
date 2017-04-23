@@ -56,8 +56,6 @@ export default class EmbedImageComponent extends React.Component {
 
 	render(props = {})
 	{
-		console.dir(this.labelTextFragments);
-
 		return (
 			<div
 				className="embed-image"

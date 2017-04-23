@@ -7,8 +7,8 @@ import {TAPi18n} from 'meteor/tap:i18n';
 import moment from 'moment';
 import classnames from 'classnames';
 
-import EmbedImageComponent from '/imports/ui/component/general/embed-image/index.js';
-import EmbedGalleryComponent from '/imports/ui/component/general/embed-gallery/index.js';
+import EmbedImageComponent from '/imports/ui/component/general/embed-image/index.jsx';
+import EmbedGalleryComponent from '/imports/ui/component/general/embed-gallery/index.jsx';
 
 import App from '/imports/ui/app.jsx';
 
@@ -189,26 +189,6 @@ export default class ArticleDetailComponent extends React.Component {
 									},
 									{
 										image: '/img/sample4.jpg',
-										label: 'Это слон. Просто. Восковой. Мать его. Слон. Это слон.',
-									},
-									{
-										image: '/img/sample1.jpg',
-										label: 'Это слон. Просто. Восковой. Мать его. Слон. Это слон.',
-									},
-									{
-										image: '/img/sample2.jpg',
-										label: 'Это слон. Просто. Восковой. Мать его. Слон. Это слон.',
-									},
-									{
-										image: '/img/sample3.jpg',
-										label: 'Это слон. Просто. Восковой. Мать его. Слон. Это слон.',
-									},
-									{
-										image: '/img/sample4.jpg',
-										label: 'Это слон. Просто. Восковой. Мать его. Слон. Это слон.',
-									},
-									{
-										image: '/img/sample1.jpg',
 										label: 'Это слон. Просто. Восковой. Мать его. Слон. Это слон.',
 									},
 								]

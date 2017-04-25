@@ -49,4 +49,10 @@ export default class Util
 	{
 		return function(){};
 	}
+
+	static passCtx(fn, extraArgs) {
+		return function wrappedFn(...args) {
+			fn.apply(this, _.union(extraArgs, args));
+		};
+	}
 }

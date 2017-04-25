@@ -2,7 +2,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
+//import classnames from 'classnames';
+import Util from '/imports/lib/util.js';
 
 import App from '/imports/ui/app.jsx';
 
@@ -68,12 +69,14 @@ export default class EmbedGalleryComponent extends React.Component {
 		window.removeEventListener("resize", this.onWindowResize);
 	}
 
-	showImage(e)
+	onImageClick(item, e)
 	{
-		console.dir('click!');
 		e.preventDefault();
 
-		App.instance.imageView.open('/img/sample4.jpg');
+		if(item && item.image)
+		{
+			App.instance.imageView.open(item.image);
+		}
 	}
 
 	render(props = {})
@@ -82,7 +85,6 @@ export default class EmbedGalleryComponent extends React.Component {
 			<div
 				className="embed-gallery"
 			    ref={(instance) => {this._scope = instance;}}
-				onClick={this.showImage.bind(this)}
 			>
 				{
 					this.props.items.map((item) => {
@@ -96,6 +98,7 @@ export default class EmbedGalleryComponent extends React.Component {
 								}}
 							    key={item.image+item.label}
 								target="_blank"
+								onClick={Util.passCtx(this.onImageClick, [item])}
 							>
 								{
 									item.label

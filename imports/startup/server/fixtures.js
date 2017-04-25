@@ -4,6 +4,7 @@ import { TAPi18n } from 'meteor/tap:i18n';
 import Article from '/imports/api/entity/article.js';
 import ArticleTag from '/imports/api/entity/article/tag.js';
 import File from '/imports/api/entity/file.js';
+import Embed from '/imports/api/entity/embed.js';
 
 Meteor.startup(() => {
 
@@ -73,12 +74,18 @@ Meteor.startup(() => {
 		console.dir('Demo files created');
 	}
 
+	if(!Embed.count())
+	{
+		let files = File.find({fields: ['_id']});
+	}
+
 	if(!Article.count())
 	{
 		console.dir('Creating articles............');
 
 		let tags = ArticleTag.find({fields: ['_id', 'title']});
 		let files = File.find({fields: ['_id']});
+		let embed = Embed.find();
 		let text = "Короче... Походу я только что получил свой первый штраф в Германии. На лобовое стекло под дворники мне положили такую бумажонку.\r\n\r\n"+
 				"*тут фотка бумажонки*\r\n\r\n"+
 				"Показал я эту бумажку своим друзьям с работы, и оказывается, что на одной ее стороне написано, что это просто \"friendly warning\", а на другой, что это \"fine\". Куда платить - не понятно. Сколько платить - не понятно. За что платить - не понятно. Мне сказали, что мне в Россию должно прийти письмо с описанием и реквизитами, и пока я судорожно думаю, что с этим делать, я решил разобраться, за что может быть штраф.\r\n\r\n"+

@@ -106,7 +106,7 @@ export default class ArticleCollection extends BaseCollection
 				optional: false,
 			},
 			embedId: {
-				type: String,
+				type: [String],
 				optional: true,
 			},
 		};
@@ -128,7 +128,7 @@ export default class ArticleCollection extends BaseCollection
 				index: false,
 			},
 			embed: {
-				type: 'one',
+				type: 'many',
 				collection: EmbedCollection.instance,
 				field: 'embedId',
 				index: false,

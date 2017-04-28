@@ -1,17 +1,16 @@
 import { Mongo } from 'meteor/mongo';
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 
+import BaseCollection from '/imports/api/collection/base.js';
 import ArticleTagCollection from '/imports/api/collection/article/tag.js'
 import FileCollection from '/imports/api/collection/file.js'
+import EmbedCollection from '/imports/api/collection/embed.js'
 
-export default class ArticleCollection extends Mongo.Collection
+export default class ArticleCollection extends BaseCollection
 {
 	constructor()
 	{
 		super('article');
-		this.attachSchema(this.schema);
-		this.addLinks(this.links);
-		this.ensureIndexesExist();
 	}
 
 	insert(data, cb)
@@ -65,76 +64,76 @@ export default class ArticleCollection extends Mongo.Collection
 		return _id;
 	}
 
-	get schema()
+	describeSchema()
 	{
-		if(!this._schema)
-		{
-			this._schema = new SimpleSchema({
-				_id: {
-					type: String,
-					regEx: SimpleSchema.RegEx.Id,
-					optional: false,
-				},
-				title: {
-					type: String,
-					optional: false,
-				},
-				date: {
-					type: Date,
-					optional: false,
-				},
-				text: {
-					type: String,
-					optional: false,
-				},
-				tagId: {
-					type: [String],
-					optional: true,
-				},
-				location: {
-					type: [Number],
-					optional: true,
-				},
-				headerImageId: {
-					type: [String],
-					optional: true,
-				},
-				headerColor: {
-					type: String,
-					optional: true,
-					regEx: /^[a-z0-9_-]+$/,
-				},
-				search: {
-					type: String,
-					optional: false,
-				}
-			});
-		}
-
-		return this._schema;
+		return {
+			_id: {
+				type: String,
+				regEx: SimpleSchema.RegEx.Id,
+				optional: false,
+			},
+			title: {
+				type: String,
+				optional: false,
+			},
+			date: {
+				type: Date,
+				optional: false,
+			},
+			text: {
+				type: String,
+				optional: false,
+			},
+			tagId: {
+				type: [String],
+				optional: true,
+			},
+			location: {
+				type: [Number],
+				optional: true,
+			},
+			headerImageId: {
+				type: [String],
+				optional: true,
+			},
+			headerColor: {
+				type: String,
+				optional: true,
+				regEx: /^[a-z0-9_-]+$/,
+			},
+			search: {
+				type: String,
+				optional: false,
+			},
+			embedId: {
+				type: String,
+				optional: true,
+			},
+		};
 	}
 
-	get links()
+	describeLinks()
 	{
-		if(!this._links)
-		{
-			this._links = {
-				tag: {
-					type: 'many',
-					collection: ArticleTagCollection.getInstance(),
-					field: 'tagId',
-					index: true,
-				},
-				headerImage: {
-					type: 'one',
-					collection: FileCollection.getInstance(),
-					field: 'headerImageId',
-					index: false,
-				}
-			};
-		}
-
-		return this._links;
+		return {
+			tag: {
+				type: 'many',
+				collection: ArticleTagCollection.instance,
+				field: 'tagId',
+				index: true,
+			},
+			headerImage: {
+				type: 'one',
+				collection: FileCollection.instance,
+				field: 'headerImageId',
+				index: false,
+			},
+			embed: {
+				type: 'one',
+				collection: EmbedCollection.instance,
+				field: 'embedId',
+				index: false,
+			},
+		};
 	}
 
 	ensureIndexesExist()
@@ -147,15 +146,5 @@ export default class ArticleCollection extends Mongo.Collection
 				name: 'search',
 			});
 		}
-	}
-
-	static getInstance()
-	{
-		if(!this.instance)
-		{
-			this.instance = new this();
-		}
-
-		return this.instance;
 	}
 }

@@ -8,6 +8,7 @@ export default class BaseCollection extends Mongo.Collection
 		super(name);
 		this.attachSchema(this.schema);
 		this.addLinks(this.links);
+		this.ensureIndexesExist();
 	}
 
 	get schema()
@@ -46,13 +47,26 @@ export default class BaseCollection extends Mongo.Collection
 		return {};
 	}
 
-	static getInstance()
+	ensureIndexesExist()
 	{
-		if(!this.instance)
+	}
+
+	static get instance()
+	{
+		if(!this._instance)
 		{
-			this.instance = new this();
+			this._instance = new this();
 		}
 
+		return this._instance;
+	}
+
+	/**
+	 * @deprecated
+	 * @returns {*}
+	 */
+	static getInstance()
+	{
 		return this.instance;
 	}
 }

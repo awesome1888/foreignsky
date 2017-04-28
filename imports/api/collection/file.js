@@ -1,45 +1,31 @@
 import {Mongo} from 'meteor/mongo';
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 
-export default class FileCollection extends Mongo.Collection
+import BaseCollection from '/imports/api/collection/base.js';
+
+export default class FileCollection extends BaseCollection
 {
 	constructor()
 	{
 		super('file');
-		this.attachSchema(this.schema);
 	}
 
-	get schema()
+	describeSchema()
 	{
-		if(!this._schema)
-		{
-			this._schema = new SimpleSchema({
-				_id: {
-					type: String,
-					regEx: SimpleSchema.RegEx.Id,
-					optional: false,
-				},
-				title: {
-					type: String,
-					optional: false,
-				},
-				url: {
-					type: String,
-					optional: true,
-				},
-			});
-		}
-
-		return this._schema;
-	}
-
-	static getInstance()
-	{
-		if(!this.instance)
-		{
-			this.instance = new this();
-		}
-
-		return this.instance;
+		return {
+			_id: {
+				type: String,
+				regEx: SimpleSchema.RegEx.Id,
+				optional: false,
+			},
+			title: {
+				type: String,
+				optional: false,
+			},
+			url: {
+				type: String,
+				optional: true,
+			},
+		};
 	}
 }

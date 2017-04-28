@@ -77,6 +77,42 @@ Meteor.startup(() => {
 	if(!Embed.count())
 	{
 		let files = File.find({fields: ['_id']});
+
+		const itemsA = [
+			{
+				label: 'Sony Center - место, где я работаю.',
+				imageId: files[0]._id,
+			},
+			{
+				label: 'Небоскребчеги Потсдамер Платз.',
+				imageId: files[1]._id,
+			},
+			{
+				imageId: files[2]._id,
+			},
+			{
+				label: 'Смотрите дети: в клетке слон, а слева - злобный слонов клон.',
+				imageId: files[3]._id,
+			},
+		];
+
+		Embed.insert({
+			itemId: itemsA,
+			renderer: 'GALLERY',
+		});
+
+		Embed.insert({
+			itemId: [
+				{
+					imageId: files[2]._id,
+					label: 'А это купол Рейхстага из окна моего туалета.',
+					options: {
+						labelPosition: 'tl',
+					},
+				},
+			],
+			renderer: 'IMAGE',
+		});
 	}
 
 	if(!Article.count())

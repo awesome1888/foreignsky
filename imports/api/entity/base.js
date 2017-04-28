@@ -34,6 +34,11 @@ export default class BaseEntity
 		//options.limit = params.limit;
 	}
 
+	insert(data, cb)
+	{
+		return this.collection.insert(data, cb);
+	}
+
 	expose()
 	{
 		if(Meteor.isServer && !this.exposed)

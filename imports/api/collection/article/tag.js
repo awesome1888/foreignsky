@@ -1,54 +1,40 @@
 import {Mongo} from 'meteor/mongo';
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 
-export default class ArticleTagCollection extends Mongo.Collection
+import BaseCollection from '/imports/api/collection/base.js';
+
+export default class ArticleTagCollection extends BaseCollection
 {
 	constructor()
 	{
 		super('article.tag');
-		this.attachSchema(this.schema);
 	}
 
-	get schema()
+	describeSchema()
 	{
-		if(!this._schema)
-		{
-			this._schema = new SimpleSchema({
-				_id: {
-					type: String,
-					regEx: SimpleSchema.RegEx.Id,
-					optional: false,
-				},
-				title: {
-					type: String,
-					optional: false,
-				},
-				sort: {
-					type: Number,
-					optional: true,
-				},
-				color: {
-					type: String,
-					optional: true,
-					regEx: /^[a-z0-9_-]+$/,
-				},
-				primary: {
-					type: Boolean,
-					optional: true,
-				},
-			});
-		}
-
-		return this._schema;
-	}
-
-	static getInstance()
-	{
-		if(!this.instance)
-		{
-			this.instance = new this();
-		}
-
-		return this.instance;
+		return {
+			_id: {
+				type: String,
+				regEx: SimpleSchema.RegEx.Id,
+				optional: false,
+			},
+			title: {
+				type: String,
+				optional: false,
+			},
+			sort: {
+				type: Number,
+				optional: true,
+			},
+			color: {
+				type: String,
+				optional: true,
+				regEx: /^[a-z0-9_-]+$/,
+			},
+			primary: {
+				type: Boolean,
+				optional: true,
+			},
+		};
 	}
 }

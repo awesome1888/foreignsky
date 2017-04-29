@@ -69,7 +69,19 @@ export default class ArticleDetailComponent extends React.Component {
 					tag: {
 						title: 1,
 						color: 1,
-					}
+					},
+					embed: {
+						item: {
+							image: {
+								url: 1,
+								title: 1,
+							},
+							label: 1,
+							options: 1,
+						},
+						renderer: 1,
+						options: 1,
+					},
 				},
 				filter: {'_id': id}
 			}).fetchOne((err, res) => {
@@ -105,6 +117,52 @@ export default class ArticleDetailComponent extends React.Component {
 		FlowRouter.go('/');
 	}
 
+	makeText(data)
+	{
+		if(!_.isObject(data))
+		{
+			return '';
+		}
+
+		let text = data.text;
+
+		if(!_.isString(text))
+		{
+			return '';
+		}
+
+		console.dir(text);
+
+		const expr = new RegExp('\\[EMBED\\s+ID=([a-zA-Z0-9]+)\\]', 'ig');
+		let found = null;
+		let parts = [];
+		let prevIndex = 0;
+		let chunk = '';
+		while(found = expr.exec(text))
+		{
+			chunk = text.substr(prevIndex, expr.lastIndex - found[0].length);
+			if(chunk.length)
+			{
+				parts.push(React.createElement('div', {key: chunk}, chunk));
+			}
+
+			// insert react component here...
+
+			prevIndex = expr.lastIndex;
+		}
+
+		// when nothing were found or for the last part of the text
+		chunk = text.substr(prevIndex, text.length);
+		if(chunk.length)
+		{
+			parts.push(React.createElement('div', {key: chunk}, chunk));
+		}
+
+		console.dir(parts);
+
+		return parts;
+	}
+
 	render(props = {})
 	{
 		const data = this.state.data;
@@ -113,6 +171,8 @@ export default class ArticleDetailComponent extends React.Component {
 		{
 			return null;
 		}
+
+		const content = this.makeText(data);
 
 		return (
 			<div
@@ -170,38 +230,7 @@ export default class ArticleDetailComponent extends React.Component {
 
 					<div className="article-detail__body">
 
-						{data.text}
-
-						<EmbedGalleryComponent
-							items={
-								[
-									{
-										image: '/img/sample1.jpg',
-										label: 'Это слон. Просто. Восковой. Мать его. Слон. Это слон.',
-									},
-									{
-										image: '/img/sample2.jpg',
-										label: 'Это слон. Просто. Восковой. Мать его. Слон. Это слон.',
-									},
-									{
-										image: '/img/sample3.jpg',
-										label: 'Это слон. Просто. Восковой. Мать его. Слон. Это слон.',
-									},
-									{
-										image: '/img/sample4.jpg',
-										label: 'Это слон. Просто. Восковой. Мать его. Слон. Это слон.',
-									},
-								]
-							}
-						/>
-
-						<EmbedImageComponent
-							image="/img/sample3.jpg"
-						    label={{
-						    	text: "Вид на Рейхстаг из окна SonyCenter\r\nПамятник коммунистам и победе\r\nНу и еще заголовок до кучи!",
-						        position: 'bl',
-						    }}
-						/>
+						{content}
 
 					</div>
 

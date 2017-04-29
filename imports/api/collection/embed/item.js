@@ -38,7 +38,7 @@ export default class EmbedItemCollection extends BaseCollection
 		return {
 			image: {
 				type: 'one',
-				collection: FileCollection.getInstance(),
+				collection: FileCollection.instance,
 				field: 'imageId',
 				index: true,
 			}

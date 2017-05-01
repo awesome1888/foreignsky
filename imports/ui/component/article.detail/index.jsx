@@ -131,7 +131,7 @@ export default class ArticleDetailComponent extends React.Component {
 			return '';
 		}
 
-		console.dir(text);
+		//console.dir(text);
 
 		const expr = new RegExp('\\[EMBED\\s+ID=([a-zA-Z0-9]+)\\]', 'ig');
 		let found = null;
@@ -140,27 +140,91 @@ export default class ArticleDetailComponent extends React.Component {
 		let chunk = '';
 		while(found = expr.exec(text))
 		{
-			chunk = text.substr(prevIndex, expr.lastIndex - found[0].length);
+			const till = expr.lastIndex - found[0].length;
+			chunk = text.substr(prevIndex, till - prevIndex);
+			console.dir(chunk);
+
 			if(chunk.length)
 			{
 				parts.push(React.createElement('div', {key: chunk}, chunk));
 			}
 
+			parts.push(this.makeEmbed(data, found[1]));
 			// insert react component here...
 
 			prevIndex = expr.lastIndex;
 		}
 
 		// when nothing were found or for the last part of the text
-		chunk = text.substr(prevIndex, text.length);
+		chunk = text.substr(prevIndex, text.length - prevIndex);
 		if(chunk.length)
 		{
 			parts.push(React.createElement('div', {key: chunk}, chunk));
 		}
 
-		console.dir(parts);
+		//console.dir(parts);
 
 		return parts;
+	}
+
+	/**
+	 * @access protected
+	 * @param data
+	 * @param id
+	 * @returns {null}
+	 */
+	makeEmbed(data, id)
+	{
+		if(!id || !_.isObject(data) || !_.isArray(data.embed))
+		{
+			return null;
+		}
+
+		id = id.toString().trim();
+		if(!id)
+		{
+			return null;
+		}
+
+		const embedData = data.embed.find((item) => {return item._id === id});
+		if(!_.isObject(embedData))
+		{
+			return null;
+		}
+
+		const renderer = this.getRendererClass(embedData.renderer);
+		if(!renderer)
+		{
+			return null;
+		}
+
+		return React.createElement(renderer, {key: id});
+
+		console.dir(embedData);
+		console.dir(id);
+
+		return null;
+	}
+
+	/**
+	 * @access private
+	 * @param code
+	 * @returns {*}
+	 */
+	getRendererClass(code)
+	{
+		if(code === 'GALLERY')
+		{
+			return EmbedGalleryComponent;
+		}
+		else if(code === 'IMAGE')
+		{
+			return EmbedImageComponent;
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	render(props = {})

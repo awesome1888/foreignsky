@@ -109,6 +109,10 @@ export default class ArticleCollection extends BaseCollection
 				type: [String],
 				optional: true,
 			},
+			public: {
+				type: Boolean,
+				optional: false,
+			}
 		};
 	}
 

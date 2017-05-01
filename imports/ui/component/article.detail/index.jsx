@@ -83,7 +83,10 @@ export default class ArticleDetailComponent extends React.Component {
 						options: 1,
 					},
 				},
-				filter: {'_id': id}
+				filter: {
+					_id: id,
+					public: true,
+				}
 			}).fetchOne((err, res) => {
 				if (!err)
 				{

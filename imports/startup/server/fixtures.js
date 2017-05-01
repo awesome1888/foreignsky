@@ -151,14 +151,16 @@ Meteor.startup(() => {
 				headerColor: 'silver',
 				headerImage: files[0]._id,
 				embedId: [embed[0]._id, embed[1]._id],
+				public: false,
 			},
 			{
-				title: 'Воскресенье в Германии',
+				title: 'Воскресенье в Германии!',
 				text: text,
 				tagId: [tags[1]._id],
 				headerColor: 'fresh-onion',
 				headerImage: files[1]._id,
 				embedId: [embed[0]._id, embed[1]._id],
+				public: true,
 			},
 			{
 				title: 'Про парковку',
@@ -166,6 +168,7 @@ Meteor.startup(() => {
 				tagId: [tags[2]._id, tags[1]._id],
 				headerImage: files[2]._id,
 				embedId: [embed[0]._id, embed[1]._id],
+				public: true,
 			},
 		].forEach(item => Article.collection.insert(item));
 

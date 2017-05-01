@@ -33,18 +33,6 @@ export default class EmbedGalleryComponent extends React.Component {
 		},
 	};
 
-	// static propTypes = {
-	// 	items: PropTypes.arrayOf(PropTypes.shape({
-	// 		image: PropTypes.string.isRequired,
-	// 		label: PropTypes.string,
-	// 		size: PropTypes.array,
-	// 	})),
-	// };
-	//
-	// static defaultProps = {
-	// 	items: [],
-	// };
-
 	constructor(props)
 	{
 		super(props);

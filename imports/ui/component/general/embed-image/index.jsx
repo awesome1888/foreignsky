@@ -30,22 +30,6 @@ export default class EmbedImageComponent extends React.Component {
 		},
 	};
 
-	// static propTypes = {
-	// 	label: PropTypes.shape({
-	// 		text: PropTypes.string.isRequired,
-	// 		position: PropTypes.oneOf(['bottom', 'tl', 'tr', 'bl', 'br']),
-	// 	}),
-	// 	image: PropTypes.string.isRequired,
-	// 	height: PropTypes.number,
-	// };
-	//
-	// static defaultProps = {
-	// 	label: {
-	// 		position: 'bottom',
-	// 	},
-	// 	height: 300,
-	// };
-
 	get options()
 	{
 		return this.props.options || {};

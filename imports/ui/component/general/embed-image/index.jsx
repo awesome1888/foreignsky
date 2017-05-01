@@ -9,49 +9,118 @@ import classnames from 'classnames';
 export default class EmbedImageComponent extends React.Component {
 
 	static propTypes = {
-		label: PropTypes.shape({
-			text: PropTypes.string.isRequired,
-			position: PropTypes.oneOf(['bottom', 'tl', 'tr', 'bl', 'br']),
+		item: PropTypes.arrayOf(PropTypes.shape({
+			image: PropTypes.oneOf(PropTypes.string, PropTypes.shape({
+				url: PropTypes.string,
+			})).isRequired,
+			label: PropTypes.string,
+			options: PropTypes.shape({
+				labelPosition: PropTypes.oneOf(['bottom', 'tl', 'tr', 'bl', 'br']),
+			}),
+		})),
+		options: PropTypes.shape({
+			height: PropTypes.number,
 		}),
-		image: PropTypes.string.isRequired,
-		height: PropTypes.number,
 	};
 
 	static defaultProps = {
-		label: {
-			position: 'bottom',
+		item: [],
+		options: {
+			height: 300,
 		},
-		height: 300,
 	};
 
-	get image()
+	// static propTypes = {
+	// 	label: PropTypes.shape({
+	// 		text: PropTypes.string.isRequired,
+	// 		position: PropTypes.oneOf(['bottom', 'tl', 'tr', 'bl', 'br']),
+	// 	}),
+	// 	image: PropTypes.string.isRequired,
+	// 	height: PropTypes.number,
+	// };
+	//
+	// static defaultProps = {
+	// 	label: {
+	// 		position: 'bottom',
+	// 	},
+	// 	height: 300,
+	// };
+
+	get options()
 	{
-		return this.props.image;
+		return this.props.options || {};
+	}
+
+	get item()
+	{
+		if(
+			_.isArray(this.props.item)
+			&&
+			_.isObject(this.props.item[0])
+		)
+		{
+			return this.props.item[0];
+		}
+
+		return {};
+	}
+
+	get imageUrl()
+	{
+		const image = this.item.image;
+
+		if(_.isObject(image) && image.url)
+		{
+			return image.url.toString().trim();
+		}
+
+		return '';
 	}
 
 	get height()
 	{
-		return this.props.height;
+		const height = parseInt(this.options.height);
+
+		if(_.isNumber(height) && height > 0)
+		{
+			return height;
+		}
+
+		return 300;
 	}
 
 	get labelText()
 	{
-		return this.props.label.text;
-	}
+		const item = this.item;
 
-	get labelTextFragments()
-	{
-		return this.props.label.text.split("\r\n");
+		if(this.item.label)
+		{
+			return this.item.label.toString().trim();
+		}
+
+		return '';
 	}
 
 	get labelPosition()
 	{
-		return this.props.label.position || 'tl';
+		const item = this.item;
+
+		if(_.isObject(item.options) && item.options.labelPosition)
+		{
+			return item.options.labelPosition.toString().trim();
+		}
+
+		return 'bottom';
+	}
+
+	get labelTextFragments()
+	{
+		return this.labelText.split("\r\n");
 	}
 
 	isLabelTypeBottom()
 	{
-		return this.props.label.position == 'bottom';
+		return this.labelPosition === 'bottom';
 	}
 
 	render(props = {})
@@ -63,7 +132,7 @@ export default class EmbedImageComponent extends React.Component {
 				<div
 					className="embed-image__image embed-image__image_static"
 					style={{
-						backgroundImage: `url(${this.image})`,
+						backgroundImage: `url(${this.imageUrl})`,
 						height: `${this.height}px`,
 					}}
 				>

@@ -198,12 +198,14 @@ export default class ArticleDetailComponent extends React.Component {
 			return null;
 		}
 
-		return React.createElement(renderer, {key: id});
+		// console.dir('embedData');
+		// console.dir(embedData);
 
-		console.dir(embedData);
-		console.dir(id);
-
-		return null;
+		return React.createElement(renderer, {
+			key: id,
+			item: embedData.item,
+			options: embedData.options,
+		});
 	}
 
 	/**
@@ -307,13 +309,3 @@ export default class ArticleDetailComponent extends React.Component {
 		);
 	}
 }
-//
-// export default createQueryContainer(Article.createQuery({
-// 	fields: ['title'],
-// 	sort: [
-// 		{date: -1}
-// 	]
-// }, 'ArticleViewerDetailComponent'), ArticleViewerDetailComponent, {
-// 	reactive: false,
-// 	single: false,
-// });

@@ -12,16 +12,38 @@ import './style.less';
 export default class EmbedGalleryComponent extends React.Component {
 
 	static propTypes = {
-		items: PropTypes.arrayOf(PropTypes.shape({
-			image: PropTypes.string.isRequired,
+		item: PropTypes.arrayOf(PropTypes.shape({
+			image: PropTypes.oneOf(PropTypes.string, PropTypes.shape({
+				url: PropTypes.string,
+			})).isRequired,
 			label: PropTypes.string,
-			size: PropTypes.array,
+			options: PropTypes.shape({
+				labelPosition: PropTypes.oneOf(['bottom', 'tl', 'tr', 'bl', 'br']),
+			}),
 		})),
+		options: PropTypes.shape({
+			height: PropTypes.number,
+		}),
 	};
 
 	static defaultProps = {
-		items: [],
+		item: [],
+		options: {
+			height: 300,
+		},
 	};
+
+	// static propTypes = {
+	// 	items: PropTypes.arrayOf(PropTypes.shape({
+	// 		image: PropTypes.string.isRequired,
+	// 		label: PropTypes.string,
+	// 		size: PropTypes.array,
+	// 	})),
+	// };
+	//
+	// static defaultProps = {
+	// 	items: [],
+	// };
 
 	constructor(props)
 	{
@@ -31,6 +53,21 @@ export default class EmbedGalleryComponent extends React.Component {
 		this.state = {};
 
 		this.onWindowResize = this.onWindowResize.bind(this);
+	}
+
+	get options()
+	{
+		return this.props.options || {};
+	}
+
+	get item()
+	{
+		if(_.isArray(this.props.item))
+		{
+			return this.props.item;
+		}
+
+		return [];
 	}
 
 	onWindowResize()
@@ -73,9 +110,9 @@ export default class EmbedGalleryComponent extends React.Component {
 	{
 		e.preventDefault();
 
-		if(item && item.image)
+		if(item && item.image.url)
 		{
-			App.instance.imageView.open(item.image);
+			App.instance.imageView.open(item.image.url);
 		}
 	}
 
@@ -87,16 +124,16 @@ export default class EmbedGalleryComponent extends React.Component {
 			    ref={(instance) => {this._scope = instance;}}
 			>
 				{
-					this.props.items.map((item) => {
+					this.item.map((item) => {
 						return (
 
 							<a
-								href={item.image}
+								href={item.image.url}
 								className="embed-gallery__image"
 								style={{
-									backgroundImage: `url(${item.image})`
+									backgroundImage: `url(${item.image.url})`
 								}}
-							    key={item.image+item.label}
+							    key={item._id}
 								target="_blank"
 								onClick={Util.passCtx(this.onImageClick, [item])}
 							>

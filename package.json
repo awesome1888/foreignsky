@@ -5,10 +5,12 @@
     "meteor": "MONGO_URL=mongodb://localhost:27017/indaberlin meteor"
   },
   "dependencies": {
-    "babel-runtime": "^6.20.0",
+    "babel-runtime": "^6.23.0",
+    "classnames": "^2.2.5",
     "meteor-node-stubs": "~0.2.4",
+    "moment": "^2.18.1",
     "prop-types": "^15.5.8",
-    "react": "^15.4.2",
+    "react": "^15.5.4",
     "react-addons-pure-render-mixin": "^15.4.2",
     "react-document-meta": "^2.1.1",
     "react-dom": "^15.4.2",
@@ -20,6 +22,8 @@
     "babel-plugin-transform-class-properties": "^6.24.1"
   },
   "babel": {
-    "plugins": ["transform-class-properties"]
+    "plugins": [
+      "transform-class-properties"
+    ]
   }
 }

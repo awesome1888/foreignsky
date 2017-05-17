@@ -1,6 +1,7 @@
 {
   "name": "indaberlin",
   "private": true,
+  "version": "1.0.0",
   "scripts": {
     "start": "MONGO_URL=mongodb://localhost:27017/indaberlin meteor run --port 3000 --settings=local-settings.json"
   },

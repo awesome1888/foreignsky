@@ -2,7 +2,7 @@
   "name": "indaberlin",
   "private": true,
   "scripts": {
-    "meteor": "MONGO_URL=mongodb://localhost:27017/indaberlin meteor"
+    "start": "MONGO_URL=mongodb://localhost:27017/indaberlin meteor run --port 3000 --settings=local-settings.json"
   },
   "dependencies": {
     "babel-runtime": "^6.23.0",

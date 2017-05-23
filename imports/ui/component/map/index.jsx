@@ -45,7 +45,7 @@ export default class Map extends React.Component {
 	get mapUrl()
 	{
 	    const key = Meteor.settings.public['google-maps_key'];
-		return `http://maps.googleapis.com/maps/api/js?v=3&key=${key}&libraries=geometry,drawing,places`;
+		return `https://maps.googleapis.com/maps/api/js?v=3&key=${key}&libraries=geometry,drawing,places`;
 	}
 
 	get map()

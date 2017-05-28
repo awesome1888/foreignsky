@@ -27,6 +27,7 @@ ddp-client@1.3.3
 ddp-common@1.2.8
 ddp-server@1.3.13
 deps@1.0.12
+dferber:prerender@2.2.2_3
 diff-sequence@1.0.7
 ecmascript@0.6.3
 ecmascript-runtime@0.3.15

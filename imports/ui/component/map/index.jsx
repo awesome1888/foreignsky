@@ -44,6 +44,8 @@ export default class Map extends React.Component {
 
 	get mapUrl()
 	{
+	    console.dir('сосиски');
+
 	    const key = Meteor.settings.public['google-maps_key'];
 		return `https://maps.googleapis.com/maps/api/js?v=3&key=${key}&libraries=geometry,drawing,places`;
 	}

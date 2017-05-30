@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Util from '/imports/lib/util.js';
+import PreRender from '/imports/lib/prerender.js';
 
 import App from '/imports/ui/app.jsx';
 
@@ -85,8 +86,10 @@ export default class Map extends React.Component {
 
 	initializeMap()
 	{
-		if(!Meteor.isClient)
+		if(!Meteor.isClient || PreRender.isCrawler)
 		{
+		    // do not initialize map if we are not on the client
+            // or google/yandex is visiting us
 			return;
 		}
 

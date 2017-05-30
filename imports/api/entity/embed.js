@@ -16,9 +16,6 @@ class EmbedEntity extends BaseEntity
 
 	insert(data, cb)
 	{
-		console.dir('Inserting');
-		console.dir(data);
-
 		if(!_.isString(data.itemId))
 		{
 			let ids = [];

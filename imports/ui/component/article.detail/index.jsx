@@ -145,7 +145,6 @@ export default class ArticleDetailComponent extends React.Component {
 		{
 			const till = expr.lastIndex - found[0].length;
 			chunk = text.substr(prevIndex, till - prevIndex);
-			console.dir(chunk);
 
 			if(chunk.length)
 			{

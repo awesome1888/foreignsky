@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 echo 'Building...'
-meteor build .;
+rm -f /tmp/meteor/nachberlin.ru.tar.gz;
+meteor build /tmp/meteor;
 echo 'Uploading...'
-scp ../nachberlin.ru.tar.gz root@188.120.254.6:/home/indaberlin/;
+scp /tmp/meteor/nachberlin.ru.tar.gz root@188.120.254.6:/home/indaberlin/;
 echo 'Unpacking...'
 ssh root@188.120.254.6 'systemctl daemon-reload; systemctl stop nachberlin';
 ssh root@188.120.254.6 'rm -rf /home/indaberlin/bundle/';

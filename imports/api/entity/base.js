@@ -67,8 +67,13 @@ export default class BaseEntity
 
 	find(parameters)
 	{
-		return this.createQuery(this.translateParameters(parameters)).fetch();
+		return this.createQuery(parameters).fetch();
 	}
+
+	findOne()
+    {
+        // todo
+    }
 
 	createQuery(parameters, name = '')
 	{

@@ -95,6 +95,7 @@ export default class ArticleDetailComponent extends React.Component {
 						data: res || {},
 					});
 					App.instance.map.toggleBlock(true);
+                    App.instance.setTitle(res.title);
 					resolve();
 				}
 				else
@@ -102,7 +103,6 @@ export default class ArticleDetailComponent extends React.Component {
 					reject();
 				}
 			});
-
 		});
 	}
 
@@ -117,6 +117,7 @@ export default class ArticleDetailComponent extends React.Component {
 			opened: false
 		});
 		App.instance.map.toggleBlock(false);
+        App.instance.setTitle();
 		FlowRouter.go('/');
 	}
 

@@ -13,7 +13,6 @@
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-addons-pure-render-mixin": "^15.4.2",
-    "react-document-meta": "^2.1.1",
     "react-dom": "^15.4.2",
     "react-google-maps": "^4.11.0",
     "react-mounter": "^1.2.0",

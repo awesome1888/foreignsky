@@ -1,31 +1,20 @@
 /* eslint-disable class-methods-use-this */
 
 import React from 'react';
-import DocumentMeta from 'react-document-meta';
+import {DocHead} from 'meteor/kadira:dochead';
 
 export default class BasePage extends React.Component {
+
+    constructor(props)
+    {
+        super(props);
+    }
 
 	static propTypes = {
 	};
 
 	static defaultProps = {
 	};
-
-	get meta()
-	{
-		return  {
-			title: 'InDaBerlin',
-			description: 'You can find here a lot of cool stuff',
-			//canonical: 'http://example.com/path/to/page',
-			meta: {
-				charset: 'utf-8',
-				name: {
-					keywords: 'berlin,blackjack,whores',
-					viewport: 'initial-scale=1.0, user-scalable=no'
-				}
-			}
-		};
-	}
 
 	get routeParams()
 	{
@@ -46,7 +35,6 @@ export default class BasePage extends React.Component {
 	{
 		return (
 			<div className="layout__central layout__central-body container">
-				<DocumentMeta {...this.meta} />
 				<div className="layout__central-row row">
 					<div className="layout__central-body-left col-xs-3">
 						{this.getSideHtml(props)}

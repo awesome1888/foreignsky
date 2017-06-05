@@ -1,11 +1,11 @@
 import React from 'react';
-
 import Header from '/imports/ui/component/header/index.jsx';
 import Map from '/imports/ui/component/map/index.jsx';
 import LoadOverlay from '/imports/ui/component/load.overlay/index.jsx';
 import LoadIndicator from '/imports/ui/component/load.indicator/index.jsx';
 import ImageViewComponent from '/imports/ui/component/general/image-view/index.jsx';
 import Util from '/imports/lib/util.js';
+import {DocHead} from 'meteor/kadira:dochead';
 
 export default class App extends React.Component {
 
@@ -20,6 +20,10 @@ export default class App extends React.Component {
 		this._map = null;
 		this._indicator = null;
 		this._imageView = null;
+
+		this.setTitle();
+		this.setDescription();
+		this.setKeywords();
 	}
 
 	get overlay()
@@ -91,6 +95,40 @@ export default class App extends React.Component {
 
 		return p;
 	}
+
+    setTitle(pageName = '')
+    {
+        let title = 'Еще один блог еще одной семьи, переехавшей в Берлин.';
+        if (_.isStringNotEmpty(pageName)) {
+            title = pageName+' – '+title;
+        }
+        DocHead.setTitle(title);
+    }
+
+    setDescription(text = '')
+    {
+        DocHead.addMeta({
+            name: "description",
+            content: _.isStringNotEmpty(text) ? text : 'Еще один блог еще одной семьи, переехавшей в Берлин.',
+        });
+    }
+
+    setKeywords(keywords = [])
+    {
+        let kw = [
+            'берлин','блог','город','поездка','достопримечательности',
+            'места','памятники','статьи','экскурсии','германия',
+        ];
+        if (_.isArrayNotEmpty(keywords))
+        {
+            kw = keywords;
+        }
+
+        DocHead.addMeta({
+            name: "keywords",
+            content: kw.join(', '),
+        });
+    }
 
 	static get instance()
 	{

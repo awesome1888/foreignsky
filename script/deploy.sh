@@ -11,7 +11,7 @@ ssh root@188.120.254.6 'rm -rf /home/indaberlin/bundle/';
 ssh root@188.120.254.6 'tar -xzf /home/indaberlin/nachberlin.ru.tar.gz -C /home/indaberlin/';
 ssh root@188.120.254.6 'cd /home/indaberlin/bundle/programs/server/; /home/indaberlin/.node/current/bin/npm install;'
 ssh root@188.120.254.6 'chown -R indaberlin:indaberlin /home/indaberlin/bundle/';
-ssh root@188.120.254.6 'chown -R indaberlin:indaberlin /home/indaberlin/settings.json';
+#ssh root@188.120.254.6 'chown -R indaberlin:indaberlin /home/indaberlin/settings.json';
 ssh root@188.120.254.6 'rm /home/indaberlin/nachberlin.ru.tar.gz';
 echo 'Restarting...'
 ssh root@188.120.254.6 'systemctl daemon-reload; systemctl start nachberlin';

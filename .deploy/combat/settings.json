@@ -5,6 +5,8 @@
   "private": {
   },
   "PrerenderIO": {
-    "token": "E6owwnZQmQEkWMOT0ujP"
+    "token": "E6owwnZQmQEkWMOT0ujP",
+    "host": "localhost:3000",
+    "protocol": "http"
   }
 }

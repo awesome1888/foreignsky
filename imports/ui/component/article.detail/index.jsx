@@ -94,7 +94,7 @@ export default class ArticleDetailComponent extends React.Component {
 						opened: true,
 						data: res || {},
 					});
-					App.instance.map.toggleBlock(true);
+					App.instance.mapToggleBlock(true);
                     App.instance.setTitle(res.title);
 					resolve();
 				}
@@ -116,7 +116,7 @@ export default class ArticleDetailComponent extends React.Component {
 		this.setState({
 			opened: false
 		});
-		App.instance.map.toggleBlock(false);
+		App.instance.mapToggleBlock(false);
         App.instance.setTitle();
 		FlowRouter.go('/');
 	}
@@ -200,9 +200,6 @@ export default class ArticleDetailComponent extends React.Component {
 		{
 			return null;
 		}
-
-		// console.dir('embedData');
-		// console.dir(embedData);
 
 		return React.createElement(renderer, {
 			key: id,

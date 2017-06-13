@@ -33,6 +33,10 @@ export default class Map extends React.Component {
 		};
 	}
 
+    /**
+     * Toggles map overlay
+     * @param way
+     */
 	toggleBlock(way)
 	{
 		this.setState({blocked: !!way});

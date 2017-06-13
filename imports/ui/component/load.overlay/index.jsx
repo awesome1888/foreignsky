@@ -29,11 +29,12 @@ export default class AppLoadingOverlay extends React.Component {
 		this.waitPool = [];
 	}
 
-	/**
-	 * temporal
-	 */
-	waitAll()
+    wait()
 	{
+	    if(PreRender.isCrawler) {
+	        return; // when crawler do nothing
+        }
+
 		Promise.all(this.waitPool).then(() => {
 		    this.startUnlocking();
         });

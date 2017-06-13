@@ -6,6 +6,7 @@ import LoadIndicator from '/imports/ui/component/load.indicator/index.jsx';
 import ImageViewComponent from '/imports/ui/component/general/image-view/index.jsx';
 import Util from '/imports/lib/util.js';
 import {DocHead} from 'meteor/kadira:dochead';
+import PreRender from '/imports/lib/prerender.js';
 
 export default class App extends React.Component {
 
@@ -85,13 +86,24 @@ export default class App extends React.Component {
 		}
 	}
 
+	mapToggleBlock(way)
+    {
+	    if(this.map)
+	    {
+	        this.map.toggleBlock(way);
+        }
+    }
+
 	setLoading(p)
 	{
 		if(this.overlay)
 		{
 			this.overlay.waitMe(p);
-			this.indicator.addProcess(p);
 		}
+		if(this.indicator)
+		{
+            this.indicator.addProcess(p);
+        }
 
 		return p;
 	}
@@ -145,14 +157,15 @@ export default class App extends React.Component {
 
 	componentWillMount()
 	{
-		//console.dir('re-mount!');
 		App._instance = this;
 	}
 
 	componentDidMount()
 	{
-		//console.dir('App mounted');
-		this.overlay.waitAll();
+	    if(this.overlay)
+        {
+            this.overlay.wait();
+        }
 	}
 
 	render() {
@@ -162,25 +175,38 @@ export default class App extends React.Component {
 		return (
 			<div id="app">
 				<div className="layout">
-					<LoadOverlay
-						ref={(instance) => {this.overlay = instance;}}
-					/>
-					<div className="layout__central layout__header">
+                    {
+                        !PreRender.isCrawler
+                        &&
+                        <LoadOverlay
+                            ref={(instance) => {this.overlay = instance;}}
+                        />
+                    }
+
+                    <div className="layout__central layout__header">
 						<Header />
-						<LoadIndicator
-							ref={(instance) => {this.indicator = instance;}}
-						/>
-					</div>
+                        {
+                            !PreRender.isCrawler
+                            &&
+                            <LoadIndicator
+                                ref={(instance) => {this.indicator = instance;}}
+                            />
+                        }
+                    </div>
 					{React.createElement(main, {
 						route: routeProps,
 					})}
 				</div>
-				<Map
-					ref={(instance) => {this.map = instance;}}
-				    center={{lat: 52.520764, lng: 13.409161}}
-				    zoom={15}
-				/>
-				<ImageViewComponent
+                {
+                    !PreRender.isCrawler
+                    &&
+                    <Map
+                        ref={(instance) => {this.map = instance;}}
+                        center={{lat: 52.520764, lng: 13.409161}}
+                        zoom={15}
+                    />
+                }
+                <ImageViewComponent
 					ref={(instance) => {this.imageView = instance;}}
 				/>
 			</div>

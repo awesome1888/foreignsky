@@ -7,7 +7,7 @@ export default class PreRender
     {
         if(Meteor.isClient)
         {
-            //window.prerenderReady = false;
+            window.prerenderReady = false;
         }
     }
 
@@ -18,9 +18,9 @@ export default class PreRender
     {
         if(Meteor.isClient)
         {
-            // Meteor.setTimeout(() => {
-            //     window.prerenderReady = true;
-            // }, 10000);
+            Meteor.setTimeout(() => {
+                window.prerenderReady = true;
+            }, 10000);
         }
     }
 

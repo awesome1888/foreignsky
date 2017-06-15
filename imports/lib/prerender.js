@@ -25,12 +25,28 @@ export default class PreRender
     }
 
     /**
-     * Returns true, if google/yandex is visiting the app at the moment
+     * Returns true, if google/yandex/prerender/... is visiting the app at the moment
      * @returns {boolean}
      */
     static get isCrawler()
     {
+        if(!Meteor.isClient)
+        {
+            return false;
+        }
+
         const ef = FlowRouter.getQueryParam('escaped_fragment');
-        return ef !== undefined;
+        if(ef !== undefined)
+        {
+            return true;
+        }
+
+        const agent = navigator.userAgent.toLowerCase();
+        if(agent.indexOf('prerender') >= 0) {
+            // prerender crawler
+            return true;
+        }
+
+        return false;
     }
 }

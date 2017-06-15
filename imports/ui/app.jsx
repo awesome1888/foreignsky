@@ -169,7 +169,6 @@ export default class App extends React.Component {
 	}
 
 	render() {
-
 		const {main, routeProps} = this.props;
 
 		return (

@@ -197,12 +197,11 @@ export default class App extends React.Component {
 					})}
 				</div>
                 {
-                    !PreRender.isCrawler
-                    &&
                     <Map
                         ref={(instance) => {this.map = instance;}}
                         center={{lat: 52.520764, lng: 13.409161}}
                         zoom={15}
+                        useFakeMap={PreRender.isCrawler}
                     />
                 }
                 <ImageViewComponent

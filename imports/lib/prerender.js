@@ -30,23 +30,20 @@ export default class PreRender
      */
     static get isCrawler()
     {
+        return true;
+
         if(!Meteor.isClient)
         {
             return false;
         }
 
-        const ef = FlowRouter.getQueryParam('escaped_fragment');
+        const ef = FlowRouter.getQueryParam('_escaped_fragment_');
         if(ef !== undefined)
         {
             return true;
         }
 
         const agent = navigator.userAgent.toLowerCase();
-        if(agent.indexOf('prerender') >= 0) {
-            // prerender crawler
-            return true;
-        }
-
-        return false;
+        return agent.indexOf('prerender') >= 0; // preprender crawler
     }
 }

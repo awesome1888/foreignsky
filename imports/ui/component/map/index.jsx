@@ -14,17 +14,18 @@ export default class Map extends React.Component {
 	static propTypes = {
 		center: PropTypes.object,
 		zoom: PropTypes.number,
+        useFakeMap: PropTypes.boolean,
 	};
 
 	static defaultProps = {
 		center: {lat: 54.714187, lng: 20.581439},
 		zoom: 14,
+        useFakeMap: false,
 	};
 
 	constructor(params)
 	{
 		super(params);
-		this.useFakeMap = false;
 		this.mapContainer = null;
 		this._map = null;
 
@@ -44,7 +45,10 @@ export default class Map extends React.Component {
 
 	componentDidMount()
 	{
-		this.initializeMap();
+	    if(!this.props.useFakeMap)
+        {
+            this.initializeMap();
+        }
 	}
 
 	get mapUrl()
@@ -90,13 +94,12 @@ export default class Map extends React.Component {
 
 	initializeMap()
 	{
-		if(!Meteor.isClient || PreRender.isCrawler)
-		{
-		    // do not initialize map if we are not on the client
-            // or google/yandex is visiting us
-			return;
-		}
-
+		// if(!Meteor.isClient || PreRender.isCrawler)
+		// {
+		//     // do not initialize map if we are not on the client
+         //    // or google/yandex is visiting us
+		// 	return;
+		// }
 		return App.instance.setLoading(new Promise((resolve, reject) => {
 			Util.loadJs(this.mapUrl).then(() => {
 
@@ -122,13 +125,13 @@ export default class Map extends React.Component {
 		return (
 			<div className="map">
 				{
-					this.useFakeMap
+					this.props.useFakeMap
 					&&
-					<div className="map__container" />
+					<div className="map__container map__container_map-fake" />
 				}
 				{
-					!this.useFakeMap
-					&&
+				    !this.props.useFakeMap
+                    &&
 					<div
 						className="map__container"
 					    ref={(instance) => {this.mapContainer = instance}}

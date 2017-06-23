@@ -30,8 +30,6 @@ export default class PreRender
      */
     static get isCrawler()
     {
-        return true;
-
         if(!Meteor.isClient)
         {
             return false;

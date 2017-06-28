@@ -8,6 +8,11 @@ import Embed from '/imports/api/entity/embed.js';
 
 Meteor.startup(() => {
 
+    if(!Meteor.isDevelopment)
+    {
+        return;
+    }
+
 	if(!ArticleTag.count())
 	{
 		console.dir('Creating article types....');
@@ -172,5 +177,4 @@ Meteor.startup(() => {
 
 		console.dir('Articles created');
 	}
-
 });

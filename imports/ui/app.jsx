@@ -7,6 +7,7 @@ import ImageViewComponent from '/imports/ui/component/general/image-view/index.j
 import Util from '/imports/lib/util.js';
 import {DocHead} from 'meteor/kadira:dochead';
 import PreRender from '/imports/lib/prerender.js';
+import {FlowRouter} from 'meteor/kadira:flow-router';
 
 export default class App extends React.Component {
 
@@ -86,7 +87,11 @@ export default class App extends React.Component {
 		}
 	}
 
-	mapToggleBlock(way)
+	get query() {
+	    return FlowRouter.current().queryParams;
+    }
+
+	toggleMap(way)
     {
 	    if(this.map)
 	    {
@@ -108,13 +113,14 @@ export default class App extends React.Component {
 		return p;
 	}
 
-    setTitle(pageName = '')
+    setTitle(title = '')
     {
-        let title = 'Еще один блог еще одной семьи, переехавшей в Берлин.';
-        if (_.isStringNotEmpty(pageName)) {
-            title = pageName+' – '+title;
+        let newTitle = 'Еще один блог еще одной семьи, переехавшей в Берлин.';
+        if (_.isStringNotEmpty(title)) {
+            title = title.replace(/#DASH#/g, '–');
+            newTitle = `${title} – ${newTitle}`;
         }
-        DocHead.setTitle(title);
+        DocHead.setTitle(newTitle);
     }
 
     setDescription(text = '')

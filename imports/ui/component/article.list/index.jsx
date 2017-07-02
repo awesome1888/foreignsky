@@ -77,8 +77,14 @@ export default class ArticleListComponent extends React.Component {
 		}));
 	}
 
+	hasData() {
+	    return _.isArrayNotEmpty(this.state.data);
+    }
+
 	render(props = {})
 	{
+	    const data = this.state.data;
+
 		return (
 			<div className="article-list">
 				<ArticleListFilterComponent
@@ -86,8 +92,17 @@ export default class ArticleListComponent extends React.Component {
 				/>
 				<div className="article-list__list">
 					<div className="article-list__list-scroll">
+                        {
+                            !this.hasData()
+                            &&
+                            <div className="text_size_minor">
+                                Нет статей для показа :(
+                            </div>
+                        }
 						{
-							this.state.data.map(item => {
+                            this.hasData()
+                            &&
+                            data.map(item => {
 								return (
 									<a key={item._id} href={`/${item._id}`} className="article-list__list-item">
 										{item.title}

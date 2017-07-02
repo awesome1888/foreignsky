@@ -11,6 +11,10 @@ export default class BaseEntity
 		throw new ReferenceError();
 	}
 
+	static get collection() {
+	    return this.constructor.prototype.collectionClass.getInstance();
+    }
+
 	get collection()
 	{
 		return this.collectionClass.getInstance();

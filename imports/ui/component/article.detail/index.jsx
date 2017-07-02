@@ -2,7 +2,6 @@
 
 import React from 'react';
 import {createQueryContainer} from 'meteor/cultofcoders:grapher-react';
-import Article from '/imports/api/entity/article.js';
 import {TAPi18n} from 'meteor/tap:i18n';
 import moment from 'moment';
 import classnames from 'classnames';
@@ -11,11 +10,13 @@ import EmbedImageComponent from '/imports/ui/component/general/embed-image/index
 import EmbedGalleryComponent from '/imports/ui/component/general/embed-gallery/index.jsx';
 
 import App from '/imports/ui/app.jsx';
+import BaseComponent from '../../../lib/util/base-component/base-component.js';
 
+import Query from './query/article.query.js';
 import './style.less';
 
-export default class ArticleDetailComponent extends React.Component {
-
+export default class ArticleDetailComponent extends BaseComponent
+{
 	constructor(params)
 	{
 		super(params);
@@ -55,47 +56,26 @@ export default class ArticleDetailComponent extends React.Component {
 
 	show(id)
 	{
+	    const params = {
+	        id,
+        };
+
+        // weak defence, but better then nothing
+	    if (App.instance.query['super-secret'] !== 'm73iho5e2ws3rhbsgm2btumqhki2eg') {
+            params.public = true;
+        }
+
 		return new Promise((resolve, reject) => {
-			Article.createQuery({
-				fields: {
-					title: 1,
-					text: 1,
-					date: 1,
-					headerColor: 1,
-					headerImage: {
-						title: 1,
-						url: 1,
-					},
-					tag: {
-						title: 1,
-						color: 1,
-					},
-					embed: {
-						item: {
-							image: {
-								url: 1,
-								title: 1,
-							},
-							label: 1,
-							options: 1,
-						},
-						renderer: 1,
-						options: 1,
-					},
-				},
-				filter: {
-					_id: id,
-					public: true,
-				}
-			}).fetchOne((err, res) => {
+            Query.clone(params).fetchOne((err, res) => {
 				if (!err)
 				{
+				    const data = res || {};
 					this.setState({
 						opened: true,
-						data: res || {},
+						data,
 					});
-					App.instance.mapToggleBlock(true);
-                    App.instance.setTitle(res.title);
+					App.instance.toggleMap(true);
+                    this.setTitle(data.title);
 					resolve();
 				}
 				else
@@ -116,8 +96,8 @@ export default class ArticleDetailComponent extends React.Component {
 		this.setState({
 			opened: false
 		});
-		App.instance.mapToggleBlock(false);
-        App.instance.setTitle();
+		App.instance.toggleMap(false);
+        //App.instance.setTitle();
 		FlowRouter.go('/');
 	}
 
@@ -135,8 +115,6 @@ export default class ArticleDetailComponent extends React.Component {
 			return '';
 		}
 
-		//console.dir(text);
-
 		const expr = new RegExp('\\[EMBED\\s+ID=([a-zA-Z0-9]+)\\]', 'ig');
 		let found = null;
 		let parts = [];
@@ -153,7 +131,6 @@ export default class ArticleDetailComponent extends React.Component {
 			}
 
 			parts.push(this.makeEmbed(data, found[1]));
-			// insert react component here...
 
 			prevIndex = expr.lastIndex;
 		}
@@ -164,8 +141,6 @@ export default class ArticleDetailComponent extends React.Component {
 		{
 			parts.push(React.createElement('div', {key: chunk}, chunk));
 		}
-
-		//console.dir(parts);
 
 		return parts;
 	}
@@ -232,7 +207,6 @@ export default class ArticleDetailComponent extends React.Component {
 	render(props = {})
 	{
 		const data = this.state.data;
-
 		if(!data._id)
 		{
 			return null;

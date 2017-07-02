@@ -204,6 +204,15 @@ export default class ArticleDetailComponent extends BaseComponent
 		}
 	}
 
+	hasHeaderImage()
+    {
+	    if (!this.state.data)
+	    {
+	        return false;
+        }
+        return _.isObjectNotEmpty(this.state.data.headerImage);
+    }
+
 	render(props = {})
 	{
 		const data = this.state.data;
@@ -224,23 +233,27 @@ export default class ArticleDetailComponent extends BaseComponent
 			>
 				<div className="article-detail__inner-scroll">
 
-					<div
-						className="embed-image article-detail__header-embed"
-					>
-						<div
-							className="embed-image__image embed-image__image_static article-detail__header-image-embed"
-							style={{
-								backgroundImage: `url(${data.headerImage.url})`,
-							}}
-						>
-							<div className="embed-image__label embed-image__label-br">
-								<div className="embed-image__label-line">
-									{data.title}
-								</div>
-							</div>
-						</div>
+                    {
+                        this.hasHeaderImage()
+                        &&
+                        <div
+                            className="embed-image article-detail__header-embed"
+                        >
+                            <div
+                                className="embed-image__image embed-image__image_static article-detail__header-image-embed"
+                                style={{
+                                    backgroundImage: `url(${data.headerImage.url})`,
+                                }}
+                            >
+                                <div className="embed-image__label embed-image__label-br">
+                                    <div className="embed-image__label-line">
+                                        {data.title}
+                                    </div>
+                                </div>
+                            </div>
 
-					</div>
+                        </div>
+                    }
 
 					<div className="article-detail__body-top-line">
 						<div className="group-tag">

@@ -15,4 +15,12 @@ _.mixin({
     isArrayNotEmpty(value) {
         return _.isArray(value) && value.length > 0;
     },
+    /**
+     * Check if the argument is an object and it has some own keys
+     * @param {*} value
+     * @returns {boolean}
+     */
+    isObjectNotEmpty(value) {
+        return _.isObject(value) && Object.keys(value).length > 0;
+    },
 });

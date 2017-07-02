@@ -6,13 +6,8 @@ import route from '/imports/ui/router.js';
 // import LogoutPage from '/imports/ui/pages/logout.jsx';
 
 import HomePage from '/imports/ui/page/home/index.jsx';
+import ShellPage from '/imports/ui/page/shell/index.jsx';
 import NotFoundPage from '/imports/ui/page/not-found/index.jsx';
-
-// FlowRouter.route('/', {
-// 	action() {
-// 		FlowRouter.go('/list');
-// 	}
-// });
 
 FlowRouter.notFound = {
 	action: function() {
@@ -20,9 +15,7 @@ FlowRouter.notFound = {
 	}
 };
 
-// FlowRouter.triggers.exit(() => {
-// });
-
+route('/shell', ShellPage, {});
 route('/', HomePage, {});
 route('/:id', HomePage, {});
 route('/not-found', NotFoundPage, {});

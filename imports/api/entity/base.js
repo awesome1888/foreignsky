@@ -38,9 +38,9 @@ export default class BaseEntity
 		//options.limit = params.limit;
 	}
 
-	insert(data, cb)
+	insert(data)
 	{
-		return this.collection.insert(data, cb);
+		return this.collection.insert(data);
 	}
 
 	expose()

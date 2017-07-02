@@ -55,4 +55,10 @@ export default class Util
 			fn.apply(this, _.union(extraArgs, args));
 		};
 	}
+
+	static getProjectFolder() {
+        const path = Npm.require('path');
+        console.dir(path.resolve('.'));
+        return path.resolve('.').split('.meteor')[0];
+    }
 }

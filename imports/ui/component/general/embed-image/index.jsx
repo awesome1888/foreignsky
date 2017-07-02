@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import {FileEntity} from '../../../../../imports/api/entity/file.js';
 
 //import './style.less';
 
@@ -11,7 +12,7 @@ export default class EmbedImageComponent extends React.Component {
 	static propTypes = {
 		item: PropTypes.arrayOf(PropTypes.shape({
 			image: PropTypes.oneOf(PropTypes.string, PropTypes.shape({
-				url: PropTypes.string,
+				path: PropTypes.string,
 			})).isRequired,
 			label: PropTypes.string,
 			options: PropTypes.shape({
@@ -53,9 +54,9 @@ export default class EmbedImageComponent extends React.Component {
 	{
 		const image = this.item.image;
 
-		if(_.isObject(image) && image.url)
+		if(_.isObject(image) && image.path)
 		{
-			return image.url.toString().trim();
+			return FileEntity.convertToUrl(image.path);
 		}
 
 		return '';

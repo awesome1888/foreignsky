@@ -14,24 +14,31 @@ class EmbedEntity extends BaseEntity
 		return EmbedItemCollection.instance;
 	}
 
-	insert(data, cb)
-	{
-		if(!_.isString(data.itemId))
-		{
-			let ids = [];
-			let id = null;
-			_.map(data.itemId, (item) => {
-				id = this.itemCollection.insert(item);
-				if(id)
-				{
-					ids.push(id);
-				}
-			});
+	static get itemCollection()
+    {
+        return EmbedItemCollection.instance;
+    }
 
-			data.itemId = ids;
+	static add(renderer, data)
+	{
+        const itemId = [];
+		if(_.isArrayNotEmpty(data.items))
+		{
+            data.items.forEach((item) => {
+                const id = this.itemCollection.insert(item);
+                if(id)
+                {
+                    itemId.unshift(id);
+                }
+            });
 		}
 
-		return super.insert(data, cb);
+		data.renderer = renderer;
+
+		return EmbedCollection.instance.insert({
+            renderer,
+            itemId,
+        });
 	}
 }
 

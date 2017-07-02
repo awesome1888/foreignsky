@@ -116,7 +116,7 @@ export default class ArticleDetailComponent extends BaseComponent
 		}
 
 		const expr = new RegExp('\\[EMBED\\s+ID=([a-zA-Z0-9]+)\\]', 'ig');
-		let found = null;
+		let found;
 		let parts = [];
 		let prevIndex = 0;
 		let chunk = '';
@@ -148,7 +148,7 @@ export default class ArticleDetailComponent extends BaseComponent
 	/**
 	 * @access protected
 	 * @param data
-	 * @param id
+	 * @param id Embed ID found in body
 	 * @returns {null}
 	 */
 	makeEmbed(data, id)
@@ -164,18 +164,19 @@ export default class ArticleDetailComponent extends BaseComponent
 			return null;
 		}
 
+		// search for
 		const embedData = data.embed.find((item) => {return item._id === id});
 		if(!_.isObject(embedData))
 		{
 			return null;
 		}
-
+		
 		const renderer = this.getRendererClass(embedData.renderer);
 		if(!renderer)
 		{
 			return null;
 		}
-
+		
 		return React.createElement(renderer, {
 			key: id,
 			item: embedData.item,
@@ -232,7 +233,6 @@ export default class ArticleDetailComponent extends BaseComponent
 				)}
 			>
 				<div className="article-detail__inner-scroll">
-
                     {
                         this.hasHeaderImage()
                         &&

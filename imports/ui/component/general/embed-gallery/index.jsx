@@ -4,6 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 //import classnames from 'classnames';
 import Util from '/imports/lib/util.js';
+import {FileEntity} from '../../../../../imports/api/entity/file.js';
 
 import App from '/imports/ui/app.jsx';
 
@@ -14,7 +15,7 @@ export default class EmbedGalleryComponent extends React.Component {
 	static propTypes = {
 		item: PropTypes.arrayOf(PropTypes.shape({
 			image: PropTypes.oneOf(PropTypes.string, PropTypes.shape({
-				url: PropTypes.string,
+				path: PropTypes.string,
 			})).isRequired,
 			label: PropTypes.string,
 			options: PropTypes.shape({
@@ -98,14 +99,20 @@ export default class EmbedGalleryComponent extends React.Component {
 	{
 		e.preventDefault();
 
-		if(item && item.image.url)
+		if(item && item.image.path)
 		{
-			App.instance.imageView.open(item.image.url);
+			App.instance.imageView.open(FileEntity.convertToUrl(item.image.path));
 		}
 	}
 
 	render(props = {})
 	{
+	    // this shit definitely needs refactoring
+	    let imgClass = '';
+	    if (this.item.length === 2) {
+	        imgClass = 'embed-gallery__image-2x1';
+        }
+
 		return (
 			<div
 				className="embed-gallery"
@@ -113,13 +120,18 @@ export default class EmbedGalleryComponent extends React.Component {
 			>
 				{
 					this.item.map((item) => {
-						return (
+					    if (!_.isObjectNotEmpty(item.image) || !_.isStringNotEmpty(item.image.path)) {
+					        return;
+                        }
 
+                        const url = FileEntity.convertToUrl(item.image.path);
+
+						return (
 							<a
-								href={item.image.url}
-								className="embed-gallery__image"
+								href={url}
+								className={`embed-gallery__image ${imgClass}`}
 								style={{
-									backgroundImage: `url(${item.image.url})`
+									backgroundImage: `url(${url})`
 								}}
 							    key={item._id}
 								target="_blank"

@@ -96,7 +96,7 @@ export default class ArticleListComponent extends React.Component {
                             !this.hasData()
                             &&
                             <div className="text_size_minor">
-                                Нет статей для показа :(
+                                Нет статей для показа. Плак :'(
                             </div>
                         }
 						{

@@ -15,7 +15,7 @@ export default Article.collection.createQuery({
     headerColor: 1,
     headerImage: {
         title: 1,
-        url: 1,
+        path: 1,
     },
     tag: {
         title: 1,
@@ -24,8 +24,8 @@ export default Article.collection.createQuery({
     embed: {
         item: {
             image: {
-                url: 1,
                 title: 1,
+                path: 1,
             },
             label: 1,
             options: 1,

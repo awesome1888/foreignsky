@@ -5,16 +5,16 @@ import {DocHead} from 'meteor/kadira:dochead';
 
 export default class BasePage extends React.Component {
 
+    static propTypes = {
+    };
+
+    static defaultProps = {
+    };
+
     constructor(props)
     {
         super(props);
     }
-
-	static propTypes = {
-	};
-
-	static defaultProps = {
-	};
 
 	get routeParams()
 	{

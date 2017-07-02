@@ -1,5 +1,6 @@
 import {Meteor} from 'meteor/meteor';
 import SpyConsole from './spy-console/spy-console.js';
+import '../../underscore-mixin.js';
 
 const writeFile = require('fs').writeFile;
 const env = require('process').env;

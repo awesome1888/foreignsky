@@ -18,13 +18,13 @@ export default class FileCollection extends BaseCollection
 				regEx: SimpleSchema.RegEx.Id,
 				optional: false,
 			},
-			title: {
+			name: {
 				type: String,
 				optional: false,
 			},
-			url: {
+			path: {
 				type: String,
-				optional: true,
+				optional: false,
 			},
 		};
 	}

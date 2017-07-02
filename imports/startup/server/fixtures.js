@@ -8,6 +8,8 @@ import Embed from '/imports/api/entity/embed.js';
 
 Meteor.startup(() => {
 
+    return;
+
     if(!Meteor.isDevelopment)
     {
         return;
@@ -59,19 +61,19 @@ Meteor.startup(() => {
 
 		[
 			{
-				title: 'Sony Center',
+				name: 'Sony Center',
 				url: '/img/sample1.jpg',
 			},
 			{
-				title: 'Potsdamer Platz',
+                name: 'Potsdamer Platz',
 				url: '/img/sample2.jpg',
 			},
 			{
-				title: 'Reichstag',
+                name: 'Reichstag',
 				url: '/img/sample3.jpg',
 			},
 			{
-				title: 'Elephant',
+                name: 'Elephant',
 				url: '/img/sample4.jpg',
 			},
 		].forEach(item => File.collection.insert(item));
@@ -101,8 +103,8 @@ Meteor.startup(() => {
 			},
 		];
 
-		Embed.insert({
-			itemId: itemsA,
+		Embed.add({
+			items: itemsA,
 			renderer: 'GALLERY',
 		});
 

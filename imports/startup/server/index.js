@@ -2,4 +2,5 @@
 
 import './register-api.js';
 import './prerender.js';
+import './migration/index.js';
 import './fixtures.js';

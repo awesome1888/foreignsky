@@ -13,6 +13,7 @@ export default class ArticleCollection extends BaseCollection
 		super('article');
 	}
 
+	// todo: remove this shit, make hook to generate search value
 	insert(data, cb)
 	{
 		if(!data.date)

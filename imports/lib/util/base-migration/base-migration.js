@@ -1,5 +1,10 @@
 import {log} from '../../util/shell/shell.js';
 
+if (!Meteor.isServer)
+{
+    throw new Error('Not a server');
+}
+
 /**
  * @abstract
  */

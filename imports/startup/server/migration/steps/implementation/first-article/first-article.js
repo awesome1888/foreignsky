@@ -1,12 +1,22 @@
 import File, {FileEntity} from '../../../../../../api/entity/file.js';
 import {EmbedEntity as Embed, default as EMBED__} from '../../../../../../api/entity/embed.js';
 import BaseMigration from '../../../../../../lib/util/base-migration/base-migration.js';
+import Util from '../../../../../../lib/util.js';
+import ArticleCollection from '../../../../../../api/collection/article.js';
 
 const fs = Npm.require('fs');
 
-export default new (class extends BaseMigration {
-
+export default class FirstArticle extends BaseMigration
+{
     _fileCache = {};
+    embeds = [];
+    text = '';
+
+    constructor()
+    {
+        super();
+        //this.up = this.up.bind(this);
+    }
 
     get version()
     {
@@ -14,20 +24,43 @@ export default new (class extends BaseMigration {
     }
     up()
     {
+        this.clear();
         File.collection.remove({});
         EMBED__.collection.remove({});
         Embed.itemCollection.remove({});
         this.addFiles();
         this.addEmbeds();
+
+        // add or update article
+        //this.log(this.text);
+
+        // todo: implement add
+        const res = ArticleCollection.instance.update({
+            _id: 'niGF3h8FCQcCpndZb',
+        }, {
+            $set: {
+                embedId: this.embeds,
+                text: this.text,
+                search: this.text.toUpperCase(),
+            },
+        });
+
+        this.log(res);
+    }
+
+    clear()
+    {
+        this.text = this.getText();
+        this.embeds = [];
+        this._fileCache = {};
     }
 
     addEmbeds()
     {
-        let id = this.addEmbed('GALLERY', [
+        this.addEmbed('GALLERY', [
             {label: 'Надеюсь, мистер песчаный человек хотя бы подмел за собой :)', file: 'DSC_0668'},
-            {label: 'Как выяснилось позже, это был https://www.facebook.com/theloneousarmadillo/', file: 'DSC_0686'},
+            {label: 'Я не поленился поискать в инете, и нашел его: https://www.facebook.com/theloneousarmadillo/', file: 'DSC_0686'},
         ]);
-        log('>>> '+id);
     }
 
     addEmbed(type, items)
@@ -38,14 +71,22 @@ export default new (class extends BaseMigration {
             delete item.file;
         });
 
-        log(items);
-
-        return Embed.add(type, {
+        const id = Embed.add(type, {
             items
         });
+
+        this.embeds.push(id);
+        this.setEmbedInText(id);
     }
 
-    getFileId(name) {
+    setEmbedInText(id)
+    {
+        const offset = this.embeds.length;
+        this.text = this.text.replace(new RegExp('_'+offset+'_', 'mg'), '[EMBED ID='+this.embeds[offset - 1]+']');
+    }
+
+    getFileId(name)
+    {
         return this._fileCache[name];
     }
 
@@ -67,8 +108,10 @@ export default new (class extends BaseMigration {
     }
 
     getText() {
-        return "";
+        const pPath = Util.getProjectFolder() + 'imports/startup/server/migration/steps/implementation/first-article/text.txt';
+        return fs.readFileSync(pPath).toString();
     }
-})();
+}
+
 
 

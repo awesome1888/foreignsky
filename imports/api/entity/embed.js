@@ -28,7 +28,7 @@ class EmbedEntity extends BaseEntity
                 const id = this.itemCollection.insert(item);
                 if(id)
                 {
-                    itemId.unshift(id);
+                    itemId.push(id);
                 }
             });
 		}

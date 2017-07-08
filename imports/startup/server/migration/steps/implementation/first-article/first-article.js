@@ -42,6 +42,7 @@ export default class FirstArticle extends BaseMigration
                 embedId: this.embeds,
                 text: this.text,
                 search: this.text.toUpperCase(),
+                headerImageId: this.getFileId('dsc_0715.jpg'),
             },
         });
 
@@ -80,8 +81,129 @@ export default class FirstArticle extends BaseMigration
             {label: 'Леди торгует разноцветными эмалированными чашками. Почему нет?:)', file: 'DSC_0693'},
         ]);
 
-        this.addEmbed('IMAGE', [
+        this.addEmbed('GALLERY', [
             {label: 'Очень трогательно и по-берлински.', file: 'DSC_0743'},
+            {label: 'Неполиткорретные сумки для походов в магазин за продуктами.', file: 'DSC_0740'},
+        ]);
+
+        this.addEmbed('IMAGE', [
+            {label: 'За границей рынка справа находится Max-Schmeling-Halle (спорткомплекс имени Макса Шмеллинга).', file: 'DSC_0729'},
+        ]);
+
+        this.addEmbed('GALLERY', [
+            {label: 'Я насчитал несколько палаток, торгующих старыми наборами LEGO', file: 'DSC_0778'},
+            {file: 'DSC_0706'},
+        ]);
+
+        this.addEmbed('IMAGE', [
+            {label: 'Вот они - вещи, привезенные неизвестно откуда.', file: 'DSC_0746'},
+        ]);
+
+        this.addEmbed('IMAGE', [
+            {label: 'Вызывающий подозрение байк', file: 'DSC_0749'},
+        ]);
+
+        this.addEmbed('GALLERY', [
+            {label: 'По рынку достаточно много отделов с винилом', file: 'DSC_0718'},
+            {file: 'DSC_0882'},
+        ]);
+
+        this.addEmbed('IMAGE', [
+            {label: 'Знаю я этот фаст-фуд на солнцепеке', file: 'DSC_0768'},
+        ]);
+
+        this.addEmbed('GALLERY', [
+            {label: 'Такая вот развлекательная программа.', file: 'DSC_0775'},
+            {label: 'И еще присутствует развлекательная программа, совмещенная с продажей.', file: 'DSC_0765'},
+        ]);
+
+        this.addEmbed('GALLERY', [
+            {label: '', file: 'DSC_0796'},
+            {label: 'Но иногда все же попадается интересное', file: 'DSC_0759'},
+        ]);
+
+        this.addEmbed('IMAGE', [
+            {label: 'Тут уже нет палаток, как таковых, а вместо них - ряды коробок и столов', file: 'DSC_0782'},
+        ]);
+
+        this.addEmbed('GALLERY', [
+            {label: 'Я не мог пройти мимо сисек, простите.', file: 'DSC_0785'},
+            {label: 'В ассортименте представлены старые игрушечные машинки.', file: 'DSC_0790'},
+            {label: 'Небольшой такой билет в детство, если у вас были такие.', file: 'DSC_0836'},
+            {label: 'Также очень много по тематике ГДР: это и ордена, и медали, и флаги, и монеты.', file: 'DSC_0780'},
+        ]);
+
+        this.addEmbed('IMAGE', [
+            {label: 'Монеты. Моря монет.', file: 'DSC_0812'},
+        ]);
+
+        this.addEmbed('IMAGE', [
+            {label: 'Очень много старой техники: видеокамеры, видемагнитофоны, фотоаппараты позапрошлого десятилетия.', file: 'DSC_0803'},
+        ]);
+
+        this.addEmbed('IMAGE', [
+            {label: 'Тут я уже начинаю наглеть', file: 'DSC_0817'},
+        ]);
+
+        this.addEmbed('IMAGE', [
+            {label: 'Шах и мат, владельцы ссаных тряпок', file: 'DSC_0905'},
+        ]);
+
+        this.addEmbed('IMAGE', [
+            {label: 'Шах и мат, владельцы ссаных тряпок', file: 'DSC_0887'},
+        ]);
+
+        this.addEmbed('IMAGE', [
+            {label: 'В изобилии представлена посуда.', file: 'DSC_0820'},
+        ]);
+
+        this.addEmbed('GALLERY', [
+            {label: 'Или, например, коллекция "калекокряков" из Властелина Колец. Между прочим, олово, а не пластмасса какая-нибудь.', file: 'DSC_0848'},
+            {label: 'Попадаются и практичные вещи, вроде армейских касок, которые могут пригодиться в быту :)', file: 'DSC_0801'},
+        ]);
+
+        this.addEmbed('GALLERY', [
+            {label: 'Также попадаются мрачные вещицы, вроде фрагментов тел животных.', file: 'DSC_0923'},
+            {label: 'Скелет кошки, потрепанный временем.', file: 'DSC_0870'},
+        ]);
+
+        this.addEmbed('IMAGE', [
+            {label: 'Старые фотографии чужих людей, начало 19 века.', file: 'DSC_0835'},
+        ]);
+
+        this.addEmbed('GALLERY', [
+            {label: 'Просто до кучи: разные жестяные коробочки из-под разного.', file: 'DSC_0852'},
+            {label: '', file: 'DSC_0854'},
+        ]);
+
+        this.addEmbed('IMAGE', [
+            {label: 'Открытки. Моря их.', file: 'DSC_0858'},
+        ]);
+
+        this.addEmbed('GALLERY', [
+            {label: '"Сделки только за евро, джедай! Никаких Республиканских Кредитов, тут нужно что-то понадежнее." Хехе...', file: 'DSC_0869'},
+            {label: 'Семейство деревянных котов смотрит на потенциального покупателя.', file: 'DSC_0898'},
+            {label: 'И снова моря, на этот раз - значков.', file: 'DSC_0878'},
+            {label: 'Куклы. (Мама, тебе это понравится!)', file: 'DSC_0900'},
+        ]);
+
+        this.addEmbed('IMAGE', [
+            {label: 'Фото-ружжо и флаг ГДР. Опять ГДР. Всегда ГДР.', file: 'DSC_0866'},
+        ]);
+
+        this.addEmbed('GALLERY', [
+            {file: 'DSC_0892'},
+            {file: 'DSC_0919'},
+            {file: 'DSC_0818'},
+            {file: 'DSC_0828'},
+        ]);
+
+        this.addEmbed('IMAGE', [
+            {label: '', file: 'DSC_0881'},
+        ]);
+
+        this.addEmbed('IMAGE', [
+            {label: '', file: 'DSC_0929'},
         ]);
     }
 

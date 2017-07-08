@@ -8,8 +8,6 @@ import Embed from '/imports/api/entity/embed.js';
 
 Meteor.startup(() => {
 
-    return;
-
     if(!Meteor.isDevelopment)
     {
         return;
@@ -50,10 +48,21 @@ Meteor.startup(() => {
 				color: 'hanada',
 				primary: false,
 			},
-		].forEach(item => ArticleTag.collection.insert(item));
+            {
+                title: 'Шопинг', //TAPi18n.__('article.type.life'),
+                sort: 600,
+                color: 'violet',
+                primary: false,
+            },
+		].forEach((item) => {
+		    item.search = item.title.toUpperCase();
+		    ArticleTag.collection.insert(item)
+        });
 
 		console.dir('Article types created');
 	}
+
+    return;
 
 	if(!File.count())
 	{

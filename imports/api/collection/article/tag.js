@@ -35,6 +35,10 @@ export default class ArticleTagCollection extends BaseCollection
 				type: Boolean,
 				optional: true,
 			},
+            search: {
+                type: String,
+                optional: true,
+            },
 		};
 	}
 }

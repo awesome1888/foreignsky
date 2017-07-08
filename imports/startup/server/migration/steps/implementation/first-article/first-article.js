@@ -1,5 +1,6 @@
 import File, {FileEntity} from '../../../../../../api/entity/file.js';
 import {EmbedEntity as Embed, default as EMBED__} from '../../../../../../api/entity/embed.js';
+import {ArticleTag as Tag} from '../../../../../../api/entity/article/tag.js';
 import BaseMigration from '../../../../../../lib/util/base-migration/base-migration.js';
 import Util from '../../../../../../lib/util.js';
 import ArticleCollection from '../../../../../../api/collection/article.js';
@@ -34,19 +35,28 @@ export default class FirstArticle extends BaseMigration
         // add or update article
         //this.log(this.text);
 
-        // todo: implement add
-        const res = ArticleCollection.instance.update({
-            _id: 'niGF3h8FCQcCpndZb',
-        }, {
-            $set: {
-                embedId: this.embeds,
-                text: this.text,
-                search: this.text.toUpperCase(),
-                headerImageId: this.getFileId('dsc_0715.jpg'),
-            },
-        });
+        console.dir(Tag.getByTitle(['событие', 'место', 'шопинг']));
+        
+        const data = {
+            embedId: this.embeds,
+            text: this.text,
+            search: this.text.toUpperCase(),
+            headerImageId: this.getFileId('dsc_0715.jpg'),
+            tagId: _.pluck(Tag.getByTitle(['событие', 'место', 'шопинг']), '_id'),
+        };
 
-        this.log(res);
+        if(ArticleCollection.instance.findOne({_id: 'niGF3h8FCQcCpndZb'}))
+        {
+            ArticleCollection.instance.update({
+                _id: 'niGF3h8FCQcCpndZb',
+            }, {
+                $set: data,
+            });
+        }
+        else
+        {
+            ArticleCollection.instance.insert(data);
+        }
     }
 
     clear()

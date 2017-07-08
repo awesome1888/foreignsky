@@ -11,6 +11,7 @@ import EmbedGalleryComponent from '/imports/ui/component/general/embed-gallery/i
 
 import App from '/imports/ui/app.jsx';
 import BaseComponent from '../../../lib/util/base-component/base-component.js';
+import {FileEntity} from '../../../api/entity/file.js';
 
 import Query from './query/article.query.js';
 import './style.less';
@@ -242,7 +243,7 @@ export default class ArticleDetailComponent extends BaseComponent
                             <div
                                 className="embed-image__image embed-image__image_static article-detail__header-image-embed"
                                 style={{
-                                    backgroundImage: `url(${data.headerImage.url})`,
+                                    backgroundImage: `url(${FileEntity.convertToUrl(data.headerImage.path)})`,
                                 }}
                             >
                                 <div className="embed-image__label embed-image__label-br">

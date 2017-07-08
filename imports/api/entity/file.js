@@ -9,20 +9,31 @@ class FileEntity extends BaseEntity
 		return FileCollection;
 	}
 
-	static get localFolderAbsolute() {
+	static get localFolderAbsolute()
+    {
 	    return Util.getProjectFolder()+this.localFolder;
     }
 
-    static get localFolder() {
+    static get localFolder()
+    {
 	    return 'public/img/';
     }
 
-    static convertToUrl(path) {
+    static convertToUrl(path)
+    {
 	    if (!_.isStringNotEmpty(path))
         {
             return '';
         }
         return path.replace(/^public/i, '');
+    }
+
+    static add(path, name = 'File')
+    {
+        return FileCollection.insert({
+            path: this.localFolder+path,
+            name,
+        });
     }
 }
 

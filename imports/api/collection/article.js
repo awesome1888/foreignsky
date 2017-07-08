@@ -112,7 +112,8 @@ export default class ArticleCollection extends BaseCollection
 			},
 			public: {
 				type: Boolean,
-				optional: false,
+				optional: true,
+                defaultValue: false,
 			}
 		};
 	}

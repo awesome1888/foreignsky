@@ -128,7 +128,7 @@ export default class ArticleDetailComponent extends BaseComponent
 
 			if(chunk.length)
 			{
-				parts.push(React.createElement('div', {key: chunk}, chunk));
+				parts.push(React.createElement('div', {key: prevIndex}, chunk));
 			}
 
 			parts.push(this.makeEmbed(data, found[1]));

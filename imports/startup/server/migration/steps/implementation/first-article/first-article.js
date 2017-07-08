@@ -4,6 +4,7 @@ import {ArticleTag as Tag} from '../../../../../../api/entity/article/tag.js';
 import BaseMigration from '../../../../../../lib/util/base-migration/base-migration.js';
 import Util from '../../../../../../lib/util.js';
 import ArticleCollection from '../../../../../../api/collection/article.js';
+import moment from 'moment';
 
 const fs = Npm.require('fs');
 
@@ -38,11 +39,13 @@ export default class FirstArticle extends BaseMigration
         console.dir(Tag.getByTitle(['событие', 'место', 'шопинг']));
         
         const data = {
+            title: 'Блошиный рынок в Mauerpark',
             embedId: this.embeds,
             text: this.text,
             search: this.text.toUpperCase(),
             headerImageId: this.getFileId('dsc_0715.jpg'),
             tagId: _.pluck(Tag.getByTitle(['событие', 'место', 'шопинг']), '_id'),
+            //date: moment("20170512", "YYYYMMDD"),
         };
 
         if(ArticleCollection.instance.findOne({_id: 'niGF3h8FCQcCpndZb'}))

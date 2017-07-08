@@ -27,7 +27,14 @@ export default class EmbedItemCollection extends BaseCollection
 				optional: true,
 			},
 			options: {
-				type: Object,
+				type: [new SimpleSchema({
+				    key: {
+				        type: String,
+                    },
+                    value: {
+				        type: String,
+                    }
+                })],
 				optional: true,
 			},
 		};

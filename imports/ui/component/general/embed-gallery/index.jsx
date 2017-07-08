@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 //import classnames from 'classnames';
 import Util from '/imports/lib/util.js';
 import {FileEntity} from '../../../../../imports/api/entity/file.js';
+import {EmbedEntity} from '../../../../../imports/api/entity/embed.js';
 
 import App from '/imports/ui/app.jsx';
 
@@ -125,20 +126,28 @@ export default class EmbedGalleryComponent extends React.Component {
                         }
 
                         const url = FileEntity.convertToUrl(item.image.path);
+                        const options = EmbedEntity.parseOptions(item.options);
 
+                        const style = {
+                            backgroundImage: `url(${url})`
+                        };
+
+                        if (_.isStringNotEmpty(options.previewVerticalAlign))
+                        {
+                            style.backgroundPositionY = options.previewVerticalAlign;
+                        }
+                        
 						return (
 							<a
 								href={url}
 								className={`embed-gallery__image ${imgClass}`}
-								style={{
-									backgroundImage: `url(${url})`
-								}}
+								style={style}
 							    key={item._id}
 								target="_blank"
 								onClick={Util.passCtx(this.onImageClick, [item])}
 							>
 								{
-									item.label
+									_.isStringNotEmpty(item.label)
 									&&
 									<div className="embed-gallery__image-label">
 										{item.label}

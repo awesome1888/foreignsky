@@ -60,7 +60,13 @@ export default class FirstArticle extends BaseMigration
     {
         this.addEmbed('GALLERY', [
             {label: 'Надеюсь, мистер песчаный человек хотя бы подмел за собой :)', file: 'DSC_0668'},
-            {label: 'Я не поленился поискать в инете, и нашел его: https://www.facebook.com/theloneousarmadillo/', file: 'DSC_0686'},
+            {
+                label: 'Я не поленился поискать в инете, и нашел его: https://www.facebook.com/theloneousarmadillo/',
+                file: 'DSC_0686',
+                options: [
+                    {key: 'previewVerticalAlign', value: '-50px',},
+                ],
+            },
         ]);
 
         this.addEmbed('IMAGE', [
@@ -68,7 +74,7 @@ export default class FirstArticle extends BaseMigration
         ]);
 
         this.addEmbed('IMAGE', [
-            {label: 'Фотографию этой красавицы я робко заполучил, купив у нее два магнита на холодильник. Да-да, не позволила совесть совсем нахаляву сфоткать :)', file: 'DSC_0699'},
+            {label: 'Фотографию этой барышни я робко заполучил, купив у нее два магнита на холодильник. Да-да, не позволила совесть совсем нахаляву сфоткать :)', file: 'DSC_0699'},
         ]);
 
         this.addEmbed('GALLERY', [
@@ -78,12 +84,30 @@ export default class FirstArticle extends BaseMigration
 
         this.addEmbed('GALLERY', [
             {label: 'Очаровательные арты. Милашки. Повесить пару таких над кроватью, чтобы спалось лучше :)', file: 'DSC_0734'},
-            {label: 'Леди торгует разноцветными эмалированными чашками. Почему нет?:)', file: 'DSC_0693'},
+            {
+                label: 'Леди торгует разноцветными эмалированными чашками. Почему нет?:)',
+                file: 'DSC_0693',
+                options: [
+                    {key: 'previewVerticalAlign', value: '-105px',},
+                ],
+            },
         ]);
 
         this.addEmbed('GALLERY', [
-            {label: 'Очень трогательно и по-берлински.', file: 'DSC_0743'},
-            {label: 'Неполиткорретные сумки для походов в магазин за продуктами.', file: 'DSC_0740'},
+            {
+                label: 'Очень трогательно и по-берлински.',
+                file: 'DSC_0743',
+                options: [
+                    {key: 'previewVerticalAlign', value: '-17px',},
+                ],
+            },
+            {
+                label: 'Неполиткорретные сумки для походов в магазин за продуктами.',
+                file: 'DSC_0740',
+                options: [
+                    {key: 'previewVerticalAlign', value: '-109px',},
+                ],
+            },
         ]);
 
         this.addEmbed('IMAGE', [
@@ -91,12 +115,24 @@ export default class FirstArticle extends BaseMigration
         ]);
 
         this.addEmbed('GALLERY', [
-            {label: 'Я насчитал несколько палаток, торгующих старыми наборами LEGO', file: 'DSC_0778'},
+            {
+                label: 'Я насчитал несколько палаток, торгующих старыми наборами LEGO',
+                file: 'DSC_0778',
+                options: [
+                    {key: 'previewVerticalAlign', value: '-244px',},
+                ],
+            },
             {file: 'DSC_0706'},
         ]);
 
         this.addEmbed('IMAGE', [
-            {label: 'Вот они - вещи, привезенные неизвестно откуда.', file: 'DSC_0746'},
+            {
+                label: 'Вот они - вещи, привезенные неизвестно откуда.',
+                file: 'DSC_0746',
+                options: [
+                    {key: 'previewVerticalAlign', value: '-565px',},
+                ],
+            },
         ]);
 
         this.addEmbed('IMAGE', [
@@ -113,13 +149,31 @@ export default class FirstArticle extends BaseMigration
         ]);
 
         this.addEmbed('GALLERY', [
-            {label: 'Такая вот развлекательная программа.', file: 'DSC_0775'},
-            {label: 'И еще присутствует развлекательная программа, совмещенная с продажей.', file: 'DSC_0765'},
+            {
+                label: 'Такая вот развлекательная программа.',
+                file: 'DSC_0775',
+                options: [
+                    {key: 'previewVerticalAlign', value: '-137px',},
+                ],
+            },
+            {
+                label: 'И еще присутствует развлекательная программа, совмещенная с продажей.',
+                file: 'DSC_0765',
+                options: [
+                    {key: 'previewVerticalAlign', value: '-200px',},
+                ],
+            },
         ]);
 
         this.addEmbed('GALLERY', [
             {label: '', file: 'DSC_0796'},
-            {label: 'Но иногда все же попадается интересное', file: 'DSC_0759'},
+            {
+                label: 'Но иногда все же попадается интересное',
+                file: 'DSC_0759',
+                options: [
+                    {key: 'previewVerticalAlign', value: '-106px',},
+                ],
+            },
         ]);
 
         this.addEmbed('IMAGE', [
@@ -150,7 +204,7 @@ export default class FirstArticle extends BaseMigration
         ]);
 
         this.addEmbed('IMAGE', [
-            {label: 'Шах и мат, владельцы ссаных тряпок', file: 'DSC_0887'},
+            {file: 'DSC_0887'},
         ]);
 
         this.addEmbed('IMAGE', [
@@ -168,7 +222,13 @@ export default class FirstArticle extends BaseMigration
         ]);
 
         this.addEmbed('IMAGE', [
-            {label: 'Старые фотографии чужих людей, начало 19 века.', file: 'DSC_0835'},
+            {
+                label: 'Старые фотографии посторонних людей, начало 19 века.',
+                file: 'DSC_0835',
+                options: [
+                    {key: 'previewVerticalAlign', value: '-625px',},
+                ],
+            },
         ]);
 
         this.addEmbed('GALLERY', [
@@ -177,7 +237,13 @@ export default class FirstArticle extends BaseMigration
         ]);
 
         this.addEmbed('IMAGE', [
-            {label: 'Открытки. Моря их.', file: 'DSC_0858'},
+            {
+                label: 'Открытки. Моря их.',
+                file: 'DSC_0858',
+                options: [
+                    {key: 'previewVerticalAlign', value: '-225px',},
+                ],
+            },
         ]);
 
         this.addEmbed('GALLERY', [
@@ -188,7 +254,13 @@ export default class FirstArticle extends BaseMigration
         ]);
 
         this.addEmbed('IMAGE', [
-            {label: 'Фото-ружжо и флаг ГДР. Опять ГДР. Всегда ГДР.', file: 'DSC_0866'},
+            {
+                label: 'Фото-ружжо и флаг ГДР. Опять ГДР. Всегда ГДР.',
+                file: 'DSC_0866',
+                options: [
+                    {key: 'previewVerticalAlign', value: '-5px',},
+                ],
+            },
         ]);
 
         this.addEmbed('GALLERY', [
@@ -199,11 +271,23 @@ export default class FirstArticle extends BaseMigration
         ]);
 
         this.addEmbed('IMAGE', [
-            {label: '', file: 'DSC_0881'},
+            {
+                label: '',
+                file: 'DSC_0881',
+                options: [
+                    {key: 'previewVerticalAlign', value: '-420px',},
+                ],
+            },
         ]);
 
         this.addEmbed('IMAGE', [
-            {label: '', file: 'DSC_0929'},
+            {
+                label: '',
+                file: 'DSC_0929',
+                options: [
+                    {key: 'previewVerticalAlign', value: '-232px',},
+                ],
+            },
         ]);
     }
 

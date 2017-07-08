@@ -4,6 +4,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import {FileEntity} from '../../../../../imports/api/entity/file.js';
+import {EmbedEntity} from '../../../../../imports/api/entity/embed.js';
+import Util from '/imports/lib/util.js';
+import App from '/imports/ui/app.jsx';
 
 //import './style.less';
 
@@ -86,6 +89,11 @@ export default class EmbedImageComponent extends React.Component {
 		return '';
 	}
 
+	get options()
+    {
+        return EmbedEntity.parseOptions(this.item.options);
+    }
+
 	get labelPosition()
 	{
 		const item = this.item;
@@ -105,24 +113,52 @@ export default class EmbedImageComponent extends React.Component {
 
 	isLabelTypeBottom()
 	{
-		return this.labelPosition === 'bottom';
+		return this.labelPosition === 'bottom' && _.isStringNotEmpty(this.labelText);
 	}
+
+	isLabelInside()
+    {
+        return _.isStringNotEmpty(this.labelText) && !this.isLabelTypeBottom();
+    }
+
+    onImageClick(item, e)
+    {
+        e.preventDefault();
+
+        if(item && item.image.path)
+        {
+            App.instance.imageView.open(FileEntity.convertToUrl(item.image.path));
+        }
+    }
 
 	render(props = {})
 	{
+        const options = this.options;
+        const url = this.imageUrl;
+
+        const style = {
+            backgroundImage: `url(${url})`,
+            height: `${this.height}px`,
+        };
+
+        if (_.isStringNotEmpty(options.previewVerticalAlign))
+        {
+            style.backgroundPositionY = options.previewVerticalAlign;
+        }
+
 		return (
 			<div
 				className="embed-image"
 			>
-				<div
+				<a
+                    href={url}
 					className="embed-image__image embed-image__image_static"
-					style={{
-						backgroundImage: `url(${this.imageUrl})`,
-						height: `${this.height}px`,
-					}}
+					style={style}
+                    target="_blank"
+                    onClick={Util.passCtx(this.onImageClick, [this.item])}
 				>
 					{
-						!this.isLabelTypeBottom()
+						this.isLabelInside()
 						&&
 						<div className={classnames([
 							'embed-image__label embed-image__label_medium',
@@ -141,7 +177,7 @@ export default class EmbedImageComponent extends React.Component {
 						</div>
 					}
 
-				</div>
+				</a>
 				{
 					this.isLabelTypeBottom()
 					&&

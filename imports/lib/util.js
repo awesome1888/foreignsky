@@ -58,7 +58,23 @@ export default class Util
 
 	static getProjectFolder() {
         const path = Npm.require('path');
-        console.dir(path.resolve('.'));
-        return path.resolve('.').split('.meteor')[0];
+        let pPath = path.resolve('.').split('.meteor')[0];
+
+        if (pPath.charAt(pPath.length - 1) !== '/')
+        {
+            pPath = pPath + '/';
+        }
+
+        return pPath;
+    }
+
+    static getAssetsFolder() {
+	    const project = this.getProjectFolder();
+	    if (Meteor.isDevelopment)
+	    {
+	        return project+'public/';
+        }
+
+        return project+'../web.browser/app/';
     }
 }

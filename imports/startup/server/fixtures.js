@@ -8,10 +8,10 @@ import Embed from '/imports/api/entity/embed.js';
 
 Meteor.startup(() => {
 
-    if(!Meteor.isDevelopment)
-    {
-        return;
-    }
+    // if(!Meteor.isDevelopment)
+    // {
+    //     return;
+    // }
 
 	if(!ArticleTag.count())
 	{

@@ -11,12 +11,12 @@ class FileEntity extends BaseEntity
 
 	static get localFolderAbsolute()
     {
-	    return Util.getProjectFolder()+this.localFolder;
+	    return Util.getAssetsFolder()+this.localFolder;
     }
 
     static get localFolder()
     {
-	    return 'public/img/';
+	    return 'img/';
     }
 
     static convertToUrl(path)

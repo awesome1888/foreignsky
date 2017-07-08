@@ -4,7 +4,6 @@ import {ArticleTag as Tag} from '../../../../../../api/entity/article/tag.js';
 import BaseMigration from '../../../../../../lib/util/base-migration/base-migration.js';
 import Util from '../../../../../../lib/util.js';
 import ArticleCollection from '../../../../../../api/collection/article.js';
-import moment from 'moment';
 
 const fs = Npm.require('fs');
 
@@ -48,17 +47,24 @@ export default class FirstArticle extends BaseMigration
             //date: moment("20170512", "YYYYMMDD"),
         };
 
+        let id;
         if(ArticleCollection.instance.findOne({_id: 'niGF3h8FCQcCpndZb'}))
         {
+            id = 'niGF3h8FCQcCpndZb';
             ArticleCollection.instance.update({
-                _id: 'niGF3h8FCQcCpndZb',
+                _id: id,
             }, {
                 $set: data,
             });
         }
         else
         {
-            ArticleCollection.instance.insert(data);
+            id = ArticleCollection.instance.insert(data);
+        }
+
+        if(id)
+        {
+            this.log('Created '+id);
         }
     }
 
@@ -349,7 +355,8 @@ export default class FirstArticle extends BaseMigration
     }
 
     getText() {
-        const pPath = Util.getProjectFolder() + 'imports/startup/server/migration/steps/implementation/first-article/text.txt';
+        const pPath = Util.getAssetsFolder() + 'text.txt';
+        this.log(pPath);
         return fs.readFileSync(pPath).toString();
     }
 }

@@ -8,13 +8,19 @@ const env = require('process').env;
 const ShellClass = class Shell {
     static _cache = {};
 
-    static register(jobId, name, action) {
-        if (!Meteor.isServer) {
-            throw new Meteor.Error('Unable register on client');
-        }
+    static isUnsafe = false; // carefully with that
 
-        if (!Meteor.isDevelopment) {
-            return; // do not use on production ever
+    static register(jobId, name, action) {
+        if(!Shell.isUnsafe)
+        {
+            if (!Meteor.isServer) {
+                console.error('Unable register on client');
+                return;
+            }
+
+            if (!Meteor.isDevelopment) {
+                return; // do not use on production ever
+            }
         }
 
         if (_.isFunction(name) && action === undefined) {
@@ -54,9 +60,15 @@ const ShellClass = class Shell {
     }
 
     static execute(jobId) {
-        if (!Meteor.isDevelopment) {
-            throw new Meteor.Error('Not available on production');
+
+        if(!Shell.isUnsafe)
+        {
+            if (!Meteor.isDevelopment) {
+                console.error('Not available on production');
+                return {};
+            }
         }
+
         if (
             !Shell.jobs ||
             !_.isObject(Shell.jobs[jobId]) ||

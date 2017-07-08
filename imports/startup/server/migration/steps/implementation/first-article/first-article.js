@@ -78,8 +78,8 @@ export default class FirstArticle extends BaseMigration
         ]);
 
         this.addEmbed('GALLERY', [
-            {file: 'DSC_0720'},
             {file: 'DSC_0719'},
+            {file: 'DSC_0720'},
         ]);
 
         this.addEmbed('GALLERY', [
@@ -212,8 +212,8 @@ export default class FirstArticle extends BaseMigration
         ]);
 
         this.addEmbed('GALLERY', [
-            {label: 'Или, например, коллекция "калекокряков" из Властелина Колец. Между прочим, олово, а не пластмасса какая-нибудь.', file: 'DSC_0848'},
             {label: 'Попадаются и практичные вещи, вроде армейских касок, которые могут пригодиться в быту :)', file: 'DSC_0801'},
+            {label: 'Или, например, коллекция "калекокряков" из Властелина Колец. Между прочим, олово, а не пластмасса какая-нибудь.', file: 'DSC_0848'},
         ]);
 
         this.addEmbed('GALLERY', [

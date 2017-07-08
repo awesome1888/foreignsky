@@ -106,6 +106,16 @@ export default class EmbedGalleryComponent extends React.Component {
 		}
 	}
 
+	sortItems(items) {
+	    return items.sort((a, b) => {
+	        // todo: nasty
+            const aOpt = EmbedEntity.parseOptions(a.options);
+            const bOpt = EmbedEntity.parseOptions(b.options);
+            
+            return aOpt.order > bOpt.order ? 1 : -1;
+        });
+    }
+
 	render(props = {})
 	{
 	    // this shit definitely needs refactoring
@@ -120,7 +130,7 @@ export default class EmbedGalleryComponent extends React.Component {
 			    ref={(instance) => {this._scope = instance;}}
 			>
 				{
-					this.item.map((item) => {
+					this.sortItems(this.item).map((item) => {
 					    if (!_.isObjectNotEmpty(item.image) || !_.isStringNotEmpty(item.image.path)) {
 					        return;
                         }

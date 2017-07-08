@@ -28,7 +28,7 @@ class EmbedEntity extends BaseEntity
             data.items.forEach((item) => {
                 item.options = item.options || [];
                 item.options.push({
-                    order
+                    key: 'order', value: order,
                 });
                 const id = this.itemCollection.insert(item);
                 if(id)

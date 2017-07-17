@@ -81,6 +81,19 @@ class ArticleCollection extends BaseCollection
             },
         };
     }
+
+    get indexes() {
+        return [
+            {
+                fields: {
+                    search: "text",
+                },
+                options: {
+                    name: 'search',
+                },
+            }
+        ];
+    }
 }
 
 export default new ArticleCollection();

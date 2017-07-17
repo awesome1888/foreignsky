@@ -7,7 +7,7 @@ export default class BaseCollection extends Mongo.Collection
         super(collectionName);
         this.attachSchema(this.schema);
         this.addLinks(this.links);
-        // this.ensureIndexesExist();
+        this.createIndexes();
     }
 
     get schema()
@@ -20,19 +20,21 @@ export default class BaseCollection extends Mongo.Collection
         return {};
     }
 
-    ensureIndexesExist()
-    {
+    get indexes() {
+        return [];
     }
 
-    // ensureIndexesExist()
-    // {
-    //     if(Meteor.isServer)
-    //     {
-    //         this.rawCollection().createIndex({
-    //             search: "text",
-    //         }, {
-    //             name: 'search',
-    //         });
-    //     }
-    // }
+    createIndexes()
+    {
+        if(Meteor.isServer)
+        {
+            const rawCollection = this.rawCollection();
+            this.indexes.forEach((index) => {
+                rawCollection.createIndex(
+                    index.fields,
+                    index.options
+                );
+            });
+        }
+    }
 }

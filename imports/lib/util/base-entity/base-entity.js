@@ -1,3 +1,5 @@
+import flatten from 'mongo-dot-notation';
+
 /**
  * @abstract
  * @mixin
@@ -12,5 +14,15 @@ export default class BaseEntity
     get collection()
     {
         return this.prototype.constructor.collection;
+    }
+
+    static get rawCollection()
+    {
+        return this.collection.rawCollection();
+    }
+
+    static flatten(value)
+    {
+        return flatten(value).$set;
     }
 }

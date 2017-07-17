@@ -1,9 +1,7 @@
-import {SimpleSchema} from 'meteor/aldeed:simple-schema';
-
 import BaseCollection from '../../../lib/util/base-collection/base-collection.js';
-// import ArticleTagCollection from '/imports/api/collection/article/tag.js'
-// import FileCollection from '/imports/api/collection/file.js'
-// import EmbedCollection from '/imports/api/collection/embed.js'
+import ArticleTagCollection from '../../article.tag/config/collection.js';
+import FileCollection from '../../file/config/collection.js';
+import EmbedCollection from '../../embed/config/collection.js';
 
 class ArticleCollection extends BaseCollection
 {
@@ -63,24 +61,24 @@ class ArticleCollection extends BaseCollection
     get links()
     {
         return {
-            // tag: {
-            //     type: 'many',
-            //     collection: ArticleTagCollection.instance,
-            //     field: 'tagId',
-            //     index: true,
-            // },
-            // headerImage: {
-            //     type: 'one',
-            //     collection: FileCollection.instance,
-            //     field: 'headerImageId',
-            //     index: false,
-            // },
-            // embed: {
-            //     type: 'many',
-            //     collection: EmbedCollection.instance,
-            //     field: 'embedId',
-            //     index: false,
-            // },
+            tag: {
+                type: 'many',
+                collection: ArticleTagCollection,
+                field: 'tagId',
+                index: true,
+            },
+            headerImage: {
+                type: 'one',
+                collection: FileCollection,
+                field: 'headerImageId',
+                index: false,
+            },
+            embed: {
+                type: 'many',
+                collection: EmbedCollection,
+                field: 'embedId',
+                index: false,
+            },
         };
     }
 }

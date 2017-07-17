@@ -1,5 +1,4 @@
 import {Mongo} from 'meteor/mongo';
-import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 
 export default class BaseCollection extends Mongo.Collection
 {

@@ -14,6 +14,13 @@ export default class BaseComponent extends Component {
             App.instance.setTitle();
             this._titleUpdated = false;
         }
+
+        // un-bind events
+        if (_.isArrayNotEmpty(this.events)) {
+            this.events.forEach((pair) => {
+                $(document).unbind(pair.event, pair.cb);
+            });
+        }
     }
 
     setTitle(title = '') {
@@ -42,5 +49,17 @@ export default class BaseComponent extends Component {
             // eslint-disable-next-line no-console
             console.error.apply(this, args);
         }
+    }
+
+    on(event, cb) {
+        $(document).on(event, cb);
+        this.events.push({
+            event,
+            cb,
+        });
+    }
+
+    fire(event, args = []) {
+        $(document).trigger(event, args);
     }
 }

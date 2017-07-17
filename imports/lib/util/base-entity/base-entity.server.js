@@ -5,4 +5,7 @@ Side.ensureServer();
 
 export default class BaseEntity extends Entity
 {
+    static expose()
+    {
+    }
 }

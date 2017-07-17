@@ -22,4 +22,16 @@ export default class BaseEntity extends Entity
             //body, // object that will intersect with the actual request body from the client
         });
     }
+
+    /**
+     * Server-side, sync
+     * @param filter
+     * @returns {*}
+     */
+    static count(filter)
+    {
+        return this.collection.createQuery({
+            $filters: filter
+        }).getCount();
+    }
 }

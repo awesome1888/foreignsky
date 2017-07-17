@@ -4,6 +4,7 @@ import mix from '../../../lib/mixin.js';
 
 export default class Embed extends mix(BaseEntity).with(Entity)
 {
+    // todo: actually, there should be "save", non-static
     static create(renderer, data)
     {
         const itemId = [];

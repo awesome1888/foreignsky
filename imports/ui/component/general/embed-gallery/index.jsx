@@ -4,8 +4,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 //import classnames from 'classnames';
 import Util from '/imports/lib/util.js';
-import {FileEntity} from '../../../../../imports/api/entity/file.js';
-import {EmbedEntity} from '../../../../../imports/api/entity/embed.js';
+import File from '../../../../../imports/api/file/entity/entity.client.js';
+import Embed from '../../../../../imports/api/embed/entity/entity.client.js';
 
 import App from '/imports/ui/app.jsx';
 
@@ -15,9 +15,9 @@ export default class EmbedGalleryComponent extends React.Component {
 
 	static propTypes = {
 		item: PropTypes.arrayOf(PropTypes.shape({
-			image: PropTypes.oneOf(PropTypes.string, PropTypes.shape({
+			image: PropTypes.oneOfType([PropTypes.string, PropTypes.shape({
 				path: PropTypes.string,
-			})).isRequired,
+			})]).isRequired,
 			label: PropTypes.string,
 			options: PropTypes.shape({
 				labelPosition: PropTypes.oneOf(['bottom', 'tl', 'tr', 'bl', 'br']),
@@ -109,8 +109,8 @@ export default class EmbedGalleryComponent extends React.Component {
 	sortItems(items) {
 	    return items.sort((a, b) => {
 	        // todo: nasty
-            const aOpt = EmbedEntity.parseOptions(a.options);
-            const bOpt = EmbedEntity.parseOptions(b.options);
+            const aOpt = Embed.unpackOptions(a.options);
+            const bOpt = Embed.unpackOptions(b.options);
             
             return aOpt.order > bOpt.order ? 1 : -1;
         });
@@ -135,8 +135,8 @@ export default class EmbedGalleryComponent extends React.Component {
 					        return;
                         }
 
-                        const url = FileEntity.convertToUrl(item.image.path);
-                        const options = EmbedEntity.parseOptions(item.options);
+                        const url = File.convertToUrl(item.image.path);
+                        const options = Embed.unpackOptions(item.options);
 
                         const style = {
                             backgroundImage: `url(${url})`

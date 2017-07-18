@@ -1,4 +1,4 @@
-import Article from '/imports/api/entity/article.js';
+import Article from '../../../../api/article/entity/entity.client.js';
 
 export default Article.collection.createQuery({
     $filter({ filters, params }) {

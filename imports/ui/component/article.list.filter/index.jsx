@@ -5,7 +5,7 @@ import {createContainer} from 'meteor/react-meteor-data';
 import {TAPi18n} from 'meteor/tap:i18n';
 import PropTypes from 'prop-types';
 
-import ArticleTag from '/imports/api/entity/article/tag.js';
+import ArticleTag from '/imports/api/article.tag/entity/entity.client.js';
 import Util from '/imports/lib/util.js';
 
 import './style.less';

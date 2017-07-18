@@ -3,8 +3,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import {FileEntity} from '../../../../../imports/api/entity/file.js';
-import {EmbedEntity} from '../../../../../imports/api/entity/embed.js';
+import File from '../../../../../imports/api/file/entity/entity.client.js';
+import Embed from '../../../../../imports/api/embed/entity/entity.client.js';
 import Util from '/imports/lib/util.js';
 import App from '/imports/ui/app.jsx';
 
@@ -14,9 +14,9 @@ export default class EmbedImageComponent extends React.Component {
 
 	static propTypes = {
 		item: PropTypes.arrayOf(PropTypes.shape({
-			image: PropTypes.oneOf(PropTypes.string, PropTypes.shape({
+			image: PropTypes.oneOfType([PropTypes.string, PropTypes.shape({
 				path: PropTypes.string,
-			})).isRequired,
+			})]).isRequired,
 			label: PropTypes.string,
 			options: PropTypes.shape({
 				labelPosition: PropTypes.oneOf(['bottom', 'tl', 'tr', 'bl', 'br']),
@@ -59,7 +59,7 @@ export default class EmbedImageComponent extends React.Component {
 
 		if(_.isObject(image) && image.path)
 		{
-			return FileEntity.convertToUrl(image.path);
+			return File.convertToUrl(image.path);
 		}
 
 		return '';
@@ -91,7 +91,7 @@ export default class EmbedImageComponent extends React.Component {
 
 	get options()
     {
-        return EmbedEntity.parseOptions(this.item.options);
+        return Embed.unpackOptions(this.item.options);
     }
 
 	get labelPosition()
@@ -127,7 +127,7 @@ export default class EmbedImageComponent extends React.Component {
 
         if(item && item.image.path)
         {
-            App.instance.imageView.open(FileEntity.convertToUrl(item.image.path));
+            App.instance.imageView.open(File.convertToUrl(item.image.path));
         }
     }
 

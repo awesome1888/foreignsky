@@ -92,16 +92,24 @@ export default class BaseEntity
             translated.$paginate = true;
             translated.$options.offset = parseInt(parameters.offset);
         }
-
-        console.dir(translated);
         
         return translated;
     }
 
     static translateParamtersSort(sort)
     {
-        // todo
-        return sort;
+        return sort.reduce((result, item) => {
+
+            // todo: this will be unordered
+            result[item[0]] = item[1] === 1 ? 1 : -1;
+
+            // qParameters.$options.sort.push([
+            // 	item[0], // todo: check legal field
+            // 	item[1] === 'desc' ? 'desc' : 'asc'
+            // ]);
+
+            return result;
+        }, {});
     }
 
     static clearCaches()

@@ -89,7 +89,7 @@ export default class ArticleListFilterComponent extends React.Component {
 
 			ArticleTag.createQuery({
 				filter: filter,
-				fields: ['title', 'color'],
+				select: ['title', 'color'],
 				sort: [
 					['sort', 'asc']
 				]

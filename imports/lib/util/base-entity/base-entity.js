@@ -93,6 +93,8 @@ export default class BaseEntity
             translated.$options.offset = parseInt(parameters.offset);
         }
 
+        console.dir(translated);
+        
         return translated;
     }
 

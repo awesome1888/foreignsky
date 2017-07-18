@@ -4,7 +4,7 @@ export default class ArticleTagCollection extends BaseCollection
 {
     constructor()
     {
-        super('article.tag-v2');
+        super('article.tag');
     }
 
     schema()

@@ -4,7 +4,7 @@ export default class FileCollection extends BaseCollection
 {
     constructor()
     {
-        super('file-v2');
+        super('file');
     }
 
     schema()

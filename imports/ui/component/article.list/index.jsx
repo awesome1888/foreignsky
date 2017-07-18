@@ -3,7 +3,7 @@
 import React from 'react';
 import {createQueryContainer} from 'meteor/cultofcoders:grapher-react';
 
-import Article from '/imports/api/entity/article.js';
+import Article from '/imports/api/article/entity/entity.client.js';
 import App from '/imports/ui/app.jsx';
 import ArticleListFilterComponent from '/imports/ui/component/article.list.filter/index.jsx';
 //import PropTypes from 'prop-types';
@@ -54,9 +54,10 @@ export default class ArticleListComponent extends React.Component {
 		}
 
 		return App.instance.setLoading(new Promise((resolve, reject) => {
-			Article.createQuery({
-				filter: filter,
-				fields: ['title'],
+		    // low-level, just for now
+			Article.collection.createQuery({
+				$filters: filter,
+				title: 1,
 				sort: [
 					['date', 'desc'],
 				]

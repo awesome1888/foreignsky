@@ -7,7 +7,7 @@ class ArticleCollection extends BaseCollection
 {
     constructor()
     {
-        super('article-v2');
+        super('article');
     }
 
     get schema()

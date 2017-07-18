@@ -5,7 +5,7 @@ export default class EmbedCollection extends BaseCollection
 {
     constructor()
     {
-        super('embed-v2');
+        super('embed');
     }
 
     schema()

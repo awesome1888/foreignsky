@@ -1,9 +1,9 @@
-import BaseCollection from '../../../lib/util/base-collection/base-collection.js';
+import Collection from '../../../lib/base/collection/collection.js';
 import ArticleTagCollection from '../../article.tag/config/collection.js';
 import FileCollection from '../../file/config/collection.js';
 import EmbedCollection from '../../embed/config/collection.js';
 
-export default new class extends BaseCollection
+export default new class extends Collection
 {
     constructor()
     {

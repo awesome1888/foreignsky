@@ -2,6 +2,7 @@
 
 import React from 'react';
 import {createQueryContainer} from 'meteor/cultofcoders:grapher-react';
+import BaseComponent from '../../../lib/base/component/component.js';
 
 import Article from '/imports/api/article/entity/entity.client.js';
 import App from '/imports/ui/app.jsx';
@@ -10,15 +11,15 @@ import ArticleListFilterComponent from '/imports/ui/component/article.list.filte
 
 import './style.less';
 
-export default class ArticleListComponent extends React.Component {
+export default class ArticleListComponent extends BaseComponent {
 
 	constructor(params)
 	{
 		super(params);
 
-		this.state = {
-			data: [],
-		};
+		this.extendState({
+            data: [],
+        });
 	}
 
 	onFilterChange(params)

@@ -3,32 +3,47 @@ import {Meteor} from 'meteor/meteor';
 
 import App from '../../../ui/app.jsx';
 
-export default class BaseComponent extends Component {
-    constructor(props) {
+export default class BaseComponent extends Component
+{
+    constructor(props)
+    {
         super(props);
         this.state = {};
     }
 
-    componentWillUnmount() {
-        if (this._titleUpdated) {
+    extendState(extra)
+    {
+        if(_.isObject(extra))
+        {
+            Object.assign(this.state, extra);
+        }
+    }
+
+    componentWillUnmount()
+    {
+        if(this._titleUpdated)
+        {
             App.instance.setTitle();
             this._titleUpdated = false;
         }
 
         // un-bind events
-        if (_.isArrayNotEmpty(this.events)) {
+        if(_.isArrayNotEmpty(this.events))
+        {
             this.events.forEach((pair) => {
                 $(document).unbind(pair.event, pair.cb);
             });
         }
     }
 
-    setTitle(title = '') {
+    setTitle(title = '')
+    {
         App.instance.setTitle(title);
         this._titleUpdated = true;
     }
 
-    execute(name, args) {
+    execute(name, args)
+    {
         return new Promise((fulfil, reject) => {
             Meteor.apply(name, args, (err, res) => {
                 if (err) {
@@ -44,14 +59,17 @@ export default class BaseComponent extends Component {
         });
     }
 
-    showConsoleError(...args) {
-        if (Meteor.isDevelopment) {
+    showConsoleError(...args)
+    {
+        if (Meteor.isDevelopment)
+        {
             // eslint-disable-next-line no-console
             console.error.apply(this, args);
         }
     }
 
-    on(event, cb) {
+    on(event, cb)
+    {
         $(document).on(event, cb);
         this.events.push({
             event,
@@ -59,7 +77,8 @@ export default class BaseComponent extends Component {
         });
     }
 
-    fire(event, args = []) {
+    fire(event, args = [])
+    {
         $(document).trigger(event, args);
     }
 }

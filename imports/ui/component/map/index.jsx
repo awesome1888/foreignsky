@@ -3,13 +3,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Util from '/imports/lib/util.js';
-import PreRender from '/imports/lib/prerender.js';
+import BaseComponent from '/imports/lib/base/component/component.js';
 
 import App from '/imports/ui/app.jsx';
 
 import './style.less';
 
-export default class Map extends React.Component {
+export default class Map extends BaseComponent {
 
 	static propTypes = {
 		center: PropTypes.object,
@@ -102,13 +102,9 @@ export default class Map extends React.Component {
 		// }
 		return App.instance.setLoading(new Promise((resolve, reject) => {
 			Util.loadJs(this.mapUrl).then(() => {
-
 				return this.createMapObject();
-
 			}).then(() => {
-
 				resolve();
-
 			}, () => {
 				reject();
 			}).catch(() => {

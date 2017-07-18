@@ -1,6 +1,6 @@
-import BaseCollection from '../../../lib/util/base-collection/base-collection.js';
+import Collection from '../../../lib/base/collection/collection.js';
 
-export default new class extends BaseCollection
+export default new class extends Collection
 {
     constructor()
     {

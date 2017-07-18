@@ -120,8 +120,6 @@ export default class LoadIndicator extends React.Component {
 			value = 0;
 		}
 
-		//console.dir(value+'%');
-
 		this.setState({
 			percent: value,
 		});

@@ -1,23 +1,14 @@
 /* eslint-disable class-methods-use-this */
 
 import React from 'react';
-import BasePage from '/imports/ui/page/base/index';
+import BasePage from '../../../lib/base/page/page.jsx';
+import MapFullLayout from '../../component/layout/map-full/map-full.jsx';
 
 import ArticleListComponent from '/imports/ui/component/article.list/index.jsx';
 import ArticleDetailComponent from  '/imports/ui/component/article.detail/index.jsx';
 
-import App from '/imports/ui/app.jsx';
-
-import './style.less';
-
-export default class HomePage extends BasePage {
-
-	static propTypes = {
-	};
-
-	static defaultProps = {
-	};
-
+export default class HomePage extends BasePage
+{
 	constructor(params)
 	{
 		super(params);
@@ -42,26 +33,20 @@ export default class HomePage extends BasePage {
 		}
 	}
 
-	getSideHtml()
-	{
-		return (
-			<div className="home__side">
-				<ArticleListComponent
-					app={this.props.app}
-				/>
-			</div>
-		);
-	}
-
-	getCentralHtml()
-	{
-		return (
-			<div className="home__central">
-				<ArticleDetailComponent
-					id={this.state.id}
-					app={this.props.app}
-				/>
-			</div>
-		);
-	}
+	render()
+    {
+        return (
+            <MapFullLayout
+                className="margin-top_5"
+                side={
+                    <ArticleListComponent />
+                }
+                central={
+                    <ArticleDetailComponent
+                        id={this.state.id}
+                    />
+                }
+            />
+        );
+    }
 }

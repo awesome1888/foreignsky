@@ -10,7 +10,7 @@ import EmbedImageComponent from '/imports/ui/component/general/embed-image/index
 import EmbedGalleryComponent from '/imports/ui/component/general/embed-gallery/index.jsx';
 
 import App from '/imports/ui/app.jsx';
-import BaseComponent from '../../../lib/util/base-component/base-component.js';
+import BaseComponent from '../../../lib/base/component/component.js';
 import File from '../../../api/file/entity/entity.client.js';
 
 import Query from './query/article.query.js';

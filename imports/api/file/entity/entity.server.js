@@ -1,4 +1,4 @@
-import BaseEntity from '../../../lib/util/base-entity/base-entity.server.js';
+import BaseEntity from '../../../lib/base/entity/entity.server.js';
 import Entity from './entity.js';
 import mix from '../../../lib/mixin.js';
 import Util from '../../../lib/util.js';

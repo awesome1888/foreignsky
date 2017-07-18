@@ -3,7 +3,7 @@ import ArticleTagCollection from '../../article.tag/config/collection.js';
 import FileCollection from '../../file/config/collection.js';
 import EmbedCollection from '../../embed/config/collection.js';
 
-class ArticleCollection extends BaseCollection
+export default new class extends BaseCollection
 {
     constructor()
     {
@@ -95,5 +95,3 @@ class ArticleCollection extends BaseCollection
         ];
     }
 }
-
-export default new ArticleCollection();

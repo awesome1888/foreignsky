@@ -1,10 +1,10 @@
-import Article from '../../../imports/api/entity/article.js';
+import Article from '../../../imports/api/article/entity/entity.server.js';
 
 export default class SiteMapGenerator
 {
     static generate()
     {
-        const pages = Article.find({
+        const pages = Article.collection.find({
             filter: {
                 public: true,
             },
@@ -13,7 +13,7 @@ export default class SiteMapGenerator
                 title: 1,
                 date: 1,
             },
-        }).reduce((pageList, article) => {
+        }).fetch().reduce((pageList, article) => {
 
             pageList.push({
                 page: '/'+article._id,

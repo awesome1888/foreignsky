@@ -13,7 +13,7 @@ export default class BaseEntity
 
     static get collection()
     {
-        throw new Error('Not implemented');
+        throw new Error('Not implemented: get collection()');
     }
 
     get collection()
@@ -31,7 +31,7 @@ export default class BaseEntity
         return flatten(value).$set;
     }
 
-    static createQuery(parameters, name)
+    static createQuery(parameters, name = '')
     {
         if (_.isStringNotEmpty(name) && name in this._cache.q)
         {
@@ -57,18 +57,49 @@ export default class BaseEntity
             return {};
         }
 
+        const translated = {};
+
         if (_.isArrayNotEmpty(parameters.select))
         {
             parameters.select.forEach((field) => {
-                parameters[field] = 1;
+                translated[field] = 1;
             });
         }
 
-        if (_.isObjectNotEmpty(parameters.filters)) {
-            parameters.$filters = parameters.filters;
+        translated.$options = translated.$options || {};
+
+        if (_.isArrayNotEmpty(parameters.sort))
+        {
+            translated.$options.sort = this.translateParamtersSort(parameters.sort);
         }
 
-        return parameters;
+        if (_.isObjectNotEmpty(parameters.filter))
+        {
+            translated.$filters = parameters.filter;
+        }
+        else if(_.isFunction(parameters.filter))
+        {
+            translated.$filter = parameters.filter;
+        }
+
+        if ('limit' in parameters)
+        {
+            translated.$paginate = true;
+            translated.$options.limit = parseInt(parameters.limit);
+        }
+        if ('offset' in parameters)
+        {
+            translated.$paginate = true;
+            translated.$options.offset = parseInt(parameters.offset);
+        }
+
+        return translated;
+    }
+
+    static translateParamtersSort(sort)
+    {
+        // todo
+        return sort;
     }
 
     static clearCaches()

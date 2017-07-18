@@ -1,13 +1,13 @@
 import BaseCollection from '../../../lib/util/base-collection/base-collection.js';
 
-export default class ArticleTagCollection extends BaseCollection
+export default new class extends BaseCollection
 {
     constructor()
     {
         super('article.tag');
     }
 
-    schema()
+    get schema()
     {
         return {
             title: {

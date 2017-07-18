@@ -12,7 +12,7 @@ export default class BaseCollection extends Mongo.Collection
 
     get schema()
     {
-        throw new Error('Not implemented');
+        throw new Error('Not implemented: get schema()');
     }
 
     get links()

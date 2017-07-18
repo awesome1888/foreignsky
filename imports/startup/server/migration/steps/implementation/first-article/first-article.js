@@ -1,9 +1,9 @@
-import File, {FileEntity} from '../../../../../../api/entity/file.js';
-import {EmbedEntity as Embed, default as EMBED__} from '../../../../../../api/entity/embed.js';
-import {ArticleTag as Tag} from '../../../../../../api/entity/article/tag.js';
+import File from '../../../../../../api/file/entity/entity.server.js';
+import Embed from '../../../../../../api/embed/entity/entity.server.js';
+import ArticleTag from '../../../../../../api/article.tag/entity/entity.server.js';
 import BaseMigration from '../../../../../../lib/util/base-migration/base-migration.js';
 import Util from '../../../../../../lib/util.js';
-import ArticleCollection from '../../../../../../api/collection/article.js';
+import Article from '../../../../../../api/article/entity/entity.server.js';
 
 const fs = Npm.require('fs');
 
@@ -27,15 +27,14 @@ export default class FirstArticle extends BaseMigration
     {
         this.clear();
         File.collection.remove({});
-        EMBED__.collection.remove({});
-        Embed.itemCollection.remove({});
+        Embed.collection.remove({});
         this.addFiles();
         this.addEmbeds();
 
         // add or update article
         //this.log(this.text);
 
-        console.dir(Tag.getByTitle(['событие', 'место', 'шопинг']));
+        console.dir(ArticleTag.getByTitle(['событие', 'место', 'шопинг']));
         
         const data = {
             title: 'Блошиный рынок в Mauerpark',
@@ -43,15 +42,15 @@ export default class FirstArticle extends BaseMigration
             text: this.text,
             search: this.text.toUpperCase(),
             headerImageId: this.getFileId('dsc_0715.jpg'),
-            tagId: _.pluck(Tag.getByTitle(['событие', 'место', 'шопинг']), '_id'),
+            tagId: _.pluck(ArticleTag.getByTitle(['событие', 'место', 'шопинг']), '_id'),
             //date: moment("20170512", "YYYYMMDD"),
         };
 
         let id;
-        if(ArticleCollection.instance.findOne({_id: 'niGF3h8FCQcCpndZb'}))
+        if(Article.collection.findOne({_id: 'niGF3h8FCQcCpndZb'}))
         {
             id = 'niGF3h8FCQcCpndZb';
-            ArticleCollection.instance.update({
+            Article.collection.update({
                 _id: id,
             }, {
                 $set: data,
@@ -59,7 +58,7 @@ export default class FirstArticle extends BaseMigration
         }
         else
         {
-            id = ArticleCollection.instance.insert(data);
+            id = Article.collection.insert(data);
         }
 
         if(id)
@@ -318,7 +317,7 @@ export default class FirstArticle extends BaseMigration
             delete item.file;
         });
 
-        const id = Embed.add(type, {
+        const id = Embed.create(type, {
             items
         });
 
@@ -340,11 +339,11 @@ export default class FirstArticle extends BaseMigration
     addFiles(files)
     {
         const pubFolder = 'mauer/2kx2k/';
-        const imgFolder = FileEntity.localFolderAbsolute+pubFolder;
+        const imgFolder = File.localFolderAbsolute+pubFolder;
         //const folder300 = imgFolder+'300x300/';
 
         fs.readdirSync(imgFolder).forEach((item) => {
-            const path = FileEntity.localFolder+pubFolder+item;
+            const path = File.localFolder+pubFolder+item;
             const name = item;
             const id = File.collection.insert({
                 path,
@@ -355,7 +354,7 @@ export default class FirstArticle extends BaseMigration
     }
 
     getText() {
-        const pPath = Util.getAssetsFolder() + 'text.txt';
+        const pPath = Util.assetFolder + 'text.txt';
         this.log(pPath);
         return fs.readFileSync(pPath).toString();
     }

@@ -1,13 +1,13 @@
 import BaseCollection from '../../../lib/util/base-collection/base-collection.js';
 
-export default class FileCollection extends BaseCollection
+export default new class extends BaseCollection
 {
     constructor()
     {
         super('file');
     }
 
-    schema()
+    get schema()
     {
         return {
             name: {

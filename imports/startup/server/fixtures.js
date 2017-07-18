@@ -1,10 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { TAPi18n } from 'meteor/tap:i18n';
 
-import Article from '/imports/api/entity/article.js';
-import ArticleTag from '/imports/api/entity/article/tag.js';
-import File from '/imports/api/entity/file.js';
-import Embed from '/imports/api/entity/embed.js';
+import Article from '/imports/api/article/entity/entity.server.js';
+import ArticleTag from '/imports/api/article.tag/entity/entity.server.js';
+import File from '/imports/api/file/entity/entity.server.js';
+import Embed from '/imports/api/embed/entity/entity.server.js';
 
 Meteor.startup(() => {
 

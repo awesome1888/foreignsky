@@ -54,14 +54,20 @@ export default class ArticleListComponent extends React.Component {
 		}
 
 		return App.instance.setLoading(new Promise((resolve, reject) => {
-		    // low-level, just for now
-			Article.collection.createQuery({
-				$filters: filter,
-				title: 1,
+			Article.createQuery({
+				filter: filter,
+                select: {
+                    title: 1,
+                },
 				sort: [
-					['date', 'desc'],
-				]
-			}).fetch((err, data) => {
+                    ['date', 'desc'],
+				],
+                limit: 10,
+                offset: 0,
+                // or
+                // page: 1,
+                // window: 1,
+			}, 'article-list').fetch((err, data) => {
 				this.setState({
 					data: data || []
 				});

@@ -1,14 +1,14 @@
 import BaseCollection from '../../../lib/util/base-collection/base-collection.js';
 import ItemSchema from './sub-schema/item.js';
 
-export default class EmbedCollection extends BaseCollection
+export default new class extends BaseCollection
 {
     constructor()
     {
         super('embed');
     }
 
-    schema()
+    get schema()
     {
         return {
             item: {

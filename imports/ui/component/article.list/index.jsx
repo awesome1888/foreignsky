@@ -4,10 +4,9 @@ import React from 'react';
 import {createQueryContainer} from 'meteor/cultofcoders:grapher-react';
 import BaseComponent from '../../../lib/base/component/component.js';
 
-import Article from '/imports/api/article/entity/entity.client.js';
 import App from '/imports/ui/app.jsx';
 import ArticleListFilterComponent from '/imports/ui/component/article.list.filter/index.jsx';
-//import PropTypes from 'prop-types';
+import Query from './query/list.query.js';
 
 import './style.less';
 
@@ -55,20 +54,7 @@ export default class ArticleListComponent extends BaseComponent {
 		}
 
 		return App.instance.setLoading(new Promise((resolve, reject) => {
-			Article.createQuery({
-				filter: filter,
-                select: {
-                    title: 1,
-                },
-				sort: [
-                    ['date', 'desc'],
-				],
-                limit: 10,
-                offset: 0,
-                // or
-                // page: 1,
-                // window: 1,
-			}, 'article-list').fetch((err, data) => {
+            Query.filter(filter).fetch((err, data) => {
 				this.setState({
 					data: data || []
 				});
@@ -92,7 +78,7 @@ export default class ArticleListComponent extends BaseComponent {
 	render(props = {})
 	{
 	    const data = this.state.data;
-
+	    
 		return (
 			<div className="article-list">
 				<ArticleListFilterComponent

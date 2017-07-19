@@ -2,6 +2,8 @@ import React from 'react';
 import BaseComponent from '../../../../lib/base/component/component.js';
 import PropTypes from 'prop-types';
 
+import './style.less';
+
 export default class Layout extends BaseComponent
 {
     static propTypes = {

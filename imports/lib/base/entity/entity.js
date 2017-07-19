@@ -41,6 +41,8 @@ export default class BaseEntity
         const q = this.collection.createQuery(
             this.translateParameters(parameters)
         );
+        
+        this.patchQuery(q);
 
         if (_.isStringNotEmpty(name))
         {
@@ -50,6 +52,15 @@ export default class BaseEntity
         return q;
     }
 
+    static patchQuery(q)
+    {
+        q.filter = function(params) {
+            console.dir('set filter');
+            console.dir(this);
+            return this;
+        }.bind(q);
+    }
+    
     static translateParameters(parameters)
     {
         if (!_.isObjectNotEmpty(parameters))
@@ -64,6 +75,10 @@ export default class BaseEntity
             parameters.select.forEach((field) => {
                 translated[field] = 1;
             });
+        }
+        else if (_.isObjectNotEmpty(parameters.select))
+        {
+            Object.assign(translated, parameters.select);
         }
 
         translated.$options = translated.$options || {};

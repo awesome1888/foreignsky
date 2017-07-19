@@ -11,14 +11,51 @@ export default class BaseEntity
         q: {},
     };
 
-    static get collection()
+    _data = {};
+    _normalized = false;
+
+    constructor(data = {})
     {
-        throw new Error('Not implemented: get collection()');
+        if (_.isObjectNotEmpty(data))
+        {
+            this.data = data;
+        }
     }
 
     get collection()
     {
         return this.prototype.constructor.collection;
+    }
+
+    get id()
+    {
+        return this.data._id;
+    }
+
+    get data()
+    {
+        if (!this._normalized)
+        {
+            this._data = this.normalizeData(this._data);
+            this._normalized = true;
+        }
+
+        return this._data;
+    }
+
+    set data(data)
+    {
+        this._data = data;
+    }
+
+    normalizeData(data)
+    {
+        return data;
+    }
+
+    static get collection()
+    {
+        throw new Error('Not implemented: get collection()');
     }
 
     static get rawCollection()

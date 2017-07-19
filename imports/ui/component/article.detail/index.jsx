@@ -11,6 +11,7 @@ import EmbedGalleryComponent from '/imports/ui/component/general/embed-gallery/i
 
 import App from '/imports/ui/app.jsx';
 import BaseComponent from '../../../lib/base/component/component.js';
+import Article from '../../../api/article/entity/entity.client.js';
 import File from '../../../api/file/entity/entity.client.js';
 
 import Query from './query/article.query.js';
@@ -96,7 +97,6 @@ export default class ArticleDetailComponent extends BaseComponent
 			opened: false
 		});
 		App.instance.toggleMap(false);
-        //App.instance.setTitle();
 		FlowRouter.go('/');
 	}
 
@@ -222,6 +222,12 @@ export default class ArticleDetailComponent extends BaseComponent
 		}
 
 		const content = this.makeText(data);
+
+        Article.findOne({
+            _id: data._id,
+        }).then((article) => {
+            console.dir(article.id);
+        });
 
 		return (
 			<div

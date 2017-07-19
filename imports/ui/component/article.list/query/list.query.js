@@ -7,9 +7,4 @@ export default Article.createQuery({
     sort: [
         ['date', 'desc'],
     ],
-    limit: 10,
-    offset: 0,
-    // or
-    // page: 1,
-    // window: 1,
 });

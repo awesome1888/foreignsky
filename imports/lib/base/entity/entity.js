@@ -42,7 +42,7 @@ export default class BaseEntity
             this.translateParameters(parameters)
         );
         
-        this.patchQuery(q);
+        // this.patchQuery(q);
 
         if (_.isStringNotEmpty(name))
         {
@@ -52,14 +52,14 @@ export default class BaseEntity
         return q;
     }
 
-    static patchQuery(q)
-    {
-        q.filter = function(params) {
-            console.dir('set filter');
-            console.dir(this);
-            return this;
-        }.bind(q);
-    }
+    // static patchQuery(q)
+    // {
+    //     q.filter = function(params) {
+    //         console.dir('set filter');
+    //         console.dir(this);
+    //         return this;
+    //     }.bind(q);
+    // }
     
     static translateParameters(parameters)
     {
@@ -97,6 +97,10 @@ export default class BaseEntity
             translated.$filter = parameters.filter;
         }
 
+        if (!('$filter' in translated)) {
+            translated.$filter = this.getFilterApplier();
+        }
+
         if ('limit' in parameters)
         {
             translated.$paginate = true;
@@ -109,6 +113,14 @@ export default class BaseEntity
         }
         
         return translated;
+    }
+
+    static getFilterApplier() {
+        return ({filters, params}) => {
+            if (_.isObject(params.filter)) {
+                Object.assign(filters, params.filter);
+            }
+        };
     }
 
     static translateParamtersSort(sort)

@@ -34,7 +34,6 @@ export default class ArticleListComponent extends BaseComponent {
 	updateItemListData(params = {})
 	{
 		const filter = {
-			public: true,
 		};
 		if('tag' in params)
 		{
@@ -54,7 +53,9 @@ export default class ArticleListComponent extends BaseComponent {
 		}
 
 		return App.instance.setLoading(new Promise((resolve, reject) => {
-            Query.filter(filter).fetch((err, data) => {
+            Query.setParams({
+                filter,
+            }).fetch((err, data) => {
 				this.setState({
 					data: data || []
 				});

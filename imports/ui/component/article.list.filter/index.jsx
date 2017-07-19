@@ -5,7 +5,7 @@ import {createContainer} from 'meteor/react-meteor-data';
 import {TAPi18n} from 'meteor/tap:i18n';
 import PropTypes from 'prop-types';
 
-import ArticleTag from '/imports/api/article.tag/entity/entity.client.js';
+import Query from './query/tag.query.js';
 import Util from '/imports/lib/util.js';
 
 import './style.less';
@@ -81,19 +81,8 @@ export default class ArticleListFilterComponent extends React.Component {
 
 	updateTagData(params = {})
 	{
-		let filter = {
-			primary: true,
-		};
-
 		return App.instance.setLoading(new Promise((resolve, reject) => {
-
-			ArticleTag.createQuery({
-				filter: filter,
-				select: ['title', 'color'],
-				sort: [
-					['sort', 'asc']
-				]
-			}).fetch((err, data) => {
+			Query.fetch((err, data) => {
 				this.setState({
 					tags: data || []
 				});

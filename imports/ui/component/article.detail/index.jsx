@@ -57,17 +57,15 @@ export default class ArticleDetailComponent extends BaseComponent
 
 	show(id)
 	{
-	    const params = {
-	        id,
-        };
-
         // weak defence, but better then nothing
-	    if (App.instance.query['super-secret'] !== 'm73iho5e2ws3rhbsgm2btumqhki2eg') {
-            params.public = true;
-        }
+        // if (App.instance.query['super-secret'] !== 'm73iho5e2ws3rhbsgm2btumqhki2eg') {
+        //     params.public = true;
+        // }
 
 		return new Promise((resolve, reject) => {
-            Query.clone(params).fetchOne((err, res) => {
+            Query.setParams({
+                _id: id,
+            }).fetchOne((err, res) => {
 				if (!err)
 				{
 				    const data = res || {};

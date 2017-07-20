@@ -10,6 +10,31 @@ const M = (superclass) =>  class Article extends superclass
     {
         return Collection;
     }
+
+    get title()
+    {
+        return this.data.title || '';
+    }
+
+    get text()
+    {
+        return this.data.text || '';
+    }
+
+    get date()
+    {
+        return this.data.date || null;
+    }
+
+    get headerColor()
+    {
+        return this.data.headerColor || 'white';
+    }
+
+    hasHeaderImage()
+    {
+        return _.isObjectNotEmpty(this.data.headerImage);
+    }
 };
 
 export default M;

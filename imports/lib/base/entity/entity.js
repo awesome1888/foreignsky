@@ -13,6 +13,7 @@ export default class BaseEntity
 
     _data = {};
     _normalized = false;
+    static _qConstructor = null;
 
     constructor(data = {})
     {
@@ -68,6 +69,11 @@ export default class BaseEntity
         return flatten(value).$set;
     }
 
+    static isQuery(value)
+    {
+        return value instanceof this.getSampleQConstructor();
+    }
+
     static createQuery(parameters, name = '')
     {
         if (_.isStringNotEmpty(name) && name in this._cache.q)
@@ -78,26 +84,26 @@ export default class BaseEntity
         const q = this.collection.createQuery(
             this.translateParameters(parameters)
         );
-        
-        // this.patchQuery(q);
 
         if (_.isStringNotEmpty(name))
         {
             this._cache.q[name] = q;
         }
-
+        
         return q;
     }
 
-    // static patchQuery(q)
-    // {
-    //     q.filter = function(params) {
-    //         console.dir('set filter');
-    //         console.dir(this);
-    //         return this;
-    //     }.bind(q);
-    // }
-    
+    static getSampleQConstructor()
+    {
+        if (this._qConstructor === null)
+        {
+            const sample = this.collection.createQuery();
+            this._qConstructor = sample.constructor;
+        }
+
+        return this._qConstructor;
+    }
+
     static translateParameters(parameters)
     {
         if (!_.isObjectNotEmpty(parameters))

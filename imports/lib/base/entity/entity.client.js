@@ -5,16 +5,25 @@ Side.ensureClient();
 
 export default class BaseEntity extends Entity
 {
-    static async findOne(filter = {})
+    static async findOne(condition = {})
     {
-        const data = await this.wrapQCall(this.createQuery({
-            filter,
-            // select: '*',
-            select: ['title'],
-        }), true);
+        let q = null;
+        if (this.isQuery(condition))
+        {
+            q = condition;
+        }
+        else
+        {
+            q = this.createQuery({
+                filter: condition,
+                select: '*',
+            });
+        }
+
+        const data = await this.wrapQCall(q, true);
 
         // make instance
-        return new (this.prototype.constructor)(data);
+        return new this(data);
     }
 
     static async wrapQCall(q, one = false)

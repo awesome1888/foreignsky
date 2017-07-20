@@ -113,6 +113,7 @@ export default class BaseEntity
 
         const translated = {};
 
+        // todo: implement * in select
         if (_.isArrayNotEmpty(parameters.select))
         {
             parameters.select.forEach((field) => {

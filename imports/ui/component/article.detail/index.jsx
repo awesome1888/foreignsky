@@ -56,34 +56,32 @@ export default class ArticleDetailComponent extends BaseComponent
 		}
 	}
 
-	show(id)
+	async show(id)
 	{
         // weak defence, but better then nothing
         // if (App.instance.query['super-secret'] !== 'm73iho5e2ws3rhbsgm2btumqhki2eg') {
         //     params.public = true;
         // }
 
-		return new Promise((resolve, reject) => {
-            Query.setParams({
-                _id: id,
-            }).fetchOne((err, res) => {
-				if (!err)
-				{
-				    const data = res || {};
-					this.setState({
-						opened: true,
-						data,
-					});
-					App.instance.toggleMap(true);
-                    this.setTitle(data.title);
-					resolve();
-				}
-				else
-				{
-					reject();
-				}
-			});
-		});
+        const p = Article.findOne(Query.setParams({
+            _id: id,
+        }));
+
+        p.then((article) => {
+            console.dir(article.id);
+            console.dir(article.data);
+
+            // todo: in case of notfound, go 404, and also we need header
+
+            this.setState({
+                opened: true,
+                data: article.data,
+            });
+            App.instance.toggleMap(true);
+            this.setTitle(article.data.title);
+        });
+
+        return p;
 	}
 
 	close()
@@ -222,12 +220,6 @@ export default class ArticleDetailComponent extends BaseComponent
 		}
 
 		const content = this.makeText(data);
-
-        Article.findOne({
-            _id: data._id,
-        }).then((article) => {
-            console.dir(article.id);
-        });
 
 		return (
 			<div

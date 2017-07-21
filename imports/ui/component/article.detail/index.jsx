@@ -54,11 +54,6 @@ export default class ArticleDetailComponent extends BaseComponent
 
 	async show(id)
 	{
-        // weak defence, but better then nothing
-        // if (App.instance.query['super-secret'] !== 'm73iho5e2ws3rhbsgm2btumqhki2eg') {
-        //     params.public = true;
-        // }
-
         const p = Article.findOne(Query.setParams({
             _id: id,
         }));
@@ -100,6 +95,8 @@ export default class ArticleDetailComponent extends BaseComponent
 			return null;
 		}
 
+		console.dir(article.data.embed);
+		
 		return (
 			<div
 				className={classnames(
@@ -133,16 +130,16 @@ export default class ArticleDetailComponent extends BaseComponent
 					<div className="article-detail__body-top-line">
 						<div className="group-tag">
 							{
-								// _.map(data.tag || {}, (tag) => {
-								// 	return (
-								// 		<div
-								// 			className={`tag tag_${tag.color ? tag.color : 'blue'}`}
-								// 		    key={tag._id}
-								// 		>
-								// 			#{tag.title.toLowerCase()}
-								// 		</div>
-								// 	);
-								// })
+								_.map(article.tag || {}, (tag) => {
+									return (
+										<div
+											className={`tag tag_${tag.color}`}
+										    key={tag.id}
+										>
+											#{tag.title}
+										</div>
+									);
+								})
 							}
 						</div>
 						<div className="article-detail__body-date">

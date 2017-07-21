@@ -204,4 +204,20 @@ export default class BaseEntity
             q: {}
         };
     }
+
+    static resolveEntityConstructor(name)
+    {
+        const resolverName = `${name}Constructor`;
+        if (!_.isFunction(this[resolverName]))
+        {
+            throw new Error(`Entity resolver for entity ${name} ('static get ${resolverName}() {...}') is not implemented`);
+        }
+
+        return this[resolverName];
+    }
+
+    isEntity(arg)
+    {
+        return arg instanceof this.constructor;
+    }
 }

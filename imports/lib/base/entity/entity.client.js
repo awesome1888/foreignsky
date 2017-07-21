@@ -12,6 +12,9 @@ export default class BaseEntity extends Entity
             true
         );
 
+        console.dir('data');
+        console.dir(data);
+        
         // make instance
         return new this(data);
     }

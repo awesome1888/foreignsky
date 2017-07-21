@@ -31,6 +31,36 @@ const M = (superclass) =>  class Article extends superclass
         return this.data.headerColor || 'white';
     }
 
+    get tagEntity()
+    {
+        throw new Error('Not implemented');
+    }
+
+    get tag()
+    {
+        const tags = this.data.tag;
+        if (_.isArray(tags))
+        {
+            // todo: optimize this
+            return tags.map((tag, k) => {
+                if (this.isEntity(tag)) {
+                    return tag;
+                }
+                if (_.isObjectNotEmpty(tag)) {
+                    // make entity
+                    const constr = this.constructor.resolveEntityConstructor('tag');
+                    tags[k] = new constr(tag);
+
+                    return tags[k];
+                }
+
+                return null;
+            }).filter(item => item !== null);
+        }
+
+        return [];
+    }
+
     hasHeaderImage()
     {
         return _.isObjectNotEmpty(this.data.headerImage);

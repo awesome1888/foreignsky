@@ -77,7 +77,7 @@ export default new class extends Collection
                 type: 'many',
                 collection: EmbedCollection,
                 field: 'embedId',
-                index: false,
+                index: true,
             },
         };
     }

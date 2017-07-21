@@ -100,6 +100,8 @@ export default class BaseEntity
             this.translateParameters(parameters)
         );
 
+        this.patchQueryPrototype(q);
+
         if (_.isStringNotEmpty(name))
         {
             this._cache.q[name] = q;
@@ -174,14 +176,6 @@ export default class BaseEntity
         return translated;
     }
 
-    static getFilterApplier() {
-        return ({filters, params}) => {
-            if (_.isObject(params.filter)) {
-                Object.assign(filters, params.filter);
-            }
-        };
-    }
-
     static translateParamtersSort(sort)
     {
         return sort.reduce((result, item) => {
@@ -214,6 +208,36 @@ export default class BaseEntity
         }
 
         return this[resolverName];
+    }
+
+    /**
+     * nasty
+     */
+    static patchQueryPrototype(q)
+    {
+        if (!('filter' in q.constructor.prototype))
+        {
+            q.constructor.prototype.filter = this.getFilterForwarder();
+        }
+    }
+
+    static getFilterApplier() {
+        return ({filters, params}) => {
+            if (_.isObject(params.filter)) {
+                Object.assign(filters, params.filter);
+            }
+        };
+    }
+
+    static getFilterForwarder()
+    {
+        return function (filter) {
+            this.setParams({
+                filter,
+            });
+
+            return this;
+        };
     }
 
     isEntity(arg)

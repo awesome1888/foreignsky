@@ -54,9 +54,7 @@ export default class ArticleDetailComponent extends BaseComponent
 
 	async show(id)
 	{
-        const p = Article.findOne(Query.setParams({
-            _id: id,
-        }));
+        const p = Article.findOne(Query.filter({_id: id}));
 
         p.then((article) => {
             // todo: in case of notfound, go 404, and also we need header

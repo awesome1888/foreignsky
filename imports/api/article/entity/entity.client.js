@@ -35,7 +35,7 @@ export default class Article extends mix(BaseEntity).with(Entity)
                     parts.push(React.createElement('div', {key: prevIndex}, chunk));
                 }
 
-                parts.push(this.makeEmbed(data, found[1]));
+                parts.push(this.makeEmbed(found[1]));
 
                 prevIndex = expr.lastIndex;
             }
@@ -57,12 +57,9 @@ export default class Article extends mix(BaseEntity).with(Entity)
      * @param id Embed ID found in body
      * @returns {null}
      */
-    makeEmbed(data, id)
+    makeEmbed(id)
     {
-        if(!id || !_.isObject(data) || !_.isArray(data.embed))
-        {
-            return null;
-        }
+        const data = this.data;
 
         id = id.toString().trim();
         if(!id)

@@ -59,6 +59,21 @@ export default class BaseEntity
         throw new Error('Not implemented: get collection()');
     }
 
+    static prepareQuery(condition)
+    {
+        if (this.isQuery(condition))
+        {
+            return condition;
+        }
+        else
+        {
+            return this.createQuery({
+                filter: condition,
+                select: '*',
+            });
+        }
+    }
+
     static get rawCollection()
     {
         return this.collection.rawCollection();

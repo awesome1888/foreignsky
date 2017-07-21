@@ -7,20 +7,10 @@ export default class BaseEntity extends Entity
 {
     static async findOne(condition = {})
     {
-        let q = null;
-        if (this.isQuery(condition))
-        {
-            q = condition;
-        }
-        else
-        {
-            q = this.createQuery({
-                filter: condition,
-                select: '*',
-            });
-        }
-
-        const data = await this.wrapQCall(q, true);
+        const data = await this.wrapQCall(
+            this.prepareQuery(condition),
+            true
+        );
 
         // make instance
         return new this(data);

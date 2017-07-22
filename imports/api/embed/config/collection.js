@@ -1,5 +1,6 @@
 import Collection from '../../../lib/base/collection/collection.js';
 import ItemSchema from './sub-schema/item.js';
+import FileCollection from '../../file/config/collection.js';
 
 export default new class extends Collection
 {
@@ -28,6 +29,7 @@ export default new class extends Collection
 
     get links()
     {
-        return {};
+        return {
+        };
     }
 }

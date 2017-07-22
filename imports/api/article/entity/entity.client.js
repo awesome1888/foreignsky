@@ -36,6 +36,20 @@ export default class Article extends mix(BaseEntity).with(Entity)
     }
 
     /**
+     * This is kinda stupid method, but we have no choice
+     * @returns {Promise.<void>}
+     */
+    async populateImage()
+    {
+        // go through all embed, get images, load them, then reduce
+        const embed = this.data.embed; // raw data
+        if (_.isArrayNotEmpty(embed))
+        {
+            console.dir(embed);
+        }
+    }
+
+    /**
      * @access protected
      */
     static get tagConstructor()

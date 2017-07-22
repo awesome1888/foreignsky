@@ -16,12 +16,9 @@ export default Article.createQuery({
         },
         embed: {
             item: {
-                image: {
-                    title: 1,
-                    path: 1,
-                },
                 label: 1,
                 options: 1,
+                imageId: 1,
             },
             renderer: 1,
             options: 1,

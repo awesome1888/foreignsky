@@ -59,6 +59,8 @@ export default class ArticleDetailComponent extends BaseComponent
         p.then((article) => {
             // todo: in case of notfound, go 404, and also we need header
 
+            article.populateImage();
+
             this.setState({
                 opened: true,
                 data: article.data,
@@ -93,8 +95,6 @@ export default class ArticleDetailComponent extends BaseComponent
 			return null;
 		}
 
-		console.dir(article.data.embed);
-		
 		return (
 			<div
 				className={classnames(

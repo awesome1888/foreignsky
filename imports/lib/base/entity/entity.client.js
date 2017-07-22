@@ -7,11 +7,23 @@ export default class BaseEntity extends Entity
 {
     static async findOne(condition = {})
     {
+        // make call here...
+        // nameNormalized
+        const data = await this.executeOperation('find', [condition]);
+
+        console.dir(data);
+        
+        // make instance
+        return new this({});
+    }
+
+    static async findOneGrapher(condition = {})
+    {
         const data = await this.wrapQCall(
             this.prepareQuery(condition),
             true
         );
-        
+
         // make instance
         return new this(data);
     }
@@ -27,5 +39,32 @@ export default class BaseEntity extends Entity
                 }
             })
         });
+    }
+
+    static async executeOperation(op, args)
+    {
+        return this.executeMethod(
+            this.makeMethodName(op),
+            args
+        );
+    }
+
+    static async executeMethod(name, args)
+    {
+        return new Promise((resolve, reject) => {
+            Meteor.apply(name, args, (err, res) => {
+                if (err)
+                {
+                    reject(err);
+                }
+
+                resolve(res);
+            });
+        });
+    }
+
+    static makeMethodName(op)
+    {
+        return `${this.collection.nameNormalized}-${op}`;
     }
 }

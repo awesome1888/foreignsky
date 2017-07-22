@@ -32,9 +32,9 @@ export default class
 
     registerMethods()
     {
-        const cId = this.entity.collection.name.replace('.', '_').toLowerCase();
+        const cId = this.entity.collection.nameNormalized;
 
-        const methods = {}
+        const methods = {};
         _.forEach(this.map, (desc, op) => {
             methods[`${cId}-${op}`] = this.makeMethodBody(op, desc);
         });
@@ -65,13 +65,7 @@ export default class
 
     find(parameters)
     {
-        console.dir('trying to find...');
-        console.dir(parameters);
-    }
-
-    findOne()
-    {
-
+        return this.entity.createQuery(parameters).fetch();
     }
 
     save()
@@ -86,5 +80,6 @@ export default class
 
     accessControl(op, parameters)
     {
+
     }
 }

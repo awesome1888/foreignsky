@@ -28,6 +28,11 @@ export default class BaseCollection extends Mongo.Collection
         return this._name;
     }
 
+    get nameNormalized()
+    {
+        return this.name.replace('.', '_').toLowerCase();
+    }
+
     createIndexes()
     {
         if(Meteor.isServer)

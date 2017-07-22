@@ -54,7 +54,34 @@ export default class ArticleDetailComponent extends BaseComponent
 
 	async show(id)
 	{
-        const p = Article.findOne(Query.filter({_id: id}));
+        const p = Article.findOne({
+            select: {
+                title: 1,
+                text: 1,
+                date: 1,
+                headerColor: 1,
+                headerImage: {
+                    title: 1,
+                    path: 1,
+                },
+                tag: {
+                    title: 1,
+                    color: 1,
+                },
+                embed: {
+                    item: {
+                        label: 1,
+                        options: 1,
+                        imageId: 1,
+                    },
+                    renderer: 1,
+                    options: 1,
+                },
+            },
+            filter: {
+                _id: id,
+            },
+        });
 
         p.then((article) => {
             // todo: in case of notfound, go 404, and also we need header

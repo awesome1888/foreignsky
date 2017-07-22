@@ -24,6 +24,10 @@ export default class BaseCollection extends Mongo.Collection
         return [];
     }
 
+    get name() {
+        return this._name;
+    }
+
     createIndexes()
     {
         if(Meteor.isServer)

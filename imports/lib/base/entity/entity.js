@@ -56,7 +56,7 @@ export default class BaseEntity
 
     static get collection()
     {
-        throw new Error('Not implemented: get collection()');
+        this.throwNotImplemented('static get collection()');
     }
 
     static prepareQuery(condition)
@@ -235,6 +235,11 @@ export default class BaseEntity
 
             return this;
         };
+    }
+
+    static throwNotImplemented(fn)
+    {
+        throw new Error(`Not implemented: ${fn}`);
     }
 
     isEntity(arg)

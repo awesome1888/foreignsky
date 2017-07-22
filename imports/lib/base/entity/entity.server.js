@@ -5,14 +5,29 @@ Side.ensureServer();
 
 export default class BaseEntity extends Entity
 {
-    static restrictExposition(filters, options, userId)
+    static expCtrl = null;
+
+    static restrictExpositionGrapher(filters, options, userId)
     {
+    }
+
+    static get expositionController()
+    {
+        this.throwNotImplemented('static get expositionController()');
     }
 
     static expose()
     {
+        if(this.expCtrl === null)
+        {
+            this.expCtrl = new this.expositionController(this);
+        }
+    }
+
+    static exposeGrapher()
+    {
         this.collection.expose({
-            firewall: this.restrictExposition.bind(this),
+            firewall: this.restrictExpositionGrapher.bind(this),
             maxLimit: 1000,
             maxDepth: 5,
             // restrictedFields: this.restrictedFields, // array of fields you want to restrict

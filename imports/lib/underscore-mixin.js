@@ -23,4 +23,21 @@ _.mixin({
     isObjectNotEmpty(value) {
         return _.isObject(value) && Object.keys(value).length > 0;
     },
+    makeMap(data, field, unsetKey = false)
+    {
+        if (_.isArrayNotEmpty(data))
+        {
+            return data.reduce((result, item) => {
+                const key = item[field];
+                if (unsetKey)
+                {
+                    delete item[field];
+                }
+                result[key] = item;
+                return result;
+            }, {});
+        }
+
+        return {};
+    }
 });

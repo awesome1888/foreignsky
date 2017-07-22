@@ -67,10 +67,7 @@ export default class BaseEntity
         }
         else
         {
-            return this.createQuery({
-                filter: condition,
-                select: '*',
-            });
+            return this.createQuery(condition);
         }
     }
 
@@ -130,7 +127,7 @@ export default class BaseEntity
 
         const translated = {};
 
-        // todo: implement * in select
+        // todo: implement * in select here
         if (_.isArrayNotEmpty(parameters.select))
         {
             parameters.select.forEach((field) => {

@@ -11,9 +11,6 @@ export default class BaseEntity extends Entity
             this.prepareQuery(condition),
             true
         );
-
-        console.dir('data');
-        console.dir(data);
         
         // make instance
         return new this(data);

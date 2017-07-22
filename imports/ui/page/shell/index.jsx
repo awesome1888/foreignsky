@@ -14,7 +14,7 @@ export default class ShellPage extends BasePage
             <MapFullLayout
                 className="margin-top_5"
                 central={
-                    <div className="background-color_white">
+                    <div className="background-color_white scroll_vertical">
                         <ShellUI />
                     </div>
                 }

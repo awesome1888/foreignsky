@@ -34,4 +34,13 @@ export default class BaseEntity extends Entity
             $filters: filter
         }).getCount();
     }
+
+    static find(condition = {})
+    {
+        return this.createQuery(condition).fetch().reduce((result, data) => {
+            // make instance
+            result.push(new this(data));
+            return result;
+        }, []);
+    }
 }

@@ -1,5 +1,5 @@
 import Step1 from './implementation/first-article.js';
-import Step2 from './implementation/move-embed.js';
+import Step2 from './implementation/move-embed/move-embed.js';
 
 /* eslint-disable object-shorthand */
 

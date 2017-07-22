@@ -1,6 +1,8 @@
 import {Meteor} from 'meteor/meteor';
 import React from 'react';
 
+import './style.less';
+
 export default class UI extends React.Component {
 
     static defaultProps = {

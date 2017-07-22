@@ -15,14 +15,14 @@ export default Article.createQuery({
             color: 1,
         },
         embed: {
-            // item: {
-            //     image: {
-            //         title: 1,
-            //         path: 1,
-            //     },
-            //     label: 1,
-            //     options: 1,
-            // },
+            item: {
+                image: {
+                    title: 1,
+                    path: 1,
+                },
+                label: 1,
+                options: 1,
+            },
             renderer: 1,
             options: 1,
         },

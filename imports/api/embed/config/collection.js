@@ -25,4 +25,9 @@ export default new class extends Collection
             },
         };
     }
+
+    get links()
+    {
+        return {};
+    }
 }

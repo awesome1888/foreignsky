@@ -41,28 +41,13 @@ export default class List extends BaseComponent {
     }
 
     componentDidMount() {
-        this.startDataReload();
+        this.reLoadData();
     }
 
     componentWillUpdate() {
         this.checkUrl();
     }
 
-    /**
-     * Main routine that starts after the component get mounted
-     * or every time the component get updated
-     * @returns void
-     * @access protected
-     */
-    startDataReload() {
-        this.reLoadData();
-    }
-
-    /**
-     * The content of startDataReload, outside the promise wrapper
-     * @returns void
-     * @access protected
-     */
     reLoadData() {
         this.loadData();
         this.loadCount();
@@ -72,7 +57,7 @@ export default class List extends BaseComponent {
     {
         this.props.entity.find(Object.assign({
             select: ['title', 'sort', 'color', 'primary'],
-        }, this.getPageParameters())).then((res) => {
+        }, this.pageParameters)).then((res) => {
             this.setState({
                 data: res,
                 dataReady: true,
@@ -100,96 +85,16 @@ export default class List extends BaseComponent {
         const urlBefore = this.url;
         if (urlNow !== urlBefore) {
             this.url = urlNow;
-            this.startDataReload();
+            this.reLoadData();
         }
     }
 
     /**
-     * An alias for startDataReload(), you can pass this to nested components
+     * An alias for reLoadData(), you can pass this to nested components
      */
     onListUpdate() {
-        this.startDataReload();
+        this.reLoadData();
     }
-
-    // getCurrentFilter() {
-    //     return this.loadFiltersFromURL();
-    // }
-
-    // loadFiltersFromURL() {
-    //     const chosenFilters = {};
-    //     const fs = this.getFilterSettings();
-    //     if (!_.isObjectNotEmpty(fs)) {
-    //         return chosenFilters;
-    //     }
-    //     _.each(fs.fields, (filter) => {
-    //         if (FlowRouter.getQueryParam(filter.field)) {
-    //             chosenFilters[filter.field] = [];
-    //             _.each(FlowRouter.getQueryParam(filter.field).split(';'), (value) => {
-    //                 if (filter.type === BarFilterTypes.SEARCHBOX) {
-    //                     chosenFilters[filter.field].push(value);
-    //                 } else if (_.contains(filter.values.map(el => el.value), value)) {
-    //                     chosenFilters[filter.field].push(value);
-    //                 }
-    //             });
-    //         }
-    //     });
-    //     return chosenFilters;
-    // }
-
-    // getFilterSettings() {
-    //     return {};
-    // }
-    //
-    // getChosenFilter() {
-    //     return this.state.chosenFilters;
-    // }
-
-    // onReset() {
-    //     const params = {};
-    //     params.page = null;
-    //     _.each(this.getFilterSettings().fields, (filter) => {
-    //         params[filter.field] = null;
-    //     });
-    //     FlowRouter.setQueryParams(params);
-    // }
-
-    /**
-     * On filter rest, set page, chosenfilters, employersIds to empty and url
-     */
-    // handleFiltersReset() {
-    //     this.setState({
-    //         employersIds: null,
-    //     });
-    //     const params = {};
-    //     params.page = null;
-    //     _.each(this.getFilterSettings().fields, (filter) => {
-    //         params[filter.field] = null;
-    //     });
-    //     FlowRouter.setQueryParams(params);
-    //     this.setState({
-    //         chosenFilters: this.loadFiltersFromURL()
-    //     }, () => this.startDataReload());
-    // }
-
-    /**
-     * On change filters, get new data and set url
-     * @param filter
-     * @param values
-     */
-    // handleFilterChange(filter, values) {
-    //     const chosenFilters = _.clone(this.state.chosenFilters);
-    //     chosenFilters[filter] = values.map(el => el.value);
-    //
-    //     const params = {};
-    //     params.page = 1;
-    //     params[filter] = chosenFilters[filter].join(';');
-    //     FlowRouter.setQueryParams(params);
-    //     this.setState({
-    //         chosenFilters,
-    //         page: 1,
-    //     });
-    //     this.startDataReload();
-    // }
 
     /**
      * Returns link to the inner list component class
@@ -229,7 +134,7 @@ export default class List extends BaseComponent {
      * @returns {[string,string]}
      * @access protected
      */
-    getLabels() {
+    get labels() {
         return ['#COUNT# item', '#COUNT# items', 'no items'];
     }
 
@@ -290,70 +195,21 @@ export default class List extends BaseComponent {
     }
 
     /**
-     * Returns true if all data were loaded
-     * @returns {boolean}
-     * @access protected
-     */
-    isReady() {
-        return this.state.dataReady && this.state.countReady;
-    }
-
-    /**
      * Returns page navigation parameters for the query
      * @returns {{limit: (number|*), skip: number}}
      * @access protected
      */
-    getPageParameters() {
+    get pageParameters() {
         return {
             limit: this.state.perPage,
             offset: this.state.perPage * (this.state.page - 1),
         };
     }
 
-    /**
-     * Returns list container parameters, to create the React.Component instance
-     * @returns {{}}
-     * @access protected
-     */
-    // getListParameters() {
-    //     return {
-    //         onListUpdate: this.onListUpdate.bind(this),
-    //     };
-    // }
-
-    /**
-     * Creates query container
-     * @returns {*}
-     * @access protected
-     */
-    // getListContainer() {
-    //     if (!this._cache.listContainer) {
-    //         const query = this._cache.query;
-    //         if (!query) {
-    //             return null;
-    //         }
-    //
-    //         this._cache.listContainer = createQueryContainer(
-    //             query,
-    //             this.getListContainerClass(),
-    //         );
-    //     }
-    //     return this._cache.listContainer;
-    // }
-
-    /**
-     * Renders list title
-     * @returns {XML}
-     * @access protected
-     */
-    renderHeader() {
-        return this.title;
-    }
-
     get title()
     {
         let title = `${this.headerPrefix} `;
-        const labels = this.getLabels();
+        const labels = this.labels;
 
         if (this.count > 0)
         {
@@ -366,6 +222,29 @@ export default class List extends BaseComponent {
         }
 
         return title;
+    }
+
+    mapItemParameters(parameters)
+    {
+        return parameters;
+    }
+
+    /**
+     * Returns true if all data were loaded
+     * @returns {boolean}
+     * @access protected
+     */
+    isReady() {
+        return this.state.dataReady && this.state.countReady;
+    }
+
+    /**
+     * Renders list title
+     * @returns {XML}
+     * @access protected
+     */
+    renderHeader() {
+        return this.title;
     }
 
     renderGridHeader()
@@ -385,11 +264,6 @@ export default class List extends BaseComponent {
                 </tr>
             </thead>
         );
-    }
-
-    mapItemParameters(parameters)
-    {
-        return parameters;
     }
 
     renderListItem(parameters = {}) {

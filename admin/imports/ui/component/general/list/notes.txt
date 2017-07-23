@@ -1,0 +1,79 @@
+    // getCurrentFilter() {
+    //     return this.loadFiltersFromURL();
+    // }
+
+    // loadFiltersFromURL() {
+    //     const chosenFilters = {};
+    //     const fs = this.getFilterSettings();
+    //     if (!_.isObjectNotEmpty(fs)) {
+    //         return chosenFilters;
+    //     }
+    //     _.each(fs.fields, (filter) => {
+    //         if (FlowRouter.getQueryParam(filter.field)) {
+    //             chosenFilters[filter.field] = [];
+    //             _.each(FlowRouter.getQueryParam(filter.field).split(';'), (value) => {
+    //                 if (filter.type === BarFilterTypes.SEARCHBOX) {
+    //                     chosenFilters[filter.field].push(value);
+    //                 } else if (_.contains(filter.values.map(el => el.value), value)) {
+    //                     chosenFilters[filter.field].push(value);
+    //                 }
+    //             });
+    //         }
+    //     });
+    //     return chosenFilters;
+    // }
+
+    // getFilterSettings() {
+    //     return {};
+    // }
+    //
+    // getChosenFilter() {
+    //     return this.state.chosenFilters;
+    // }
+
+    // onReset() {
+    //     const params = {};
+    //     params.page = null;
+    //     _.each(this.getFilterSettings().fields, (filter) => {
+    //         params[filter.field] = null;
+    //     });
+    //     FlowRouter.setQueryParams(params);
+    // }
+
+    /**
+     * On filter rest, set page, chosenfilters, employersIds to empty and url
+     */
+    // handleFiltersReset() {
+    //     this.setState({
+    //         employersIds: null,
+    //     });
+    //     const params = {};
+    //     params.page = null;
+    //     _.each(this.getFilterSettings().fields, (filter) => {
+    //         params[filter.field] = null;
+    //     });
+    //     FlowRouter.setQueryParams(params);
+    //     this.setState({
+    //         chosenFilters: this.loadFiltersFromURL()
+    //     }, () => this.startDataReload());
+    // }
+
+    /**
+     * On change filters, get new data and set url
+     * @param filter
+     * @param values
+     */
+    // handleFilterChange(filter, values) {
+    //     const chosenFilters = _.clone(this.state.chosenFilters);
+    //     chosenFilters[filter] = values.map(el => el.value);
+    //
+    //     const params = {};
+    //     params.page = 1;
+    //     params[filter] = chosenFilters[filter].join(';');
+    //     FlowRouter.setQueryParams(params);
+    //     this.setState({
+    //         chosenFilters,
+    //         page: 1,
+    //     });
+    //     this.startDataReload();
+    // }

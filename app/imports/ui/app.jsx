@@ -4,9 +4,9 @@ import Map from '/imports/ui/component/map/index.jsx';
 import LoadOverlay from '/imports/ui/component/load.overlay/index.jsx';
 import LoadIndicator from '/imports/ui/component/load.indicator/index.jsx';
 import ImageViewComponent from '/imports/ui/component/general/image-view/index.jsx';
-import Util from '/imports/lib/util.js';
+import Util from '../lib/util.js';
 import {DocHead} from 'meteor/kadira:dochead';
-import PreRender from '/imports/lib/prerender.js';
+import PreRender from '../lib/prerender.js';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 
 export default class App extends React.Component {

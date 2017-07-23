@@ -12,7 +12,9 @@ export default class HomePage extends BasePage
 	constructor(params)
 	{
 		super(params);
-		this.state = {};
+		this.extendState({
+            id: null,
+        });
 	}
 
 	componentWillMount()

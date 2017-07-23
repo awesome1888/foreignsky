@@ -3,6 +3,8 @@
 import React from 'react';
 import BasePage from '../../../lib/base/page/page.jsx';
 
+import Layout from '../../component/layout/layout.jsx';
+
 // tmp
 import Article from '../../../api/article/entity/entity.client.js';
 
@@ -16,7 +18,12 @@ export default class HomePage extends BasePage
         });
 
         return (
-            <div>Hello there</div>
+            <Layout
+                side={'SIDE'}
+                central={
+                    <div>Hello there</div>
+                }
+            />
         );
     }
 }

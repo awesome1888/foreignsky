@@ -30,12 +30,12 @@ export default class Header extends React.Component {
 									className="header__logo-img"
 								    title="Однажды тут будет красивый логотип"
 								>
-									B_
+									A
 								</a>
 								<div className="header__logo-text">
 									Nach Berlin!
 									<div className="header__logo-funny-desc">
-										Ну или просто еще один блог одной IT-семьи, решившей переехать в Берлин
+										Admin Panel. Behold, bitches!
 									</div>
 								</div>
 							</div>

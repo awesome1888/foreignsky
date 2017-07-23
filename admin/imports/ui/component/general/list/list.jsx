@@ -38,7 +38,6 @@ export default class List extends BaseComponent {
             data: [],
         });
         this.url = FlowRouter.current().path;
-        this.setTitle('Article tag');
     }
 
     componentDidMount() {
@@ -221,8 +220,8 @@ export default class List extends BaseComponent {
      * @returns {string}
      * @access protected
      */
-    getHeaderPrefix() {
-        return '';
+    get headerPrefix() {
+        return 'Article tag: ';
     }
 
     /**
@@ -231,7 +230,7 @@ export default class List extends BaseComponent {
      * @access protected
      */
     getLabels() {
-        return ['Match', 'Matches', 'None'];
+        return ['#COUNT# item', '#COUNT# items', 'no items'];
     }
 
     /**
@@ -268,6 +267,7 @@ export default class List extends BaseComponent {
                 count: parseInt(res),
                 countReady: true,
             });
+            this.setTitle(this.title);
         });
     }
 
@@ -286,7 +286,7 @@ export default class List extends BaseComponent {
      * @access protected
      */
     get pageSize() {
-        return 2;
+        return 10;
     }
 
     /**
@@ -343,51 +343,47 @@ export default class List extends BaseComponent {
 
     /**
      * Renders list title
-     * @param prefix
      * @returns {XML}
      * @access protected
      */
-    renderHeader(prefix = '') {
-        if (!_.isStringNotEmpty(prefix)) {
-            prefix = this.getHeaderPrefix();
-        }
+    renderHeader() {
+        return this.title;
+    }
+
+    get title()
+    {
+        let title = `${this.headerPrefix} `;
         const labels = this.getLabels();
-        return (<span>
-            {_.isStringNotEmpty(prefix) ? `${prefix}: ` : ''}
-            {
-                this.state.count > 0
-                &&
-                <span>
-                    {this.state.count}{' '}
-                    {
-                        this.state.count === 1 ? labels[0] : labels[1]
-                    }
-                </span>
-            }
-            {
-                this.state.count === 0
-                &&
-                <span>
-                    {labels[2]}
-                </span>
-            }
-        </span>);
+
+        if (this.count > 0)
+        {
+            title += this.count === 1 ? labels[0] : labels[1];
+            title = title.replace('#COUNT#', this.count);
+        }
+        else
+        {
+            title += labels[2];
+        }
+
+        return title;
     }
 
     renderGridHeader()
     {
         return (
-            <div className="grid__header">
-                {
-                    this.entity.attributes.map(item => {
-                        return (
-                            <div className="grid__header-cell">
-                                {item.label}
-                            </div>
-                        );
-                    })
-                }
-            </div>
+            <thead>
+                <tr>
+                    {
+                        this.entity.attributes.map(item => {
+                            return (
+                                <td>
+                                    {item.label}
+                                </td>
+                            );
+                        })
+                    }
+                </tr>
+            </thead>
         );
     }
 
@@ -410,13 +406,15 @@ export default class List extends BaseComponent {
 
     renderItemList() {
         return (
-            this.state.data.map(item => (
-                this.renderListItem({
-                    key: item.id,
-                    data: item,
-                    onListUpdate: this.props.onListUpdate,
-                })
-            ))
+            <tbody>
+                {this.state.data.map(item => (
+                    this.renderListItem({
+                        key: item.id,
+                        data: item,
+                        onListUpdate: this.props.onListUpdate,
+                    })
+                ))}
+            </tbody>
         );
     }
 
@@ -449,9 +447,6 @@ export default class List extends BaseComponent {
      * @access protected
      */
     render() {
-
-
-
         return (
             <div
                 className={`data-block data-block_transparent ${this.props.className}`}
@@ -461,13 +456,12 @@ export default class List extends BaseComponent {
                     &&
                     <div className="">
                         {this.renderHeader()}
-                        <div className="grid">
+                        <table className="table table-striped table-bordered wide">
                             {this.renderGridHeader()}
-                            <div>
-                                {this.renderItemList()}
-                                {this.renderPageNav()}
-                            </div>
-                        </div>
+                            {this.renderItemList()}
+                        </table>
+
+                        {this.renderPageNav()}
                     </div>
                 }
             </div>

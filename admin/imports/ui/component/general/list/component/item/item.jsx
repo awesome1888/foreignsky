@@ -11,11 +11,13 @@ export default class ListItem extends BaseComponent {
             PropTypes.object,
         ]),
         entity: PropTypes.func.isRequired,
+        data: PropTypes.object,
     };
 
     static defaultProps = {
         className: '',
         entity: null,
+        data: [],
     };
 
     render() {
@@ -24,23 +26,21 @@ export default class ListItem extends BaseComponent {
         }
 
         return (
-            <div className="data-block-panel">
-                <div className="data-block__content data-block__content_adaptive">
-                    {
-                        _.map(this.props.data, (item, key) => {
-                            if (_.isObject(item) || _.isArray(item)) {
-                                return null;
-                            }
+            <tr>
+                {
+                    this.props.data.map((item) => {
+                        if (!_.isObject(item)) {
+                            return null;
+                        }
 
-                            return (
-                                <div className="" key={key}>
-                                    {key}: {item}
-                                </div>
-                            );
-                        })
-                    }
-                </div>
-            </div>
+                        return (
+                            <td key={item.code}>
+                                {item.value}
+                            </td>
+                        );
+                    })
+                }
+            </tr>
         );
     }
 }

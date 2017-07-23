@@ -38,6 +38,7 @@ export default new class extends Collection
             search: {
                 type: String,
                 optional: true,
+                label: 'Поисковый индекс',
                 // order: 5,
             },
         };

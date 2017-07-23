@@ -1,5 +1,6 @@
 import flatten from 'mongo-dot-notation';
 import Util from '../../util.js';
+import clone from 'clone';
 
 /**
  * @abstract
@@ -255,7 +256,7 @@ export default class BaseEntity
             result.push({
                 code,
                 label: attribute.label,
-                order: attribute.order,
+                order: 0, //attribute.order,
             });
         });
 
@@ -264,10 +265,15 @@ export default class BaseEntity
         return result;
     }
 
-    static getLinkAttributes()
+    get attributes()
     {
-
+        return this.constructor.attributes;
     }
+
+    // static get linkAttributes()
+    // {
+    //
+    // }
 
     makeInstances(point, type)
     {
@@ -291,5 +297,42 @@ export default class BaseEntity
         }
 
         return [];
+    }
+
+    forEach(cb)
+    {
+        if (!_.isFunction(cb))
+        {
+            return;
+        }
+
+        this.attributes.forEach((attribute) => {
+            const getter = attribute.code;
+            let value = undefined;
+            if (getter in this)
+            {
+                value = this[getter];
+            }
+
+            const item = clone(attribute, false, 1);
+            item.value = value;
+            cb(item);
+        });
+    }
+
+    map(cb)
+    {
+        if (!_.isFunction(cb))
+        {
+            return;
+        }
+
+        const result = [];
+
+        this.forEach((item) => {
+            result.push(cb(item));
+        });
+
+        return result;
     }
 }

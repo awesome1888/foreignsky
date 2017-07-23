@@ -9,6 +9,9 @@ import App from '/imports/ui/app.jsx';
 import BaseComponent from '../../../lib/base/component/component.js';
 import Article from '../../../api/article/entity/entity.client.js';
 
+import EmbedImageComponent from '../../../ui/component/general/embed-image/index.jsx';
+import EmbedGalleryComponent from '../../../ui/component/general/embed-gallery/index.jsx';
+
 import './style.less';
 
 export default class ArticleDetailComponent extends BaseComponent
@@ -173,7 +176,10 @@ export default class ArticleDetailComponent extends BaseComponent
 						</div>
 					</div>
 					<div className="article-detail__body">
-						{article.renderedText}
+						{article.renderText({
+                            IMAGE: EmbedImageComponent,
+                            GALLERY: EmbedGalleryComponent,
+                        })}
 					</div>
 				</div>
 				<div

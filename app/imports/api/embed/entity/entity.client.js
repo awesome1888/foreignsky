@@ -3,15 +3,14 @@ import BaseEntity from '../../../lib/base/entity/entity.client.js';
 import Entity from './entity.js';
 import mix from '../../../lib/mixin.js';
 
-import EmbedImageComponent from '../../../ui/component/general/embed-image/index.jsx';
-import EmbedGalleryComponent from '../../../ui/component/general/embed-gallery/index.jsx';
-
 export default class Embed extends mix(BaseEntity).with(Entity)
 {
-    static render(text, data)
+    static render(text, data, params = {})
     {
         if (text !== '')
         {
+            params.renderer = params.renderer || {};
+
             if(!_.isString(text))
             {
                 return '';
@@ -34,7 +33,7 @@ export default class Embed extends mix(BaseEntity).with(Entity)
                     parts.push(React.createElement('div', {key: prevIndex}, chunk));
                 }
 
-                parts.push(this.makeEmbed(found[1], map[found[1]]));
+                parts.push(this.makeEmbed(found[1], map[found[1]], params));
 
                 prevIndex = expr.lastIndex;
             }
@@ -56,9 +55,10 @@ export default class Embed extends mix(BaseEntity).with(Entity)
      * @access protected
      * @param id Embed ID found in body
      * @param embed
+     * @param params
      * @returns {null}
      */
-    static makeEmbed(id, embed)
+    static makeEmbed(id, embed, params)
     {
         id = id.toString().trim();
         if(!id)
@@ -71,7 +71,7 @@ export default class Embed extends mix(BaseEntity).with(Entity)
             return null;
         }
 
-        const renderer = this.getRendererClass(embed.renderer);
+        const renderer = params.renderer[embed.renderer];
         if(!renderer)
         {
             return null;

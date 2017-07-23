@@ -16,9 +16,11 @@ export default class Article extends mix(BaseEntity).with(Entity)
         };
     }
 
-    get renderedText()
+    renderText(renderer = {})
     {
-        return Embed.render(this.text, this.embed);
+        return Embed.render(this.text, this.embed, {
+            renderer,
+        });
     }
 
     get dateFormatted()

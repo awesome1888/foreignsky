@@ -25,7 +25,7 @@ export default class BaseEntity
 
     get collection()
     {
-        return this.prototype.constructor.collection;
+        return this.constructor.collection;
     }
 
     static get entityMap()

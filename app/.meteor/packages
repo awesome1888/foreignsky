@@ -24,7 +24,6 @@ johanbrook:publication-collector  # Test a Meteor publication by collecting its 
 cultofcoders:meteor-react-routing
 aldeed:collection2
 aldeed:simple-schema
-shell-server
 react-meteor-data
 tap:i18n
 cultofcoders:grapher

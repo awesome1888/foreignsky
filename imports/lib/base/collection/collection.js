@@ -8,6 +8,7 @@ export default class BaseCollection extends Mongo.Collection
         this.attachSchema(this.schema);
         this.addLinks(this.links);
         this.createIndexes();
+        this.applyHooks();
     }
 
     get schema()
@@ -31,6 +32,10 @@ export default class BaseCollection extends Mongo.Collection
     get nameNormalized()
     {
         return this.name.replace('.', '_').toLowerCase();
+    }
+
+    applyHooks()
+    {
     }
 
     createIndexes()

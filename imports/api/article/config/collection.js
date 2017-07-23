@@ -3,15 +3,12 @@ import ArticleTagCollection from '../../article.tag/config/collection.js';
 import FileCollection from '../../file/config/collection.js';
 import EmbedCollection from '../../embed/config/collection.js';
 
-export default new class extends Collection
-{
-    constructor()
-    {
+export default new class extends Collection {
+    constructor() {
         super('article');
     }
 
-    get schema()
-    {
+    get schema() {
         return {
             title: {
                 type: String,
@@ -58,8 +55,7 @@ export default new class extends Collection
         };
     }
 
-    get links()
-    {
+    get links() {
         return {
             tag: {
                 type: 'many',
@@ -93,5 +89,15 @@ export default new class extends Collection
                 },
             }
         ];
+    }
+
+    applyHooks()
+    {
+        this.before.insert((id, data) => {
+            // todo: update search
+        });
+        this.before.update((id, data) => {
+            // todo: update search
+        });
     }
 }

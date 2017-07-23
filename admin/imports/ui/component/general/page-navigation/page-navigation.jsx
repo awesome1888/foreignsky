@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 // import PageScroll from '../../../../lib/util/page-scroll/page-scroll.js';
+import BaseComponent from '../../../../lib/base/component/component.jsx';
 
-export default class PageNavigation extends Component {
-
+export default class PageNavigation extends BaseComponent
+{
     static propTypes = {
         page: PropTypes.number.isRequired,
         pageSize: PropTypes.number.isRequired,

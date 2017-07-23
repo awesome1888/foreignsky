@@ -2,28 +2,25 @@ import React from 'react';
 import BaseComponent from '../../../lib/base/component/component.jsx';
 import PropTypes from 'prop-types';
 
+import RandomShit from './component/random-shit/random-shit.jsx';
+
 import './style.less';
 
 export default class Layout extends BaseComponent
 {
     static propTypes = {
-        side: PropTypes.object,
         central: PropTypes.object,
+        header: PropTypes.string,
     };
 
     static defaultProps = {
-        side: null,
         central: null,
+        header: '',
     };
 
     renderCentral()
     {
         return this.props.central;
-    }
-
-    renderSide()
-    {
-        return this.props.side;
     }
 
     render(props)
@@ -33,7 +30,7 @@ export default class Layout extends BaseComponent
                 <div className="layout-map-full__central-row row">
                     <div className="layout-map-full__central-body-left col-xs-3">
                         <div className="layout-map-full__side">
-                            Тут будет менюшечка, ну а пока - захардкоженные ссылочки
+                            <RandomShit />
                             <br />
                             <br />
                             <br />
@@ -47,6 +44,11 @@ export default class Layout extends BaseComponent
                     </div>
                     <div className="layout-map-full__central-body-right col-xs-9">
                         <div className="layout-map-full__central">
+                            {
+                                _.isStringNotEmpty(this.props.header)
+                                &&
+                                <h1>{this.props.header}</h1>
+                            }
                             {this.renderCentral(props)}
                         </div>
                     </div>

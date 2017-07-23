@@ -172,6 +172,13 @@ export default class App extends React.Component {
         {
             this.overlay.wait();
         }
+
+        // shit-fix
+        if (this.indicator)
+        {
+            const p = new Promise((resolve) => {resolve()});
+            this.indicator.waitOne(p);
+        }
 	}
 
 	render() {

@@ -2,7 +2,7 @@ import React from 'react';
 import {Meteor} from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import {FlowRouter} from 'meteor/kadira:flow-router';
-import Paginator from '../paginator/paginator.jsx';
+import PageNavigation from '../page-navigation/page-navigation.jsx';
 import Item from './component/item/item.jsx';
 import BaseComponent from '../../../../lib/base/component/component.jsx';
 
@@ -26,13 +26,11 @@ export default class List extends BaseComponent {
         entity: null,
     };
 
-    _cache = {}; // eslint-disable-line react/sort-comp
-
     constructor(params) {
         super(params);
         this.extendState({
             page: this.queryPage,
-            perPage: this.getPageSize(),
+            perPage: this.pageSize,
             total: 0,
             countReady: false,
             dataReady: false,
@@ -72,9 +70,9 @@ export default class List extends BaseComponent {
 
     loadData()
     {
-        this.props.entity.find({
+        this.props.entity.find(Object.assign({
             select: ['title', 'sort', 'color', 'primary'],
-        }).then((res) => {
+        }, this.getPageParameters())).then((res) => {
             this.setState({
                 data: res,
                 dataReady: true,
@@ -218,42 +216,6 @@ export default class List extends BaseComponent {
     }
 
     /**
-     * Returns query parameters. It can be async in implementations, for example, if
-     * we need to get some remote criteria asynchronously before building the list
-     * @returns {Promise.<{}>}
-     * @access protected
-     */
-    async getQueryParameters() {
-        return {
-        };
-    }
-
-    /**
-     * Returns clone of the query instance returned with getListContainerClass()
-     * @returns {Promise.<void>}
-     * @access protected
-     */
-    async getQuery() {
-        if (!this._cache.query) {
-            this._cache.query = this.getQueryInstance().clone();
-        }
-
-        const params = await this.getQueryParameters();
-        params.chosenFilters = this.loadFiltersFromURL();
-
-        /**
-         * ACHTUNG!
-         * Because of inside Query.setParams() the goddamn
-         * _.extend(this._params, data);
-         * is used, there is no other way to un-set previously defined
-         * parameter, rather than do {someParam: undefined}
-         */
-        this._cache.query.setParams(params);
-
-        return this._cache.query;
-    }
-
-    /**
      * Returns title prefix, if any
      * @returns {string}
      * @access protected
@@ -289,6 +251,11 @@ export default class List extends BaseComponent {
         FlowRouter.setQueryParams({page});
     }
 
+    get page()
+    {
+        return this.state.page;
+    }
+
     /**
      * Loads record count by executing the given query
      * @returns void
@@ -309,7 +276,7 @@ export default class List extends BaseComponent {
      * @access protected
      */
     get count() {
-        return this.state.total;
+        return this.state.count;
     }
 
     /**
@@ -317,7 +284,7 @@ export default class List extends BaseComponent {
      * @returns {number}
      * @access protected
      */
-    getPageSize() {
+    get pageSize() {
         return 2;
     }
 
@@ -338,7 +305,7 @@ export default class List extends BaseComponent {
     getPageParameters() {
         return {
             limit: this.state.perPage,
-            skip: this.state.perPage * (this.state.page - 1),
+            offset: this.state.perPage * (this.state.page - 1),
         };
     }
 
@@ -444,16 +411,6 @@ export default class List extends BaseComponent {
         );
     }
 
-    renderItems() {
-        return (
-            <div className="list-container">
-                <div className="list__item-group_simple">
-                    {this.renderItemsList()}
-                </div>
-            </div>
-        );
-    }
-
     /**
      * Renders page navigator
      * @returns {XML|null}
@@ -466,11 +423,11 @@ export default class List extends BaseComponent {
         return (
             <div className="pagination_custom margin-top">
                 {
-                    <Paginator
-                        activePage={this.state.page}
-                        itemsCountPerPage={this.state.perPage}
-                        totalItemsCount={this.count}
-                        onChange={this.onPageChange.bind(this)}
+                    <PageNavigation
+                        page={this.page}
+                        pageSize={this.pageSize}
+                        count={this.count}
+                        onPageSelect={this.onPageChange.bind(this)}
                     />
                 }
             </div>

@@ -167,7 +167,7 @@ export default class BaseEntity
         if ('offset' in parameters)
         {
             translated.$paginate = true;
-            translated.$options.offset = parseInt(parameters.offset);
+            translated.$options.skip = parseInt(parameters.offset);
         }
         
         return translated;

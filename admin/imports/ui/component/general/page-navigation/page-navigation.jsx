@@ -2,58 +2,70 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 // import PageScroll from '../../../../lib/util/page-scroll/page-scroll.js';
 
-export default class Paginator extends Component {
+export default class PageNavigation extends Component {
+
     static propTypes = {
-        // This component gets the task to display through a React prop.
-        // We can use propTypes to indicate it is required
-        activePage: PropTypes.number.isRequired,
-        itemsCountPerPage: PropTypes.number.isRequired,
-        totalItemsCount: PropTypes.number.isRequired,
-        onChange: PropTypes.func.isRequired,
+        page: PropTypes.number.isRequired,
+        pageSize: PropTypes.number.isRequired,
+        count: PropTypes.number.isRequired,
+        onPageSelect: PropTypes.func.isRequired,
     };
 
     static defaultProps = {
-        activePage: 1,
-        itemsCountPerPage: 10,
-        totalItemsCount: 0,
-        onChange: null,
+        page: 1,
+        pageSize: 10,
+        count: 0,
+        onPageSelect: null,
     };
 
-    onClick(pageNumber) {
+    onClick(page) {
         // PageScroll.scrollTo();
-        this.props.onChange(pageNumber);
+        if (_.isFunction(this.props.onPageSelect))
+        {
+            this.props.onPageSelect(page);
+        }
+    }
+
+    get pageCount()
+    {
+        return Math.ceil(this.props.count / this.props.pageSize);
+    }
+
+    get page()
+    {
+        return this.props.page;
     }
 
     render() {
-        const totalPages = Math.ceil(this.props.totalItemsCount / this.props.itemsCountPerPage);
-        const activePage = this.props.activePage;
+        const pageCount = this.pageCount;
+        const page = this.page;
         return (
             <div>
                 {
-                    activePage > 1
+                    page > 1
                     &&
                     <div className="pagination__group">
                         <a className="pagination__link" href="" onClick={this.onClick.bind(this, 1)} >
                             <img className="pagination__icon" src="/images/icons/page_first.png" alt="" />
                         </a>
-                        <a className="pagination__link" href="" onClick={this.onClick.bind(this, activePage - 1)}>
+                        <a className="pagination__link" href="" onClick={this.onClick.bind(this, page - 1)}>
                             <img className="pagination__icon" src="/images/icons/page_prev.png" alt="" />
                         </a>
                     </div>
                 }
                 <div className="pagination__group">
                     <span className="pagination__current-page">
-                      Page <span className="text_weight_bold">{activePage}</span> of <span className="text_weight_bold">{totalPages}</span>
+                      Page <span className="text_weight_bold">{page}</span> of <span className="text_weight_bold">{pageCount}</span>
                     </span>
                 </div>
                 {
-                    activePage < totalPages
+                    page < pageCount
                     &&
                     <div className="pagination__group">
-                        <a className="pagination__link" href="" onClick={this.onClick.bind(this, activePage + 1)}>
+                        <a className="pagination__link" href="" onClick={this.onClick.bind(this, page + 1)}>
                             <img className="pagination__icon" src="/images/icons/page_next.png" alt="" />
                         </a>
-                        <a className="pagination__link" href="" onClick={this.onClick.bind(this, totalPages)} >
+                        <a className="pagination__link" href="" onClick={this.onClick.bind(this, pageCount)} >
                             <img className="pagination__icon" src="/images/icons/page_last.png" alt="" />
                         </a>
                     </div>

@@ -2,10 +2,30 @@
   "name": "admin",
   "private": true,
   "scripts": {
-    "start": "meteor run"
+    "start": "MONGO_URL=mongodb://localhost:27017/indaberlin meteor run --port 3000 --settings=../.deploy/combat/settings.json"
   },
   "dependencies": {
     "babel-runtime": "^6.20.0",
-    "meteor-node-stubs": "~0.2.4"
+    "classnames": "^2.2.5",
+    "clone": "^2.1.1",
+    "meteor-node-stubs": "~0.2.4",
+    "moment": "^2.18.1",
+    "mongo-dot-notation": "^1.2.0",
+    "prerender-node": "^2.7.1",
+    "prop-types": "^15.5.8",
+    "react": "^15.5.4",
+    "react-addons-pure-render-mixin": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-google-maps": "^4.11.0",
+    "react-mounter": "^1.2.0",
+    "react-router": "^4.0.0"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1"
+  },
+  "babel": {
+    "plugins": [
+      "transform-class-properties"
+    ]
   }
 }

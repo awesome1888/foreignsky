@@ -1,5 +1,5 @@
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
-import OptionSchema from './item.option.js';
+import OptionSchema from './../../../../lib/util/schema/option.js';
 
 export default new SimpleSchema({
     imageId: {

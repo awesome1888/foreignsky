@@ -7,6 +7,16 @@ export default class BaseEntity extends Entity
 {
     static expCtrl = null;
 
+    get rawCollection()
+    {
+        return this.collection.rawCollection();
+    }
+
+    static get rawCollection()
+    {
+        return this.collection.rawCollection();
+    }
+
     static restrictExpositionGrapher(filters, options, userId)
     {
     }

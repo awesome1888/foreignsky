@@ -4,10 +4,19 @@ import Entity from './entity.js';
 import mix from '../../../lib/mixin.js';
 
 import Tag from '../../../api/article.tag/entity/entity.server.js'
-import File from '../../../api/file/entity/entity.server.js'
+import File from '../../../api/file/entity/entity.server.js';
+import Embed from '../../../api/embed/entity/entity.server.js';
 
 export default class Article extends mix(BaseEntity).with(Entity)
 {
+    static get entityMap()
+    {
+        return {
+            tag: Tag,
+            embed: Embed,
+        };
+    }
+
     static restrictExpositionGrapher(filters, options, userId)
     {
         filters.public = true;
@@ -18,14 +27,6 @@ export default class Article extends mix(BaseEntity).with(Entity)
         return Exposition;
     }
 
-    /**
-     * @access protected
-     */
-    static get tagConstructor()
-    {
-        return Tag;
-    }
-
     static populateEmbedImages(items)
     {
         if (_.isArrayNotEmpty(items))
@@ -33,7 +34,6 @@ export default class Article extends mix(BaseEntity).with(Entity)
             let ids = {};
             const bind = [];
             items.forEach((item) => {
-
                 if (_.isArrayNotEmpty(item.embed))
                 {
                     item.embed.forEach((eItem) => {
@@ -51,7 +51,6 @@ export default class Article extends mix(BaseEntity).with(Entity)
 
                     });
                 }
-
             });
 
             ids = Object.keys(ids);

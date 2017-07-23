@@ -31,11 +31,6 @@ const M = (superclass) =>  class Article extends superclass
         return this.data.headerColor || 'white';
     }
 
-    get tagEntity()
-    {
-        throw new Error('Not implemented');
-    }
-
     get headerImage()
     {
         return this.data.headerImage || {};
@@ -64,6 +59,12 @@ const M = (superclass) =>  class Article extends superclass
         }
 
         return [];
+    }
+
+    get embed()
+    {
+        this.data.embed = this.makeInstances(this.data.embed, 'embed');
+        return this.data.embed;
     }
 
     hasHeaderImage()

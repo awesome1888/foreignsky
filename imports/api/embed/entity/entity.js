@@ -11,6 +11,22 @@ const M = (superclass) =>  class Embed extends superclass
         return Collection;
     }
 
+    get renderer()
+    {
+        return this.data.renderer || 'IMAGE';
+    }
+
+    get options()
+    {
+        // unpack here...
+        return this.data.options || {};
+    }
+
+    get item()
+    {
+        return this.data.item || {};
+    }
+
     /**
      * Converts flat options structure into tree-based
      * @param options

@@ -28,6 +28,11 @@ export default class BaseEntity
         return this.prototype.constructor.collection;
     }
 
+    static get entityMap()
+    {
+        return {};
+    }
+
     get id()
     {
         return this.data._id;
@@ -69,11 +74,6 @@ export default class BaseEntity
         {
             return this.createQuery(condition);
         }
-    }
-
-    static get rawCollection()
-    {
-        return this.collection.rawCollection();
     }
 
     static flatten(value)
@@ -196,17 +196,6 @@ export default class BaseEntity
         };
     }
 
-    static resolveEntityConstructor(name)
-    {
-        const resolverName = `${name}Constructor`;
-        if (!_.isFunction(this[resolverName]))
-        {
-            throw new Error(`Entity resolver for entity ${name} ('static get ${resolverName}() {...}') is not implemented`);
-        }
-
-        return this[resolverName];
-    }
-
     /**
      * nasty
      */
@@ -245,5 +234,40 @@ export default class BaseEntity
     isEntity(arg)
     {
         return arg instanceof this.constructor;
+    }
+
+    static resolveEntityConstructor(name)
+    {
+        const resolver = this.entityMap[name];
+        if (!_.isFunction(resolver))
+        {
+            throw new Error(`Unable to get entity '${name}' class constructor`);
+        }
+
+        return resolver;
+    }
+
+    makeInstances(point, type)
+    {
+        if (_.isArray(point))
+        {
+            // todo: optimize this
+            return point.map((item, k) => {
+                if (this.isEntity(item)) {
+                    return item;
+                }
+                if (_.isObjectNotEmpty(item)) {
+                    // make entity
+                    const constr = this.constructor.resolveEntityConstructor(type);
+                    point[k] = new constr(item);
+
+                    return point[k];
+                }
+
+                return null;
+            }).filter(item => item !== null);
+        }
+
+        return [];
     }
 }

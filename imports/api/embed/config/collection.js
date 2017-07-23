@@ -1,6 +1,6 @@
 import Collection from '../../../lib/base/collection/collection.js';
 import ItemSchema from './sub-schema/item.js';
-import FileCollection from '../../file/config/collection.js';
+import OptionSchema from './../../../lib/util/schema/option.js';
 
 export default new class extends Collection
 {
@@ -21,7 +21,7 @@ export default new class extends Collection
                 optional: false,
             },
             options: {
-                type: Object,
+                type: [OptionSchema],
                 optional: true,
             },
         };

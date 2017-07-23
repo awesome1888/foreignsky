@@ -12,12 +12,12 @@ export default class Embed extends mix(BaseEntity).with(Entity)
     {
         if (text !== '')
         {
-            return '';
-
             if(!_.isString(text))
             {
                 return '';
             }
+
+            const map = _.makeMap(data, 'id');
 
             const expr = new RegExp('\\[EMBED\\s+ID=([a-zA-Z0-9]+)\\]', 'ig');
             let found;
@@ -34,7 +34,7 @@ export default class Embed extends mix(BaseEntity).with(Entity)
                     parts.push(React.createElement('div', {key: prevIndex}, chunk));
                 }
 
-                parts.push(this.makeEmbed(found[1]));
+                parts.push(this.makeEmbed(found[1], map[found[1]]));
 
                 prevIndex = expr.lastIndex;
             }
@@ -55,9 +55,10 @@ export default class Embed extends mix(BaseEntity).with(Entity)
     /**
      * @access protected
      * @param id Embed ID found in body
+     * @param embed
      * @returns {null}
      */
-    static makeEmbed(id)
+    static makeEmbed(id, embed)
     {
         const data = this.data;
 
@@ -67,23 +68,21 @@ export default class Embed extends mix(BaseEntity).with(Entity)
             return null;
         }
 
-        // search for
-        const embedData = data.embed.find((item) => {return item._id === id});
-        if(!_.isObject(embedData))
+        if(!_.isObject(embed))
         {
             return null;
         }
 
-        const renderer = this.getRendererClass(embedData.renderer);
+        const renderer = this.getRendererClass(embed.renderer);
         if(!renderer)
         {
             return null;
         }
-
+        
         return React.createElement(renderer, {
             key: id,
-            item: embedData.item,
-            options: embedData.options,
+            item: embed.item,
+            options: embed.options,
         });
     }
 

@@ -123,8 +123,6 @@ export default class ArticleDetailComponent extends BaseComponent
 			return null;
 		}
 
-		console.dir(article.data);
-
 		return (
 			<div
 				className={classnames(

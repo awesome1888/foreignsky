@@ -1,11 +1,22 @@
-import React, {Component} from 'react';
+import React from 'react';
+import BaseComponent from '../../../../../../lib/base/component/component.jsx';
+import PropTypes from 'prop-types';
 
-export default class ListItem extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-        };
-    }
+export default class ListItem extends BaseComponent {
+
+    static propTypes = {
+        className: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.array,
+            PropTypes.object,
+        ]),
+        entity: PropTypes.func.isRequired,
+    };
+
+    static defaultProps = {
+        className: '',
+        entity: null,
+    };
 
     render() {
         if (!_.isObject(this.props.data)) {

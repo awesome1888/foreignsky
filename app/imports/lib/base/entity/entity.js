@@ -1,4 +1,5 @@
 import flatten from 'mongo-dot-notation';
+import Util from '../../util.js';
 
 /**
  * @abstract
@@ -245,6 +246,27 @@ export default class BaseEntity
         }
 
         return resolver;
+    }
+
+    static get attributes()
+    {
+        const result = [];
+        _.forEach(this.collection.schema, (attribute, code) => {
+            result.push({
+                code,
+                label: attribute.label,
+                order: attribute.order,
+            });
+        });
+
+        result.sort(Util.getNumericComparator());
+
+        return result;
+    }
+
+    static getLinkAttributes()
+    {
+
     }
 
     makeInstances(point, type)

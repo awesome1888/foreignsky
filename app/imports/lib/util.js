@@ -77,4 +77,27 @@ export default class Util
 
         return project+'../web.browser/app/';
     }
+
+    static getAlphabeticalComparator()
+    {
+        if ('localeCompare' in String.prototype)
+        {
+            return (a, b) => {
+                return a.localeCompare(b);
+            };
+        }
+        else
+        {
+            return this.getNumericComparator(a.order, b.order);
+        }
+    }
+
+    static getNumericComparator()
+    {
+        return (a, b) => {
+            if (a < b) return -1;
+            if (a > b) return 1;
+            return 0;
+        };
+    }
 }

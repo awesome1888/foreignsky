@@ -38,6 +38,7 @@ export default class List extends BaseComponent {
             data: [],
         });
         this.url = FlowRouter.current().path;
+        this.setTitle('Article tag');
     }
 
     componentDidMount() {
@@ -373,15 +374,22 @@ export default class List extends BaseComponent {
         </span>);
     }
 
-    /**
-     * Renders query container
-     * @param parameters
-     * @access protected
-     */
-    // renderListContainer(parameters = {}) {
-    //     parameters.params = this.getPageParameters();
-    //     return React.createElement(this.getListContainer(), parameters);
-    // }
+    renderGridHeader()
+    {
+        return (
+            <div className="grid__header">
+                {
+                    this.entity.attributes.map(item => {
+                        return (
+                            <div className="grid__header-cell">
+                                {item.label}
+                            </div>
+                        );
+                    })
+                }
+            </div>
+        );
+    }
 
     mapItemParameters(parameters)
     {
@@ -392,6 +400,7 @@ export default class List extends BaseComponent {
         const key = parameters.key;
         parameters = this.mapItemParameters(parameters);
         parameters.key = key; // we always keep key
+        parameters.entity = this.entity;
 
         return React.createElement(
             this.listItemConstructor,
@@ -440,6 +449,9 @@ export default class List extends BaseComponent {
      * @access protected
      */
     render() {
+
+
+
         return (
             <div
                 className={`data-block data-block_transparent ${this.props.className}`}
@@ -447,13 +459,14 @@ export default class List extends BaseComponent {
                 {
                     this.isReady()
                     &&
-                    <div>
-                        <div className="data-block__heading data-block__heading_adaptive">
-                            {this.renderHeader()}
-                        </div>
-                        <div>
-                            {this.renderItemList()}
-                            {this.renderPageNav()}
+                    <div className="">
+                        {this.renderHeader()}
+                        <div className="grid">
+                            {this.renderGridHeader()}
+                            <div>
+                                {this.renderItemList()}
+                                {this.renderPageNav()}
+                            </div>
                         </div>
                     </div>
                 }

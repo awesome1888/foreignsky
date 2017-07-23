@@ -15,15 +15,6 @@ export default class File extends mix(BaseEntity).with(Entity)
         return 'img/';
     }
 
-    static convertToUrl(path)
-    {
-        if (!_.isStringNotEmpty(path))
-        {
-            return '';
-        }
-        return path.replace(/^public/i, '');
-    }
-
     static create(path, name = 'File')
     {
         return this.collection.insert({

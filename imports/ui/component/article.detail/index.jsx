@@ -9,8 +9,6 @@ import App from '/imports/ui/app.jsx';
 import BaseComponent from '../../../lib/base/component/component.js';
 import Article from '../../../api/article/entity/entity.client.js';
 
-
-import Query from './query/article.query.js';
 import './style.less';
 
 export default class ArticleDetailComponent extends BaseComponent
@@ -73,6 +71,7 @@ export default class ArticleDetailComponent extends BaseComponent
                         label: 1,
                         options: 1,
                         imageId: 1,
+                        image: 1,
                     },
                     renderer: 1,
                     options: 1,
@@ -84,9 +83,11 @@ export default class ArticleDetailComponent extends BaseComponent
         });
 
         p.then((article) => {
-            // todo: in case of notfound, go 404, and also we need header
-
-            article.populateImage();
+            if(!article)
+            {
+                FlowRouter.go('/404');
+                return;
+            }
 
             this.setState({
                 opened: true,
@@ -122,6 +123,8 @@ export default class ArticleDetailComponent extends BaseComponent
 			return null;
 		}
 
+		console.dir(article.data);
+
 		return (
 			<div
 				className={classnames(
@@ -145,7 +148,7 @@ export default class ArticleDetailComponent extends BaseComponent
                             >
                                 <div className="embed-image__label embed-image__label-br">
                                     <div className="embed-image__label-line">
-                                        {data.title}
+                                        {article.title}
                                     </div>
                                 </div>
                             </div>

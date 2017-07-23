@@ -36,6 +36,11 @@ const M = (superclass) =>  class Article extends superclass
         throw new Error('Not implemented');
     }
 
+    get headerImage()
+    {
+        return this.data.headerImage || {};
+    }
+
     get tag()
     {
         const tags = this.data.tag;
@@ -63,7 +68,7 @@ const M = (superclass) =>  class Article extends superclass
 
     hasHeaderImage()
     {
-        return _.isObjectNotEmpty(this.data.headerImage);
+        return _.isObjectNotEmpty(this.headerImage);
     }
 };
 

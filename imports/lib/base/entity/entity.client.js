@@ -8,13 +8,15 @@ export default class BaseEntity extends Entity
     static async findOne(condition = {})
     {
         // make call here...
-        // nameNormalized
+        condition.limit = 1;
         const data = await this.executeOperation('find', [condition]);
 
-        console.dir(data);
-        
-        // make instance
-        return new this({});
+        if (_.isArrayNotEmpty(data))
+        {
+            return new this(data[0]);
+        }
+
+        return null;
     }
 
     static async findOneGrapher(condition = {})

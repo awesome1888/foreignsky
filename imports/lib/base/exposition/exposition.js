@@ -1,3 +1,5 @@
+import ErrorEmitter from '../../util/erroremitter.js';
+
 export default class
 {
     _entity = null;
@@ -18,22 +20,18 @@ export default class
         return {
             'find': {
                 body: this.find,
+                //     security: {
+                //         needAuthorized: true,
+                //         needAdmin: true,
+                //         controller: this.accessControl
+                //     }
             },
-            // 'find': {
-            //     body: this.find,
-            //     security: {
-            //         needAuthorized: true,
-            //         needAdmin: true,
-            //         controller: this.accessControl
-            //     }
-            // },
         };
     }
 
     registerMethods()
     {
         const cId = this.entity.collection.nameNormalized;
-
         const methods = {};
         _.forEach(this.map, (desc, op) => {
             methods[`${cId}-${op}`] = this.makeMethodBody(op, desc);
@@ -56,7 +54,7 @@ export default class
             if (controller.apply(this, [op, args]) === false)
             {
                 // refactor later
-                throw new Error(403, 'fuck you');
+                ErrorEmitter.throw403();
             }
 
             return desc.body.apply(this, args);
@@ -68,18 +66,22 @@ export default class
         return this.entity.createQuery(parameters).fetch();
     }
 
+    count(parameters)
+    {
+        // todo
+    }
+
     save()
     {
-
+        // todo
     }
 
     delete()
     {
-
+        // todo
     }
 
     accessControl(op, parameters)
     {
-
     }
 }

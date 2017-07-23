@@ -39,5 +39,20 @@ _.mixin({
         }
 
         return {};
-    }
+    },
+    getValue(obj, path)
+    {
+        if (typeof obj === 'undefined' || obj === null) return;
+        path = path.split(/[\.\[\]\"\']{1,2}/); // eslint-disable-line
+        for (let i = 0, l = path.length; i < l; i += 1)
+        {
+            if (path[i] !== '')
+            {
+                obj = obj[path[i]];
+                if (typeof obj === 'undefined' || obj === null) return;
+            }
+        }
+
+        return obj; //eslint-disable-line
+    },
 });

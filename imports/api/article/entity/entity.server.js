@@ -4,6 +4,7 @@ import Entity from './entity.js';
 import mix from '../../../lib/mixin.js';
 
 import Tag from '../../../api/article.tag/entity/entity.server.js'
+import File from '../../../api/file/entity/entity.server.js'
 
 export default class Article extends mix(BaseEntity).with(Entity)
 {
@@ -23,5 +24,48 @@ export default class Article extends mix(BaseEntity).with(Entity)
     static get tagConstructor()
     {
         return Tag;
+    }
+
+    static populateEmbedImages(items)
+    {
+        if (_.isArrayNotEmpty(items))
+        {
+            let ids = {};
+            const bind = [];
+            items.forEach((item) => {
+
+                if (_.isArrayNotEmpty(item.embed))
+                {
+                    item.embed.forEach((eItem) => {
+
+                        if (_.isArrayNotEmpty(eItem.item))
+                        {
+                            eItem.item.forEach((eiItem) => {
+                                if (_.isStringNotEmpty(eiItem.imageId))
+                                {
+                                    ids[eiItem.imageId] = true;
+                                    bind.push(eiItem);
+                                }
+                            });
+                        }
+
+                    });
+                }
+
+            });
+
+            ids = Object.keys(ids);
+            if (_.isArrayNotEmpty(ids))
+            {
+                const fIndex = _.makeMap(File.collection.find({_id: {$in: ids}}).fetch(), '_id');
+                bind.forEach((item) => {
+                    item.image = null;
+                    if (item.imageId in fIndex)
+                    {
+                        item.image = fIndex[item.imageId];
+                    }
+                });
+            }
+        }
     }
 }

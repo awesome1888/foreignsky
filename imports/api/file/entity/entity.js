@@ -10,6 +10,15 @@ const M = (superclass) =>  class File extends superclass
     {
         return Collection;
     }
+
+    static convertToUrl(path)
+    {
+        if (!_.isStringNotEmpty(path))
+        {
+            return '';
+        }
+        return path.replace(/^public/i, '');
+    }
 };
 
 export default M;

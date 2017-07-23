@@ -6,7 +6,7 @@ import {TAPi18n} from 'meteor/tap:i18n';
 import classnames from 'classnames';
 
 import App from '/imports/ui/app.jsx';
-import BaseComponent from '../../../lib/base/component/component.js';
+import BaseComponent from '../../../lib/base/component/component.jsx';
 import Article from '../../../api/article/entity/entity.client.js';
 
 import EmbedImageComponent from '../../../ui/component/general/embed-image/index.jsx';

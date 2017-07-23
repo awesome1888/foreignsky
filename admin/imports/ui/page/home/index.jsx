@@ -7,21 +7,22 @@ import Layout from '../../component/layout/layout.jsx';
 
 // tmp
 import Article from '../../../api/article/entity/entity.client.js';
+import Tag from '../../../api/article.tag/entity/entity.client.js';
+import List from '../../component/general/list/list.jsx';
 
 export default class HomePage extends BasePage
 {
 	render()
     {
-        Article.findOne().then((res) => {
-            console.dir(res);
-            console.dir(res.collection);
-        });
-
         return (
             <Layout
-                side={'SIDE'}
+                side={<div className="">
+                    SIDE
+                </div>}
                 central={
-                    <div>Hello there</div>
+                    <List
+                        entity={Tag}
+                    />
                 }
             />
         );

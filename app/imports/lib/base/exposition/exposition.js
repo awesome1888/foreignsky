@@ -26,6 +26,9 @@ export default class
                 //         controller: this.accessControl
                 //     }
             },
+            'count': {
+                body: this.count,
+            },
         };
     }
 
@@ -68,7 +71,13 @@ export default class
 
     count(parameters)
     {
-        // todo
+        const q = this.entity.createQuery(parameters);
+        
+        // due to some fucking reason we dont have getCount() in Query
+        // on server-side anymore 0_o
+        // so, have to emulate (taken directly from grapher`s code on github)
+
+        return this.entity.collection.find(q.body.$filters || {}, {}).count();
     }
 
     save()

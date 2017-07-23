@@ -1,5 +1,6 @@
 import Side from './../../util/side.js';
 import Entity from './entity.js';
+import Exposition from '../../../lib/base/exposition/exposition.js';
 
 Side.ensureServer();
 
@@ -23,7 +24,7 @@ export default class BaseEntity extends Entity
 
     static get expositionController()
     {
-        this.throwNotImplemented('static get expositionController()');
+        return Exposition;
     }
 
     static expose()
@@ -50,6 +51,7 @@ export default class BaseEntity extends Entity
 
     /**
      * Server-side, sync
+     * todo: rename to countGrapher
      * @param filter
      * @returns {*}
      */
@@ -60,6 +62,10 @@ export default class BaseEntity extends Entity
         }).getCount();
     }
 
+    /**
+     * todo: rename to findGrapher
+     * @param condition
+     */
     static find(condition = {})
     {
         return this.createQuery(condition).fetch().reduce((result, data) => {

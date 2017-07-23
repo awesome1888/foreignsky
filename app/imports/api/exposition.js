@@ -5,3 +5,4 @@ Article.exposeGrapher();
 ArticleTag.exposeGrapher();
 
 Article.expose();
+ArticleTag.expose();

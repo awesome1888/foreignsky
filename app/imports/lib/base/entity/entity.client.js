@@ -7,8 +7,6 @@ export default class BaseEntity extends Entity
 {
     static async findOne(condition = {})
     {
-        // make call here...
-        condition.limit = 1;
         const data = await this.executeOperation('find', [condition]);
 
         if (_.isArrayNotEmpty(data))
@@ -17,6 +15,29 @@ export default class BaseEntity extends Entity
         }
 
         return null;
+    }
+
+    static async find(condition = {})
+    {
+        const data = await this.executeOperation('find', [condition]);
+
+        if (_.isArrayNotEmpty(data))
+        {
+            return data.map(item => new this(item));
+        }
+
+        return [];
+    }
+
+    static async count(condition = {})
+    {
+        let count = parseInt(await this.executeOperation('count', [condition]));
+        if (isNaN(count))
+        {
+            return 0;
+        }
+
+        return count;
     }
 
     static async findOneGrapher(condition = {})

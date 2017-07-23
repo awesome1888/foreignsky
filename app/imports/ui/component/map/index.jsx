@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Util from '/imports/lib/util.js';
-import BaseComponent from '/imports/lib/base/component/component.js';
+import BaseComponent from '/imports/lib/base/component/component.jsx';
 
 import App from '/imports/ui/app.jsx';
 

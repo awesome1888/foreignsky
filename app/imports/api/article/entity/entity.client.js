@@ -8,6 +8,11 @@ import Embed from '../../../api/embed/entity/entity.client.js';
 
 export default class Article extends mix(BaseEntity).with(Entity)
 {
+    static get title()
+    {
+        return 'Article';
+    }
+
     static get entityMap()
     {
         return {

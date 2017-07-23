@@ -5,6 +5,11 @@ Side.ensureClient();
 
 export default class BaseEntity extends Entity
 {
+    static get title()
+    {
+        return 'Spherical entity in vacuum';
+    }
+
     static async findOne(condition = {})
     {
         const data = await this.executeOperation('find', [condition]);

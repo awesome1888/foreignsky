@@ -10,7 +10,6 @@ FlowRouter.notFound = {
 	}
 };
 
-route('/shell', ShellPage, {});
 route('/', HomePage, {});
 route('/404', NotFoundPage, {});
 route('/:id', HomePage, {});

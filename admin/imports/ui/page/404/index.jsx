@@ -12,7 +12,7 @@ export default class extends BasePage
         return (
             <Layout
                 central={
-                    ('Привет! Я - кость лобковаЯ!')
+                    ('Ничего не найдено, все сперли. 404')
                 }
             />
         );

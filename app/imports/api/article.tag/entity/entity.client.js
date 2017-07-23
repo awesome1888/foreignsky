@@ -4,4 +4,8 @@ import mix from '../../../lib/mixin.js';
 
 export default class Tag extends mix(BaseEntity).with(Entity)
 {
+    static get title()
+    {
+        return 'Article tag';
+    }
 }

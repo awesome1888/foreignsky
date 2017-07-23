@@ -10,8 +10,8 @@ import BaseComponent from '../../../../lib/base/component/component.jsx';
  * The basic component for making lists
  * @abstract
  */
-export default class List extends BaseComponent {
-
+export default class List extends BaseComponent
+{
     static propTypes = {
         className: PropTypes.oneOfType([
             PropTypes.string,
@@ -26,7 +26,8 @@ export default class List extends BaseComponent {
         entity: null,
     };
 
-    constructor(params) {
+    constructor(params)
+    {
         super(params);
         this.extendState({
             page: this.queryPage,
@@ -40,22 +41,25 @@ export default class List extends BaseComponent {
         this.url = FlowRouter.current().path;
     }
 
-    componentDidMount() {
+    componentDidMount()
+    {
         this.reLoadData();
     }
 
-    componentWillUpdate() {
+    componentWillUpdate()
+    {
         this.checkUrl();
     }
 
-    reLoadData() {
+    reLoadData()
+    {
         this.loadData();
         this.loadCount();
     }
 
     loadData()
     {
-        this.props.entity.find(Object.assign({
+        this.entity.find(Object.assign({
             select: ['title', 'sort', 'color', 'primary'],
         }, this.pageParameters)).then((res) => {
             this.setState({
@@ -118,7 +122,8 @@ export default class List extends BaseComponent {
      * @abstract
      * @access protected
      */
-    get entity() {
+    get entity()
+    {
         if (this.props.entity !== null)
         {
             return this.props.entity;
@@ -132,8 +137,9 @@ export default class List extends BaseComponent {
      * @returns {string}
      * @access protected
      */
-    get headerPrefix() {
-        return 'Article tag: ';
+    get headerPrefix()
+    {
+        return this.entity.title;
     }
 
     /**
@@ -141,7 +147,8 @@ export default class List extends BaseComponent {
      * @returns {[string,string]}
      * @access protected
      */
-    get labels() {
+    get labels()
+    {
         return ['#COUNT# item', '#COUNT# items', 'no items'];
     }
 
@@ -150,7 +157,8 @@ export default class List extends BaseComponent {
      * @returns {Number}
      * @access protected
      */
-    get queryPage() {
+    get queryPage()
+    {
         return parseInt(FlowRouter.getQueryParam('page') || 1, 10);
     }
 
@@ -159,7 +167,8 @@ export default class List extends BaseComponent {
      * @param {Number} page
      * @access protected
      */
-    set queryPage(page) {
+    set queryPage(page)
+    {
         FlowRouter.setQueryParams({page});
     }
 
@@ -173,8 +182,9 @@ export default class List extends BaseComponent {
      * @returns void
      * @access protected
      */
-    loadCount() {
-        this.props.entity.count().then((res) => {
+    loadCount()
+    {
+        this.entity.count().then((res) => {
             this.setState({
                 count: parseInt(res),
                 countReady: true,
@@ -197,7 +207,8 @@ export default class List extends BaseComponent {
      * @returns {number}
      * @access protected
      */
-    get pageSize() {
+    get pageSize()
+    {
         return 10;
     }
 
@@ -206,7 +217,8 @@ export default class List extends BaseComponent {
      * @returns {{limit: (number|*), skip: number}}
      * @access protected
      */
-    get pageParameters() {
+    get pageParameters()
+    {
         return {
             limit: this.state.perPage,
             offset: this.state.perPage * (this.state.page - 1),
@@ -215,7 +227,7 @@ export default class List extends BaseComponent {
 
     get title()
     {
-        let title = `${this.headerPrefix} `;
+        let title = `${this.headerPrefix}: `;
         const labels = this.labels;
 
         if (this.count > 0)
@@ -241,7 +253,8 @@ export default class List extends BaseComponent {
      * @returns {boolean}
      * @access protected
      */
-    isReady() {
+    isReady()
+    {
         return this.state.dataReady && this.state.countReady;
     }
 
@@ -250,7 +263,8 @@ export default class List extends BaseComponent {
      * @returns {XML}
      * @access protected
      */
-    renderHeader() {
+    renderHeader()
+    {
         return this.title;
     }
 
@@ -273,7 +287,8 @@ export default class List extends BaseComponent {
         );
     }
 
-    renderListItem(parameters = {}) {
+    renderListItem(parameters = {})
+    {
         const key = parameters.key;
         parameters = this.mapItemParameters(parameters);
         parameters.key = key; // we always keep key
@@ -285,7 +300,8 @@ export default class List extends BaseComponent {
         );
     }
 
-    renderItemList() {
+    renderItemList()
+    {
         return (
             <tbody>
                 {this.state.data.map(item => (
@@ -305,7 +321,8 @@ export default class List extends BaseComponent {
      * @returns {XML|null}
      * @access protected
      */
-    renderPageNav() {
+    renderPageNav()
+    {
         if (this.count <= this.state.perPage) {
             return null;
         }
@@ -328,7 +345,8 @@ export default class List extends BaseComponent {
      * @returns {XML}
      * @access protected
      */
-    render() {
+    render()
+    {
         return (
             <div
                 className={`data-block data-block_transparent ${this.props.className}`}

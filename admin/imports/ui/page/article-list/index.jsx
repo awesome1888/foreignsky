@@ -4,6 +4,7 @@ import React from 'react';
 import BasePage from '../../../lib/base/page/page.jsx';
 
 import Layout from '../../component/layout/layout.jsx';
+import List from './component/list/list.jsx';
 
 export default class extends BasePage
 {
@@ -12,7 +13,7 @@ export default class extends BasePage
         return (
             <Layout
                 central={
-                    ('Привет! Я - кость лобковаЯ!')
+                    <List />
                 }
             />
         );

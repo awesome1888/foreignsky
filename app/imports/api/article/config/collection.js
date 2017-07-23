@@ -13,22 +13,27 @@ export default new class extends Collection {
             title: {
                 type: String,
                 optional: false,
+                label: 'Заголовок',
             },
             date: {
                 type: Date,
                 optional: false,
+                label: 'Дата',
             },
             text: {
                 type: String,
                 optional: false,
+                label: 'Текст',
             },
             tagId: {
                 type: [String],
                 optional: true,
+                label: 'Теги',
             },
             location: {
                 type: [Number],
                 optional: true,
+                label: 'Местоположение',
             },
             headerImageId: {
                 type: [String],
@@ -38,19 +43,23 @@ export default new class extends Collection {
                 type: String,
                 optional: true,
                 regEx: /^[a-z0-9_-]+$/,
+                label: 'Цвет заголовка',
             },
             search: {
                 type: String,
                 optional: false,
+                label: 'Поисковый индекс',
             },
             embedId: {
                 type: [String],
                 optional: true,
+                label: 'Изображения',
             },
             public: {
                 type: Boolean,
                 optional: true,
                 defaultValue: false,
+                label: 'Опубликовано',
             }
         };
     }

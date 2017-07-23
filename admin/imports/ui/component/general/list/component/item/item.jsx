@@ -12,12 +12,14 @@ export default class ListItem extends BaseComponent {
         ]),
         entity: PropTypes.func.isRequired,
         data: PropTypes.object,
+        map: PropTypes.array.isRequired,
     };
 
     static defaultProps = {
         className: '',
         entity: null,
         data: [],
+        map: [],
     };
 
     render() {
@@ -25,17 +27,19 @@ export default class ListItem extends BaseComponent {
             return;
         }
 
+        const item = this.props.data;
+
         return (
             <tr>
                 {
-                    this.props.data.map((item) => {
-                        if (!_.isObject(item)) {
+                    this.props.map.map((attribute) => {
+                        if (!_.isObject(attribute)) {
                             return null;
                         }
 
                         return (
                             <td key={item.code}>
-                                {item.value}
+                                {item[attribute.code]}
                             </td>
                         );
                     })

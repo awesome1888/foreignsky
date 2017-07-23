@@ -101,8 +101,15 @@ export default class List extends BaseComponent {
      * @returns {ListInner}
      * @access protected
      */
-    get listItemConstructor() {
+    get listItemConstructor()
+    {
         return Item;
+    }
+
+    get map()
+    {
+        // generate from entity, for basic usage
+        return this.entity.attributes;
     }
 
     /**
@@ -253,7 +260,7 @@ export default class List extends BaseComponent {
             <thead>
                 <tr>
                     {
-                        this.entity.attributes.map(item => {
+                        this.map.map(item => {
                             return (
                                 <td>
                                     {item.label}
@@ -286,6 +293,7 @@ export default class List extends BaseComponent {
                         key: item.id,
                         data: item,
                         onListUpdate: this.props.onListUpdate,
+                        map: this.map,
                     })
                 ))}
             </tbody>

@@ -1,5 +1,5 @@
 import flatten from 'mongo-dot-notation';
-import Util from '../../util.js';
+// import Util from '../../util.js';
 import clone from 'clone';
 
 /**
@@ -256,24 +256,31 @@ export default class BaseEntity
             result.push({
                 code,
                 label: attribute.label,
-                order: 0, //attribute.order,
+                type: attribute.type,
             });
         });
 
-        result.sort(Util.getNumericComparator());
+        // result.sort(Util.getNumericComparator());
 
         return result;
     }
 
     get attributes()
     {
-        return this.constructor.attributes;
-    }
+        return this.constructor.attributes.map((attribute) => {
+            const getter = attribute.code;
+            let value = undefined;
+            if (getter in this)
+            {
+                value = this[getter];
+            }
 
-    // static get linkAttributes()
-    // {
-    //
-    // }
+            const item = clone(attribute, false, 1);
+            item.value = value;
+
+            return item;
+        });
+    }
 
     makeInstances(point, type)
     {
@@ -307,16 +314,7 @@ export default class BaseEntity
         }
 
         this.attributes.forEach((attribute) => {
-            const getter = attribute.code;
-            let value = undefined;
-            if (getter in this)
-            {
-                value = this[getter];
-            }
-
-            const item = clone(attribute, false, 1);
-            item.value = value;
-            cb(item);
+            cb(attribute);
         });
     }
 

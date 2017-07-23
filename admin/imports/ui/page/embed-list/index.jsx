@@ -12,6 +12,8 @@ export default class extends BasePage
     {
         return (
             <Layout
+                title={this.props.title}
+                motd={this.props.motd}
                 central={
                     <List />
                 }

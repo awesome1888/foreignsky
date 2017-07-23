@@ -11,7 +11,8 @@ export default class extends BasePage
     {
         return (
             <Layout
-                header={this.props.header}
+                title={this.props.title}
+                motd={this.props.motd}
                 central={
                     ('Привет! Я - кость лобковаЯ!')
                 }

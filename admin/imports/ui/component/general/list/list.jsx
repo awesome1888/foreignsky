@@ -360,7 +360,6 @@ export default class List extends BaseComponent
                     this.isReady()
                     &&
                     <div className="">
-                        {this.renderHeader()}
                         <table className="table table-striped table-bordered wide">
                             {this.renderGridHeader()}
                             {this.renderItemList()}

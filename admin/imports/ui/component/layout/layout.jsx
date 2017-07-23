@@ -2,20 +2,20 @@ import React from 'react';
 import BaseComponent from '../../../lib/base/component/component.jsx';
 import PropTypes from 'prop-types';
 
-import RandomShit from './component/random-shit/random-shit.jsx';
-
 import './style.less';
 
 export default class Layout extends BaseComponent
 {
     static propTypes = {
         central: PropTypes.object,
-        header: PropTypes.string,
+        title: PropTypes.string,
+        motd: PropTypes.string,
     };
 
     static defaultProps = {
         central: null,
-        header: '',
+        title: '',
+        motd: '',
     };
 
     renderCentral()
@@ -30,7 +30,13 @@ export default class Layout extends BaseComponent
                 <div className="layout-map-full__central-row row">
                     <div className="layout-map-full__central-body-left col-xs-3">
                         <div className="layout-map-full__side">
-                            <RandomShit />
+                            {
+                                _.isStringNotEmpty(this.props.motd)
+                                &&
+                                <blockquote className="margin-bottom margin-top_2x">
+                                    {this.props.motd}
+                                </blockquote>
+                            }
                             <br />
                             <br />
                             <br />
@@ -45,9 +51,9 @@ export default class Layout extends BaseComponent
                     <div className="layout-map-full__central-body-right col-xs-9">
                         <div className="layout-map-full__central">
                             {
-                                _.isStringNotEmpty(this.props.header)
+                                _.isStringNotEmpty(this.props.title)
                                 &&
-                                <h1>{this.props.header}</h1>
+                                <h1>{this.props.title}</h1>
                             }
                             {this.renderCentral(props)}
                         </div>

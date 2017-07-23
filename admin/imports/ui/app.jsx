@@ -10,14 +10,18 @@ export default class App extends React.Component {
 	constructor(props)
 	{
 		super(props);
+
 		this.state = {
-			loaded: false
+			loaded: false,
+            title: '',
 		};
+
+        this.setTitle('', false);
 
 		this._indicator = null;
 		this._imageView = null;
 
-		this.setTitle();
+		this._idioticMessage = this.generateMOTD();
 	}
 
 	get indicator()
@@ -51,14 +55,27 @@ export default class App extends React.Component {
 		return p;
 	}
 
-    setTitle(title = '')
+	makeTitle(title = '')
     {
         let newTitle = 'Admin panel';
         if (_.isStringNotEmpty(title)) {
             title = title.replace(/#DASH#/g, '–');
             newTitle = `${title} – ${newTitle}`;
         }
-        DocHead.setTitle(newTitle);
+
+        return newTitle;
+    }
+
+    setTitle(title = '', updateState = true)
+    {
+        DocHead.setTitle(this.makeTitle(title));
+
+        if (updateState)
+        {
+            this.setState({
+                title: title,
+            });
+        }
     }
 
 	static get instance()
@@ -73,6 +90,19 @@ export default class App extends React.Component {
 			wait: function(){},
 		};
 	}
+
+    generateMOTD()
+    {
+        return _.sample([
+            'This is my panel, I am The Admin, I do what I want!',
+            'Uncorns sucks! I mean it!',
+            'Do some good today. Or die. Whatever.',
+            'This is only hard-coded text, and soon there will be more!',
+            'Do not underestimate unpredictable idiots around.',
+            'Man, get some sleep already!',
+            'Тут будет менюшечка, ну а пока - захардкоженные ссылочки',
+        ]);
+    }
 
 	componentWillMount()
 	{
@@ -96,7 +126,7 @@ export default class App extends React.Component {
 
 	render() {
 		const {main, routeProps} = this.props;
-
+		
 		return (
 			<div id="app">
 				<div className="layout">
@@ -112,6 +142,8 @@ export default class App extends React.Component {
                     </div>
 					{React.createElement(main, {
 						route: routeProps,
+                        title: this.state.title,
+                        motd: this._idioticMessage,
 					})}
 				</div>
 			</div>

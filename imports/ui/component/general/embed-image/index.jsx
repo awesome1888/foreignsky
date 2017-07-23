@@ -18,9 +18,9 @@ export default class EmbedImageComponent extends React.Component {
 				path: PropTypes.string,
 			})]).isRequired,
 			label: PropTypes.string,
-			options: PropTypes.shape({
-				labelPosition: PropTypes.oneOf(['bottom', 'tl', 'tr', 'bl', 'br']),
-			}),
+			// options: PropTypes.shape({
+			// 	labelPosition: PropTypes.oneOf(['bottom', 'tl', 'tr', 'bl', 'br']),
+			// }),
 		})),
 		options: PropTypes.shape({
 			height: PropTypes.number,

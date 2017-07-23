@@ -19,9 +19,9 @@ export default class EmbedGalleryComponent extends React.Component {
 				path: PropTypes.string,
 			})]).isRequired,
 			label: PropTypes.string,
-			options: PropTypes.shape({
-				labelPosition: PropTypes.oneOf(['bottom', 'tl', 'tr', 'bl', 'br']),
-			}),
+			// options: PropTypes.shape({
+			// 	labelPosition: PropTypes.oneOf(['bottom', 'tl', 'tr', 'bl', 'br']),
+			// }),
 		})),
 		options: PropTypes.shape({
 			height: PropTypes.number,
@@ -146,13 +146,14 @@ export default class EmbedGalleryComponent extends React.Component {
                         {
                             style.backgroundPositionY = options.previewVerticalAlign;
                         }
-                        
+
+                        // todo: make key better
 						return (
 							<a
 								href={url}
 								className={`embed-gallery__image ${imgClass}`}
 								style={style}
-							    key={item._id}
+							    key={url}
 								target="_blank"
 								onClick={Util.passCtx(this.onImageClick, [item])}
 							>

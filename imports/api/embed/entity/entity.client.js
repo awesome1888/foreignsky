@@ -60,8 +60,6 @@ export default class Embed extends mix(BaseEntity).with(Entity)
      */
     static makeEmbed(id, embed)
     {
-        const data = this.data;
-
         id = id.toString().trim();
         if(!id)
         {
@@ -78,11 +76,11 @@ export default class Embed extends mix(BaseEntity).with(Entity)
         {
             return null;
         }
-        
+
         return React.createElement(renderer, {
             key: id,
             item: embed.item,
-            options: embed.options,
+            // options: embed.options,
         });
     }
 

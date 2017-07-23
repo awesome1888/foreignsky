@@ -24,7 +24,7 @@ const M = (superclass) =>  class Embed extends superclass
 
     get item()
     {
-        return this.data.item || {};
+        return this.data.item || [];
     }
 
     /**

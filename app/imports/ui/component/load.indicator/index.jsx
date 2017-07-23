@@ -25,7 +25,7 @@ export default class LoadIndicator extends React.Component {
 		this.launch();
 	}
 
-	addProcess(p)
+	waitOne(p)
 	{
 		if(this.locked)
 		{
@@ -39,7 +39,7 @@ export default class LoadIndicator extends React.Component {
 
 		this.pool.push(p);
 
-		this.lockPool();
+		this.lockPool(); // no more new tasks, sorry
 	}
 
 	lockPool()

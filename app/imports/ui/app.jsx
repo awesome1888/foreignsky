@@ -99,15 +99,15 @@ export default class App extends React.Component {
         }
     }
 
-	setLoading(p)
+	wait(p)
 	{
 		if(this.overlay)
 		{
-			this.overlay.waitMe(p);
+			this.overlay.waitOne(p);
 		}
 		if(this.indicator)
 		{
-            this.indicator.addProcess(p);
+            this.indicator.waitOne(p);
         }
 
 		return p;
@@ -157,7 +157,7 @@ export default class App extends React.Component {
 
 		// return mock
 		return {
-			setLoading: function(){},
+			wait: function(){},
 		};
 	}
 

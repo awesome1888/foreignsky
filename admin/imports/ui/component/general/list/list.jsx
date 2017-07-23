@@ -5,6 +5,7 @@ import {FlowRouter} from 'meteor/kadira:flow-router';
 import PageNavigation from '../page-navigation/page-navigation.jsx';
 import Item from './component/item/item.jsx';
 import BaseComponent from '../../../../lib/base/component/component.jsx';
+import App from '../../../../ui/app.jsx';
 
 /**
  * The basic component for making lists
@@ -59,9 +60,13 @@ export default class List extends BaseComponent
 
     loadData()
     {
-        this.entity.find(Object.assign({
+        const p = this.entity.find(Object.assign({
             select: ['title', 'sort', 'color', 'primary'],
-        }, this.pageParameters)).then((res) => {
+        }, this.pageParameters));
+
+        App.instance.wait(p);
+
+        p.then((res) => {
             this.setState({
                 data: res,
                 dataReady: true,

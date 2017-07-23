@@ -81,7 +81,7 @@ export default class ArticleListFilterComponent extends React.Component {
 
 	updateTagData(params = {})
 	{
-		return App.instance.setLoading(new Promise((resolve, reject) => {
+		return App.instance.wait(new Promise((resolve, reject) => {
 			Query.fetch((err, data) => {
 				this.setState({
 					tags: data || []

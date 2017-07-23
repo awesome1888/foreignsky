@@ -3,7 +3,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import classnames from 'classnames';
-import PreRender from '/imports/lib/prerender.js';
+import PreRender from '../../../lib/prerender.js';
 
 import './style.less';
 
@@ -29,7 +29,7 @@ export default class AppLoadingOverlay extends React.Component {
 		this.waitPool = [];
 	}
 
-    wait()
+    waitAll()
 	{
 	    if(PreRender.isCrawler) {
 	        return; // when crawler do nothing
@@ -40,7 +40,7 @@ export default class AppLoadingOverlay extends React.Component {
         });
 	}
 
-	waitMe(promise)
+	waitOne(promise)
 	{
 		if(this.state.shown && promise)
 		{

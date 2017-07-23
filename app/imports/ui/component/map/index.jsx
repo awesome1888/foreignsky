@@ -100,7 +100,7 @@ export default class Map extends BaseComponent {
          //    // or google/yandex is visiting us
 		// 	return;
 		// }
-		return App.instance.setLoading(new Promise((resolve, reject) => {
+		return App.instance.wait(new Promise((resolve, reject) => {
 			Util.loadJs(this.mapUrl).then(() => {
 				return this.createMapObject();
 			}).then(() => {

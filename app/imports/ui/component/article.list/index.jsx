@@ -52,7 +52,7 @@ export default class ArticleListComponent extends BaseComponent {
 			}
 		}
 
-		return App.instance.setLoading(new Promise((resolve, reject) => {
+		return App.instance.wait(new Promise((resolve, reject) => {
             Query.setParams({
                 filter,
             }).fetch((err, data) => {

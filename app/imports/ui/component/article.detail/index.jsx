@@ -44,7 +44,7 @@ export default class ArticleDetailComponent extends BaseComponent
 
 			if(id)
 			{
-				App.instance.setLoading(this.show(id));
+				App.instance.wait(this.show(id));
 			}
 			else
 			{

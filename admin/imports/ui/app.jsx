@@ -37,15 +37,15 @@ export default class App extends React.Component {
 	    return FlowRouter.current().queryParams;
     }
 
-	setLoading(p)
+	wait(p)
 	{
 		if(this.overlay)
 		{
-			this.overlay.waitMe(p);
+			this.overlay.waitOne(p);
 		}
 		if(this.indicator)
 		{
-            this.indicator.addProcess(p);
+            this.indicator.waitOne(p);
         }
 
 		return p;
@@ -70,7 +70,7 @@ export default class App extends React.Component {
 
 		// return mock
 		return {
-			setLoading: function(){},
+			wait: function(){},
 		};
 	}
 
@@ -83,7 +83,14 @@ export default class App extends React.Component {
 	{
 	    if(this.overlay)
         {
-            this.overlay.wait();
+            this.overlay.waitAll();
+        }
+
+        // shit-fix
+        if (this.indicator)
+        {
+            const p = new Promise((resolve) => {resolve()});
+            this.indicator.waitOne(p);
         }
 	}
 

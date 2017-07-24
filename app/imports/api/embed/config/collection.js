@@ -9,7 +9,7 @@ export default new class extends Collection
         super('embed');
     }
 
-    get schema()
+    getSchema()
     {
         return {
             item: {
@@ -27,7 +27,7 @@ export default new class extends Collection
         };
     }
 
-    get links()
+    getLinks()
     {
         return {
         };

@@ -83,17 +83,17 @@ const ShellClass = class Shell {
             Shell.startTime('MAIN');
             Shell.jobs[jobId].action.apply(Shell, [this]);
         } catch (e) {
-            Shell.console.log('!====== ERROR OCCURED:');
-            Shell.console.log(e.message);
+            Shell.getConsole().log('!====== ERROR OCCURED:');
+            Shell.getConsole().log(e.message);
             if (e instanceof Error) {
-                Shell.console.dir(e.stack);
+                Shell.getConsole().dir(e.stack);
             }
         }
 
         Shell.stopTime('MAIN');
 
         return {
-            data: Shell.console.getData(),
+            data: Shell.getConsole().getData(),
             durations: Shell.getDurations(),
             times: Shell.getTimes(),
             duration: Shell.getDuration(),
@@ -104,12 +104,12 @@ const ShellClass = class Shell {
         return (value / 1000).toFixed(2);
     }
 
-    static get console() {
+    static getConsole() {
         return SpyConsole.getInstance();
     }
 
     static dir(...args) {
-        this.console.dir(...args);
+        this.getConsole().dir(...args);
     }
 
     static startTime(label) {

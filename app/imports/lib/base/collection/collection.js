@@ -5,33 +5,33 @@ export default class BaseCollection extends Mongo.Collection
     constructor(collectionName)
     {
         super(collectionName);
-        this.attachSchema(this.schema);
-        this.addLinks(this.links);
+        this.attachSchema(this.getSchema());
+        this.addLinks(this.getLinks());
         this.createIndexes();
         this.applyHooks();
     }
 
-    get schema()
+    getSchema()
     {
-        throw new Error('Not implemented: get schema()');
+        throw new Error('Not implemented: getSchema()');
     }
 
-    get links()
+    getLinks()
     {
         return {};
     }
 
-    get indexes() {
+    getIndexes() {
         return [];
     }
 
-    get name() {
+    getName() {
         return this._name;
     }
 
-    get nameNormalized()
+    getNameNormalized()
     {
-        return this.name.replace('.', '_').toLowerCase();
+        return this.getName().replace('.', '_').toLowerCase();
     }
 
     applyHooks()
@@ -43,7 +43,7 @@ export default class BaseCollection extends Mongo.Collection
         if(Meteor.isServer)
         {
             const rawCollection = this.rawCollection();
-            this.indexes.forEach((index) => {
+            this.getIndexes().forEach((index) => {
                 rawCollection.createIndex(
                     index.fields,
                     index.options

@@ -102,7 +102,7 @@ export default class EmbedGalleryComponent extends React.Component {
 
 		if(item && item.image.path)
 		{
-			App.instance.imageView.open(File.convertToUrl(item.image.path));
+			App.getInstance().imageView.open(File.convertToUrl(item.image.path));
 		}
 	}
 

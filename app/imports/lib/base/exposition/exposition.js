@@ -10,12 +10,12 @@ export default class
         this.registerMethods();
     }
 
-    get entity()
+    getEntity()
     {
         return this._entity;
     }
 
-    get map()
+    getMap()
     {
         return {
             'find': {
@@ -34,7 +34,7 @@ export default class
 
     registerMethods()
     {
-        const cId = this.entity.collection.nameNormalized;
+        const cId = this.getEntity().getCollection().getNameNormalized();
         const methods = {};
         _.forEach(this.map, (desc, op) => {
             methods[`${cId}-${op}`] = this.makeMethodBody(op, desc);
@@ -66,18 +66,18 @@ export default class
 
     find(parameters)
     {
-        return this.entity.createQuery(parameters).fetch();
+        return this.getEntity().createQuery(parameters).fetch();
     }
 
     count(parameters)
     {
-        const q = this.entity.createQuery(parameters);
+        const q = this.getEntity().createQuery(parameters);
         
         // due to some fucking reason we dont have getCount() in Query
         // on server-side anymore 0_o
         // so, have to emulate (taken directly from grapher`s code on github)
 
-        return this.entity.collection.find(q.body.$filters || {}, {}).count();
+        return this.getEntity().collection.find(q.body.$filters || {}, {}).count();
     }
 
     save()

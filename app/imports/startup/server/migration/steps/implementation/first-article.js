@@ -339,13 +339,13 @@ export default class FirstArticle extends BaseMigration
     addFiles(files)
     {
         const pubFolder = 'mauer/2kx2k/';
-        const imgFolder = File.localFolderAbsolute+pubFolder;
+        const imgFolder = File.getLocalFolderAbsolute()+pubFolder;
         //const folder300 = imgFolder+'300x300/';
 
         fs.readdirSync(imgFolder).forEach((item) => {
-            const path = File.localFolder+pubFolder+item;
+            const path = File.getLocalFolder()+pubFolder+item;
             const name = item;
-            const id = File.collection.insert({
+            const id = File.getCollection().insert({
                 path,
                 name,
             });
@@ -354,7 +354,7 @@ export default class FirstArticle extends BaseMigration
     }
 
     getText() {
-        const pPath = Util.assetFolder + 'text.txt';
+        const pPath = Util.getAssetFolder() + 'text.txt';
         this.log(pPath);
         return fs.readFileSync(pPath).toString();
     }

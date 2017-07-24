@@ -127,7 +127,7 @@ export default class EmbedImageComponent extends React.Component {
 
         if(item && item.image.path)
         {
-            App.instance.imageView.open(File.convertToUrl(item.image.path));
+            App.getInstance().getImageView().open(File.convertToUrl(item.image.path));
         }
     }
 

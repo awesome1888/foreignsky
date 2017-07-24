@@ -68,7 +68,7 @@ export default class Util
         return pPath;
     }
 
-    static get assetFolder() {
+    static getAssetFolder() {
 	    const project = this.getProjectFolder();
 	    if (Meteor.isDevelopment)
 	    {

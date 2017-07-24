@@ -51,18 +51,18 @@ export default class Map extends BaseComponent {
         }
 	}
 
-	get mapUrl()
+	getMapUrl()
 	{
 	    const key = Meteor.settings.public['google-maps_key'];
 		return `https://maps.googleapis.com/maps/api/js?v=3&key=${key}&libraries=geometry,drawing,places`;
 	}
 
-	get map()
+	getMap()
 	{
 		return this._map;
 	}
 
-	static get instance()
+	static getInstance()
 	{
 		if(this._instance)
 		{
@@ -81,7 +81,7 @@ export default class Map extends BaseComponent {
 				center: this.props.center,
 			});
 
-			this.map.addListener('tilesloaded', () => {
+			this.getMap().addListener('tilesloaded', () => {
 				resolve();
 			});
 
@@ -100,8 +100,8 @@ export default class Map extends BaseComponent {
          //    // or google/yandex is visiting us
 		// 	return;
 		// }
-		return App.instance.wait(new Promise((resolve, reject) => {
-			Util.loadJs(this.mapUrl).then(() => {
+		return App.getInstance().wait(new Promise((resolve, reject) => {
+			Util.loadJs(this.getMapUrl()).then(() => {
 				return this.createMapObject();
 			}).then(() => {
 				resolve();

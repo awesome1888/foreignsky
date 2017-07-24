@@ -7,7 +7,7 @@ export default new class extends Collection
         super('file');
     }
 
-    get schema()
+    getSchema()
     {
         return {
             name: {

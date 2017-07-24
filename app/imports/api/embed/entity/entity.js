@@ -11,18 +11,18 @@ const M = (superclass) =>  class Embed extends superclass
         return Collection;
     }
 
-    get renderer()
+    getRenderer()
     {
         return this.data.renderer || 'IMAGE';
     }
 
-    get options()
+    getOptions()
     {
         // unpack here...
         return this.data.options || {};
     }
 
-    get item()
+    getItem()
     {
         return this.data.item || [];
     }

@@ -9,7 +9,7 @@ import Embed from '../../../api/embed/entity/entity.server.js';
 
 export default class Article extends mix(BaseEntity).with(Entity)
 {
-    static get entityMap()
+    static getEntityMap()
     {
         return {
             tag: Tag,
@@ -22,7 +22,7 @@ export default class Article extends mix(BaseEntity).with(Entity)
         filters.public = true;
     }
 
-    static get expositionController()
+    static getExpositionController()
     {
         return Exposition;
     }
@@ -56,7 +56,7 @@ export default class Article extends mix(BaseEntity).with(Entity)
             ids = Object.keys(ids);
             if (_.isArrayNotEmpty(ids))
             {
-                const fIndex = _.makeMap(File.collection.find({_id: {$in: ids}}).fetch(), '_id');
+                const fIndex = _.makeMap(File.getCollection().find({_id: {$in: ids}}).fetch(), '_id');
                 bind.forEach((item) => {
                     item.image = null;
                     if (item.imageId in fIndex)

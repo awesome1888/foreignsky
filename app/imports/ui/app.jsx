@@ -28,12 +28,12 @@ export default class App extends React.Component {
 		this.setKeywords();
 	}
 
-	get overlay()
+	getOverlay()
 	{
 		return this._overlay;
 	}
 
-	set overlay(ref)
+	setOverlay(ref)
 	{
 		if(!this._overlay)
 		{
@@ -41,12 +41,12 @@ export default class App extends React.Component {
 		}
 	}
 
-	get indicator()
+	getIndicator()
 	{
 		return this._indicator;
 	}
 
-	set indicator(ref)
+	setIndicator(ref)
 	{
 		if(!this._indicator)
 		{
@@ -54,12 +54,12 @@ export default class App extends React.Component {
 		}
 	}
 
-	get map()
+	getMap()
 	{
 		return this._map;
 	}
 
-	set map(ref)
+	setMap(ref)
 	{
 		if(!this._map)
 		{
@@ -67,7 +67,7 @@ export default class App extends React.Component {
 		}
 	}
 
-	get imageView()
+	getImageView()
 	{
 		if(!this._imageView)
 		{
@@ -79,7 +79,7 @@ export default class App extends React.Component {
 		return this._imageView;
 	}
 
-	set imageView(ref)
+	setImageView(ref)
 	{
 		if(!this._imageView)
 		{
@@ -87,7 +87,7 @@ export default class App extends React.Component {
 		}
 	}
 
-	get query() {
+	getQuery() {
 	    return FlowRouter.current().queryParams;
     }
 
@@ -101,13 +101,13 @@ export default class App extends React.Component {
 
 	wait(p)
 	{
-		if(this.overlay)
+		if(this.getOverlay())
 		{
-			this.overlay.waitOne(p);
+			this.getOverlay().waitOne(p);
 		}
-		if(this.indicator)
+		if(this.getIndicator())
 		{
-            this.indicator.waitOne(p);
+            this.getIndicator().waitOne(p);
         }
 
 		return p;
@@ -148,7 +148,7 @@ export default class App extends React.Component {
         });
     }
 
-	static get instance()
+	static getInstance()
 	{
 		if(this._instance)
 		{
@@ -174,10 +174,10 @@ export default class App extends React.Component {
         }
 
         // shit-fix
-        if (this.indicator)
+        if (this.getIndicator())
         {
             const p = new Promise((resolve) => {resolve()});
-            this.indicator.waitOne(p);
+            this.getIndicator().waitOne(p);
         }
 	}
 
@@ -191,7 +191,7 @@ export default class App extends React.Component {
                         !PreRender.isCrawler
                         &&
                         <LoadOverlay
-                            ref={(instance) => {this.overlay = instance;}}
+                            ref={(instance) => {this.setOverlay(instance)}}
                         />
                     }
 
@@ -201,7 +201,7 @@ export default class App extends React.Component {
                             !PreRender.isCrawler
                             &&
                             <LoadIndicator
-                                ref={(instance) => {this.indicator = instance;}}
+                                ref={(instance) => {this.setIndicator(instance)}}
                             />
                         }
                     </div>
@@ -211,14 +211,14 @@ export default class App extends React.Component {
 				</div>
                 {
                     <Map
-                        ref={(instance) => {this.map = instance;}}
+                        ref={(instance) => {this.setMap(instance)}}
                         center={{lat: 52.520764, lng: 13.409161}}
                         zoom={15}
                         useFakeMap={PreRender.isCrawler}
                     />
                 }
                 <ImageViewComponent
-					ref={(instance) => {this.imageView = instance;}}
+					ref={(instance) => {this.setImageView(instance)}}
 				/>
 			</div>
 		);

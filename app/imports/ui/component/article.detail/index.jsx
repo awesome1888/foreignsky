@@ -44,7 +44,7 @@ export default class ArticleDetailComponent extends BaseComponent
 
 			if(id)
 			{
-				App.instance.wait(this.show(id));
+				App.getInstance().wait(this.show(id));
 			}
 			else
 			{
@@ -97,7 +97,7 @@ export default class ArticleDetailComponent extends BaseComponent
                 data: article.data,
                 article,
             });
-            App.instance.toggleMap(true);
+            App.getInstance().toggleMap(true);
             this.setTitle(article.title);
         });
 
@@ -114,7 +114,7 @@ export default class ArticleDetailComponent extends BaseComponent
 		this.setState({
 			opened: false
 		});
-		App.instance.toggleMap(false);
+		App.getInstance().toggleMap(false);
 		FlowRouter.go('/');
 	}
 
@@ -144,12 +144,12 @@ export default class ArticleDetailComponent extends BaseComponent
                             <div
                                 className="embed-image__image embed-image__image_static article-detail__header-image-embed"
                                 style={{
-                                    backgroundImage: `url(${article.headerImagePath})`,
+                                    backgroundImage: `url(${article.getHeaderImagePath()})`,
                                 }}
                             >
                                 <div className="embed-image__label embed-image__label-br">
                                     <div className="embed-image__label-line">
-                                        {article.title}
+                                        {article.getTitle()}
                                     </div>
                                 </div>
                             </div>
@@ -159,20 +159,20 @@ export default class ArticleDetailComponent extends BaseComponent
 					<div className="article-detail__body-top-line">
 						<div className="group-tag">
 							{
-								_.map(article.tag || {}, (tag) => {
+								_.map(article.getTag() || {}, (tag) => {
 									return (
 										<div
-											className={`tag tag_${tag.color}`}
-										    key={tag.id}
+											className={`tag tag_${tag.getColor()}`}
+										    key={tag.getId()}
 										>
-											#{tag.title}
+											#{tag.getTitle()}
 										</div>
 									);
 								})
 							}
 						</div>
 						<div className="article-detail__body-date">
-							{article.dateFormatted}
+							{article.getDateFormatted()}
 						</div>
 					</div>
 					<div className="article-detail__body">

@@ -5,20 +5,20 @@ import Util from '../../../lib/util.js';
 
 export default class File extends mix(BaseEntity).with(Entity)
 {
-    static get localFolderAbsolute()
+    static getLocalFolderAbsolute()
     {
-        return Util.getAssetsFolder()+this.localFolder;
+        return Util.getAssetFolder()+this.getLocalFolder();
     }
 
-    static get localFolder()
+    static getLocalFolder()
     {
         return 'img/';
     }
 
     static create(path, name = 'File')
     {
-        return this.collection.insert({
-            path: this.localFolder+path,
+        return this.getCollection().insert({
+            path: this.getLocalFolder()+path,
             name,
         });
     }

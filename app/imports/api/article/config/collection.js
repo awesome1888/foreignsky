@@ -8,7 +8,7 @@ export default new class extends Collection {
         super('article');
     }
 
-    get schema() {
+    getSchema() {
         return {
             title: {
                 type: String,
@@ -64,7 +64,7 @@ export default new class extends Collection {
         };
     }
 
-    get links() {
+    getLinks() {
         return {
             tag: {
                 type: 'many',
@@ -87,7 +87,7 @@ export default new class extends Collection {
         };
     }
 
-    get indexes() {
+    getIndexes() {
         return [
             {
                 fields: {

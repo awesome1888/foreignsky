@@ -24,7 +24,7 @@ export default class BaseComponent extends Component
     {
         if(this._titleUpdated)
         {
-            App.instance.setTitle();
+            App.getInstance().setTitle();
             this._titleUpdated = false;
         }
 
@@ -39,7 +39,7 @@ export default class BaseComponent extends Component
 
     setTitle(title = '')
     {
-        App.instance.setTitle(title);
+        App.getInstance().setTitle(title);
         this._titleUpdated = true;
     }
 

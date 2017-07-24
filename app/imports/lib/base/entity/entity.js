@@ -25,22 +25,22 @@ export default class BaseEntity
         }
     }
 
-    get collection()
+    getCollection()
     {
-        return this.constructor.collection;
+        return this.constructor.getCollection();
     }
 
-    static get entityMap()
+    static getEntityMap()
     {
         return {};
     }
 
-    get id()
+    getId()
     {
         return this.data._id;
     }
 
-    get data()
+    getData()
     {
         if (!this._normalized)
         {
@@ -51,7 +51,7 @@ export default class BaseEntity
         return this._data;
     }
 
-    set data(data)
+    seData(data)
     {
         this._data = data;
     }
@@ -61,7 +61,7 @@ export default class BaseEntity
         return data;
     }
 
-    static get collection()
+    static getCollection()
     {
         this.throwNotImplemented('static get collection()');
     }
@@ -95,7 +95,7 @@ export default class BaseEntity
             return this._cache.q[name];
         }
 
-        const q = this.collection.createQuery(
+        const q = this.getCollection().createQuery(
             this.translateParameters(parameters)
         );
 
@@ -113,7 +113,7 @@ export default class BaseEntity
     {
         if (this._qConstructor === null)
         {
-            const sample = this.collection.createQuery();
+            const sample = this.getCollection().createQuery();
             this._qConstructor = sample.constructor;
         }
 
@@ -240,7 +240,7 @@ export default class BaseEntity
 
     static resolveEntityConstructor(name)
     {
-        const resolver = this.entityMap[name];
+        const resolver = this.getEntityMap()[name];
         if (!_.isFunction(resolver))
         {
             throw new Error(`Unable to get entity '${name}' class constructor`);
@@ -249,10 +249,10 @@ export default class BaseEntity
         return resolver;
     }
 
-    static get attributes()
+    static getAttributes()
     {
         const result = [];
-        _.forEach(this.collection.schema, (attribute, code) => {
+        _.forEach(this.getCollection().getSchema(), (attribute, code) => {
             result.push({
                 code,
                 label: attribute.label,
@@ -265,9 +265,9 @@ export default class BaseEntity
         return result;
     }
 
-    get attributes()
+    getAttributes()
     {
-        return this.constructor.attributes.map((attribute) => {
+        return this.constructor.getAttributes().map((attribute) => {
             const getter = attribute.code;
             let value = undefined;
             if (getter in this)
@@ -313,7 +313,7 @@ export default class BaseEntity
             return;
         }
 
-        this.attributes.forEach((attribute) => {
+        this.getAttributes().forEach((attribute) => {
             cb(attribute);
         });
     }

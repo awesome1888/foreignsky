@@ -11,38 +11,38 @@ const M = (superclass) =>  class Article extends superclass
         return Collection;
     }
 
-    get title()
+    getTitle()
     {
         return this.data.title || '';
     }
 
-    get text()
+    getText()
     {
         return this.data.text || '';
     }
 
-    get date()
+    getDate()
     {
         return this.data.date || null;
     }
 
-    get headerColor()
+    getHeaderColor()
     {
         return this.data.headerColor || 'white';
     }
 
-    get headerImage()
+    getHeaderImage()
     {
         return this.data.headerImage || {};
     }
 
-    get tag()
+    getTag()
     {
         this.data.tag = this.makeInstances(this.data.tag, 'tag');
         return this.data.tag;
     }
 
-    get embed()
+    getEmbed()
     {
         this.data.embed = this.makeInstances(this.data.embed, 'embed');
         return this.data.embed;

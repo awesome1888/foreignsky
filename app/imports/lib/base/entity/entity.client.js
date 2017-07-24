@@ -5,7 +5,7 @@ Side.ensureClient();
 
 export default class BaseEntity extends Entity
 {
-    static get title()
+    static getTitle()
     {
         return 'Spherical entity in vacuum';
     }

@@ -48,19 +48,19 @@ export default class LoadIndicator extends React.Component {
 		Promise.all(this.pool).then(() => {
 			Meteor.clearTimeout(this.timer);
 			this.active = false;
-			this.percent = 100;
+			this.setPercent(100);
 			this.locked = false;
 		});
 	}
 
 	launch()
 	{
-		this.steps = this.randomPoints;
+		this.steps = this.getRandomPoints();
 		this.step = 0;
 		this.active = true;
 		this.locked = false;
 		this.pool = [];
-		this.percent = 0;
+		this.setPercent(0);
 
 		this.goNextStep();
 	}
@@ -70,7 +70,7 @@ export default class LoadIndicator extends React.Component {
 		this.timer = Meteor.setTimeout(
 			() => {
 
-				this.percent = this.steps[this.step];
+				this.setPercent(this.steps[this.step]);
 				this.step = this.step + 1;
 
 				if(this.step === this.steps.length)
@@ -86,7 +86,7 @@ export default class LoadIndicator extends React.Component {
 		);
 	}
 
-	get randomPoints()
+	getRandomPoints()
 	{
 		// todo: random number of steps here
 		return [
@@ -102,12 +102,12 @@ export default class LoadIndicator extends React.Component {
 		];
 	}
 
-	get percent()
+	getPercent()
 	{
 		return this.state.percent;
 	}
 
-	set percent(value)
+	setPercent(value)
 	{
 		value = parseInt(value);
 		if(Number.isNaN(value))
@@ -131,7 +131,7 @@ export default class LoadIndicator extends React.Component {
 			<div className="header__loading-bar">
 				<div
 					className="header__loading-bar-progress"
-				    style={{width: this.percent+'%'}}
+				    style={{width: this.getPercent()+'%'}}
 				/>
 			</div>
 		);

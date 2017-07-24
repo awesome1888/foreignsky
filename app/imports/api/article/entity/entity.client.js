@@ -8,12 +8,12 @@ import Embed from '../../../api/embed/entity/entity.client.js';
 
 export default class Article extends mix(BaseEntity).with(Entity)
 {
-    static get title()
+    static getTitle()
     {
         return 'Article';
     }
 
-    static get entityMap()
+    static getEntityMap()
     {
         return {
             tag: Tag,
@@ -28,7 +28,7 @@ export default class Article extends mix(BaseEntity).with(Entity)
         });
     }
 
-    get dateFormatted()
+    getDateFormatted()
     {
         const date = this.date;
         if (date !== null)
@@ -39,7 +39,7 @@ export default class Article extends mix(BaseEntity).with(Entity)
         return '';
     }
 
-    get headerImagePath()
+    getHeaderImagePath()
     {
         if (this.hasHeaderImage())
         {

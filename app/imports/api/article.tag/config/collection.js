@@ -7,7 +7,7 @@ export default new class extends Collection
         super('article.tag');
     }
 
-    get schema()
+    getSchema()
     {
         return {
             title: {

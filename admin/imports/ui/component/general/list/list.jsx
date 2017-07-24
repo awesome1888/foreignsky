@@ -64,7 +64,7 @@ export default class List extends BaseComponent
             select: ['title', 'sort', 'color', 'primary'],
         }, this.pageParameters));
 
-        App.instance.wait(p);
+        App.getInstance().wait(p);
 
         p.then((res) => {
             this.setState({

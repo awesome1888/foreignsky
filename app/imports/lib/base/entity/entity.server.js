@@ -8,21 +8,21 @@ export default class BaseEntity extends Entity
 {
     static expCtrl = null;
 
-    get rawCollection()
+    getRawCollection()
     {
-        return this.collection.rawCollection();
+        return this.getCollection().rawCollection();
     }
 
-    static get rawCollection()
+    static getRawCollection()
     {
-        return this.collection.rawCollection();
+        return this.getCollection().rawCollection();
     }
 
     static restrictExpositionGrapher(filters, options, userId)
     {
     }
 
-    static get expositionController()
+    static getExpositionController()
     {
         return Exposition;
     }
@@ -31,7 +31,7 @@ export default class BaseEntity extends Entity
     {
         if(this.expCtrl === null)
         {
-            this.expCtrl = new this.expositionController(this);
+            this.expCtrl = new this.getExpositionController()(this);
         }
     }
 
@@ -57,7 +57,7 @@ export default class BaseEntity extends Entity
      */
     static count(filter)
     {
-        return this.collection.createQuery({
+        return this.getCollection().createQuery({
             $filters: filter
         }).getCount();
     }

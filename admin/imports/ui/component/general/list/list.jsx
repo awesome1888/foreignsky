@@ -115,7 +115,7 @@ export default class List extends BaseComponent
         return Item;
     }
 
-    get map()
+    getMap()
     {
         // generate from entity, for basic usage
         return this.entity.attributes;
@@ -279,7 +279,7 @@ export default class List extends BaseComponent
             <thead>
                 <tr>
                     {
-                        this.map.map(item => {
+                        this.getMap().map(item => {
                             return (
                                 <td>
                                     {item.label}

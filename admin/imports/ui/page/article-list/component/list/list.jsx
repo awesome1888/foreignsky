@@ -8,4 +8,13 @@ export default class extends List
     {
         return Article;
     }
+
+    getMap()
+    {
+        const map = super.getMap();
+
+        console.dir(map);
+
+        return map;
+    }
 }

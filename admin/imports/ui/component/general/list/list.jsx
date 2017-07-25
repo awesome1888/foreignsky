@@ -27,6 +27,8 @@ export default class List extends BaseComponent
         entity: null,
     };
 
+    _cache = {};
+
     constructor(params)
     {
         super(params);
@@ -61,7 +63,7 @@ export default class List extends BaseComponent
     loadData()
     {
         const p = this.getEntity().find(Object.assign({
-            select: ['title', 'sort', 'color', 'primary'],
+            select: this.getAllowedAttributes(), // todo: currently, this way, but refactor
         }, this.getPageParameters()));
 
         App.getInstance().wait(p);

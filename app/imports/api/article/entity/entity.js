@@ -48,6 +48,11 @@ const M = (superclass) =>  class Article extends superclass
         return this.data.embed;
     }
 
+    getPublic()
+    {
+        return !!this.data.public;
+    }
+
     hasHeaderImage()
     {
         return _.isObjectNotEmpty(this.headerImage);

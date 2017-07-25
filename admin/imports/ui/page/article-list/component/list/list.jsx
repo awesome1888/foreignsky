@@ -9,12 +9,27 @@ export default class extends List
         return Article;
     }
 
+    getAllowedAttributes()
+    {
+        return [
+            'title',
+            'date',
+            'tags',
+            'public',
+        ];
+    }
+
     getMap()
     {
-        const map = super.getMap();
+        if (!this._cache.map)
+        {
+            const allowed = this.getAllowedAttributes();
+            this._cache.map = super.getMap().filter((item) => {
+                // optimize this
+                return allowed.indexOf(item.code) >= 0;
+            });
+        }
 
-        console.dir(map);
-
-        return map;
+        return this._cache.map;
     }
 }

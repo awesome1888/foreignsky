@@ -34,12 +34,12 @@ export default class EmbedImageComponent extends React.Component {
 		},
 	};
 
-	get options()
-	{
-		return this.props.options || {};
-	}
+	// getOptions()
+	// {
+	// 	return this.props.options || {};
+	// }
 
-	get item()
+	getItem()
 	{
 		if(
 			_.isArray(this.props.item)
@@ -53,9 +53,9 @@ export default class EmbedImageComponent extends React.Component {
 		return {};
 	}
 
-	get imageUrl()
+	getImageUrl()
 	{
-		const image = this.item.image;
+		const image = this.getItem().image;
 
 		if(_.isObject(image) && image.path)
 		{
@@ -65,9 +65,9 @@ export default class EmbedImageComponent extends React.Component {
 		return '';
 	}
 
-	get height()
+	getHeight()
 	{
-		const height = parseInt(this.options.height);
+		const height = parseInt(this.getOptions().height);
 
 		if(_.isNumber(height) && height > 0)
 		{
@@ -77,26 +77,26 @@ export default class EmbedImageComponent extends React.Component {
 		return 300;
 	}
 
-	get labelText()
+	getLabelText()
 	{
-		const item = this.item;
+		const item = this.getItem();
 
-		if(this.item.label)
+		if(item.label)
 		{
-			return this.item.label.toString().trim();
+			return item.label.toString().trim();
 		}
 
 		return '';
 	}
 
-	get options()
+	getOptions()
     {
-        return Embed.unpackOptions(this.item.options);
+        return Embed.unpackOptions(this.getItem().options);
     }
 
-	get labelPosition()
+	getLabelPosition()
 	{
-		const item = this.item;
+		const item = this.getItem();
 
 		if(_.isObject(item.options) && item.options.labelPosition)
 		{
@@ -106,19 +106,19 @@ export default class EmbedImageComponent extends React.Component {
 		return 'bottom';
 	}
 
-	get labelTextFragments()
+	getLabelTextFragments()
 	{
 		return this.labelText.split("\r\n");
 	}
 
 	isLabelTypeBottom()
 	{
-		return this.labelPosition === 'bottom' && _.isStringNotEmpty(this.labelText);
+		return this.getLabelPosition() === 'bottom' && _.isStringNotEmpty(this.getLabelText());
 	}
 
 	isLabelInside()
     {
-        return _.isStringNotEmpty(this.labelText) && !this.isLabelTypeBottom();
+        return _.isStringNotEmpty(this.getLabelText()) && !this.isLabelTypeBottom();
     }
 
     onImageClick(item, e)
@@ -133,12 +133,12 @@ export default class EmbedImageComponent extends React.Component {
 
 	render(props = {})
 	{
-        const options = this.options;
+        const options = this.getOptions();
         const url = this.imageUrl;
 
         const style = {
             backgroundImage: `url(${url})`,
-            height: `${this.height}px`,
+            height: `${this.getHeight()}px`,
         };
 
         if (_.isStringNotEmpty(options.previewVerticalAlign))
@@ -155,17 +155,17 @@ export default class EmbedImageComponent extends React.Component {
 					className="embed-image__image embed-image__image_static"
 					style={style}
                     target="_blank"
-                    onClick={Util.passCtx(this.onImageClick, [this.item])}
+                    onClick={Util.passCtx(this.onImageClick, [this.getItem()])}
 				>
 					{
 						this.isLabelInside()
 						&&
 						<div className={classnames([
 							'embed-image__label embed-image__label_medium',
-							`embed-image__label-${this.labelPosition}`,
+							`embed-image__label-${this.getLabelPosition()}`,
 						])}>
 							{
-								this.labelTextFragments.map((fragment) => {
+								this.getLabelTextFragments().map((fragment) => {
 									return (<div
 										className="embed-image__label-line"
 									    key={fragment}
@@ -182,7 +182,7 @@ export default class EmbedImageComponent extends React.Component {
 					this.isLabelTypeBottom()
 					&&
 					<div className="embed-image__label_bottom">
-						{this.labelText}
+						{this.getLabelText()}
 					</div>
 				}
 

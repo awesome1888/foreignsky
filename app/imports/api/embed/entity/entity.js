@@ -6,11 +6,11 @@ import Collection from '../config/collection.js';
  */
 const M = (superclass) =>  class Embed extends superclass
 {
-    static get collection()
+    static getCollection()
     {
         return Collection;
     }
-
+    
     getRenderer()
     {
         return this.data.renderer || 'IMAGE';

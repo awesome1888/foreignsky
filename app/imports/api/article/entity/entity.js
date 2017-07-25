@@ -6,7 +6,7 @@ import Collection from '../config/collection.js';
  */
 const M = (superclass) =>  class Article extends superclass
 {
-    static get collection()
+    static getCollection()
     {
         return Collection;
     }

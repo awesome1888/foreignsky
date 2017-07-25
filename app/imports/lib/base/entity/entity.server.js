@@ -31,7 +31,8 @@ export default class BaseEntity extends Entity
     {
         if(this.expCtrl === null)
         {
-            this.expCtrl = new this.getExpositionController()(this);
+            const ctrl = this.getExpositionController();
+            this.expCtrl = new ctrl(this);
         }
     }
 

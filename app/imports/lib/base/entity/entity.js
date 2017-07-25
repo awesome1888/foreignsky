@@ -63,7 +63,7 @@ export default class BaseEntity
 
     static getCollection()
     {
-        this.throwNotImplemented('static get collection()');
+        this.throwNotImplemented('static getCollection()');
     }
 
     static prepareQuery(condition)

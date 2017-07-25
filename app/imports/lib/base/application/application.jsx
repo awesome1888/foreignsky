@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '/imports/ui/component/header/index.jsx';
 import LoadOverlay from '/imports/ui/component/load.overlay/index.jsx';
 import LoadIndicator from '/imports/ui/component/load.indicator/index.jsx';
-import Util from '../lib/util.js';
+import Util from '../../util.js';
 import {DocHead} from 'meteor/kadira:dochead';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 

@@ -25,9 +25,9 @@ export default class extends Application {
 
     transformPageParameters(params)
     {
-        const params = super.transformPageParameters(params);
-        params.motd = this._idioticMessage;
+        const tParams = super.transformPageParameters(params);
+        tParams.motd = this._idioticMessage;
 
-        return params;
+        return tParams;
     }
 }

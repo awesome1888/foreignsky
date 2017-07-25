@@ -45,12 +45,12 @@ export default class EmbedGalleryComponent extends React.Component {
 		this.onWindowResize = this.onWindowResize.bind(this);
 	}
 
-	get options()
+	getOptions()
 	{
 		return this.props.options || {};
 	}
 
-	get item()
+	getItem()
 	{
 		if(_.isArray(this.props.item))
 		{
@@ -120,7 +120,7 @@ export default class EmbedGalleryComponent extends React.Component {
 	{
 	    // this shit definitely needs refactoring
 	    let imgClass = '';
-	    if (this.item.length === 2) {
+	    if (this.getItem().length === 2) {
 	        imgClass = 'embed-gallery__image-2x1';
         }
 
@@ -130,7 +130,7 @@ export default class EmbedGalleryComponent extends React.Component {
 			    ref={(instance) => {this._scope = instance;}}
 			>
 				{
-					this.sortItems(this.item).map((item) => {
+					this.sortItems(this.getItem()).map((item) => {
 					    if (!_.isObjectNotEmpty(item.image) || !_.isStringNotEmpty(item.image.path)) {
 					        return;
                         }

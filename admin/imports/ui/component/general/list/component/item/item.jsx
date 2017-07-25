@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 // renderers
 import RendererGeneric from './component/renderer/generic/generic.jsx';
 import RendererDate from './component/renderer/date/date.jsx';
+import RendererBoolean from './component/renderer/boolean/boolean.jsx';
+import RendererPrimary from './component/renderer/primary/primary.jsx';
 
 export default class ListItem extends BaseComponent {
 
@@ -26,8 +28,16 @@ export default class ListItem extends BaseComponent {
         map: [],
     };
 
-    resolveRenderer(type)
+    resolveRenderer(attribute)
     {
+        // todo: hardcoded for now, get from map later
+        if (attribute.code === 'title')
+        {
+            return RendererPrimary;
+        }
+
+        const type = attribute.type;
+
         if (type === String)
         {
             return RendererGeneric;
@@ -36,6 +46,10 @@ export default class ListItem extends BaseComponent {
         {
             return RendererDate;
         }
+        if (type === Boolean)
+        {
+            return RendererBoolean;
+        }
 
         return RendererGeneric;
     }
@@ -43,7 +57,7 @@ export default class ListItem extends BaseComponent {
     renderRenderer(item, attribute)
     {
         return React.createElement(
-            this.resolveRenderer(attribute.type),
+            this.resolveRenderer(attribute),
             {
                 code: attribute.code,
                 value: item.getAttributeValue(attribute.code),

@@ -117,6 +117,12 @@ export default class List extends BaseComponent
         return Item;
     }
 
+    // todo: this SHOULD be generated from getMap
+    getAllowedAttributes()
+    {
+        return [];
+    }
+
     getMap()
     {
         // generate from entity, for basic usage

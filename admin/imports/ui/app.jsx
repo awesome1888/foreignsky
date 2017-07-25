@@ -24,7 +24,7 @@ export default class extends Application {
     generateMOTD()
     {
         return _.sample([
-            'This is my panel, I am The Admin, I do what I want!',
+            'This is my panel, I am The Admin, I do what I want! Agggrrrrhhhh!!!',
             'Uncorns sucks! I mean it!',
             'Do some good today. Or die. Whatever.',
             'This is only hard-coded text, and soon there will be more!',

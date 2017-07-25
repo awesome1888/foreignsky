@@ -11,4 +11,19 @@ export default class BasePage extends BaseComponent
     static defaultProps = {
         title: '',
     };
+
+    constructor(props)
+    {
+        super(props);
+        const title = this.getDefaultTitle();
+        if (_.isStringNotEmpty(title))
+        {
+            this.setTitle(title);
+        }
+    }
+
+    getDefaultTitle()
+    {
+        return '';
+    }
 }

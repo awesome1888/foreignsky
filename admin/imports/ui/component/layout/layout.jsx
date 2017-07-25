@@ -45,7 +45,7 @@ export default class Layout extends BaseComponent
                             <a href="/entity/embed">Embed</a>
                             <a href="/entity/file">File</a>
                             <br />
-                            <a href="/shell">Shell</a>
+                            <a href="/shell">Task runner</a>
                         </div>
                     </div>
                     <div className="layout-map-full__central-body-right col-xs-9">

@@ -8,10 +8,17 @@ import ShellUI from '../../../lib/util/shell/ui/ui.jsx';
 
 export default class extends BasePage
 {
+    getDefaultTitle()
+    {
+        return 'Task runner';
+    }
+
 	render()
     {
         return (
             <Layout
+                title={this.props.title}
+                motd={this.props.motd}
                 central={
                     <ShellUI />
                 }

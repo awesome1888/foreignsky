@@ -20,11 +20,16 @@ export default class BaseComponent extends Component
         }
     }
 
+    getApplication()
+    {
+        return App.getInstance();
+    }
+
     componentWillUnmount()
     {
         if(this._titleUpdated)
         {
-            App.getInstance().setTitle();
+            this.getApplication().setTitle();
             this._titleUpdated = false;
         }
 
@@ -39,7 +44,7 @@ export default class BaseComponent extends Component
 
     setTitle(title = '')
     {
-        App.getInstance().setTitle(title);
+        this.getApplication().setTitle(title);
         this._titleUpdated = true;
     }
 

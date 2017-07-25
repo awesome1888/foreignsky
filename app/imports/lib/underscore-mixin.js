@@ -55,4 +55,13 @@ _.mixin({
 
         return obj; //eslint-disable-line
     },
+    lCFirst(value)
+    {
+        if (_.isStringNotEmpty(value))
+        {
+            return value.substr(0, 1).toUpperCase() + value.substr(1);
+        }
+
+        return '';
+    }
 });

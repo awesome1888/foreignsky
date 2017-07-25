@@ -263,17 +263,7 @@ export default class List extends BaseComponent
         return this.state.dataReady && this.state.countReady;
     }
 
-    /**
-     * Renders list title
-     * @returns {XML}
-     * @access protected
-     */
     renderHeader()
-    {
-        return this.getTitle();
-    }
-
-    renderGridHeader()
     {
         return (
             <thead>
@@ -298,14 +288,15 @@ export default class List extends BaseComponent
         parameters = this.mapItemParameters(parameters);
         parameters.key = key; // we always keep key
         parameters.entity = this.getEntity();
-
+        parameters.map = this.getMap();
+        
         return React.createElement(
             this.getListItemConstructor(),
             parameters
         );
     }
 
-    renderItemList()
+    renderList()
     {
         return (
             <tbody>
@@ -361,8 +352,8 @@ export default class List extends BaseComponent
                     &&
                     <div className="">
                         <table className="table table-striped table-bordered wide">
-                            {this.renderGridHeader()}
-                            {this.renderItemList()}
+                            {this.renderHeader()}
+                            {this.renderList()}
                         </table>
 
                         {this.renderPageNav()}

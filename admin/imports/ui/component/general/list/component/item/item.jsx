@@ -38,8 +38,8 @@ export default class ListItem extends BaseComponent {
                         }
 
                         return (
-                            <td key={item.code}>
-                                {item[attribute.code]}
+                            <td key={attribute.code}>
+                                {item.getAttributeValue(attribute.code)}
                             </td>
                         );
                     })

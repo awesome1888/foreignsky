@@ -23,11 +23,11 @@ export default class
                 //     security: {
                 //         needAuthorized: true,
                 //         needAdmin: true,
-                //         controller: this.accessControl
+                //         controller: () => {}
                 //     }
             },
-            'count': {
-                body: this.count,
+            'getCount': {
+                body: this.getCount,
             },
         };
     }
@@ -36,7 +36,7 @@ export default class
     {
         const cId = this.getEntity().getCollection().getNameNormalized();
         const methods = {};
-        _.forEach(this.map, (desc, op) => {
+        _.forEach(this.getMap(), (desc, op) => {
             methods[`${cId}-${op}`] = this.makeMethodBody(op, desc);
         });
 
@@ -69,7 +69,7 @@ export default class
         return this.getEntity().createQuery(parameters).fetch();
     }
 
-    count(parameters)
+    getCount(parameters)
     {
         const q = this.getEntity().createQuery(parameters);
         
@@ -77,7 +77,7 @@ export default class
         // on server-side anymore 0_o
         // so, have to emulate (taken directly from grapher`s code on github)
 
-        return this.getEntity().collection.find(q.body.$filters || {}, {}).count();
+        return this.getEntity().getCollection().find(q.body.$filters || {}, {}).count();
     }
 
     save()

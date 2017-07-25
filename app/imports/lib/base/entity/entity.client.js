@@ -12,6 +12,7 @@ export default class BaseEntity extends Entity
 
     static async findOne(condition = {})
     {
+        condition.limit = 1;
         const data = await this.executeOperation('find', [condition]);
 
         if (_.isArrayNotEmpty(data))
@@ -34,9 +35,9 @@ export default class BaseEntity extends Entity
         return [];
     }
 
-    static async count(condition = {})
+    static async getCount(condition = {})
     {
-        let count = parseInt(await this.executeOperation('count', [condition]));
+        let count = parseInt(await this.executeOperation('getCount', [condition]));
         if (isNaN(count))
         {
             return 0;
@@ -93,6 +94,6 @@ export default class BaseEntity extends Entity
 
     static makeMethodName(op)
     {
-        return `${this.collection.nameNormalized}-${op}`;
+        return `${this.getCollection().getNameNormalized()}-${op}`;
     }
 }

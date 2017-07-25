@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from '/imports/ui/component/header/index.jsx';
-import LoadOverlay from '/imports/ui/component/load.overlay/index.jsx';
-import LoadIndicator from '/imports/ui/component/load.indicator/index.jsx';
+import Header from '../../../ui/component/header/index.jsx';
+import LoadOverlay from '../../../ui/component/load.overlay/index.jsx';
+import LoadIndicator from '../../../ui/component/load.indicator/index.jsx';
 import Util from '../../util.js';
 import {DocHead} from 'meteor/kadira:dochead';
 import {FlowRouter} from 'meteor/kadira:flow-router';
@@ -23,6 +23,19 @@ export default class App extends React.Component {
         this.setTitle();
         this.setDescription();
         this.setKeywords();
+    }
+
+    static getInstance()
+    {
+        if(this._instance)
+        {
+            return this._instance;
+        }
+
+        // return mock
+        return {
+            wait: function(){},
+        };
     }
 
     getOverlay()
@@ -51,49 +64,8 @@ export default class App extends React.Component {
         }
     }
 
-    getMap()
-    {
-        return this._map;
-    }
-
-    setMap(ref)
-    {
-        if(!this._map)
-        {
-            this._map = ref;
-        }
-    }
-
-    getImageView()
-    {
-        if(!this._imageView)
-        {
-            return {
-                open: Util.noop,
-            };
-        }
-
-        return this._imageView;
-    }
-
-    setImageView(ref)
-    {
-        if(!this._imageView)
-        {
-            this._imageView = ref;
-        }
-    }
-
     getQuery() {
         return FlowRouter.current().queryParams;
-    }
-
-    toggleMap(way)
-    {
-        if(this.map)
-        {
-            this.map.toggleBlock(way);
-        }
     }
 
     wait(p)
@@ -145,19 +117,6 @@ export default class App extends React.Component {
         });
     }
 
-    static getInstance()
-    {
-        if(this._instance)
-        {
-            return this._instance;
-        }
-
-        // return mock
-        return {
-            wait: function(){},
-        };
-    }
-
     componentWillMount()
     {
         App._instance = this;
@@ -165,9 +124,9 @@ export default class App extends React.Component {
 
     componentDidMount()
     {
-        if(this.overlay)
+        if(this.getOverlay())
         {
-            this.overlay.wait();
+            this.getOverlay().waitAll();
         }
 
         // shit-fix

@@ -268,18 +268,22 @@ export default class BaseEntity
     getAttributes()
     {
         return this.constructor.getAttributes().map((attribute) => {
-            const getter = attribute.code;
-            let value = undefined;
-            if (getter in this)
-            {
-                value = this[getter];
-            }
-
             const item = clone(attribute, false, 1);
-            item.value = value;
+            item.value = this.getAttributeValue(attribute.code);
 
             return item;
         });
+    }
+
+    getAttributeValue(code)
+    {
+        const getter = 'get'+_.lCFirst(code);
+        if (_.isFunction(this[getter]))
+        {
+            return this[getter].call(this);
+        }
+
+        return undefined;
     }
 
     makeInstances(point, type)

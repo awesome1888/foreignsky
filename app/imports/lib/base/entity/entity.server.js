@@ -56,7 +56,7 @@ export default class BaseEntity extends Entity
      * @param filter
      * @returns {*}
      */
-    static count(filter)
+    static getCount(filter)
     {
         return this.getCollection().createQuery({
             $filters: filter

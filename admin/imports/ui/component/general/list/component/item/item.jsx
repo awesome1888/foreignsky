@@ -30,7 +30,12 @@ export default class ListItem extends BaseComponent {
 
     resolveRenderer(attribute)
     {
-        // todo: hardcoded for now, get from map later
+        if (attribute.renderer)
+        {
+            return attribute.renderer;
+        }
+
+        // todo: hardcoded for now, get from the map later
         if (attribute.code === 'title')
         {
             return RendererPrimary;
@@ -50,6 +55,8 @@ export default class ListItem extends BaseComponent {
         {
             return RendererBoolean;
         }
+
+        // todo: standard renderers for: object and array of one type
 
         return RendererGeneric;
     }

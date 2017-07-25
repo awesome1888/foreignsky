@@ -277,10 +277,10 @@ export default class List extends BaseComponent
             <thead>
                 <tr>
                     {
-                        this.getMap().map(item => {
+                        this.getMap().map(attribute => {
                             return (
                                 <td>
-                                    {item.label}
+                                    {attribute.label || attribute.code}
                                 </td>
                             );
                         })

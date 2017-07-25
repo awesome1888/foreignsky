@@ -17,7 +17,11 @@ FlowRouter.notFound = {
 // route('/', HomePage, {});
 route('/404', NotFoundPage, {});
 route('/shell', ShellPage, {});
-route('/article.tag/list', ArticleTagList, {});
-route('/article/list', ArticleList, {});
-route('/embed/list', EmbedList, {});
+
+// todo: this should be auto-generated from some kind of structure
+route('/entity/article.tag', ArticleTagList, {});
+//route('/article.tag/:id', ArticleTag, {});
+route('/entity/article', ArticleList, {});
+route('/entity/embed', EmbedList, {});
+
 route('/', HomePage, {});

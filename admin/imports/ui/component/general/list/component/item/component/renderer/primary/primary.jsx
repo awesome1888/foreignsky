@@ -5,12 +5,19 @@ import RendererGeneric from '../generic/generic.jsx';
 
 export default class extends RendererGeneric
 {
+    getItemId()
+    {
+        return this.props.item.getId();
+    }
+
     render()
     {
+        const path = '/entity/article/#ID#';
+        // todo: get path template from settings
         return (
             <div>
-                <a href="">{this.prepareValue()}</a><br />
-                <span className="text_color_gray">Id: {this.props.item.getId()}</span>
+                <a href={path.replace('#ID#', this.getItemId())}>{this.prepareValue()}</a><br />
+                <span className="text_color_gray">Id: {this.getItemId()}</span>
             </div>
         );
     }

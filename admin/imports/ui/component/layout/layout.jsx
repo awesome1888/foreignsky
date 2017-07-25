@@ -40,10 +40,10 @@ export default class Layout extends BaseComponent
                             <br />
                             <br />
                             <br />
-                            <a href="/article/list">Article</a>
-                            <a href="/article.tag/list">Article tag</a>
-                            <a href="/embed/list">Embed</a>
-                            <a href="/file/list">File</a>
+                            <a href="/entity/article">Article</a>
+                            <a href="/entity/article.tag">Article tag</a>
+                            <a href="/entity/embed">Embed</a>
+                            <a href="/entity/file">File</a>
                             <br />
                             <a href="/shell">Shell</a>
                         </div>

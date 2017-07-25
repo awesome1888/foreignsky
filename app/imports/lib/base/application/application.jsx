@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../../../ui/component/header/index.jsx';
 import LoadOverlay from '../../../ui/component/load.overlay/index.jsx';
 import LoadIndicator from '../../../ui/component/load.indicator/index.jsx';
-import Util from '../../util.js';
+// import Util from '../../util.js';
 import {DocHead} from 'meteor/kadira:dochead';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 
@@ -23,6 +23,14 @@ export default class App extends React.Component {
         this.setTitle();
         this.setDescription();
         this.setKeywords();
+    }
+
+    extendState(extra)
+    {
+        if(_.isObject(extra))
+        {
+            Object.assign(this.state, extra);
+        }
     }
 
     static getInstance()
@@ -82,14 +90,19 @@ export default class App extends React.Component {
         return p;
     }
 
+    makeTitle(title = '')
+    {
+        if (_.isStringNotEmpty(title)) {
+            return title.replace(/#DASH#/g, '–');
+        }
+
+        return '';
+    }
+
     setTitle(title = '')
     {
-        let newTitle = 'Еще один блог еще одной семьи, переехавшей в Берлин.';
-        if (_.isStringNotEmpty(title)) {
-            title = title.replace(/#DASH#/g, '–');
-            newTitle = `${title} – ${newTitle}`;
-        }
-        DocHead.setTitle(newTitle);
+        let titlePostfix = 'Еще один блог еще одной семьи, переехавшей в Берлин.';
+        DocHead.setTitle(`${this.makeTitle(title)} – ${titlePostfix}`);
     }
 
     setDescription(text = '')

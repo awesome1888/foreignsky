@@ -6,9 +6,20 @@ export default class extends Application {
 	constructor(props)
 	{
 		super(props);
+		this.extendState({
+            title: this.makeTitle(),
+        });
 
 		this._idioticMessage = this.generateMOTD();
 	}
+
+    setTitle(title = '')
+    {
+        super.setTitle(title);
+        this.setState({
+            title,
+        });
+    }
 
     generateMOTD()
     {
@@ -27,6 +38,7 @@ export default class extends Application {
     {
         const tParams = super.transformPageParameters(params);
         tParams.motd = this._idioticMessage;
+        tParams.title = this.state.title;
 
         return tParams;
     }

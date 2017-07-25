@@ -4,7 +4,7 @@ import ArticleTag from '../../../../../api/article.tag/entity/entity.client.js'
 
 export default class ArticleTagList extends List
 {
-    get entity()
+    getEntity()
     {
         return ArticleTag;
     }

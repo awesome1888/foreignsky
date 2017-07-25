@@ -27,19 +27,19 @@ export default class PageNavigation extends BaseComponent
         }
     }
 
-    get pageCount()
+    getPageCount()
     {
         return Math.ceil(this.props.count / this.props.pageSize);
     }
 
-    get page()
+    getPage()
     {
         return this.props.page;
     }
 
     render() {
-        const pageCount = this.pageCount;
-        const page = this.page;
+        const pageCount = this.getPageCount();
+        const page = this.getPage();
         return (
             <div>
                 {

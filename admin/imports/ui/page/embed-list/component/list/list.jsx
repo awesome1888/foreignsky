@@ -4,7 +4,7 @@ import Embed from '../../../../../api/embed/entity/entity.client.js'
 
 export default class extends List
 {
-    get entity()
+    getEntity()
     {
         return Embed;
     }

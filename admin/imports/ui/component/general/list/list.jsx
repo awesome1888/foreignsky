@@ -31,8 +31,8 @@ export default class List extends BaseComponent
     {
         super(params);
         this.extendState({
-            page: this.queryPage,
-            perPage: this.pageSize,
+            page: this.getQueryPage(),
+            perPage: this.getPageSize(),
             total: 0,
             countReady: false,
             dataReady: false,
@@ -60,9 +60,9 @@ export default class List extends BaseComponent
 
     loadData()
     {
-        const p = this.entity.find(Object.assign({
+        const p = this.getEntity().find(Object.assign({
             select: ['title', 'sort', 'color', 'primary'],
-        }, this.pageParameters));
+        }, this.getPageParameters()));
 
         App.getInstance().wait(p);
 
@@ -82,7 +82,7 @@ export default class List extends BaseComponent
      */
     onPageChange(page) {
         if (page !== this.state.page) {
-            this.queryPage = page;
+            this.setQueryPage(page);
             this.setState({
                 page,
             });
@@ -110,7 +110,7 @@ export default class List extends BaseComponent
      * @returns {ListInner}
      * @access protected
      */
-    get listItemConstructor()
+    getListItemConstructor()
     {
         return Item;
     }
@@ -118,7 +118,7 @@ export default class List extends BaseComponent
     getMap()
     {
         // generate from entity, for basic usage
-        return this.entity.attributes;
+        return this.getEntity().getAttributes();
     }
 
     /**
@@ -127,7 +127,7 @@ export default class List extends BaseComponent
      * @abstract
      * @access protected
      */
-    get entity()
+    getEntity()
     {
         if (this.props.entity !== null)
         {
@@ -142,9 +142,9 @@ export default class List extends BaseComponent
      * @returns {string}
      * @access protected
      */
-    get headerPrefix()
+    getHeaderPrefix()
     {
-        return this.entity.title;
+        return this.getEntity().getTitle();
     }
 
     /**
@@ -152,7 +152,7 @@ export default class List extends BaseComponent
      * @returns {[string,string]}
      * @access protected
      */
-    get labels()
+    getLabels()
     {
         return ['#COUNT# item', '#COUNT# items', 'no items'];
     }
@@ -162,7 +162,7 @@ export default class List extends BaseComponent
      * @returns {Number}
      * @access protected
      */
-    get queryPage()
+    getQueryPage()
     {
         return parseInt(FlowRouter.getQueryParam('page') || 1, 10);
     }
@@ -172,12 +172,12 @@ export default class List extends BaseComponent
      * @param {Number} page
      * @access protected
      */
-    set queryPage(page)
+    setQueryPage(page)
     {
         FlowRouter.setQueryParams({page});
     }
 
-    get page()
+    getPage()
     {
         return this.state.page;
     }
@@ -189,12 +189,12 @@ export default class List extends BaseComponent
      */
     loadCount()
     {
-        this.entity.count().then((res) => {
+        this.getEntity().getCount().then((res) => {
             this.setState({
                 count: parseInt(res),
                 countReady: true,
             });
-            this.setTitle(this.title);
+            this.setTitle(this.getTitle());
         });
     }
 
@@ -203,7 +203,7 @@ export default class List extends BaseComponent
      * @returns {number}
      * @access protected
      */
-    get count() {
+    getCount() {
         return this.state.count;
     }
 
@@ -212,7 +212,7 @@ export default class List extends BaseComponent
      * @returns {number}
      * @access protected
      */
-    get pageSize()
+    getPageSize()
     {
         return 10;
     }
@@ -222,7 +222,7 @@ export default class List extends BaseComponent
      * @returns {{limit: (number|*), skip: number}}
      * @access protected
      */
-    get pageParameters()
+    getPageParameters()
     {
         return {
             limit: this.state.perPage,
@@ -230,15 +230,15 @@ export default class List extends BaseComponent
         };
     }
 
-    get title()
+    getTitle()
     {
-        let title = `${this.headerPrefix}: `;
-        const labels = this.labels;
+        let title = `${this.getHeaderPrefix()}: `;
+        const labels = this.getLabels();
 
-        if (this.count > 0)
+        if (this.getCount() > 0)
         {
-            title += this.count === 1 ? labels[0] : labels[1];
-            title = title.replace('#COUNT#', this.count);
+            title += this.getCount() === 1 ? labels[0] : labels[1];
+            title = title.replace('#COUNT#', this.getCount().toString());
         }
         else
         {
@@ -270,7 +270,7 @@ export default class List extends BaseComponent
      */
     renderHeader()
     {
-        return this.title;
+        return this.getTitle();
     }
 
     renderGridHeader()
@@ -297,10 +297,10 @@ export default class List extends BaseComponent
         const key = parameters.key;
         parameters = this.mapItemParameters(parameters);
         parameters.key = key; // we always keep key
-        parameters.entity = this.entity;
+        parameters.entity = this.getEntity();
 
         return React.createElement(
-            this.listItemConstructor,
+            this.getListItemConstructor(),
             parameters
         );
     }
@@ -328,16 +328,16 @@ export default class List extends BaseComponent
      */
     renderPageNav()
     {
-        if (this.count <= this.state.perPage) {
+        if (this.getCount() <= this.state.perPage) {
             return null;
         }
         return (
             <div className="pagination_custom margin-top">
                 {
                     <PageNavigation
-                        page={this.page}
-                        pageSize={this.pageSize}
-                        count={this.count}
+                        page={this.getPage()}
+                        pageSize={this.getPageSize()}
+                        count={this.getCount()}
                         onPageSelect={this.onPageChange.bind(this)}
                     />
                 }

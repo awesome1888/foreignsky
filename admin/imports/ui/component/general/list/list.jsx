@@ -334,7 +334,9 @@ export default class List extends BaseComponent
                     {
                         this.getMap().map(attribute => {
                             return (
-                                <td>
+                                <td
+                                    key={attribute.code}
+                                >
                                     {attribute.label || attribute.code}
                                 </td>
                             );
@@ -347,9 +349,7 @@ export default class List extends BaseComponent
 
     renderListItem(parameters = {})
     {
-        const key = parameters.key;
         parameters = this.mapItemParameters(parameters);
-        parameters.key = key; // we always keep key
         parameters.entity = this.getEntity();
         parameters.map = this.getMap();
         
@@ -365,7 +365,7 @@ export default class List extends BaseComponent
             <tbody>
                 {this.state.data.map(item => (
                     this.renderListItem({
-                        key: item.id,
+                        key: item.getId(),
                         data: item,
                         onListUpdate: this.props.onListUpdate,
                         map: this.map,

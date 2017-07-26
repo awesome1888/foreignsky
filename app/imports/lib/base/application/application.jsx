@@ -20,7 +20,7 @@ export default class Application extends React.Component {
         this._indicator = null;
         this._imageView = null;
 
-        this.setTitle();
+        this.setPageTitle();
         this.setDescription();
         this.setKeywords();
     }
@@ -101,8 +101,18 @@ export default class Application extends React.Component {
 
     setTitle(title = '')
     {
+        this.setPageTitle(title);
+    }
+
+    setPageTitle(title)
+    {
         let titlePostfix = 'Еще один блог еще одной семьи, переехавшей в Берлин.';
-        DocHead.setTitle(`${this.makeTitle(title)} – ${titlePostfix}`);
+        title = this.makeTitle(title);
+        if (title.length > 0)
+        {
+            title = `${title} – ${titlePostfix}`
+        }
+        DocHead.setTitle(title);
     }
 
     setDescription(text = '')

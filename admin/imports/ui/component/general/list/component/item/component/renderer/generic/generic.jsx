@@ -8,13 +8,13 @@ export default class GenericRenderer extends BaseComponent
 {
     static propTypes = {
         code: PropTypes.string.isRequired,
-        value: PropTypes.oneOfType(
+        value: PropTypes.oneOfType([
             PropTypes.string,
             PropTypes.number,
             PropTypes.bool,
             PropTypes.object,
             PropTypes.array,
-        ).isRequired,
+        ]).isRequired,
         item: PropTypes.object,
         onUpdate: PropTypes.func,
     };

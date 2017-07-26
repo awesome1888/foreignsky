@@ -19,13 +19,15 @@ export default class ListItem extends BaseComponent {
         entity: PropTypes.func.isRequired,
         data: PropTypes.object,
         map: PropTypes.array.isRequired,
+        onListUpdate: PropTypes.func,
     };
 
     static defaultProps = {
         className: '',
         entity: null,
-        data: [],
+        data: {},
         map: [],
+        onListUpdate: null,
     };
 
     resolveRenderer(attribute)
@@ -81,7 +83,9 @@ export default class ListItem extends BaseComponent {
         const item = this.props.data;
 
         return (
-            <tr>
+            <tr
+                key={item.getId()}
+            >
                 {
                     this.props.map.map((attribute) => {
                         if (!_.isObject(attribute)) {

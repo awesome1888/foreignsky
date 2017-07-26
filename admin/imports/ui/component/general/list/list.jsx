@@ -6,6 +6,7 @@ import PageNavigation from '../page-navigation/page-navigation.jsx';
 import Item from './component/item/item.jsx';
 import BaseComponent from '../../../../lib/base/component/component.jsx';
 import App from '../../../../ui/app.jsx';
+import clone from 'clone';
 
 /**
  * The basic component for making lists
@@ -63,7 +64,7 @@ export default class List extends BaseComponent
     loadData()
     {
         const p = this.getEntity().find(Object.assign({
-            select: this.getAllowedAttributes(), // todo: currently, this way, but refactor
+            select: this.getAttributeCodes(),
         }, this.getPageParameters()));
 
         App.getInstance().wait(p);
@@ -117,16 +118,52 @@ export default class List extends BaseComponent
         return Item;
     }
 
-    // todo: this SHOULD be generated from getMap
-    getAllowedAttributes()
-    {
-        return [];
-    }
-
     getMap()
     {
         // generate from entity, for basic usage
         return this.getEntity().getAttributes();
+    }
+
+    getMap()
+    {
+        return this.makeMapCache();
+    }
+
+    getMapIndex()
+    {
+        this.getMap();
+
+        return this._cache.mapIndex;
+    }
+
+    getAttributeCodes()
+    {
+        return Object.keys(this.getMapIndex());
+    }
+
+    makeMapCache(chosenFields = null)
+    {
+        if (!this._cache.map)
+        {
+            let attributes = this.getEntity().getAttributes();
+            if (_.isArrayNotEmpty(chosenFields))
+            {
+                let iChosen = _.invert(chosenFields);
+                attributes = attributes.filter(attribute => attribute.code in iChosen);
+            }
+
+            const index = {};
+            this._cache.map = attributes.map((attribute) => {
+                const copy = clone(attribute, false);
+                index[copy.code] = copy;
+
+                return copy;
+            });
+
+            this._cache.mapIndex = index;
+        }
+
+        return this._cache.map;
     }
 
     /**

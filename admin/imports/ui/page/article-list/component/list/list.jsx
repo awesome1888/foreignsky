@@ -11,25 +11,16 @@ export default class extends List
 
     getAllowedAttributes()
     {
-        return [
-            'title',
-            'date',
-            'tags',
-            'public',
-        ];
+        return ;
     }
 
     getMap()
     {
-        if (!this._cache.map)
-        {
-            const allowed = this.getAllowedAttributes();
-            this._cache.map = super.getMap().filter((item) => {
-                // optimize this
-                return allowed.indexOf(item.code) >= 0;
-            });
-        }
-
-        return this._cache.map;
+        return this.makeMapCache([
+            'title',
+            'date',
+            'tags',
+            'public',
+        ]);
     }
 }

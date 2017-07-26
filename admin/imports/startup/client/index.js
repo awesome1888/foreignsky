@@ -1,5 +1,5 @@
 // localization
 import './i18n.js';
+import Application from '../../ui/application.jsx';
 
-// routing
-import './routes/index.js';
+Application.init();

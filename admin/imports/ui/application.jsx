@@ -1,8 +1,42 @@
 import React from 'react';
 import Application from '../lib/base/application/application.jsx';
 
+import HomePage from './page/home/index.jsx';
+import NotFoundPage from './page/404/index.jsx';
+import TaskRunnerPage from './page/task-runner/index.jsx';
+
+import EntityMap from '../startup/client/entity-map.js';
+
 export default class AdminApplication extends Application
 {
+    static getHomePageController()
+    {
+        return HomePage;
+    }
+
+    static get404PageController()
+    {
+        return NotFoundPage;
+    }
+
+    static getRouteMap()
+    {
+        const routes = super.getRouteMap();
+
+        routes.push({
+            path: '/task-runner',
+            controller: TaskRunnerPage,
+        });
+
+        EntityMap.getRouteMap().forEach((item) => {
+            routes.push(item);
+        });
+
+        // todo: add more routes here...
+        
+        return routes;
+    }
+
 	constructor(props)
 	{
 		super(props);

@@ -5,7 +5,7 @@ import {FlowRouter} from 'meteor/kadira:flow-router';
 import PageNavigation from '../page-navigation/page-navigation.jsx';
 import Item from './component/item/item.jsx';
 import BaseComponent from '../../../../lib/base/component/component.jsx';
-import App from '../../../../ui/app.jsx';
+import App from '../../../application.jsx';
 import clone from 'clone';
 
 /**

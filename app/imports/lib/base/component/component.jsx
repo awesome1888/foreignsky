@@ -2,7 +2,7 @@ import React from 'react';
 import {Component} from 'react';
 import {Meteor} from 'meteor/meteor';
 
-import App from '../../../ui/app.jsx';
+import App from '../../../ui/application.jsx';
 
 export default class BaseComponent extends Component
 {

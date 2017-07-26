@@ -5,8 +5,85 @@ import LoadIndicator from '../../../ui/component/load.indicator/index.jsx';
 // import Util from '../../util.js';
 import {DocHead} from 'meteor/kadira:dochead';
 import {FlowRouter} from 'meteor/kadira:flow-router';
+import {createRouter} from 'meteor/cultofcoders:meteor-react-routing';
 
-export default class Application extends React.Component {
+export default class Application extends React.Component
+{
+    static _router = null;
+    static _instance = null;
+
+    static init()
+    {
+        this.registerRoutes();
+        // do whatever else needed
+    }
+
+    static getRouter()
+    {
+        if (this._router === null)
+        {
+            this._router = createRouter(this);
+        }
+
+        return this._router;
+    }
+
+    static addRoute(path, controller, params = {})
+    {
+        this.getRouter()(path, controller, params);
+    }
+
+    static getRouteMap()
+    {
+        return [
+            {
+                path: '/',
+                controller: this.getHomePageController(),
+                params: {},
+            },
+            {
+                path: '/404',
+                controller: this.get404PageController(),
+                params: {},
+            },
+        ];
+    }
+
+    static getHomePageController()
+    {
+        throw new Error('Not implemented: static getHomePageController()');
+    }
+
+    static get404PageController()
+    {
+        throw new Error('Not implemented: static get404PageController()');
+    }
+
+    static registerRoutes()
+    {
+        FlowRouter.notFound = {
+            action: function() {
+                FlowRouter.go('/404');
+            }
+        };
+
+        this.getRouteMap().forEach((route) => {
+            this.addRoute(route.path, route.controller, route.params || {});
+        });
+    }
+
+    static getInstance()
+    {
+        if(this._instance)
+        {
+            return this._instance;
+        }
+
+        // return mock
+        return {
+            wait: function(){},
+        };
+    }
 
     constructor(props)
     {
@@ -31,19 +108,6 @@ export default class Application extends React.Component {
         {
             Object.assign(this.state, extra);
         }
-    }
-
-    static getInstance()
-    {
-        if(this._instance)
-        {
-            return this._instance;
-        }
-
-        // return mock
-        return {
-            wait: function(){},
-        };
     }
 
     getOverlay()
@@ -88,6 +152,11 @@ export default class Application extends React.Component {
         }
 
         return p;
+    }
+
+    getRouter()
+    {
+
     }
 
     makeTitle(title = '')

@@ -11,7 +11,7 @@ import {FlowRouter} from 'meteor/kadira:flow-router';
 
 import Application from '../lib/base/application/application.jsx';
 
-export default class extends Application
+export default class FrontApplication extends Application
 {
 	getMap()
 	{

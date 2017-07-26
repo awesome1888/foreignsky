@@ -1,7 +1,7 @@
 import React from 'react';
 import Application from '../lib/base/application/application.jsx';
 
-export default class extends Application {
+export default class AdminApplication extends Application {
 
 	constructor(props)
 	{

@@ -4,7 +4,7 @@ import moment from 'moment';
 import RendererGeneric from '../generic/generic.jsx';
 // import './style.less';
 
-export default class extends RendererGeneric
+export default class DateRenderer extends RendererGeneric
 {
     prepareValue()
     {

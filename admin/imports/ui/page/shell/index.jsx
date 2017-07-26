@@ -6,7 +6,7 @@ import BasePage from '../../../lib/base/page/page.jsx';
 import Layout from '../../component/layout/layout.jsx';
 import ShellUI from '../../../lib/util/shell/ui/ui.jsx';
 
-export default class extends BasePage
+export default class TaskRunnerPage extends BasePage
 {
     getDefaultTitle()
     {

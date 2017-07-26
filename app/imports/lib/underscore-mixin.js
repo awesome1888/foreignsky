@@ -63,5 +63,24 @@ _.mixin({
         }
 
         return '';
-    }
+    },
+    intersectKeys(one, two)
+    {
+        if (!_.isObject(one))
+        {
+            return one;
+        }
+        if (!_.isObjectNotEmpty(two))
+        {
+            return {};
+        }
+
+        return _.intersection(
+            Object.keys(one),
+            Object.keys(two)
+        ).reduce((result, key) => {
+            result[key] = one[key];
+            return result;
+        }, {});
+    },
 });

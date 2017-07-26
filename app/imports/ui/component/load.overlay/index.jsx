@@ -7,7 +7,7 @@ import PreRender from '../../../lib/prerender.js';
 
 import './style.less';
 
-export default class AppLoadingOverlay extends React.Component {
+export default class LoadOverlay extends React.Component {
 
 	static propTypes = {
 		transitionDuration: PropTypes.number,

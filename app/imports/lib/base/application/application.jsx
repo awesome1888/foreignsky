@@ -6,7 +6,7 @@ import LoadIndicator from '../../../ui/component/load.indicator/index.jsx';
 import {DocHead} from 'meteor/kadira:dochead';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 
-export default class App extends React.Component {
+export default class Application extends React.Component {
 
     constructor(props)
     {
@@ -132,7 +132,7 @@ export default class App extends React.Component {
 
     componentWillMount()
     {
-        App._instance = this;
+        this.constructor._instance = this;
     }
 
     componentDidMount()

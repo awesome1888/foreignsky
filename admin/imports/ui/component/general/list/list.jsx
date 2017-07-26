@@ -126,7 +126,50 @@ export default class List extends BaseComponent
 
     getMap()
     {
-        return this.makeMapCache();
+        if (!this._cache.map)
+        {
+            this._cache.map = this.declareMap();
+            this._cache.mapIndex = this._cache.map.reduce((result, attribute) => {
+                result[attribute.code] = attribute;
+                return result;
+            }, {});
+        }
+
+        return this._cache.map;
+    }
+
+    /**
+     * Use this function to make hooks
+     * @returns {*}
+     */
+    declareMap()
+    {
+        return this.readMap();
+    }
+
+    readMap(chosenFields = null)
+    {
+        let attributes = this.getEntity().getAttributes();
+        if (_.isObjectNotEmpty(chosenFields))
+        {
+            attributes = attributes.filter(attribute => attribute.code in chosenFields);
+        }
+        else
+        {
+            chosenFields = {};
+        }
+
+        return attributes.map((attribute) => {
+            const copy = clone(attribute, false);
+            if (copy.code in chosenFields && _.isObject(chosenFields[copy]))
+            {
+                Object.assign(copy, _.intersectKeys(chosenFields[copy], {
+                    renderer: 1,
+                }));
+            }
+
+            return copy;
+        });
     }
 
     getMapIndex()
@@ -139,31 +182,6 @@ export default class List extends BaseComponent
     getAttributeCodes()
     {
         return Object.keys(this.getMapIndex());
-    }
-
-    makeMapCache(chosenFields = null)
-    {
-        if (!this._cache.map)
-        {
-            let attributes = this.getEntity().getAttributes();
-            if (_.isArrayNotEmpty(chosenFields))
-            {
-                let iChosen = _.invert(chosenFields);
-                attributes = attributes.filter(attribute => attribute.code in iChosen);
-            }
-
-            const index = {};
-            this._cache.map = attributes.map((attribute) => {
-                const copy = clone(attribute, false);
-                index[copy.code] = copy;
-
-                return copy;
-            });
-
-            this._cache.mapIndex = index;
-        }
-
-        return this._cache.map;
     }
 
     /**

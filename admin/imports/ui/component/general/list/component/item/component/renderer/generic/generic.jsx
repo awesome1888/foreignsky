@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import BaseComponent from '../../../../../../../../../lib/base/component/component.jsx';
 // import './style.less';
 
-export default class extends BaseComponent
+export default class GenericRenderer extends BaseComponent
 {
     static propTypes = {
         code: PropTypes.string.isRequired,

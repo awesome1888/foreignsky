@@ -5,7 +5,7 @@ import BasePage from '../../../lib/base/page/page.jsx';
 
 import Layout from '../../component/layout/layout.jsx';
 
-export default class extends BasePage
+export default class HomePage extends BasePage
 {
 	render()
     {

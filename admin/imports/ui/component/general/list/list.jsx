@@ -422,7 +422,15 @@ export default class List extends BaseComponent
                             {this.renderList()}
                         </table>
 
+                        <div className="margin-bottom">
+                            <a href={this.props.detailPageUrl.replace('#ID#', '0')}>+ Add</a>
+                        </div>
+
                         {this.renderPageNav()}
+                        <br />
+                        <br />
+                        <br />
+                        <br />
                     </div>
                 }
             </div>

@@ -37,9 +37,11 @@ export default class Navigation extends BaseComponent
             <div className="">
                 {
                     this.getItems().map((item) => {
-                        return (<div>
-                            <a href={item.path}>{item.title}</a>
-                        </div>);
+                        return (
+                            <div key={`${item.path} - ${item.title}`}>
+                                <a href={item.path}>{item.title}</a>
+                            </div>
+                        );
                     })
                 }
             </div>

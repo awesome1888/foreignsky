@@ -1,5 +1,6 @@
 import React from 'react';
 import BaseComponent from '../../../lib/base/component/component.jsx';
+import Naviation from './component/navigation/navigation.jsx';
 import PropTypes from 'prop-types';
 
 import './style.less';
@@ -33,19 +34,13 @@ export default class Layout extends BaseComponent
                             {
                                 _.isStringNotEmpty(this.props.motd)
                                 &&
-                                <blockquote className="margin-bottom margin-top_2x">
+                                <blockquote className="margin-top_2x margin-top_2x">
                                     {this.props.motd}
                                 </blockquote>
                             }
-                            <br />
-                            <br />
-                            <br />
-                            <a href="/entity/article">Article</a>
-                            <a href="/entity/article.tag">Article tag</a>
-                            <a href="/entity/embed">Embed</a>
-                            <a href="/entity/file">File</a>
-                            <br />
-                            <a href="/task-runner">Task runner</a>
+                            <Naviation
+                                className="margin-bottom"
+                            />
                         </div>
                     </div>
                     <div className="layout-map-full__central-body-right col-xs-9">

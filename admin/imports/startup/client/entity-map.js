@@ -35,6 +35,7 @@ class AdminEntityMap extends EntityMap
                         controller: null, // fix later
                     },
                 },
+                entity: Article,
                 title: Article.getTitle(),
             },
             {
@@ -48,6 +49,7 @@ class AdminEntityMap extends EntityMap
                         controller: null, // fix later
                     },
                 },
+                entity: ArticleTag,
                 title: ArticleTag.getTitle(),
             },
             {
@@ -61,6 +63,7 @@ class AdminEntityMap extends EntityMap
                         controller: null, // fix later
                     },
                 },
+                entity: Embed,
                 title: Embed.getTitle(),
             },
             {
@@ -74,6 +77,7 @@ class AdminEntityMap extends EntityMap
                         controller: null, // fix later
                     },
                 },
+                entity: File,
                 title: File.getTitle(),
             },
             // route-declaration-end

@@ -8,8 +8,8 @@ import RendererDate from './component/renderer/date/date.jsx';
 import RendererBoolean from './component/renderer/boolean/boolean.jsx';
 import RendererPrimary from './component/renderer/primary/primary.jsx';
 
-export default class ListItem extends BaseComponent {
-
+export default class ListItem extends BaseComponent
+{
     static propTypes = {
         className: PropTypes.oneOfType([
             PropTypes.string,

@@ -7,6 +7,16 @@ export default class EntityMap
         this._map = map || [];
     }
 
+    forEach(cb)
+    {
+        if (_.isFunction(cb))
+        {
+            this._map.forEach((item) => {
+                cb(item);
+            });
+        }
+    }
+
     getRouteMap()
     {
         return this._map.reduce((result, entity) => {

@@ -5,6 +5,11 @@ import mix from '../../../lib/mixin.js';
 
 export default class Embed extends mix(BaseEntity).with(Entity)
 {
+    static getTitle()
+    {
+        return 'Embed area';
+    }
+
     static render(text, data, params = {})
     {
         if (text !== '')

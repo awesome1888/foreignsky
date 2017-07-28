@@ -12,7 +12,7 @@ export default class PrimaryFieldRenderer extends RendererGeneric
 
     render()
     {
-        const path = '/entity/article/#ID#';
+        const path = this.props.detailPageUrl;
         // todo: get path template from settings
         return (
             <div>

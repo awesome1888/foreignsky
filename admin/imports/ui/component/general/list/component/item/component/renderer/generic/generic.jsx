@@ -17,6 +17,7 @@ export default class GenericRenderer extends BaseComponent
         ]).isRequired,
         item: PropTypes.object,
         onUpdate: PropTypes.func,
+        detailPageUrl: PropTypes.string,
     };
 
     static defaultProps = {
@@ -24,6 +25,7 @@ export default class GenericRenderer extends BaseComponent
         value: '',
         item: null,
         onUpdate: () => {},
+        detailPageUrl: '',
     };
 
     // constructor(params) {

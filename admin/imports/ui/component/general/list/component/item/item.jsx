@@ -20,6 +20,7 @@ export default class ListItem extends BaseComponent
         data: PropTypes.object,
         map: PropTypes.array.isRequired,
         onListUpdate: PropTypes.func,
+        detailPageUrl: PropTypes.string,
     };
 
     static defaultProps = {
@@ -28,6 +29,7 @@ export default class ListItem extends BaseComponent
         data: {},
         map: [],
         onListUpdate: null,
+        detailPageUrl: '',
     };
 
     resolveRenderer(attribute)
@@ -71,6 +73,7 @@ export default class ListItem extends BaseComponent
                 code: attribute.code,
                 value: item.getAttributeValue(attribute.code),
                 item: item,
+                detailPageUrl: this.props.detailPageUrl,
             }
         );
     }
@@ -81,7 +84,7 @@ export default class ListItem extends BaseComponent
         }
 
         const item = this.props.data;
-
+        
         return (
             <tr
                 key={item.getId()}

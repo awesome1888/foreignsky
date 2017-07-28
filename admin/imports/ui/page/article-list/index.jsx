@@ -15,7 +15,9 @@ export default class ArticleListPage extends BasePage
                 title={this.props.title}
                 motd={this.props.motd}
                 central={
-                    <List />
+                    <List
+                        detailPageUrl={this.props.route.detailPath || ''}
+                    />
                 }
             />
         );

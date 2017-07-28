@@ -23,18 +23,54 @@ export default class AdminApplication extends Application
     {
         const routes = super.getRouteMap();
 
+        // todo: probably move this function to event-based pattern
+
+        // static
         routes.push({
             path: '/task-runner',
             controller: TaskRunnerPage,
         });
 
-        EntityMap.getRouteMap().forEach((item) => {
-            routes.push(item);
-        });
+        // entity
+        this.loadEntityRouteMap(routes);
 
         // todo: add more routes here...
-        
+
         return routes;
+    }
+
+    static loadEntityRouteMap(routes)
+    {
+        return EntityMap.forEach((item) => {
+            if (_.isObjectNotEmpty(item.route))
+            {
+                const params = {};
+                if (item.route.detail)
+                {
+                    params.detailPath = item.route.detail.path;
+                }
+
+                Object.values(item.route).forEach((path) => {
+
+                    routes.push({
+                        path: this.transformPath(path.path),
+                        controller: path.controller,
+                        params,
+                    });
+
+                });
+            }
+        });
+    }
+
+    static transformPath(path)
+    {
+        if (_.isStringNotEmpty(path))
+        {
+            return path.replace('#ID#/', ':id');
+        }
+
+        return '';
     }
 
 	constructor(props)

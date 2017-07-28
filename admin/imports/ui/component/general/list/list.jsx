@@ -21,11 +21,13 @@ export default class List extends BaseComponent
             PropTypes.object,
         ]),
         entity: PropTypes.func,
+        detailPageUrl: PropTypes.string,
     };
 
     static defaultProps = {
         className: '',
         entity: null,
+        detailPageUrl: '',
     };
 
     _cache = {};
@@ -352,6 +354,7 @@ export default class List extends BaseComponent
         parameters = this.mapItemParameters(parameters);
         parameters.entity = this.getEntity();
         parameters.map = this.getMap();
+        parameters.detailPageUrl = this.props.detailPageUrl;
         
         return React.createElement(
             this.getListItemConstructor(),

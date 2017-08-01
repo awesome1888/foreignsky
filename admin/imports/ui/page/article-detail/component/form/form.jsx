@@ -1,8 +1,8 @@
 import React from 'react';
-import Form from '../../../../component/general/form/form.jsx';
+import EntityForm from '../../../../component/general/entity-form/index.jsx';
 import Article from '../../../../../api/article/entity/entity.client.js'
 
-export default class ArticleForm extends Form
+export default class ArticleForm extends EntityForm
 {
     getEntity()
     {
@@ -11,6 +11,5 @@ export default class ArticleForm extends Form
 
     declareMap()
     {
-
     }
 }

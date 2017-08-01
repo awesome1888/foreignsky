@@ -14,12 +14,14 @@
     "mongo-dot-notation": "^1.2.0",
     "prerender-node": "^2.7.1",
     "prop-types": "^15.5.8",
-    "react": "^15.5.4",
+    "react": "^15.6.1",
     "react-addons-pure-render-mixin": "^15.4.2",
-    "react-dom": "^15.4.2",
+    "react-dom": "^15.6.1",
     "react-google-maps": "^4.11.0",
     "react-mounter": "^1.2.0",
-    "react-router": "^4.0.0"
+    "react-router": "^4.0.0",
+    "uniforms": "^1.19.1",
+    "uniforms-unstyled": "^1.19.1"
   },
   "devDependencies": {
     "babel-plugin-transform-class-properties": "^6.24.1"

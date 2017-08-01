@@ -6,10 +6,18 @@ import App from '../../../ui/application.jsx';
 
 export default class BaseComponent extends Component
 {
+    _cache = null;
+
     constructor(props)
     {
         super(props);
         this.state = {};
+        this.clearCache();
+    }
+
+    clearCache()
+    {
+        this._cache = {};
     }
 
     extendState(extra)

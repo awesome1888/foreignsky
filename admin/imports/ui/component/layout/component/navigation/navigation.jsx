@@ -9,6 +9,21 @@ export default class Navigation extends BaseComponent
     getItems()
     {
         const menuItems = [];
+
+        this.makeEntityItems(menuItems);
+
+        // static
+        // todo: inject items here in more sophisticated way
+        menuItems.push({
+            path: '/task-runner',
+            title: 'Task Runner',
+        });
+
+        return menuItems;
+    }
+
+    makeEntityItems(menuItems)
+    {
         entityMap.forEach((item) => {
             const entity = item.entity;
             const listRoute = _.getValue(item, 'route.list');
@@ -20,15 +35,6 @@ export default class Navigation extends BaseComponent
                 });
             }
         });
-
-        // static
-        // todo: inject items here in more sophisticated way
-        menuItems.push({
-            path: '/task-runner',
-            title: 'Task Runner',
-        });
-
-        return menuItems;
     }
 
     render()

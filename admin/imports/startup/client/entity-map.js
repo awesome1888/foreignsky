@@ -12,8 +12,9 @@ import File from '../../api/file/entity/entity.client.js';
 // entity-import-end
 
 // page-controller-import-begin
-import ArticleTagListPage from '../../ui/page/article.tag-list/index.jsx';
 import ArticleListPage from '../../ui/page/article-list/index.jsx';
+import ArticleDetailPage from '../../ui/page/article-detail/index.jsx';
+import ArticleTagListPage from '../../ui/page/article.tag-list/index.jsx';
 import EmbedListPage from '../../ui/page/embed-list/index.jsx';
 import FileListPage from '../../ui/page/file-list/index.jsx';
 // page-controller-import-end
@@ -32,7 +33,7 @@ class AdminEntityMap extends EntityMap
                     },
                     detail: {
                         path: '/entity/article/#ID#/',
-                        controller: null, // fix later
+                        controller: ArticleDetailPage,
                     },
                 },
                 entity: Article,

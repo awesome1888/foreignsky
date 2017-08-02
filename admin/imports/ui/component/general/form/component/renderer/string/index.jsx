@@ -5,24 +5,26 @@ import connectField from 'uniforms/connectField';
 // https://github.com/vazco/uniforms/blob/master/API.md#connectfield
 // https://github.com/vazco/uniforms/blob/master/packages/uniforms-unstyled/src/TextField.js
 
-class StringAttribute extends React.Component
+import RendererGeneric from '../generic/index.jsx';
+import Container from '../container/index.jsx';
+
+class RendererString extends RendererGeneric
 {
     render()
     {
-        console.dir(this.props);
-
         return (
-            <div className="field__container">
+            <Container
+                errorProps={this.props}
+            >
                 <input
                     type="text"
-                    name={this.props.name}
-                    onChange={event => this.props.onChange(event.target.value)}
-                    value={this.props.value}
+                    name={this.getName()}
+                    onChange={this.getOnChange()}
+                    value={this.getValue()}
                 />
-                <div>Error: {this.props.error}</div>
-            </div>
+            </Container>
         );
     }
 }
 
-export default connectField(StringAttribute, {});
+export default connectField(RendererString, {});

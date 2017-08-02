@@ -30,8 +30,6 @@ export default class List extends BaseComponent
         detailPageUrl: '',
     };
 
-    _cache = {};
-
     constructor(params)
     {
         super(params);

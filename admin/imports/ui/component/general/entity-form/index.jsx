@@ -9,6 +9,12 @@ import Form from '../form/form.jsx';
  */
 export default class EntityForm extends Form
 {
+    constructor()
+    {
+        super();
+        this.setTitle(`New ${this.getEntity().getTitle()}`);
+    }
+
     getEntity()
     {
         throw new Error('Not implemented');

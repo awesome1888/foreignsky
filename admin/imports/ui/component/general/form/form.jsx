@@ -7,7 +7,7 @@ import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import BaseComponent from '../../../../lib/base/component/component.jsx';
 
-import RendererString from './component/renderer/string/index.jsx';
+import Row from './component/row/index.jsx';
 
 import './style.less';
 
@@ -53,61 +53,39 @@ export default class Form extends BaseComponent
         console.dir(data);
     }
 
-    resolveControl(attribute)
-    {
-        if (attribute.renderer)
-        {
-            return attribute.renderer;
-        }
-
-        const type = attribute.type;
-
-        if (type === String)
-        {
-            return RendererString;
-        }
-        if (type === Date)
-        {
-            return RendererDate;
-        }
-        if (type === Boolean)
-        {
-            return RendererBoolean;
-        }
-
-        // todo: standard renderers for: object and array of one type
-
-        return RendererGeneric;
-    }
-
     render()
     {
+        const model = this.obtainModel();
+        if (model === null)
+        {
+            return null; // probably still loading
+        }
+
+        const schema = this.getSchemaTransformed();
+
+        // getDefinition
+
         return (
             <AutoForm
-                schema={this.getSchemaTransformed()}
+                schema={schema}
                 model={this.obtainModel()}
                 onSubmit={this.onSubmit.bind(this)}
                 className="form"
             >
                 <div className="form__block">
                     <div className="form__block-inner">
-
-                        <div className="form__block-row-group">
-
-                            <div className="form__row row">
-                                <div className="form__column col-md-3 col-sm-12">
-                                    <div className="form__label form__label_padded">
-                                        Field 1
-                                    </div>
-                                </div>
-                                <div className="form__column col-md-9 col-sm-12">
-                                    <RendererString name="title" />
-                                </div>
-                            </div>
-
-                        </div>
-
-
+                        {
+                            _.map(schema.schema(), (attribute, field) => {
+                                console.dir(attribute);
+                                return (
+                                    <Row
+                                        key={field}
+                                        attribute={attribute}
+                                        field={field}
+                                    />
+                                );
+                            })
+                        }
                     </div>
                 </div>
 

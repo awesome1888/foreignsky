@@ -120,12 +120,6 @@ export default class List extends BaseComponent
 
     getMap()
     {
-        // generate from entity, for basic usage
-        return this.getEntity().getAttributes();
-    }
-
-    getMap()
-    {
         if (!this._cache.map)
         {
             this._cache.map = this.declareMap();

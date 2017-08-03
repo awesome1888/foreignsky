@@ -1,10 +1,11 @@
 import React from 'react';
 
 import RendererString from './../../component/renderer/string/index.jsx';
+import RendererBoolean from './../../component/renderer/boolean/index.jsx';
 
 export default class Row extends React.Component
 {
-    resolveControl(attribute)
+    resolveRenderer(attribute)
     {
         if (attribute.renderer)
         {
@@ -23,12 +24,31 @@ export default class Row extends React.Component
         }
         if (type === Boolean)
         {
-            return null; //RendererBoolean;
+            return RendererBoolean;
         }
 
         // todo: standard renderers for: object and array of one type
 
         return null;
+    }
+
+    renderRenderer(item, attribute, name)
+    {
+        const constructor = this.resolveRenderer(attribute);
+        if (!constructor) {
+            return null;
+        }
+
+        return React.createElement(
+            constructor,
+            {
+                name,
+                // code: attribute.code,
+                // value: item.getAttributeValue(attribute.code),
+                // item: item,
+                // detailPageUrl: this.props.detailPageUrl,
+            }
+        );
     }
 
     getAttribute()
@@ -52,7 +72,7 @@ export default class Row extends React.Component
                     </div>
                 </div>
                 <div className="form__column col-md-9 col-sm-12">
-                    <RendererString name={field} />
+                    {this.renderRenderer({}, attribute, field)}
                 </div>
             </div>
         );

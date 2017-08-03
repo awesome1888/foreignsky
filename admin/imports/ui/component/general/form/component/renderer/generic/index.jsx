@@ -26,6 +26,11 @@ export default class RendererGeneric extends React.Component
         return this.props.errorMessage;
     }
 
+    getDisabled()
+    {
+        return this.props.disabled || '';
+    }
+
     getOnChange()
     {
         if (!_.isFunction(this.props.onChange))

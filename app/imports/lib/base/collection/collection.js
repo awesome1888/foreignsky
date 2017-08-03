@@ -1,4 +1,5 @@
 import {Mongo} from 'meteor/mongo';
+import BulkContext from './bulk-context/bulk-context.js';
 
 export default class BaseCollection extends Mongo.Collection
 {
@@ -50,5 +51,30 @@ export default class BaseCollection extends Mongo.Collection
                 );
             });
         }
+    }
+
+    updateMany(filter, changes)
+    {
+        if (
+            _.isObject(changes)
+            &&
+            !('$set' in changes)
+            &&
+            !('$unset' in changes)
+        )
+        {
+            // then a short form of $set passed
+            changes = {$set: changes};
+        }
+
+        return this.rawCollection().updateMany(
+            filter,
+            changes,
+        );
+    }
+
+    createBulkContext()
+    {
+        return new BulkContext(this);
     }
 }

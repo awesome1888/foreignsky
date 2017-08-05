@@ -61,6 +61,26 @@ export default class Form extends BaseComponent
         return this.props.map || [];
     }
 
+    async getModel()
+    {
+        return this.props.model || {};
+    }
+
+    transformMap()
+    {
+        return this.getMap();
+    }
+
+    transformModel()
+    {
+        return this.state.model;
+    }
+
+    transformModelBack(model)
+    {
+        return model;
+    }
+
     /**
      * Creates surrogate schema suitable for AutoForm on the
      * basis of getMap() result
@@ -68,22 +88,22 @@ export default class Form extends BaseComponent
      */
     makeSurrogateSchema()
     {
-        return new SimpleSchema({});
+        const map = this.transformMap();
+
+        console.dir(map);
+        
+        return {};
     }
 
-    async getModel()
+    onSubmit(model)
     {
-        return this.props.model || {};
-    }
+        const sourceModel = this.transformModelBack();
 
-    obtainModel()
-    {
-        return {title: 'Shit'};
-    }
+        if (_.isFunction(this.props.onSubmit)) {
+            this.props.onSubmit(sourceModel);
+        }
 
-    onSubmit(data)
-    {
-        console.dir(data);
+        return sourceModel;
     }
 
     render()
@@ -104,7 +124,7 @@ export default class Form extends BaseComponent
         return (
             <AutoForm
                 schema={this.makeSurrogateSchema()}
-                model={this.obtainModel()}
+                model={this.transformModel()}
                 onSubmit={this.onSubmit.bind(this)}
                 className="form"
             >

@@ -252,12 +252,22 @@ export default class BaseEntity
                 optional = !!schema[attribute.field].optional;
             }
 
+            let type = null;
+            if (attribute.type === 'many') {
+                type = [attribute.collection];
+            } else if (attribute.type === 'one') {
+                type = attribute.collection;
+            } else {
+                throw new Error('Link types other than "one" and "many" are not supported');
+            }
+
             result.push({
                 code,
                 order,
                 label: attribute.label || '',
-                type: `link_${attribute.type}`,
+                type,
                 optional,
+                reference: attribute.field,
             });
 
             order += 1;

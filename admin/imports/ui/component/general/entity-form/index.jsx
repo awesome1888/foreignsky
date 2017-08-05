@@ -36,6 +36,15 @@ export default class EntityForm extends Form
         return {};
     }
 
+    onSubmit(model)
+    {
+        const sourceModel = this.transformModelBack();
+
+        // on submit we try save
+        console.dir('save');
+        console.dir(sourceModel);
+    }
+    
     // getMap()
     // {
     //     if (!this._cache.map)

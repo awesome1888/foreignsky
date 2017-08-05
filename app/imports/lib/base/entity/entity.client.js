@@ -14,7 +14,7 @@ export default class BaseEntity extends Entity
     {
         condition.limit = 1;
         const data = await this.executeOperation('find', [condition]);
-
+        
         if (_.isArrayNotEmpty(data))
         {
             return new this(data[0]);

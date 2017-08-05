@@ -3,7 +3,7 @@ import React from 'react';
 import AutoForm from 'uniforms-unstyled/AutoForm';
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import BaseComponent from '../../../../lib/base/component/component.jsx';
 
@@ -17,30 +17,63 @@ import './style.less';
  */
 export default class Form extends BaseComponent
 {
-    getSchema()
+    static propTypes = {
+        className: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.array,
+            PropTypes.object,
+        ]),
+        map: PropTypes.array,
+        model: PropTypes.object,
+    };
+
+    static defaultProps = {
+        className: '',
+        map: [],
+        model: {},
+    };
+
+    constructor(props)
     {
-        throw new Error('Not implemented');
+        super(props);
+        this.extendState({
+            model: null,
+            error: null,
+        });
     }
 
-    getSchemaTransformed()
+    componentDidMount()
     {
-        return this.obtainSchema();
+        this.getModel().then((
+            model
+        ) => {
+            this.setState({
+                model
+            });
+        }, (error) => {
+            console.error(error);
+            this.setState(error);
+        });
     }
 
-    obtainSchema()
+    getMap()
     {
-        if (!this._cache.schema)
-        {
-            let schema = this.getSchema();
-            if (!(schema instanceof SimpleSchema))
-            {
-                schema = new SimpleSchema(schema);
-            }
+        return this.props.map || [];
+    }
 
-            this._cache.schema = schema;
-        }
+    /**
+     * Creates surrogate schema suitable for AutoForm on the
+     * basis of getMap() result
+     * @returns {*}
+     */
+    makeSurrogateSchema()
+    {
+        return new SimpleSchema({});
+    }
 
-        return this._cache.schema;
+    async getModel()
+    {
+        return this.props.model || {};
     }
 
     obtainModel()
@@ -55,19 +88,22 @@ export default class Form extends BaseComponent
 
     render()
     {
-        const model = this.obtainModel();
+        const model = this.state.model;
         if (model === null)
         {
-            return null; // probably still loading
+            if (this.state.error !== null)
+            {
+                // woops
+                return (<span>Error occurred</span>);
+            }
+
+            // probably the model is still loading
+            return (<span>Loading...</span>);
         }
-
-        const schema = this.getSchemaTransformed();
-
-        // getDefinition
 
         return (
             <AutoForm
-                schema={schema}
+                schema={this.makeSurrogateSchema()}
                 model={this.obtainModel()}
                 onSubmit={this.onSubmit.bind(this)}
                 className="form"
@@ -75,8 +111,8 @@ export default class Form extends BaseComponent
                 <div className="form__block">
                     <div className="form__block-inner">
                         {
-                            _.map(schema.schema(), (attribute, field) => {
-                                console.dir(attribute);
+                            _.map(this.getModel(), (attribute, field) => {
+                                // console.dir(attribute);
                                 return (
                                     <Row
                                         key={field}
@@ -89,7 +125,7 @@ export default class Form extends BaseComponent
                     </div>
                 </div>
 
-                <div style={{'margin-top': '10px'}}>
+                <div style={{marginTop: '10px'}}>
                     <button type="submit">Send</button>
                 </div>
             </AutoForm>

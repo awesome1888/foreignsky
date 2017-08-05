@@ -22,6 +22,8 @@ class RendererBoolean extends RendererGeneric
 
     renderInput()
     {
+        const onChange = this.props.onChange;
+
         return (
             <input
                 checked={this.getValue()}
@@ -35,8 +37,6 @@ class RendererBoolean extends RendererGeneric
 
     render()
     {
-        const onChange = this.props.onChange;
-
         return (
             <Container
                 errorProps={this.props}

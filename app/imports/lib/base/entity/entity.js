@@ -12,53 +12,14 @@ export default class BaseEntity
     static _cache = {
         q: {},
     };
+    static _qConstructor = null;
 
     _data = {};
     _normalized = false;
-    static _qConstructor = null;
-
-    constructor(data = {})
-    {
-        if (_.isObjectNotEmpty(data))
-        {
-            this.data = data;
-        }
-    }
-
-    getCollection()
-    {
-        return this.constructor.getCollection();
-    }
 
     static getEntityMap()
     {
         return {};
-    }
-
-    getId()
-    {
-        return this.data._id;
-    }
-
-    getData()
-    {
-        if (!this._normalized)
-        {
-            this._data = this.normalizeData(this._data);
-            this._normalized = true;
-        }
-
-        return this._data;
-    }
-
-    seData(data)
-    {
-        this._data = data;
-    }
-
-    normalizeData(data)
-    {
-        return data;
     }
 
     static getCollection()
@@ -249,6 +210,63 @@ export default class BaseEntity
         return resolver;
     }
 
+    /**
+     * This function returns the same as getCollection().getSchema(), but extended, with
+     * a few new attributes and including links
+     * // todo: move all to getMap()
+     * // todo: make it cached
+     * @returns {*}
+     */
+    static getMap()
+    {
+        const result = [];
+        let order = 0;
+
+        const schema = this.getCollection().getSchema();
+        const links = this.getCollection().getLinks();
+        const linkRefs = _.invert(_.uniq(_.map(links, (link) => {
+            return link.field;
+        })));
+
+        _.forEach(schema, (attribute, code) => {
+            if (code in linkRefs)
+            {
+                return;
+            }
+
+            result.push({
+                code,
+                order,
+                label: attribute.label || '',
+                type: attribute.type,
+                optional: attribute.optional,
+            });
+
+            order += 1;
+        });
+
+        _.forEach(links, (attribute, code) => {
+            let optional = true;
+            if (attribute.field in linkRefs)
+            {
+                optional = !!schema[attribute.field].optional;
+            }
+
+            result.push({
+                code,
+                order,
+                label: attribute.label || '',
+                type: `link_${attribute.type}`,
+                optional,
+            });
+
+            order += 1;
+        });
+
+        return result;
+    }
+
+    // todo: deprecated, replace with getMap() and remove
     static getAttributes()
     {
         const result = [];
@@ -259,12 +277,57 @@ export default class BaseEntity
                 type: attribute.type,
             });
         });
-
+        
         // result.sort(Util.getNumericComparator());
 
         return result;
     }
 
+    constructor(data = {})
+    {
+        if (_.isObjectNotEmpty(data))
+        {
+            this.data = data;
+        }
+    }
+
+    getCollection()
+    {
+        return this.constructor.getCollection();
+    }
+
+    getId()
+    {
+        return this.data._id;
+    }
+
+    getData()
+    {
+        if (!this._normalized)
+        {
+            this._data = this.normalizeData(this._data);
+            this._normalized = true;
+        }
+
+        return this._data;
+    }
+
+    seData(data)
+    {
+        this._data = data;
+    }
+
+    normalizeData(data)
+    {
+        return data;
+    }
+
+    getMap()
+    {
+        return this.getAttributes();
+    }
+
+    // todo: move all to getMap()
     getAttributes()
     {
         return this.constructor.getAttributes().map((attribute) => {

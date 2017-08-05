@@ -10,12 +10,16 @@ export default class ArticleDetailPage extends BasePage
 {
     render()
     {
+        // todo: better parse ID from the current path according to detailPath, but
+        // todo: not rely on FlowRouter behaviour
+
         return (
             <Layout
                 title={this.props.title}
                 motd={this.props.motd}
                 central={
                     <Form
+                        id={this.props.route.id}
                         detailPageUrl={this.props.route.detailPath || ''}
                     />
                 }

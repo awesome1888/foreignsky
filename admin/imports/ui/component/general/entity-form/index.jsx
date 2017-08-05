@@ -20,9 +20,20 @@ export default class EntityForm extends Form
         throw new Error('Not implemented');
     }
 
-    getSchema()
+    getMap()
     {
-        return this.getEntity().getCollection().getSchema();
+        return this.getEntity().getMap();
+    }
+
+    async getModel()
+    {
+        const id = this.props.id;
+
+        // if (_.isStringNotEmpty(id)) {
+        //     return this.getEntity().findOne(id);
+        // }
+
+        return {};
     }
 
     // getMap()

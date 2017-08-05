@@ -26,4 +26,9 @@ export default class BasePage extends BaseComponent
     {
         return '';
     }
+
+    getQueryParameter(name)
+    {
+        return FlowRouter.getQueryParam(name);
+    }
 }

@@ -62,7 +62,7 @@ export default class Row extends React.Component
 
         const field = this.props.field; // temporal
         
-        console.dir(attribute);
+        // console.dir(attribute);
         
         return (
             <div className="form__row row">

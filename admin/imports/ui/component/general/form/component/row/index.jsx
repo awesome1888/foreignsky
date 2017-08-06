@@ -7,39 +7,36 @@ import RendererList from './../../component/renderer/list/index.jsx';
 
 export default class Row extends React.Component
 {
-    resolveRenderer(attribute)
+    resolveRenderer()
     {
-        if (attribute.renderer)
+        const attribute = this.getAttribute();
+
+        if (attribute.getRenderer())
         {
-            return attribute.renderer;
+            return attribute.getRenderer();
         }
 
-        return this.resolveDefaultRenderer(attribute.type);
-    }
-
-    resolveDefaultRenderer(type)
-    {
-        if (this.isString())
+        if (attribute.isString())
         {
             return RendererString;
         }
-        if (this.isDate())
+        if (attribute.isDate())
         {
             return RendererDate;
         }
-        if (this.isBoolean())
+        if (attribute.isBoolean())
         {
             return RendererBoolean;
         }
 
-        if (this.isArrayOfBoolean())
+        if (attribute.isArrayOfBoolean())
         {
             // todo: it should be rendered as selectbox with
             // todo: either checkboxes or radio-buttons
             return null;
         }
 
-        if (this.isArray())
+        if (attribute.isArray())
         {
             return RendererList;
         }
@@ -47,38 +44,57 @@ export default class Row extends React.Component
         return null;
     }
 
-    getInnerType()
+    resolveItemRenderer()
     {
-        if (this.isArray())
+        const attribute = this.getAttribute();
+
+        if (attribute.getItemRenderer())
         {
-            return this.getAttribute().type[0];
+            return attribute.getItemRenderer();
         }
+
+        if (attribute.isStringItem() || attribute.isNumberItem())
+        {
+            return RendererString;
+        }
+        if (attribute.isDateItem())
+        {
+            return RendererDate;
+        }
+        if (attribute.isBooleanItem())
+        {
+            return RendererBoolean;
+        }
+        
+        // todo: could be also sub-schema
 
         return null;
     }
 
-    renderControl(attribute)
+    renderControl()
     {
-        const constructor = this.resolveRenderer(attribute);
+        const attribute = this.getAttribute();
+
+        const constructor = this.resolveRenderer();
         if (!constructor) {
             return null;
         }
 
-        const children = null;
-        const it = this.getInnerType();
-        if (it)
+        let children = null;
+        if (attribute.isArray())
         {
-            children
+            children = [this.resolveItemRenderer()];
         }
 
         return React.createElement(
             constructor,
             {
-                name: attribute.code,
+                name: attribute.getCode(),
                 attribute,
                 // value: item.getAttributeValue(attribute.code),
                 // detailPageUrl: this.props.detailPageUrl,
-            }
+            },
+            children
         );
     }
 
@@ -87,49 +103,21 @@ export default class Row extends React.Component
         return this.props.attribute || {};
     }
 
-    // checkers for standard types
-    isString()
-    {
-        return this.getAttribute().type === String;
-    }
-
-    isBoolean()
-    {
-        return this.getAttribute().type === Boolean;
-    }
-
-    isDate()
-    {
-        return this.getAttribute().type === Date;
-    }
-
-    isArrayOfBoolean()
-    {
-        const a = this.getAttribute();
-        return a.type === Array && a.type === Boolean;
-    }
-
-    isArray()
-    {
-        return _.isArray(this.getAttribute().type);
-    }
-
     renderLabel()
     {
         const attr = this.getAttribute();
-        return attr.label || attr.code || '';
+        return attr.getLabel() || attr.getCode() || '';
     }
 
     render()
     {
-        const attribute = this.getAttribute();
-        // console.dir(attribute);
+        const a = this.getAttribute();
 
         return (
             <div className="form__row row">
                 <div className="form__column col-md-3 col-sm-12">
                     {
-                        !this.isBoolean()
+                        !a.isBoolean()
                         &&
                         <div className="form__label form__label_padded">
                             {this.renderLabel()}:
@@ -137,7 +125,7 @@ export default class Row extends React.Component
                     }
                 </div>
                 <div className="form__column col-md-9 col-sm-12">
-                    {this.renderControl(attribute)}
+                    {this.renderControl(a)}
                 </div>
             </div>
         );

@@ -14,12 +14,12 @@ class RendererList extends RendererGeneric
 {
     getItemControl()
     {
-        if (this.children)
+        if (this.props.children)
         {
-            return this.children;
+            return this.props.children;
         }
 
-        return;
+        throw new ReferenceError('Unable to get child list element');
     }
 
     getChildName(child, index)
@@ -30,6 +30,36 @@ class RendererList extends RendererGeneric
         }
 
         return `${this.getName()}.${index}`;
+    }
+
+    isLimitReached()
+    {
+        const a = this.getAttribute();
+
+        return this.isDisabled() || a.getMax() <= this.getValue().length;
+    }
+
+    onItemAddClick()
+    {
+        const isLimitReached = this.isLimitReached();
+        const onChange = this.props.onChange;
+        const val = this.getValue();
+
+        if (!isLimitReached)
+        {
+            onChange(val.concat(['']));
+        }
+    }
+
+    renderAddButton()
+    {
+        return (
+            <span
+                onClick={this.onItemAddClick.bind(this)}
+            >
+                + Add
+            </span>
+        );
     }
 
     render()
@@ -51,10 +81,13 @@ class RendererList extends RendererGeneric
                             )
                         )
                     }
+                    <div>
+                        {this.renderAddButton()}
+                    </div>
                 </div>
             </Container>
         );
     }
 }
 
-export default connectField(RendererList, {});
+export default connectField(RendererList, {includeInChain: false});

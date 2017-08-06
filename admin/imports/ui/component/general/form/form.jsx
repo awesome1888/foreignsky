@@ -92,33 +92,6 @@ export default class Form extends BaseComponent
         return this._cache.map;
     }
 
-    /**
-     * Creates surrogate schema suitable for AutoForm on the
-     * basis of getMap() result
-     * @returns {*}
-     */
-    makeSurrogateSchema()
-    {
-        const map = this.getMapTransformed();
-
-        // console.dir('map');
-        // console.dir(map);
-
-        const schema = new SimpleSchema(map.reduce((result, item) => {
-
-            result[item.code] = _.intersectKeys(item, {
-                type: 1, label: 1, defaultValue: 1,
-                optional: 1, allowedValues: 1,
-            });
-
-            return result;
-        }, {}));
-
-        // console.dir(schema);
-
-        return schema;
-    }
-
     onSubmit(model)
     {
         const sourceModel = this.transformModelBack();
@@ -149,7 +122,7 @@ export default class Form extends BaseComponent
         
         return (
             <AutoForm
-                schema={this.makeSurrogateSchema()}
+                schema={this.getMapTransformed().getSurrogateSchema()}
                 model={this.transformModel()}
                 onSubmit={this.onSubmit.bind(this)}
                 className="form"
@@ -157,10 +130,10 @@ export default class Form extends BaseComponent
                 <div className="form__block">
                     <div className="form__block-inner">
                         {
-                            _.map(this.getMapTransformed(), (attribute) => {
+                            this.getMapTransformed().map((attribute) => {
                                 return (
                                     <Row
-                                        key={attribute.code}
+                                        key={attribute.getCode()}
                                         attribute={attribute}
                                     />
                                 );

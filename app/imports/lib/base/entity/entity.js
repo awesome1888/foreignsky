@@ -1,6 +1,7 @@
 import flatten from 'mongo-dot-notation';
-// import Util from '../../util.js';
 import clone from 'clone';
+
+import Map from './map/index.js';
 
 /**
  * @abstract
@@ -219,75 +220,7 @@ export default class BaseEntity
      */
     static getMap()
     {
-        const result = [];
-        let order = 0;
-
-        const schema = this.getCollection().getSchema();
-        const links = this.getCollection().getLinks();
-        const linkRefs = _.invert(_.uniq(_.map(links, (link) => {
-            return link.field;
-        })));
-
-        _.forEach(schema, (attribute, code) => {
-            if (code in linkRefs)
-            {
-                return;
-            }
-
-            result.push({
-                code,
-                order,
-                label: attribute.label || '',
-                type: attribute.type,
-                optional: attribute.optional,
-            });
-
-            order += 1;
-        });
-
-        _.forEach(links, (attribute, code) => {
-            const field = attribute.field;
-            const fData = clone(schema[attribute.field]);
-
-            fData.code = code;
-            fData.order = order;
-
-            fData.codeRef = field;
-            fData.collectionRef = attribute.collection;
-
-            result.push(fData);
-
-            // let optional = true;
-            // if (attribute.field in linkRefs)
-            // {
-            //     optional = !!schema[attribute.field].optional;
-            // }
-
-            // let type = null;
-            // if (attribute.type === 'many') {
-            //     type = [attribute.collection];
-            // } else if (attribute.type === 'one') {
-            //     type = attribute.collection;
-            // } else {
-            //     throw new Error('Link types other than "one" and "many" are not supported');
-            // }
-            //
-            // const reference = clone(schema[attribute.field]);
-            // reference.code = attribute.field;
-
-            // result.push({
-            //     code,
-            //     order,
-            //     label: attribute.label || '',
-            //     type,
-            //     optional,
-            //     reference,
-            // });
-
-            order += 1;
-        });
-
-        return result;
+        return new Map(this.getCollection());
     }
 
     // todo: deprecated, replace with getMap() and remove

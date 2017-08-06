@@ -12,6 +12,11 @@ export default class Attribute
         return this._data.type === String;
     }
 
+    isNumber()
+    {
+        return this._data.type === String;
+    }
+
     isBoolean()
     {
         return this._data.type === Boolean;
@@ -22,10 +27,34 @@ export default class Attribute
         return this._data.type === Date;
     }
 
+    isStringItem()
+    {
+        const a = this._data;
+        return this.isArray() && a.type[0] === String;
+    }
+
+    isNumberItem()
+    {
+        const a = this._data;
+        return this.isArray() && a.type[0] === Number;
+    }
+
+    isBooleanItem()
+    {
+        const a = this._data;
+        return this.isArray() && a.type[0] === Boolean;
+    }
+
+    isDateItem()
+    {
+        const a = this._data;
+        return this.isArray() && a.type[0] === Date;
+    }
+
     isArrayOfBoolean()
     {
         const a = this._data;
-        return a.type === Array && a.type === Boolean;
+        return _.isArray(a.type) && a.type[0] === Boolean;
     }
 
     isArray()
@@ -41,5 +70,34 @@ export default class Attribute
     getType()
     {
         return this._data.type;
+    }
+
+    getCode()
+    {
+        return this._data.code;
+    }
+
+    getLabel()
+    {
+        return this._data.label || '';
+    }
+
+    getMax()
+    {
+        if ('maxCount' in this._data)
+        {
+            return parseInt(this._data.maxCount);
+        }
+        return 9999999;
+    }
+
+    getRenderer()
+    {
+        return this._data.renderer || null;
+    }
+
+    getItemRenderer()
+    {
+        return this._data.itemRenderer || null;
     }
 }

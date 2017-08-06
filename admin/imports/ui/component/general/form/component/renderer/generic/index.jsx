@@ -4,11 +4,24 @@ import React from 'react';
 // https://github.com/vazco/uniforms/blob/master/API.md#connectfield
 // https://github.com/vazco/uniforms/blob/master/packages/uniforms-unstyled/src/TextField.js
 
+/**
+ * @abstract
+ */
 export default class RendererGeneric extends React.Component
 {
+    getAttribute()
+    {
+        return this.props.attribute || null;
+    }
+
     getName()
     {
-        return this.props.name;
+        if(_.isStringNotEmpty(this.props.name))
+        {
+            return this.props.name;
+        }
+
+        return this.getAttribute().code;
     }
 
     getValue()

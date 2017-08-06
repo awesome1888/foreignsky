@@ -9,7 +9,7 @@ import filterDOMProps from 'uniforms/filterDOMProps';
 import RendererGeneric from '../generic/index.jsx';
 import Container from '../container/index.jsx';
 
-class RendererString extends RendererGeneric
+class RendererDate extends RendererGeneric
 {
     render()
     {
@@ -29,4 +29,4 @@ class RendererString extends RendererGeneric
     }
 }
 
-export default connectField(RendererString, {});
+export default connectField(RendererDate, {});

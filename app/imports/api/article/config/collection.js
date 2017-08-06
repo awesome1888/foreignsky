@@ -42,12 +42,12 @@ export default new class extends Collection
                 type: [String],
                 optional: true,
             },
-            headerColor: {
-                type: String,
-                optional: true,
-                regEx: /^[a-z0-9_-]+$/,
-                label: 'Цвет заголовка',
-            },
+            // headerColor: {
+            //     type: String,
+            //     optional: true,
+            //     regEx: /^[a-z0-9_-]+$/,
+            //     label: 'Цвет заголовка',
+            // },
             search: {
                 type: String,
                 optional: false,

@@ -1,5 +1,6 @@
 import React from 'react';
 import connectField from 'uniforms/connectField';
+import filterDOMProps from 'uniforms/filterDOMProps';
 
 // https://github.com/vazco/uniforms/blob/master/INTRODUCTION.md#autofield-algorithm
 // https://github.com/vazco/uniforms/blob/master/API.md#connectfield
@@ -40,6 +41,7 @@ class RendererBoolean extends RendererGeneric
         return (
             <Container
                 errorProps={this.props}
+                {...filterDOMProps(this.props)}
             >
                 {
                     this.hasLabel()

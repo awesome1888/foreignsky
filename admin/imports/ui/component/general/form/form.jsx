@@ -86,6 +86,7 @@ export default class Form extends BaseComponent
         if (!this._cache.map)
         {
             this._cache.map = this.transformMap(this.getMap());
+            // todo: pre-sort here by order!!!
         }
 
         return this._cache.map;
@@ -143,6 +144,8 @@ export default class Form extends BaseComponent
             // probably the model is still loading
             return (<span>Loading...</span>);
         }
+        
+        console.dir(this.getMapTransformed());
         
         return (
             <AutoForm

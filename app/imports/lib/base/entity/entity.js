@@ -246,29 +246,43 @@ export default class BaseEntity
         });
 
         _.forEach(links, (attribute, code) => {
-            let optional = true;
-            if (attribute.field in linkRefs)
-            {
-                optional = !!schema[attribute.field].optional;
-            }
+            const field = attribute.field;
+            const fData = clone(schema[attribute.field]);
 
-            let type = null;
-            if (attribute.type === 'many') {
-                type = [attribute.collection];
-            } else if (attribute.type === 'one') {
-                type = attribute.collection;
-            } else {
-                throw new Error('Link types other than "one" and "many" are not supported');
-            }
+            fData.code = code;
+            fData.order = order;
 
-            result.push({
-                code,
-                order,
-                label: attribute.label || '',
-                type,
-                optional,
-                reference: attribute.field,
-            });
+            fData.codeRef = field;
+            fData.collectionRef = attribute.collection;
+
+            result.push(fData);
+
+            // let optional = true;
+            // if (attribute.field in linkRefs)
+            // {
+            //     optional = !!schema[attribute.field].optional;
+            // }
+
+            // let type = null;
+            // if (attribute.type === 'many') {
+            //     type = [attribute.collection];
+            // } else if (attribute.type === 'one') {
+            //     type = attribute.collection;
+            // } else {
+            //     throw new Error('Link types other than "one" and "many" are not supported');
+            // }
+            //
+            // const reference = clone(schema[attribute.field]);
+            // reference.code = attribute.field;
+
+            // result.push({
+            //     code,
+            //     order,
+            //     label: attribute.label || '',
+            //     type,
+            //     optional,
+            //     reference,
+            // });
 
             order += 1;
         });

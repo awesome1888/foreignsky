@@ -32,7 +32,7 @@ export default class Row extends React.Component
         return null;
     }
 
-    renderRenderer(item, attribute, name)
+    renderRenderer(attribute)
     {
         const constructor = this.resolveRenderer(attribute);
         if (!constructor) {
@@ -42,7 +42,7 @@ export default class Row extends React.Component
         return React.createElement(
             constructor,
             {
-                name,
+                name: attribute.code,
                 // code: attribute.code,
                 // value: item.getAttributeValue(attribute.code),
                 // item: item,
@@ -59,9 +59,6 @@ export default class Row extends React.Component
     render()
     {
         const attribute = this.getAttribute();
-
-        const field = this.props.field; // temporal
-        
         // console.dir(attribute);
         
         return (
@@ -72,7 +69,7 @@ export default class Row extends React.Component
                     </div>
                 </div>
                 <div className="form__column col-md-9 col-sm-12">
-                    {this.renderRenderer({}, attribute, field)}
+                    {this.renderRenderer(attribute)}
                 </div>
             </div>
         );

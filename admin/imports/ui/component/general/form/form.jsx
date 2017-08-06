@@ -66,9 +66,9 @@ export default class Form extends BaseComponent
         return this.props.model || {};
     }
 
-    transformMap()
+    transformMap(map)
     {
-        return this.getMap();
+        return map;
     }
 
     transformModel()
@@ -81,6 +81,16 @@ export default class Form extends BaseComponent
         return model;
     }
 
+    getMapTransformed()
+    {
+        if (!this._cache.map)
+        {
+            this._cache.map = this.transformMap(this.getMap());
+        }
+
+        return this._cache.map;
+    }
+
     /**
      * Creates surrogate schema suitable for AutoForm on the
      * basis of getMap() result
@@ -88,11 +98,24 @@ export default class Form extends BaseComponent
      */
     makeSurrogateSchema()
     {
-        const map = this.transformMap();
+        const map = this.getMapTransformed();
 
-        console.dir(map);
-        
-        return {};
+        // console.dir('map');
+        // console.dir(map);
+
+        const schema = new SimpleSchema(map.reduce((result, item) => {
+
+            result[item.code] = _.intersectKeys(item, {
+                type: 1, label: 1, defaultValue: 1,
+                optional: 1, allowedValues: 1,
+            });
+
+            return result;
+        }, {}));
+
+        // console.dir(schema);
+
+        return schema;
     }
 
     onSubmit(model)
@@ -120,7 +143,7 @@ export default class Form extends BaseComponent
             // probably the model is still loading
             return (<span>Loading...</span>);
         }
-
+        
         return (
             <AutoForm
                 schema={this.makeSurrogateSchema()}
@@ -131,13 +154,11 @@ export default class Form extends BaseComponent
                 <div className="form__block">
                     <div className="form__block-inner">
                         {
-                            _.map(this.getModel(), (attribute, field) => {
-                                // console.dir(attribute);
+                            _.map(this.getMapTransformed(), (attribute) => {
                                 return (
                                     <Row
-                                        key={field}
+                                        key={attribute.code}
                                         attribute={attribute}
-                                        field={field}
                                     />
                                 );
                             })

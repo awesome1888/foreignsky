@@ -45,10 +45,13 @@ export default class BaseCollection extends Mongo.Collection
         {
             const rawCollection = this.rawCollection();
             this.getIndexes().forEach((index) => {
-                rawCollection.createIndex(
-                    index.fields,
-                    index.options
-                );
+                if (_.isObjectNotEmpty(index.fields))
+                {
+                    rawCollection.createIndex(
+                        index.fields,
+                        index.options
+                    );
+                }
             });
         }
     }

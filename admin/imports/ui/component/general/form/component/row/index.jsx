@@ -14,6 +14,11 @@ export default class Row extends React.Component
             return attribute.renderer;
         }
 
+        return this.resolveDefaultRenderer(attribute.type);
+    }
+
+    resolveDefaultRenderer(type)
+    {
         if (this.isString())
         {
             return RendererString;
@@ -42,11 +47,28 @@ export default class Row extends React.Component
         return null;
     }
 
+    getInnerType()
+    {
+        if (this.isArray())
+        {
+            return this.getAttribute().type[0];
+        }
+
+        return null;
+    }
+
     renderControl(attribute)
     {
         const constructor = this.resolveRenderer(attribute);
         if (!constructor) {
             return null;
+        }
+
+        const children = null;
+        const it = this.getInnerType();
+        if (it)
+        {
+            children
         }
 
         return React.createElement(

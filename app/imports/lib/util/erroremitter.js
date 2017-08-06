@@ -4,8 +4,11 @@ export default class ErrorEmitter {
     /**
      * Throws 400 error
      */
-    static throw400() {
-        throw new Meteor.Error('400', 'Illegal arguments');
+    static throw400(message = '') {
+        throw new Meteor.Error(
+            '400',
+            `Illegal arguments${(_.isStringNotEmpty(message) ? `: ${message}` : '')}`
+        );
     }
 
     /**

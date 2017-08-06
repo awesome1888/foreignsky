@@ -13,44 +13,44 @@ const M = (superclass) =>  class Article extends superclass
 
     getTitle()
     {
-        return this.data.title || '';
+        return this.getData().title || '';
     }
 
     getText()
     {
-        return this.data.text || '';
+        return this.getData().text || '';
     }
 
     getDate()
     {
-        return this.data.date || null;
+        return this.getData().date || null;
     }
 
     getHeaderColor()
     {
-        return this.data.headerColor || 'white';
+        return this.getData().headerColor || 'white';
     }
 
     getHeaderImage()
     {
-        return this.data.headerImage || {};
+        return this.getData().headerImage || {};
     }
 
     getTag()
     {
-        this.data.tag = this.makeInstances(this.data.tag, 'tag');
-        return this.data.tag;
+        this.getData().tag = this.makeInstances(this.getData().tag, 'tag');
+        return this.getData().tag;
     }
 
     getEmbed()
     {
-        this.data.embed = this.makeInstances(this.data.embed, 'embed');
-        return this.data.embed;
+        this.getData().embed = this.makeInstances(this.getData().embed, 'embed');
+        return this.getData().embed;
     }
 
     getPublic()
     {
-        return !!this.data.public;
+        return !!this.getData().public;
     }
 
     hasHeaderImage()

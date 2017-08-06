@@ -9,7 +9,8 @@ export default class ArticleForm extends EntityForm
         return Article;
     }
 
-    declareMap()
+    setTitleAfterDataLoad(item)
     {
+        this.setTitle(item.getTitle());
     }
 }

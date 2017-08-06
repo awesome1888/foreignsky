@@ -9,10 +9,10 @@ import Form from '../form/form.jsx';
  */
 export default class EntityForm extends Form
 {
-    constructor()
+    constructor(props)
     {
-        super();
-        this.setTitle(`New ${this.getEntity().getTitle()}`);
+        super(props);
+        this.setTitle(`New ${this.getEntityTitle()}`);
     }
 
     getEntity()
@@ -25,13 +25,33 @@ export default class EntityForm extends Form
         return this.getEntity().getMap();
     }
 
+    getEntityTitle()
+    {
+        return this.getEntity().getTitle();
+    }
+
+    setTitleAfterDataLoad(item)
+    {
+    }
+
     async getModel()
     {
         const id = this.props.id;
 
-        // if (_.isStringNotEmpty(id)) {
-        //     return this.getEntity().findOne(id);
-        // }
+        if (_.isStringNotEmpty(id)) {
+            const item = await this.getEntity().findById(id, {select: ['title', 'public']});
+            if (item)
+            {
+                this.setTitleAfterDataLoad(item);
+                return item.getData();
+            }
+            else
+            {
+                this.setState({
+                    error: 'Element not found'
+                });
+            }
+        }
 
         return {};
     }

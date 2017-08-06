@@ -10,8 +10,24 @@ export default class BaseEntity extends Entity
         return 'Spherical entity in vacuum';
     }
 
+    static async findById(id, params = {})
+    {
+        const qParams = {filter: {_id: id}};
+        if ('select' in params)
+        {
+            qParams.select = params.select;
+        }
+
+        return await this.findOne(qParams);
+    }
+
     static async findOne(condition = {})
     {
+        if (!_.isObject(condition))
+        {
+            throw new TypeError('Argument should be an object and may contain keys "filter", "select", etc.');
+        }
+
         condition.limit = 1;
         const data = await this.executeOperation('find', [condition]);
         
@@ -25,6 +41,11 @@ export default class BaseEntity extends Entity
 
     static async find(condition = {})
     {
+        if (!_.isObject(condition))
+        {
+            throw new TypeError('Argument should be an object and may contain keys "filter", "select", etc.');
+        }
+
         const data = await this.executeOperation('find', [condition]);
 
         if (_.isArrayNotEmpty(data))

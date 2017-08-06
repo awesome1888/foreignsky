@@ -52,7 +52,10 @@ export default class Form extends BaseComponent
             });
         }, (error) => {
             console.error(error);
-            this.setState(error);
+            this.setState({
+                model: {},
+                error
+            });
         });
     }
 
@@ -108,17 +111,12 @@ export default class Form extends BaseComponent
         const model = this.state.model;
         if (model === null)
         {
-            if (this.state.error !== null)
-            {
-                // woops
-                return (<span>Error occurred</span>);
-            }
-
             // probably the model is still loading
             return (<span>Loading...</span>);
         }
         
-        console.dir(this.getMapTransformed());
+        // console.dir(this.getMapTransformed());
+        // console.dir(this.transformModel());
         
         return (
             <AutoForm
@@ -127,6 +125,13 @@ export default class Form extends BaseComponent
                 onSubmit={this.onSubmit.bind(this)}
                 className="form"
             >
+                {
+                    this.state.error
+                    &&
+                    <div style={{color: 'red'}}>
+                        Error occured: {this.state.error}
+                    </div>
+                }
                 <div className="form__block">
                     <div className="form__block-inner">
                         {

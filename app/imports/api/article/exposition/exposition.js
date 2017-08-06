@@ -10,7 +10,7 @@ export default class extends Exposition
 
             if (!_.isObject(condition))
             {
-                return false;
+                this.getErrorEmitter().throw400('No condition defined');
             }
 
             if (!('filter' in condition))

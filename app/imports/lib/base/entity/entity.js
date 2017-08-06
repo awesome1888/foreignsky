@@ -244,7 +244,7 @@ export default class BaseEntity
     {
         if (_.isObjectNotEmpty(data))
         {
-            this.data = data;
+            this._data = data;
         }
     }
 
@@ -255,7 +255,7 @@ export default class BaseEntity
 
     getId()
     {
-        return this.data._id;
+        return this._data._id;
     }
 
     getData()

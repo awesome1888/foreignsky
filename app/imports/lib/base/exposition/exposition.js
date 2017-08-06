@@ -92,5 +92,11 @@ export default class
 
     accessControl(op, parameters)
     {
+        return true;
+    }
+
+    getErrorEmitter()
+    {
+        return ErrorEmitter;
     }
 }

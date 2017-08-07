@@ -3,6 +3,8 @@ import connectField from 'uniforms/connectField';
 import joinName from 'uniforms/joinName';
 import filterDOMProps from 'uniforms/filterDOMProps';
 
+import ButtonAdd from './button-add/button-add.jsx';
+
 // https://github.com/vazco/uniforms/blob/master/INTRODUCTION.md#autofield-algorithm
 // https://github.com/vazco/uniforms/blob/master/API.md#connectfield
 // https://github.com/vazco/uniforms/blob/master/packages/uniforms-unstyled/src/TextField.js
@@ -54,16 +56,18 @@ class RendererList extends RendererGeneric
     renderAddButton()
     {
         return (
-            <span
-                onClick={this.onItemAddClick.bind(this)}
-            >
-                + Add
-            </span>
+            <ButtonAdd
+                name={`${this.getName()}.$`}
+                initialCount={this.props.initialCount}
+            />
         );
     }
 
     render()
     {
+        console.dir(this.getName());
+        console.dir(this.getValue());
+
         return (
             <Container
                 errorProps={this.props}
@@ -91,3 +95,4 @@ class RendererList extends RendererGeneric
 }
 
 export default connectField(RendererList, {includeInChain: false});
+

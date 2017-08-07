@@ -39,7 +39,7 @@ export default new class extends Collection
                 label: 'Местоположение',
             },
             headerImageId: {
-                type: [String],
+                type: String,
                 optional: true,
             },
             search: {

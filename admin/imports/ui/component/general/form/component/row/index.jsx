@@ -91,8 +91,8 @@ export default class Row extends React.Component
             {
                 name: attribute.getCode(),
                 attribute,
-                // value: item.getAttributeValue(attribute.code),
-                // detailPageUrl: this.props.detailPageUrl,
+
+                initialCount: 1,
             },
             children
         );

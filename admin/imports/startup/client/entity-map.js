@@ -9,6 +9,7 @@ import Article from '../../api/article/entity/entity.client.js';
 import ArticleTag from '../../api/article.tag/entity/entity.client.js';
 import Embed from '../../api/embed/entity/entity.client.js';
 import File from '../../api/file/entity/entity.client.js';
+import TestEntity from '../../api/test-entity/entity/entity.client.js';
 // entity-import-end
 
 // page-controller-import-begin
@@ -17,6 +18,8 @@ import ArticleDetailPage from '../../ui/page/article-detail/index.jsx';
 import ArticleTagListPage from '../../ui/page/article.tag-list/index.jsx';
 import EmbedListPage from '../../ui/page/embed-list/index.jsx';
 import FileListPage from '../../ui/page/file-list/index.jsx';
+import TestEntityListPage from '../../ui/page/test-entity-list/index.jsx';
+import TestEntityDetailPage from '../../ui/page/test-entity-detail/index.jsx';
 // page-controller-import-end
 
 class AdminEntityMap extends EntityMap
@@ -80,6 +83,20 @@ class AdminEntityMap extends EntityMap
                 },
                 entity: File,
                 title: File.getTitle(),
+            },
+            {
+                route: {
+                    list: {
+                        path: '/entity/test-entity/',
+                        controller: TestEntityListPage,
+                    },
+                    detail: {
+                        path: '/entity/test-entity/#ID#/',
+                        controller: TestEntityDetailPage,
+                    },
+                },
+                entity: TestEntity,
+                title: TestEntity.getTitle(),
             },
             // route-declaration-end
         ]);

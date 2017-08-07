@@ -12,6 +12,7 @@ const ListAdd = ({
 
     return (
         <button
+            type="button"
             {...filterDOMProps(props)}
             onClick={() => limitNotReached && parent.onChange(parent.value.concat([value]))}
         >

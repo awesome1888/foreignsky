@@ -34,7 +34,14 @@ export default new class extends Collection
                 label: 'Теги',
             },
             location: {
-                type: [Number],
+                type: new SimpleSchema({
+                    lat: {
+                        type: Number,
+                    },
+                    long: {
+                        type: Number,
+                    }
+                }),
                 optional: true,
                 label: 'Местоположение',
             },

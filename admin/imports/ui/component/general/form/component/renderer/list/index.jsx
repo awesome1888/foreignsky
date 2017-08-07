@@ -24,14 +24,23 @@ class RendererList extends RendererGeneric
         throw new ReferenceError('Unable to get child list element');
     }
 
-    getChildName(child, index)
+    getChildName()
     {
-        if (_.isStringNotEmpty(child.props.name))
+        return '$';
+    }
+
+    makeChildName(child = null, index = false)
+    {
+        let childName = this.getChildName();
+        if (child && _.isStringNotEmpty(child.props.name))
         {
-           return joinName(this.getName(), child.props.name.replace('$', index));
+            childName = child.props.name;
         }
 
-        return `${this.getName()}.${index}`;
+        return joinName(
+            this.getName(),
+            index !== false ? childName.replace('$', index) : childName
+        );
     }
 
     isLimitReached()
@@ -39,6 +48,16 @@ class RendererList extends RendererGeneric
         const a = this.getAttribute();
 
         return this.isDisabled() || a.getMax() <= this.getValue().length;
+    }
+
+    getInitialCount()
+    {
+        if ('initialCount' in this.props)
+        {
+            return this.props.initialCount;
+        }
+
+        return 1;
     }
 
     onItemAddClick()
@@ -57,16 +76,18 @@ class RendererList extends RendererGeneric
     {
         return (
             <ButtonAdd
-                name={`${this.getName()}.$`}
-                initialCount={this.props.initialCount}
+                name={this.makeChildName()}
+                initialCount={this.getInitialCount()}
             />
         );
     }
 
     render()
     {
-        console.dir(this.getName());
-        console.dir(this.getValue());
+        // console.dir(this.getName());
+        // console.dir(this.getValue());
+
+        const children = this.getItemControl();
 
         return (
             <Container
@@ -75,15 +96,15 @@ class RendererList extends RendererGeneric
             >
                 <div>
                     {
-                        this.getValue().map((item, index) =>
-                            Children.map(this.getItemControl(), child =>
-                                React.cloneElement(child, {
+                        this.getValue().map((item, index) => {
+                            return Children.map(children, child => {
+                                return React.cloneElement(child, {
                                     key: index,
                                     label: null,
-                                    name: this.getChildName(child, index),
-                                })
-                            )
-                        )
+                                    name: this.makeChildName(child, index),
+                                });
+                            })
+                        })
                     }
                     <div>
                         {this.renderAddButton()}
@@ -95,4 +116,3 @@ class RendererList extends RendererGeneric
 }
 
 export default connectField(RendererList, {includeInChain: false});
-

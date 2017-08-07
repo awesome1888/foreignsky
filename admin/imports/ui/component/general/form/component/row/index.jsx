@@ -83,7 +83,14 @@ export default class Row extends React.Component
         let children = null;
         if (attribute.isArray())
         {
-            children = [this.resolveItemRenderer()];
+            children = [
+                React.createElement(
+                    this.resolveItemRenderer(),
+                    {
+                        name: '$',
+                    }
+                )
+            ];
         }
 
         return React.createElement(

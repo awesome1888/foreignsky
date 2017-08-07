@@ -102,6 +102,11 @@ export default class BaseEntity
         {
             Object.assign(translated, parameters.select);
         }
+        else if(parameters.select === '*')
+        {
+            Object.assign(translated, this.getFullSelect());
+        }
+        // todo: also can process regexp
 
         translated.$options = translated.$options || {};
 
@@ -151,6 +156,12 @@ export default class BaseEntity
 
             return result;
         }, {});
+    }
+
+    static getFullSelect()
+    {
+        // todo: this is not gonna work. add links here, plus auto-select field in schema
+        return _.map(_.invert(Object.keys(this.getCollection().getSchema())), (i) => 1);
     }
 
     static clearCaches()

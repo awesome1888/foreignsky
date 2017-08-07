@@ -39,7 +39,7 @@ export default class EntityForm extends Form
         const id = this.props.id;
 
         if (_.isStringNotEmpty(id)) {
-            const item = await this.getEntity().findById(id, {select: ['title', 'public']});
+            const item = await this.getEntity().findById(id, {select: '*'});
             if (item)
             {
                 this.setTitleAfterDataLoad(item);
@@ -64,52 +64,4 @@ export default class EntityForm extends Form
         console.dir('save');
         console.dir(sourceModel);
     }
-    
-    // getMap()
-    // {
-    //     if (!this._cache.map)
-    //     {
-    //         this._cache.map = this.declareMap();
-    //         this._cache.mapIndex = this._cache.map.reduce((result, attribute) => {
-    //             result[attribute.code] = attribute;
-    //             return result;
-    //         }, {});
-    //     }
-    //
-    //     return this._cache.map;
-    // }
-    //
-    // /**
-    //  * Use this function to make hooks
-    //  * @returns {*}
-    //  */
-    // declareMap()
-    // {
-    //     return this.readMap();
-    // }
-    //
-    // readMap(chosenFields = null)
-    // {
-    //     let attributes = this.getEntity().getAttributes();
-    //     if (_.isObjectNotEmpty(chosenFields))
-    //     {
-    //         attributes = attributes.filter(attribute => attribute.code in chosenFields);
-    //     }
-    //     else
-    //     {
-    //         chosenFields = {};
-    //     }
-    //
-    //     return attributes.map((attribute) => {
-    //         const copy = clone(attribute, false);
-    //         if (copy.code in chosenFields && _.isObject(chosenFields[copy]))
-    //         {
-    //             Object.assign(copy, _.intersectKeys(chosenFields[copy], {
-    //                 renderer: 1,
-    //             }));
-    //         }
-    //
-    //         return copy;
-    //     });
-    // }
 }

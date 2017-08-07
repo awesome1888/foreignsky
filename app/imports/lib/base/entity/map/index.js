@@ -84,6 +84,11 @@ export default class Map
         // todo
     }
 
+    removeAttribute(code)
+    {
+        this._attributes = this._attributes.filter(item => item.getCode() !== code);
+    }
+
     getSurrogateSchema()
     {
         return new SimpleSchema(this._attributes.reduce((result, item) => {

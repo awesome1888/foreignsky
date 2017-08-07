@@ -117,11 +117,14 @@ export default class Form extends BaseComponent
         
         // console.dir(this.getMapTransformed());
         // console.dir(this.transformModel());
-        
+
+        const tModel = this.transformModel();
+        console.dir(tModel);
+
         return (
             <AutoForm
                 schema={this.getMapTransformed().getSurrogateSchema()}
-                model={this.transformModel()}
+                model={tModel}
                 onSubmit={this.onSubmit.bind(this)}
                 className="form"
             >

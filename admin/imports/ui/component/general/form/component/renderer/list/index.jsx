@@ -3,8 +3,6 @@ import connectField from 'uniforms/connectField';
 import joinName from 'uniforms/joinName';
 import filterDOMProps from 'uniforms/filterDOMProps';
 
-import ButtonAdd from './button-add/button-add.jsx';
-
 // https://github.com/vazco/uniforms/blob/master/INTRODUCTION.md#autofield-algorithm
 // https://github.com/vazco/uniforms/blob/master/API.md#connectfield
 // https://github.com/vazco/uniforms/blob/master/packages/uniforms-unstyled/src/TextField.js
@@ -14,6 +12,12 @@ import Container from '../container/index.jsx';
 
 class RendererList extends RendererGeneric
 {
+    constructor(props)
+    {
+        super(props);
+        this.onItemAddClick = this.onItemAddClick.bind(this);
+    }
+
     getItemControl()
     {
         if (this.props.children)
@@ -60,10 +64,20 @@ class RendererList extends RendererGeneric
         return 1;
     }
 
+    getOnChange()
+    {
+        if (_.isFunction(this.props.onChange))
+        {
+            return this.props.onChange;
+        }
+
+        return e => e;
+    }
+
     onItemAddClick()
     {
         const isLimitReached = this.isLimitReached();
-        const onChange = this.props.onChange;
+        const onChange = this.getOnChange();
         const val = this.getValue();
 
         if (!isLimitReached)
@@ -75,11 +89,18 @@ class RendererList extends RendererGeneric
     renderAddButton()
     {
         return (
-            <ButtonAdd
-                name={this.makeChildName()}
-                initialCount={this.getInitialCount()}
-            />
+            <button
+                type="button"
+                onClick={this.onItemAddClick}
+            >
+                + Add
+            </button>
         );
+    }
+
+    renderDeleteButton()
+    {
+        // todo
     }
 
     render()

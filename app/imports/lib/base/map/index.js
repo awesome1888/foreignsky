@@ -1,4 +1,5 @@
 import { Mongo } from 'meteor/mongo';
+import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 import clone from 'clone';
 
 import Attribute from './attribute/index.js';
@@ -6,21 +7,18 @@ import Attribute from './attribute/index.js';
 export default class Map
 {
     _attributes = [];
-    _collection = null;
 
-    constructor(collection)
+    static createFromCollection(collection)
     {
         if (!(collection instanceof Mongo.Collection))
         {
             throw new TypeError('Not a collection');
         }
 
-        this._collection = collection;
-
-        const result = [];
+        const attributes = [];
         let order = 0;
 
-        const schema = collection.getSchema();
+        const schema = collection.getSchema(); // object
         const links = collection.getLinks();
         const linkRefs = _.invert(_.uniq(_.map(links, (link) => {
             return link.field;
@@ -32,7 +30,7 @@ export default class Map
                 return;
             }
 
-            result.push(new Attribute({
+            attributes.push(new Attribute({
                 code,
                 order,
                 label: attribute.label || '',
@@ -53,12 +51,38 @@ export default class Map
             fData.codeRef = field;
             fData.collectionRef = attribute.collection;
 
-            result.push(new Attribute(fData));
+            attributes.push(new Attribute(fData));
 
             order += 1;
         });
 
-        this._attributes = result;
+        const result = new this();
+        result.setAttributes(attributes);
+
+        return result;
+    }
+
+    // static createFromSchema(schema)
+    // {
+    //     if (!(schema instanceof SimpleSchema))
+    //     {
+    //         throw new TypeError('Not a schema');
+    //     }
+    //
+    //     const attributes = [];
+    //     let order = 0;
+    //
+    //
+    //
+    //     const result = new this();
+    //     result.setAttributes(attributes);
+    //
+    //     return result;
+    // }
+
+    setAttributes(attributes)
+    {
+        this._attributes = attributes;
     }
 
     forEach(cb)

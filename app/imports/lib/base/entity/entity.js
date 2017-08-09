@@ -1,7 +1,7 @@
 import flatten from 'mongo-dot-notation';
 import clone from 'clone';
 
-import Map from './map/index.js';
+import Map from '../map/index.js';
 
 /**
  * @abstract
@@ -231,7 +231,7 @@ export default class BaseEntity
      */
     static getMap()
     {
-        return new Map(this.getCollection());
+        return Map.createFromCollection(this.getCollection());
     }
 
     // todo: deprecated, replace with getMap() and remove

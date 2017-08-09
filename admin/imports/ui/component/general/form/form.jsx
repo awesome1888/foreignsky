@@ -6,6 +6,7 @@ import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 import PropTypes from 'prop-types';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import BaseComponent from '../../../../lib/base/component/component.jsx';
+import Map from '../../../../lib/base/map/index.js';
 
 import Row from './component/row/index.jsx';
 
@@ -29,7 +30,6 @@ export default class Form extends BaseComponent
 
     static defaultProps = {
         className: '',
-        map: [],
         model: {},
     };
 
@@ -61,12 +61,12 @@ export default class Form extends BaseComponent
 
     getMap()
     {
-        return this.props.map || [];
+        return this.props.map;
     }
 
     async getModel()
     {
-        return this.props.model || {};
+        return this.props.model;
     }
 
     transformMap(map)
@@ -119,11 +119,19 @@ export default class Form extends BaseComponent
         // console.dir(this.transformModel());
 
         const tModel = this.transformModel();
+        const tMap = this.getMapTransformed();
+        if (!(tMap instanceof Map))
+        {
+            console.error('Not a map passed to the form');
+            return null;
+        }
+
         console.dir(tModel);
+        console.dir(tMap);
 
         return (
             <AutoForm
-                schema={this.getMapTransformed().getSurrogateSchema()}
+                schema={tMap.getSurrogateSchema()}
                 model={tModel}
                 onSubmit={this.onSubmit.bind(this)}
                 className="form"

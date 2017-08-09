@@ -33,7 +33,7 @@ export default class Row extends React.Component
         if (attribute.isArrayOfStringDiscreet())
         {
             // todo: it should be rendered as selectbox with
-            // todo: either checkboxes or radio-buttons
+            // todo: either checkboxes or radio-buttons, depending on what we have in maxCount
             return null;
         }
 
@@ -77,6 +77,39 @@ export default class Row extends React.Component
         return null;
     }
 
+    getControlParams(attribute)
+    {
+        const params = {
+            attribute,
+        };
+
+        if (attribute.isArray()) {
+            params.initialCount = 1;
+            // params.map = new Map();
+        }
+
+        return params;
+    }
+
+    getControlChildren(attribute)
+    {
+        let children = null;
+        if (attribute.isArray())
+        {
+            children = [
+                React.createElement(
+                    this.resolveItemRenderer(),
+                    {
+                        name: '$',
+                        key: '-1',
+                    }
+                )
+            ];
+        }
+
+        return children;
+    }
+
     renderControl()
     {
         const attribute = this.getAttribute();
@@ -86,28 +119,15 @@ export default class Row extends React.Component
             return null;
         }
 
-        let children = null;
-        if (attribute.isArray())
-        {
-            children = [
-                React.createElement(
-                    this.resolveItemRenderer(),
-                    {
-                        name: '$',
-                    }
-                )
-            ];
-        }
-
         return React.createElement(
             constructor,
-            {
-                name: attribute.getCode(),
-                attribute,
-
-                initialCount: 1,
-            },
-            children
+            Object.assign(
+                this.getControlParams(attribute),
+                {
+                    name: attribute.getCode(),
+                }
+            ),
+            this.getControlChildren(attribute)
         );
     }
 

@@ -22,8 +22,7 @@ class RendererSchema extends RendererGeneric
             >
                 FORM:
                 <Form
-                    model={}
-                    schema={}
+                    model={this.props.model}
                 />
             </Container>
         );

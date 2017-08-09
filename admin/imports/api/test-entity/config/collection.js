@@ -43,38 +43,38 @@ export default new class extends Collection
                 optional: false,
                 label: 'Multiple string',
             },
-            // dateM: {
-            //     type: [Date],
-            //     optional: false,
-            //     label: 'Multiple date',
-            // },
-            // boolM: {
-            //     type: [Boolean],
-            //     optional: true,
-            //     defaultValue: [false, true],
-            //     label: 'Multiple boolean',
-            // },
-            // numM: {
-            //     type: [Number],
-            //     optional: false,
-            //     defaultValue: [1, 2],
-            //     label: 'Multiple number',
-            // },
+            dateM: {
+                type: [Date],
+                optional: false,
+                label: 'Multiple date',
+            },
+            boolM: {
+                type: [Boolean],
+                optional: true,
+                defaultValue: [false, true],
+                label: 'Multiple boolean',
+            },
+            numM: {
+                type: [Number],
+                optional: false,
+                defaultValue: [1, 2],
+                label: 'Multiple number',
+            },
 
 
 
-            // schema: {
-            //     type: new SimpleSchema({
-            //         lat: {
-            //             type: Number,
-            //         },
-            //         long: {
-            //             type: Number,
-            //         }
-            //     }),
-            //     optional: true,
-            //     label: 'Sub-schema',
-            // },
+            schema: {
+                type: new SimpleSchema({
+                    lat: {
+                        type: Number,
+                    },
+                    long: {
+                        type: Number,
+                    }
+                }),
+                optional: true,
+                label: 'Sub-schema',
+            },
             // schemaM: {
             //     type: [new SimpleSchema({
             //         lat: {
@@ -91,16 +91,16 @@ export default new class extends Collection
 
 
 
-            // ref: {
-            //     type: String,
-            //     optional: false,
-            //     label: 'Single ref',
-            // },
-            // refM: {
-            //     type: [String],
-            //     optional: false,
-            //     label: 'Single ref',
-            // },
+            ref: {
+                type: String,
+                optional: false,
+                label: 'Single ref',
+            },
+            refM: {
+                type: [String],
+                optional: false,
+                label: 'Single ref',
+            },
 
         };
     }

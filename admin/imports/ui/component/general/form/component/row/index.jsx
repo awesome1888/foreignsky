@@ -4,6 +4,7 @@ import RendererString from './../../component/renderer/string/index.jsx';
 import RendererBoolean from './../../component/renderer/boolean/index.jsx';
 import RendererDate from './../../component/renderer/date/index.jsx';
 import RendererList from './../../component/renderer/list/index.jsx';
+import RenderSchema from './../../component/renderer/schema/index.jsx';
 
 export default class Row extends React.Component
 {
@@ -29,7 +30,7 @@ export default class Row extends React.Component
             return RendererBoolean;
         }
 
-        if (attribute.isArrayOfBoolean())
+        if (attribute.isArrayOfStringDiscreet())
         {
             // todo: it should be rendered as selectbox with
             // todo: either checkboxes or radio-buttons
@@ -39,6 +40,11 @@ export default class Row extends React.Component
         if (attribute.isArray())
         {
             return RendererList;
+        }
+
+        if (attribute.isSchema())
+        {
+            return RenderSchema;
         }
 
         return null;

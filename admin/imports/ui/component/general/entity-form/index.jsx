@@ -38,7 +38,7 @@ export default class EntityForm extends Form
     {
         const id = this.props.id;
 
-        if (_.isStringNotEmpty(id)) {
+        if (_.isStringNotEmpty(id) && id !== '0') {
             const item = await this.getEntity().findById(id, {select: '*'});
             if (item)
             {

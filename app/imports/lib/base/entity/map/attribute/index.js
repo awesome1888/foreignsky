@@ -1,3 +1,5 @@
+import {SimpleSchema} from 'meteor/aldeed:simple-schema';
+
 export default class Attribute
 {
     _data = null;
@@ -27,6 +29,16 @@ export default class Attribute
         return this._data.type === Date;
     }
 
+    isSchema()
+    {
+        return this._data.type instanceof SimpleSchema;
+    }
+
+    isArray()
+    {
+        return _.isArray(this._data.type);
+    }
+
     isStringItem()
     {
         const a = this._data;
@@ -51,15 +63,17 @@ export default class Attribute
         return this.isArray() && a.type[0] === Date;
     }
 
-    isArrayOfBoolean()
+    isSchemaItem()
     {
         const a = this._data;
-        return _.isArray(a.type) && a.type[0] === Boolean;
+        return this.isArray() && a.type[0] instanceof SimpleSchema;
     }
 
-    isArray()
+    // special
+    isArrayOfStringDiscreet()
     {
-        return _.isArray(this._data.type);
+        const a = this._data;
+        return this.isArray() && a.type[0] === String && _.isArray(a.allowedValues);
     }
 
     getData()

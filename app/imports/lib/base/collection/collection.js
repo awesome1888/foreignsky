@@ -18,8 +18,6 @@ export default class BaseCollection extends Mongo.Collection
 
     initializeFromSource(map)
     {
-        console.dir();
-        
         this.setSchema(map.getSchema());
         this.setLinks(map.getLinks());
 

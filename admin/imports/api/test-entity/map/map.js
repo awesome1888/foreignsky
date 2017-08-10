@@ -1,5 +1,5 @@
 import Map from '../../../lib/base/map/index.js';
-import TestLinkedEntity from '../../test-linked-entity/entity/entity.js';
+import TestLinkedEntity from '../../test-linked-entity/entity/entity.server.js';
 
 export default new class extends Map
 {
@@ -96,7 +96,6 @@ export default new class extends Map
             {
                 code: 'link',
                 type: TestLinkedEntity,
-                referenceField: 'ref',
                 label: 'Sub-entity',
             },
             {
@@ -104,7 +103,6 @@ export default new class extends Map
                 type: [
                     TestLinkedEntity,
                 ],
-                referenceField: 'refM',
                 label: 'Sub-entity (array)',
             },
         ]);

@@ -5,6 +5,7 @@ import Attribute from './attribute/index.js';
 export default class Map
 {
     _attributes = [];
+    _parts = null;
 
     constructor(definition)
     {
@@ -27,16 +28,69 @@ export default class Map
         return result;
     }
 
+    decomposeMap()
+    {
+        if (!this._parts)
+        {
+            this._parts = {};
+
+            const schema = {};
+            const links = {};
+
+            this.forEach((a) => {
+                if (a.isLink() || a.isLinkItem())
+                {
+                    const isMultiple = a.isArray();
+                    const refFieldCode = a.getCode()+'Id';
+
+                    // links
+                    links[a.getCode()] = {
+                        type: isMultiple ? 'many' : 'one',
+                        collection: a.getLinkCollection(),
+                        field: refFieldCode,
+                    };
+
+                    // add ref fields
+                    schema[refFieldCode] = {
+                        type: a.isArray() ? [String] : String,
+                        optional: a.getOptional(),
+                    };
+                }
+                else
+                {
+                    const item = a.getSchemaFields();
+
+                    if (a.isMap())
+                    {
+                        item.type = item.type.getSchema();
+                    }
+                    else if(a.isMapItem())
+                    {
+                        item.type = [item.type[0].getSchema()];
+                    }
+
+                    schema[a.getCode()] = item;
+                }
+            });
+
+            console.dir(schema);
+            console.dir(links);
+
+            this._parts.schema = new SimpleSchema(schema);
+            this._parts.links = links;
+        }
+
+        return this._parts;
+    }
+
     getSchema()
     {
-        // todo
-        return {};
+        return this.decomposeMap().schema;
     }
 
     getLinks()
     {
-        // todo
-        return {};
+        return this.decomposeMap().links;
     }
 
     forEach(cb)

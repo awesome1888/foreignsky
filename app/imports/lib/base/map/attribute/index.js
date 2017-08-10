@@ -1,4 +1,5 @@
-import {SimpleSchema} from 'meteor/aldeed:simple-schema';
+import Map from '../../map/index.js';
+import Entity from '../../entity/entity.js';
 
 export default class Attribute
 {
@@ -29,9 +30,14 @@ export default class Attribute
         return this._data.type === Date;
     }
 
-    isSchema()
+    isMap()
     {
-        return this._data.type instanceof SimpleSchema;
+        return this._data.type instanceof Map;
+    }
+
+    isLink()
+    {
+        return this._data.type.prototype instanceof Entity;
     }
 
     isArray()
@@ -63,10 +69,30 @@ export default class Attribute
         return this.isArray() && a.type[0] === Date;
     }
 
-    isSchemaItem()
+    isMapItem()
     {
         const a = this._data;
-        return this.isArray() && a.type[0] instanceof SimpleSchema;
+        return this.isArray() && a.type[0] instanceof Map;
+    }
+
+    isLinkItem()
+    {
+        const a = this._data;
+        return this.isArray() && a.type[0].prototype instanceof Entity;
+    }
+
+    getLinkCollection()
+    {
+        if (this.isLink())
+        {
+            return this._data.type.getCollection();
+        }
+        else if (this.isLinkItem())
+        {
+            return this._data.type[0].getCollection();
+        }
+
+        return null;
     }
 
     // special
@@ -103,6 +129,24 @@ export default class Attribute
             return parseInt(this._data.maxCount);
         }
         return 9999999;
+    }
+
+    getOptional()
+    {
+        if ('optional' in this._data)
+        {
+            return this._data.optional;
+        }
+
+        return false;
+    }
+
+    getSchemaFields()
+    {
+        return _.intersectKeys(this._data, {
+            type: 1, optional: 1, allowedValues: 1,
+            defaultValue: 1, custom: 1, label: 1,
+        });
     }
 
     getRenderer()

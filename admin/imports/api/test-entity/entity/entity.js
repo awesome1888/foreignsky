@@ -1,5 +1,5 @@
 import collection from '../config/collection.js';
-import map from '../config/map.js';
+import map from '../map/map.js';
 
 /**
  * @abstract

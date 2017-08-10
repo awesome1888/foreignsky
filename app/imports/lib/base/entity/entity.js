@@ -23,9 +23,37 @@ export default class BaseEntity
         return {};
     }
 
+    static getCollectionInstance()
+    {
+        this.throwNotImplemented('static getCollectionInstance()');
+    }
+
+    static getMapInstance()
+    {
+        this.throwNotImplemented('static getMapInstance()');
+    }
+
     static getCollection()
     {
-        this.throwNotImplemented('static getCollection()');
+        const inst = this.getCollectionInstance();
+        if (!inst.isInitialized())
+        {
+            inst.initializeFromSource(this.getMap());
+        }
+
+        return inst;
+    }
+
+    /**
+     * This function returns the same as getCollection().getSchema(), but extended, with
+     * a few new attributes and including links
+     * // todo: move all to getMap()
+     * // todo: make it cached
+     * @returns {*}
+     */
+    static getMap()
+    {
+        return this.getMapInstance();
     }
 
     static prepareQuery(condition)
@@ -220,18 +248,6 @@ export default class BaseEntity
         }
 
         return resolver;
-    }
-
-    /**
-     * This function returns the same as getCollection().getSchema(), but extended, with
-     * a few new attributes and including links
-     * // todo: move all to getMap()
-     * // todo: make it cached
-     * @returns {*}
-     */
-    static getMap()
-    {
-        return Map.createFromCollection(this.getCollection());
     }
 
     // todo: deprecated, replace with getMap() and remove

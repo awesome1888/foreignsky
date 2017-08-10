@@ -4,6 +4,6 @@ export default new class extends Collection
 {
     constructor()
     {
-        super('test-entity');
+        super('test-sub-entity');
     }
 }

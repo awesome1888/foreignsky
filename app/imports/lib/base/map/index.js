@@ -1,6 +1,4 @@
-import { Mongo } from 'meteor/mongo';
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
-import clone from 'clone';
 
 import Attribute from './attribute/index.js';
 
@@ -8,81 +6,37 @@ export default class Map
 {
     _attributes = [];
 
-    static createFromCollection(collection)
+    constructor(definition)
     {
-        if (!(collection instanceof Mongo.Collection))
+        this._attributes = this.makeAttributes(definition);
+    }
+
+    makeAttributes(definition)
+    {
+        const result = [];
+
+        if (_.isArrayNotEmpty(definition))
         {
-            throw new TypeError('Not a collection');
+            definition.forEach((item) => {
+                result.push(new Attribute(
+                    item
+                ));
+            });
         }
-
-        const attributes = [];
-        let order = 0;
-
-        const schema = collection.getSchema(); // object
-        const links = collection.getLinks();
-        const linkRefs = _.invert(_.uniq(_.map(links, (link) => {
-            return link.field;
-        })));
-
-        _.forEach(schema, (attribute, code) => {
-            if (code in linkRefs)
-            {
-                return;
-            }
-
-            attributes.push(new Attribute({
-                code,
-                order,
-                label: attribute.label || '',
-                type: attribute.type,
-                optional: attribute.optional,
-            }));
-
-            order += 1;
-        });
-
-        _.forEach(links, (attribute, code) => {
-            const field = attribute.field;
-            const fData = clone(schema[attribute.field]);
-
-            fData.code = code;
-            fData.order = order;
-
-            fData.codeRef = field;
-            fData.collectionRef = attribute.collection;
-
-            attributes.push(new Attribute(fData));
-
-            order += 1;
-        });
-
-        const result = new this();
-        result.setAttributes(attributes);
 
         return result;
     }
 
-    // static createFromSchema(schema)
-    // {
-    //     if (!(schema instanceof SimpleSchema))
-    //     {
-    //         throw new TypeError('Not a schema');
-    //     }
-    //
-    //     const attributes = [];
-    //     let order = 0;
-    //
-    //
-    //
-    //     const result = new this();
-    //     result.setAttributes(attributes);
-    //
-    //     return result;
-    // }
-
-    setAttributes(attributes)
+    getSchema()
     {
-        this._attributes = attributes;
+        // todo
+        return {};
+    }
+
+    getLinks()
+    {
+        // todo
+        return {};
     }
 
     forEach(cb)

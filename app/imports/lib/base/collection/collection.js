@@ -3,28 +3,62 @@ import BulkContext from './bulk-context/bulk-context.js';
 
 export default class BaseCollection extends Mongo.Collection
 {
+    _schema = null;
+    _links = null;
+    _initialized = false;
+
     constructor(collectionName)
     {
         super(collectionName);
-        this.attachSchema(this.getSchema());
-        this.addLinks(this.getLinks());
-        this.createIndexes();
-        this.applyHooks();
+        // this.attachSchema(this.getSchema());
+        // this.addLinks(this.getLinks());
+        // this.createIndexes();
+        // this.applyHooks();
+    }
+
+    initializeFromSource(map)
+    {
+        console.dir();
+        
+        this.setSchema(map.getSchema());
+        this.setLinks(map.getLinks());
+
+        this.setInitialized();
     }
 
     getSchema()
     {
-        throw new Error('Not implemented: getSchema()');
+        return this._schema;
+    }
+
+    setSchema(schema)
+    {
+        this.attachSchema(schema);
     }
 
     getLinks()
     {
-        return {};
+        return this._links;
     }
 
-    getIndexes() {
-        return [];
+    setLinks(links)
+    {
+        this.addLinks(links);
     }
+
+    setInitialized()
+    {
+        this._initialized = true;
+    }
+
+    isInitialized()
+    {
+        return this._initialized;
+    }
+
+    // getIndexes() {
+    //     return [];
+    // }
 
     getName() {
         return this._name;
@@ -35,26 +69,26 @@ export default class BaseCollection extends Mongo.Collection
         return this.getName().replace('.', '_').toLowerCase();
     }
 
-    applyHooks()
-    {
-    }
+    // applyHooks()
+    // {
+    // }
 
-    createIndexes()
-    {
-        if(Meteor.isServer)
-        {
-            const rawCollection = this.rawCollection();
-            this.getIndexes().forEach((index) => {
-                if (_.isObjectNotEmpty(index.fields))
-                {
-                    rawCollection.createIndex(
-                        index.fields,
-                        index.options
-                    );
-                }
-            });
-        }
-    }
+    // createIndexes()
+    // {
+    //     if(Meteor.isServer)
+    //     {
+    //         const rawCollection = this.rawCollection();
+    //         this.getIndexes().forEach((index) => {
+    //             if (_.isObjectNotEmpty(index.fields))
+    //             {
+    //                 rawCollection.createIndex(
+    //                     index.fields,
+    //                     index.options
+    //                 );
+    //             }
+    //         });
+    //     }
+    // }
 
     updateMany(filter, changes)
     {

@@ -6,7 +6,7 @@ const M = (superclass) => class extends superclass
     {
         super();
 
-        // const testLinked = this.resolveEntityConstructor('test');
+        const testLinked = this.resolveEntityConstructor('test');
 
         this.setDefinition([
             {
@@ -97,18 +97,18 @@ const M = (superclass) => class extends superclass
                 label: 'Multiple Sub-schema',
             },
 
-            // {
-            //     code: 'link',
-            //     type: testLinked,
-            //     label: 'Sub-entity',
-            // },
-            // {
-            //     code: 'linkM',
-            //     type: [
-            //         testLinked,
-            //     ],
-            //     label: 'Sub-entity (array)',
-            // },
+            {
+                code: 'link',
+                type: testLinked,
+                label: 'Sub-entity',
+            },
+            {
+                code: 'linkM',
+                type: [
+                    testLinked,
+                ],
+                label: 'Sub-entity (array)',
+            },
         ]);
     }
 };

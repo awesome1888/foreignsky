@@ -65,7 +65,7 @@ export default class Map
                 if (a.isLink() || a.isLinkItem())
                 {
                     const isMultiple = a.isArray();
-                    const refFieldCode = a.getCode()+'Id';
+                    const refFieldCode = this.makeRefCode(a.getCode());
 
                     // links for grapher
                     links[a.getCode()] = {
@@ -75,10 +75,7 @@ export default class Map
                     };
 
                     // add ref fields
-                    schema[refFieldCode] = {
-                        type: a.isArray() ? [String] : String,
-                        optional: a.getOptional(),
-                    };
+                    schema[refFieldCode] = this.makeRefField(a);
                 }
                 else
                 {
@@ -135,6 +132,23 @@ export default class Map
         return [];
     }
 
+    mapWithLinksReplace(cb)
+    {
+        if (_.isFunction(cb))
+        {
+            return this._attributes.map((item) => {
+                if (item.isLink() || item.isLinkItem())
+                {
+                    item = this.makeRefAttribute(item);
+                }
+
+                return cb(item);
+            });
+        }
+
+        return [];
+    }
+
     tuneAttribute(code, data = {})
     {
         // todo
@@ -143,5 +157,28 @@ export default class Map
     removeAttribute(code)
     {
         this._attributes = this._attributes.filter(item => item.getCode() !== code);
+    }
+
+    makeRefCode(code)
+    {
+        return `${code}Id`;
+    }
+
+    makeRefField(attribute)
+    {
+        return {
+            type: attribute.isArray() ? [String] : String,
+            optional: attribute.getOptional(),
+            regEx: SimpleSchema.RegEx.Id,
+            label: 'Reference', // `Reference to ${attribute.getCode()}`,
+        };
+    }
+
+    makeRefAttribute(attribute)
+    {
+        const f = this.makeRefField(attribute);
+        f.code = this.makeRefCode(attribute.getCode());
+
+        return new Attribute(f);
     }
 }

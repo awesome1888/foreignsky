@@ -47,6 +47,8 @@ export default class Row extends React.Component
             return RenderMap;
         }
 
+        // todo: can be a single link
+
         return null;
     }
 
@@ -74,6 +76,11 @@ export default class Row extends React.Component
         if (attribute.isMapItem())
         {
             return RenderMap;
+        }
+
+        if (attribute.isLinkItem())
+        {
+            return RendererString;
         }
 
         return null;

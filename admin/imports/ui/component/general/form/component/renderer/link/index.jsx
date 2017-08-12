@@ -9,9 +9,7 @@ import filterDOMProps from 'uniforms/filterDOMProps';
 import RendererGeneric from '../generic/index.jsx';
 import Container from '../container/index.jsx';
 
-import Form from '../../../form.jsx';
-
-class RendererMap extends RendererGeneric
+class RendererLink extends RendererGeneric
 {
     render()
     {
@@ -20,13 +18,15 @@ class RendererMap extends RendererGeneric
                 errorProps={this.props}
                 {...filterDOMProps(this.props)}
             >
-                <Form
-                    map={this.props.map}
-                    isFragment
+                <input
+                    type="text"
+                    name={this.getName()}
+                    onChange={this.getOnChange()}
+                    value={this.getValue()}
                 />
             </Container>
         );
     }
 }
 
-export default connectField(RendererMap, {});
+export default connectField(RendererLink, {});

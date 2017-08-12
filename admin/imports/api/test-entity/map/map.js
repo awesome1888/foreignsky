@@ -1,4 +1,5 @@
 import Map from '../../../lib/base/map/index.js';
+import Attribute from '../../../lib/base/map/attribute/index.js';
 
 const M = (superclass) => class extends superclass
 {
@@ -40,13 +41,13 @@ const M = (superclass) => class extends superclass
             {
                 code: 'stringM',
                 type: [String],
-                optional: false,
+                optional: true,
                 label: 'Multiple string',
             },
             {
                 code: 'dateM',
                 type: [Date],
-                optional: false,
+                optional: true,
                 label: 'Multiple date',
             },
             {
@@ -59,7 +60,7 @@ const M = (superclass) => class extends superclass
             {
                 code: 'numM',
                 type: [Number],
-                optional: false,
+                optional: true,
                 defaultValue: [1, 2],
                 label: 'Multiple number',
             },
@@ -108,7 +109,7 @@ const M = (superclass) => class extends superclass
                 type: [
                     testLinked,
                 ],
-                optional: false,
+                optional: true,
                 label: 'Sub-entity (array)',
             },
         ]);

@@ -51,7 +51,7 @@ class RendererList extends RendererGeneric
     {
         const a = this.getAttribute();
 
-        return this.isDisabled() || a.getMax() <= this.getValue().length;
+        return this.isDisabled() || a.getMaxCount() <= this.getValue().length;
     }
 
     getInitialCount()

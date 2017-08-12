@@ -90,6 +90,12 @@ export default class Map
                         item.type = [item.type[0].getSchema()];
                     }
 
+                    if (a.isArray() && !_.isFunction(a.getCustom()) && !a.isOptional())
+                    {
+                        // we do not accept "length 1" array of undefined as "filled" value
+                        item.custom = Attribute.getStrictArrayCondition(a.getCode());
+                    }
+
                     schema[a.getCode()] = item;
                 }
             });
@@ -166,12 +172,23 @@ export default class Map
 
     makeRefField(attribute)
     {
-        return {
+        const field = {
             type: attribute.isArray() ? [String] : String,
             optional: attribute.getOptional(),
             regEx: SimpleSchema.RegEx.Id,
             label: 'Reference', // `Reference to ${attribute.getCode()}`,
+            minCount: 0,
         };
+        if (attribute.isArray() && !_.isFunction(attribute.getCustom()) && !attribute.isOptional())
+        {
+            console.dir('attach!');
+            // we do not accept "length 1" array of undefined as "filled" value
+            field.custom = Attribute.getStrictArrayCondition(
+                this.makeRefCode(attribute.getCode())
+            );
+        }
+
+        return field;
     }
 
     makeRefAttribute(attribute)

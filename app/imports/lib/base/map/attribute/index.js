@@ -5,6 +5,20 @@ export default class Attribute
 {
     _data = null;
 
+    static getStrictArrayCondition(name)
+    {
+        return function ()
+        {
+            const value = this.field(name).value;
+            if (!_.isArrayNotEmpty(_.compact(value)))
+            {
+                return 'required';
+            }
+
+            return null;
+        };
+    }
+
     constructor(data)
     {
         this._data = data;
@@ -81,6 +95,11 @@ export default class Attribute
         return this.isArray() && a.type[0].prototype instanceof Entity;
     }
 
+    isLinkAny()
+    {
+        return this.isLink() || this.isLinkItem();
+    }
+
     getLinkCollection()
     {
         if (this.isLink())
@@ -122,11 +141,37 @@ export default class Attribute
         return this._data.label || '';
     }
 
-    getMax()
+    getCustom()
     {
-        if ('maxCount' in this._data)
+        return this._data.custom || null;
+    }
+
+    isOptional()
+    {
+        return this._data.optional === true;
+    }
+
+    hasMinCount()
+    {
+        return 'minCount' in this._data;
+    }
+
+    getMinCount()
+    {
+        const num = parseInt(this._data.minCount);
+        if (!isNaN(num))
         {
-            return parseInt(this._data.maxCount);
+            return num;
+        }
+        return 0;
+    }
+
+    getMaxCount()
+    {
+        const num = parseInt(this._data.maxCount);
+        if (!isNaN(num))
+        {
+            return num;
         }
         return 9999999;
     }

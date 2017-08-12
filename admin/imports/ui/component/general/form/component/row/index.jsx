@@ -83,9 +83,25 @@ export default class Row extends React.Component
             attribute,
         };
 
-        if (attribute.isArray()) {
+        if (attribute.isArray())
+        {
             params.initialCount = 1;
-            // params.map = new Map();
+        }
+        if (attribute.isMap())
+        {
+            params.map = attribute.getType();
+        }
+
+        return params;
+    }
+
+    getControlChildrenParams(attribute)
+    {
+        const params = {};
+
+        if (attribute.isMap())
+        {
+            params.map = attribute.getType();
         }
 
         return params;
@@ -99,10 +115,13 @@ export default class Row extends React.Component
             children = [
                 React.createElement(
                     this.resolveItemRenderer(),
-                    {
-                        name: '$',
-                        key: '-1',
-                    }
+                    Object.assign(
+                        this.getControlChildrenParams(attribute),
+                        {
+                            name: '$',
+                            key: '-1',
+                        }
+                    )
                 )
             ];
         }

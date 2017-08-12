@@ -15,6 +15,8 @@ class RendererMap extends RendererGeneric
 {
     render()
     {
+        console.dir(this.props);
+        
         return (
             <Container
                 errorProps={this.props}
@@ -22,7 +24,7 @@ class RendererMap extends RendererGeneric
             >
                 FORM:
                 <Form
-                    model={this.props.model}
+                    map={this.props.map}
                 />
             </Container>
         );

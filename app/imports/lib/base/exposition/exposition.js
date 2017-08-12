@@ -20,11 +20,18 @@ export default class
         return {
             'find': {
                 body: this.find,
+                // todo: the same restrictions as in any ordinary method in this cms:
                 //     security: {
                 //         needAuthorized: true,
                 //         needAdmin: true,
                 //         controller: () => {}
                 //     }
+            },
+            'save': {
+                body: this.save,
+            },
+            'delete': {
+                body: this.delete,
             },
             'getCount': {
                 body: this.getCount,
@@ -80,12 +87,13 @@ export default class
         return this.getEntity().getCollection().find(q.body.$filters || {}, {}).count();
     }
 
-    save()
+    save(id, data)
     {
-        // todo
+        console.dir(id);
+        console.dir(data);
     }
 
-    delete()
+    delete(id)
     {
         // todo
     }

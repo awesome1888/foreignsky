@@ -8,46 +8,45 @@ export default class BaseEntity extends Entity
 {
     static expCtrl = null;
 
-    getRawCollection()
+    static findById(id, params = {})
     {
-        return this.getCollection().rawCollection();
-    }
-
-    static getRawCollection()
-    {
-        return this.getCollection().rawCollection();
-    }
-
-    static restrictExpositionGrapher(filters, options, userId)
-    {
-    }
-
-    static getExpositionController()
-    {
-        return Exposition;
-    }
-
-    static expose()
-    {
-        if(this.expCtrl === null)
+        const qParams = {filter: {_id: id}};
+        if ('select' in params)
         {
-            const ctrl = this.getExpositionController();
-            this.expCtrl = new ctrl(this);
+            qParams.select = params.select;
         }
+
+        return this.findOne(qParams);
     }
 
-    static exposeGrapher()
+    static findOne(condition = {})
     {
-        this.collection.expose({
-            firewall: this.restrictExpositionGrapher.bind(this),
-            maxLimit: 1000,
-            maxDepth: 5,
-            // restrictedFields: this.restrictedFields, // array of fields you want to restrict
-            method: true,
-            publication: false,
-            //restrictLinks: this.restrictedLinks,
-            //body, // object that will intersect with the actual request body from the client
-        });
+        if (!_.isObject(condition))
+        {
+            throw new TypeError('Argument should be an object and may contain keys "filter", "select", etc.');
+        }
+
+        condition.limit = 1;
+        const data = this.find(condition);
+
+        if (_.isArrayNotEmpty(data))
+        {
+            return new this(data[0]);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param condition
+     */
+    static find(condition = {})
+    {
+        return this.createQuery(condition).fetch().reduce((result, data) => {
+            // make instance
+            result.push(new this(data));
+            return result;
+        }, []);
     }
 
     /**
@@ -63,16 +62,55 @@ export default class BaseEntity extends Entity
         }).getCount();
     }
 
-    /**
-     * todo: rename to findGrapher
-     * @param condition
-     */
-    static find(condition = {})
+    getRawCollection()
     {
-        return this.createQuery(condition).fetch().reduce((result, data) => {
-            // make instance
-            result.push(new this(data));
-            return result;
-        }, []);
+        return this.getCollection().rawCollection();
+    }
+
+    static save(id, data)
+    {
+
+    }
+
+    static delete(id)
+    {
+
+    }
+
+    static getRawCollection()
+    {
+        return this.getCollection().rawCollection();
+    }
+
+    static getExpositionController()
+    {
+        return Exposition;
+    }
+
+    static expose()
+    {
+        // todo: this will break the inheritance (static cache)! fix!
+        if(this.expCtrl === null)
+        {
+            const ctrl = this.getExpositionController();
+            this.expCtrl = new ctrl(this);
+        }
+    }
+
+    /**
+     * @deprecated
+     */
+    static exposeGrapher()
+    {
+        this.collection.expose({
+            // firewall: this.restrictExpositionGrapher.bind(this),
+            maxLimit: 1000,
+            maxDepth: 5,
+            // restrictedFields: this.restrictedFields, // array of fields you want to restrict
+            method: true,
+            publication: false,
+            //restrictLinks: this.restrictedLinks,
+            //body, // object that will intersect with the actual request body from the client
+        });
     }
 }

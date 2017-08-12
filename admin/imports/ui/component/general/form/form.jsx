@@ -138,7 +138,7 @@ export default class Form extends BaseComponent
                 {
                     this.state.error
                     &&
-                    <div style={{color: 'red'}}>
+                    <div className="form__error-message form__error-message_top">
                         Error occured: {this.state.error}
                     </div>
                 }

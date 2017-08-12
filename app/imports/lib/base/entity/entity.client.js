@@ -67,28 +67,14 @@ export default class BaseEntity extends Entity
         return count;
     }
 
-    static async findOneGrapher(condition = {})
+    static async save(id, data)
     {
-        const data = await this.wrapQCall(
-            this.prepareQuery(condition),
-            true
-        );
-
-        // make instance
-        return new this(data);
+        return await this.executeOperation('save', [id, data]);
     }
 
-    static async wrapQCall(q, one = false)
+    static async delete(id)
     {
-        return new Promise((resolve, reject) => {
-            q[one ? 'fetchOne' : 'fetch']((err, res) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(res);
-                }
-            })
-        });
+        return await this.executeOperation('delete', [id]);
     }
 
     static async executeOperation(op, args)
@@ -116,5 +102,15 @@ export default class BaseEntity extends Entity
     static makeMethodName(op)
     {
         return `${this.getCollection().getNameNormalized()}-${op}`;
+    }
+
+    async save(data)
+    {
+        throw new Error('Not implemened: save()');
+    }
+
+    async delete()
+    {
+        throw new Error('Not implemened: delete()');
     }
 }

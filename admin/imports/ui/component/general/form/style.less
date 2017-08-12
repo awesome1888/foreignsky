@@ -67,13 +67,21 @@
 	}
 }
 
-.form__error {
-	margin-top: 0.5rem;
+.form__error-message {
 	padding: 0.5rem;
 	font-size: 0.8rem;
 	background-color: #CF000F;
 	color: #e5e5e5 !important;
 	display: block;
+}
+
+.form__error {
+	.form__error-message;
+	margin-top: 0.5rem;
+}
+
+.form__error-message_top {
+	margin-bottom: 0.5rem;
 }
 
 .form__block-header {

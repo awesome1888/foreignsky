@@ -48,7 +48,7 @@ export default class EntityForm extends Form
             else
             {
                 this.setState({
-                    error: 'Element not found'
+                    error: 'element not found',
                 });
             }
         }
@@ -56,12 +56,19 @@ export default class EntityForm extends Form
         return {};
     }
 
+    async save(model)
+    {
+        return this.getEntity().save(this.props.id, model);
+    }
+
     onSubmit(model)
     {
-        const sourceModel = super.onSubmit(model);
+        this.save(super.onSubmit(model)).then((res) => {
 
-        // on submit we try save
-        console.dir('save');
-        console.dir(sourceModel);
+        }, (error) => {
+            this.setState({
+                error: `save failed: ${error}`,
+            });
+        });
     }
 }

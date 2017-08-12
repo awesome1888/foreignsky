@@ -12,20 +12,20 @@ const M = (superclass) => class extends superclass
             {
                 code: 'string',
                 type: String,
-                optional: false,
+                optional: true,
                 label: 'Single string',
                 // autoSelect: false,
             },
             {
                 code: 'date',
                 type: Date,
-                optional: false,
+                optional: true,
                 label: 'Single date',
             },
             {
                 code: 'bool',
                 type: Boolean,
-                optional: false,
+                optional: true,
                 defaultValue: false,
                 label: 'Single boolean',
             },
@@ -78,7 +78,7 @@ const M = (superclass) => class extends superclass
                         optional: true,
                     }
                 ]),
-                optional: false,
+                optional: true,
                 label: 'Sub-schema',
             },
             {
@@ -100,6 +100,7 @@ const M = (superclass) => class extends superclass
             {
                 code: 'link',
                 type: testLinked,
+                optional: true,
                 label: 'Sub-entity',
             },
             {
@@ -107,6 +108,7 @@ const M = (superclass) => class extends superclass
                 type: [
                     testLinked,
                 ],
+                optional: false,
                 label: 'Sub-entity (array)',
             },
         ]);

@@ -18,10 +18,17 @@ export default class TestEntityDetailPage extends BasePage
                 title={this.props.title}
                 motd={this.props.motd}
                 central={
-                    <Form
-                        id={this.props.route.id}
-                        detailPageUrl={this.props.route.detailPath || ''}
-                    />
+                    <div>
+                        <Form
+                            id={this.props.route.id}
+                            detailPageUrl={this.props.route.detailPath || ''}
+                        />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                    </div>
                 }
             />
         );

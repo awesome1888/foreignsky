@@ -99,7 +99,7 @@ export default class Form extends BaseComponent
 
     onSubmit(model)
     {
-        const sourceModel = this.transformModelBack();
+        const sourceModel = this.transformModelBack(model);
 
         if (_.isFunction(this.props.onSubmit)) {
             this.props.onSubmit(sourceModel);

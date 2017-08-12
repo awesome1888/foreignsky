@@ -58,7 +58,7 @@ export default class EntityForm extends Form
 
     onSubmit(model)
     {
-        const sourceModel = this.transformModelBack();
+        const sourceModel = super.onSubmit(model);
 
         // on submit we try save
         console.dir('save');

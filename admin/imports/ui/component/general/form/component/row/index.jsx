@@ -94,7 +94,7 @@ export default class Row extends React.Component
 
         if (attribute.isArray())
         {
-            params.initialCount = 1;
+            params.initialCount = 0;
         }
         if (attribute.isMap())
         {

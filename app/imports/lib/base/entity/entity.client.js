@@ -77,18 +77,10 @@ export default class BaseEntity extends Entity
         return await this.executeMethod('delete', [id]);
     }
 
-    static async executeMethod(op, args)
-    {
-        return this.executeMethod(
-            this.makeMethodName(op),
-            args
-        );
-    }
-
     static async executeMethod(name, args)
     {
         return new Promise((resolve, reject) => {
-            Meteor.apply(name, args, (err, res) => {
+            Meteor.apply(this.makeMethodName(name), args, (err, res) => {
                 if (err)
                 {
                     reject(err);
@@ -101,7 +93,7 @@ export default class BaseEntity extends Entity
 
     static makeMethodName(op)
     {
-        return `${this.getCollection().getNameNormalized()}-${op}`;
+        return `${this.getCollection().getNameNormalized()}.${op}`;
     }
 
     async save(data)

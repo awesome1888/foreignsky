@@ -66,7 +66,7 @@ export default class BaseEntity extends Entity
 
     static save(id, data)
     {
-
+        console.dir('save?');
     }
 
     static delete(id)

@@ -4,7 +4,7 @@ import mix from '../../../lib/mixin.js';
 
 import TestLinkedEntity from '../../../api/test-linked-entity/entity/entity.server.js';
 
-export default class Map extends mix(BaseMap).with(MapBoth)
+class Map extends mix(BaseMap).with(MapBoth)
 {
     getLinkedEntityMap()
     {
@@ -13,3 +13,5 @@ export default class Map extends mix(BaseMap).with(MapBoth)
         };
     }
 }
+
+export default new Map();

@@ -28,17 +28,6 @@ export default class BaseEntity
         this.throwNotImplemented('static getMapInstance()');
     }
 
-    static getCollection()
-    {
-        const inst = this.getCollectionInstance();
-        if (!inst.isInitialized())
-        {
-            inst.initializeFromSource(this.getMap());
-        }
-
-        return inst;
-    }
-
     /**
      * This function returns the same as getCollection().getSchema(), but extended, with
      * a few new attributes and including links
@@ -49,6 +38,22 @@ export default class BaseEntity
     static getMap()
     {
         return this.getMapInstance();
+    }
+
+    static getCollection()
+    {
+        const inst = this.getCollectionInstance();
+        if (!inst.isInitialized())
+        {
+            const map = this.getMap();
+            if (!(map instanceof Map))
+            {
+                throw new TypeError('Entity map is not an instance of Map');
+            }
+            inst.initializeFromSource(map);
+        }
+
+        return inst;
     }
 
     static prepareQuery(condition)

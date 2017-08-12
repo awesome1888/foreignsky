@@ -4,7 +4,7 @@ import RendererString from './../../component/renderer/string/index.jsx';
 import RendererBoolean from './../../component/renderer/boolean/index.jsx';
 import RendererDate from './../../component/renderer/date/index.jsx';
 import RendererList from './../../component/renderer/list/index.jsx';
-import RenderSchema from './../../component/renderer/schema/index.jsx';
+import RenderMap from './../../component/renderer/map/index.jsx';
 
 export default class Row extends React.Component
 {
@@ -17,7 +17,7 @@ export default class Row extends React.Component
             return attribute.getRenderer();
         }
 
-        if (attribute.isString())
+        if (attribute.isString() || attribute.isNumber())
         {
             return RendererString;
         }
@@ -42,9 +42,9 @@ export default class Row extends React.Component
             return RendererList;
         }
 
-        if (attribute.isSchema())
+        if (attribute.isMap())
         {
-            return RenderSchema;
+            return RenderMap;
         }
 
         return null;

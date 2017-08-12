@@ -17,7 +17,7 @@ export default class Attribute
 
     isNumber()
     {
-        return this._data.type === String;
+        return this._data.type === Number;
     }
 
     isBoolean()

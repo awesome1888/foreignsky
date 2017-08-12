@@ -43,9 +43,6 @@ export default class Map
 
     resolveEntityConstructor(name)
     {
-        console.dir('rec');
-        console.dir(this.getLinkedEntityMap());
-        
         const resolver = this.getLinkedEntityMap()[name];
         if (!_.isFunction(resolver))
         {
@@ -100,8 +97,8 @@ export default class Map
                 }
             });
 
-            console.dir(schema);
-            console.dir(links);
+            // console.dir(schema);
+            // console.dir(links);
 
             this._parts.schema = new SimpleSchema(schema);
             this._parts.links = links;
@@ -146,19 +143,5 @@ export default class Map
     removeAttribute(code)
     {
         this._attributes = this._attributes.filter(item => item.getCode() !== code);
-    }
-
-    getSurrogateSchema()
-    {
-        return new SimpleSchema(this._attributes.reduce((result, item) => {
-
-            result[item.getCode()] = _.intersectKeys(item.getData(), {
-                type: 1, label: 1, defaultValue: 1,
-                optional: 1, allowedValues: 1, maxCount: 1,
-                minCount: 1, custom: 1,
-            });
-
-            return result;
-        }, {}));
     }
 }

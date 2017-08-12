@@ -1,4 +1,4 @@
-const M = (superclass) =>  class Map extends superclass
+const M = (superclass) => class Map extends superclass
 {
     constructor()
     {

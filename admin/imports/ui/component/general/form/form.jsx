@@ -131,7 +131,7 @@ export default class Form extends BaseComponent
 
         return (
             <AutoForm
-                schema={tMap.getSurrogateSchema()}
+                schema={tMap.getSchema()}
                 model={tModel}
                 onSubmit={this.onSubmit.bind(this)}
                 className="form"

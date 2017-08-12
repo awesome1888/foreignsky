@@ -11,7 +11,7 @@ import Container from '../container/index.jsx';
 
 import Form from '../../../form.jsx';
 
-class RendererSchema extends RendererGeneric
+class RendererMap extends RendererGeneric
 {
     render()
     {
@@ -29,4 +29,4 @@ class RendererSchema extends RendererGeneric
     }
 }
 
-export default connectField(RendererSchema, {});
+export default connectField(RendererMap, {});

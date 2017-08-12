@@ -24,13 +24,15 @@ export default class Form extends BaseComponent
             PropTypes.array,
             PropTypes.object,
         ]),
-        map: PropTypes.array,
+        map: PropTypes.object,
         model: PropTypes.object,
+        isFragment: PropTypes.bool,
     };
 
     static defaultProps = {
         className: '',
         model: {},
+        isFragment: false,
     };
 
     constructor(props)
@@ -131,13 +133,8 @@ export default class Form extends BaseComponent
         // console.dir(tModel);
         // console.dir(tMap);
 
-        return (
-            <AutoForm
-                schema={tMap.getSchema()}
-                model={tModel}
-                onSubmit={this.onSubmit.bind(this)}
-                className="form"
-            >
+        const body = (
+            <div>
                 {
                     this.state.error
                     &&
@@ -159,7 +156,22 @@ export default class Form extends BaseComponent
                         }
                     </div>
                 </div>
+            </div>
+        );
 
+        if (this.props.isFragment)
+        {
+            return body;
+        }
+
+        return (
+            <AutoForm
+                schema={tMap.getSchema()}
+                model={tModel}
+                onSubmit={this.onSubmit.bind(this)}
+                className="form"
+            >
+                {body}
                 <div style={{marginTop: '10px'}}>
                     <button type="submit">Send</button>
                 </div>

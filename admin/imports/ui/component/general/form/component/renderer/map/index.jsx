@@ -22,9 +22,9 @@ class RendererMap extends RendererGeneric
                 errorProps={this.props}
                 {...filterDOMProps(this.props)}
             >
-                FORM:
                 <Form
                     map={this.props.map}
+                    isFragment
                 />
             </Container>
         );

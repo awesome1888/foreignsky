@@ -70,13 +70,15 @@ const M = (superclass) => class extends superclass
                     {
                         code: 'lat',
                         type: Number,
+                        optional: false,
                     },
                     {
                         code: 'long',
                         type: Number,
+                        optional: true,
                     }
                 ]),
-                optional: true,
+                optional: false,
                 label: 'Sub-schema',
             },
             // {

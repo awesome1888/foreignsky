@@ -81,21 +81,21 @@ const M = (superclass) => class extends superclass
                 optional: false,
                 label: 'Sub-schema',
             },
-            // {
-            //     code: 'mapM',
-            //     type: [new Map([
-            //         {
-            //             code: 'lattt',
-            //             type: Number,
-            //         },
-            //         {
-            //             code: 'longgg',
-            //             type: Number,
-            //         }
-            //     ])],
-            //     optional: true,
-            //     label: 'Sub-schema (array)',
-            // },
+            {
+                code: 'mapM',
+                type: [new Map([
+                    {
+                        code: 'lattt',
+                        type: Number,
+                    },
+                    {
+                        code: 'longgg',
+                        type: Number,
+                    }
+                ])],
+                optional: true,
+                label: 'Multiple Sub-schema',
+            },
 
             // {
             //     code: 'link',

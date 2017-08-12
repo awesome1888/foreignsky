@@ -71,8 +71,10 @@ export default class Row extends React.Component
         {
             return RendererBoolean;
         }
-        
-        // todo: could be also sub-schema
+        if (attribute.isMapItem())
+        {
+            return RenderMap;
+        }
 
         return null;
     }
@@ -99,9 +101,9 @@ export default class Row extends React.Component
     {
         const params = {};
 
-        if (attribute.isMap())
+        if (attribute.isMapItem())
         {
-            params.map = attribute.getType();
+            params.map = attribute.getType()[0];
         }
 
         return params;

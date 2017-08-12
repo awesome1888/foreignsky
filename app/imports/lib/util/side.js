@@ -1,6 +1,6 @@
 export default class Side
 {
-    static ensureClient()
+    static ensureOnClient()
     {
         if(!Meteor.isClient)
         {
@@ -8,7 +8,7 @@ export default class Side
         }
     }
 
-    static ensureServer()
+    static ensureOnServer()
     {
         if(!Meteor.isServer)
         {

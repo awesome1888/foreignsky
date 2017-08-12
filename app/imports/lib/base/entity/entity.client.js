@@ -1,7 +1,7 @@
 import Side from './../../util/side.js';
 import Entity from './entity.js';
 
-Side.ensureClient();
+Side.ensureOnClient();
 
 export default class BaseEntity extends Entity
 {
@@ -29,8 +29,8 @@ export default class BaseEntity extends Entity
         }
 
         condition.limit = 1;
-        const data = await this.executeOperation('find', [condition]);
-        
+        const data = await this.executeMethod('find', [condition]);
+
         if (_.isArrayNotEmpty(data))
         {
             return new this(data[0]);
@@ -46,7 +46,7 @@ export default class BaseEntity extends Entity
             throw new TypeError('Argument should be an object and may contain keys "filter", "select", etc.');
         }
 
-        const data = await this.executeOperation('find', [condition]);
+        const data = await this.executeMethod('find', [condition]);
 
         if (_.isArrayNotEmpty(data))
         {
@@ -58,7 +58,7 @@ export default class BaseEntity extends Entity
 
     static async getCount(condition = {})
     {
-        let count = parseInt(await this.executeOperation('getCount', [condition]));
+        let count = parseInt(await this.executeMethod('getCount', [condition]));
         if (isNaN(count))
         {
             return 0;
@@ -69,15 +69,15 @@ export default class BaseEntity extends Entity
 
     static async save(id, data)
     {
-        return await this.executeOperation('save', [id, data]);
+        return await this.executeMethod('save', [id, data]);
     }
 
     static async delete(id)
     {
-        return await this.executeOperation('delete', [id]);
+        return await this.executeMethod('delete', [id]);
     }
 
-    static async executeOperation(op, args)
+    static async executeMethod(op, args)
     {
         return this.executeMethod(
             this.makeMethodName(op),

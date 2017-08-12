@@ -1,13 +1,10 @@
 import Side from './../../util/side.js';
 import Entity from './entity.js';
-import Exposition from '../../../lib/base/exposition/exposition.js';
 
-Side.ensureServer();
+Side.ensureOnServer();
 
 export default class BaseEntity extends Entity
 {
-    static expCtrl = null;
-
     static findById(id, params = {})
     {
         const qParams = {filter: {_id: id}};
@@ -82,28 +79,12 @@ export default class BaseEntity extends Entity
         return this.getCollection().rawCollection();
     }
 
-    static getExpositionController()
-    {
-        return Exposition;
-    }
-
-    static expose()
-    {
-        // todo: this will break the inheritance (static cache)! fix!
-        if(this.expCtrl === null)
-        {
-            const ctrl = this.getExpositionController();
-            this.expCtrl = new ctrl(this);
-        }
-    }
-
     /**
      * @deprecated
      */
     static exposeGrapher()
     {
         this.collection.expose({
-            // firewall: this.restrictExpositionGrapher.bind(this),
             maxLimit: 1000,
             maxDepth: 5,
             // restrictedFields: this.restrictedFields, // array of fields you want to restrict

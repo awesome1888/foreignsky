@@ -2,11 +2,11 @@
 // import ArticleTag from './article.tag/entity/entity.server.js';
 // import Embed from './embed/entity/entity.server.js';
 // import File from './file/entity/entity.server.js';
-import TestEntity from './test-entity/entity/entity.server.js';
+import TestEntity from './test-entity/method/method.js';
 
 // todo: these exposition should be for admin only!
 // Article.expose();
 // ArticleTag.expose();
 // Embed.expose();
 // File.expose();
-TestEntity.expose();
+TestEntity.declare();

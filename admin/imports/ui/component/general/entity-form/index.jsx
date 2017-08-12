@@ -63,8 +63,9 @@ export default class EntityForm extends Form
 
     onSubmit(model)
     {
+        console.dir('sending...');
         this.save(super.onSubmit(model)).then((res) => {
-
+            console.dir('success!');
         }, (error) => {
             this.setState({
                 error: `save failed: ${error}`,

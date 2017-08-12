@@ -1,5 +1,4 @@
 import collection from '../config/collection.js';
-import map from '../map/map.js';
 
 /**
  * @abstract
@@ -10,11 +9,6 @@ const M = (superclass) =>  class Test extends superclass
     static getCollectionInstance()
     {
         return collection;
-    }
-
-    static getMapInstance()
-    {
-        return map;
     }
 
     static getFullSelect()

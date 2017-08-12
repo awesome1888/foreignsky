@@ -9,7 +9,15 @@ export default class Map
 
     constructor(definition)
     {
-        this._attributes = this.makeAttributes(definition);
+        this.setDefinition(definition);
+    }
+
+    setDefinition(definition)
+    {
+        if (_.isArrayNotEmpty(definition))
+        {
+            this._attributes = this.makeAttributes(definition);
+        }
     }
 
     makeAttributes(definition)
@@ -28,6 +36,25 @@ export default class Map
         return result;
     }
 
+    getLinkedEntityMap()
+    {
+        return {};
+    }
+
+    resolveEntityConstructor(name)
+    {
+        console.dir('rec');
+        console.dir(this.getLinkedEntityMap());
+        
+        const resolver = this.getLinkedEntityMap()[name];
+        if (!_.isFunction(resolver))
+        {
+            throw new Error(`Unable to get linked entity '${name}' class constructor`);
+        }
+
+        return resolver;
+    }
+
     decomposeMap()
     {
         if (!this._parts)
@@ -43,7 +70,7 @@ export default class Map
                     const isMultiple = a.isArray();
                     const refFieldCode = a.getCode()+'Id';
 
-                    // links
+                    // links for grapher
                     links[a.getCode()] = {
                         type: isMultiple ? 'many' : 'one',
                         collection: a.getLinkCollection(),

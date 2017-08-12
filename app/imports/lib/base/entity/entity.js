@@ -18,11 +18,6 @@ export default class BaseEntity
     _data = {};
     _normalized = false;
 
-    static getEntityMap()
-    {
-        return {};
-    }
-
     static getCollectionInstance()
     {
         this.throwNotImplemented('static getCollectionInstance()');
@@ -239,6 +234,7 @@ export default class BaseEntity
         return arg instanceof this.constructor;
     }
 
+    // todo: move on Map.resolveEntityConstructor()
     static resolveEntityConstructor(name)
     {
         const resolver = this.getEntityMap()[name];

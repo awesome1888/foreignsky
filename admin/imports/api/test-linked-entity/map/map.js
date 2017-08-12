@@ -1,6 +1,4 @@
-import Map from '../../../lib/base/map/index.js';
-
-export default class extends Map
+const M = (superclass) =>  class Map extends superclass
 {
     constructor()
     {
@@ -26,4 +24,6 @@ export default class extends Map
             },
         ]);
     }
-}
+};
+
+export default M;

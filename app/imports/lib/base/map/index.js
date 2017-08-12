@@ -181,7 +181,6 @@ export default class Map
         };
         if (attribute.isArray() && !_.isFunction(attribute.getCustom()) && !attribute.isOptional())
         {
-            console.dir('attach!');
             // we do not accept "length 1" array of undefined as "filled" value
             field.custom = Attribute.getStrictArrayCondition(
                 this.makeRefCode(attribute.getCode())

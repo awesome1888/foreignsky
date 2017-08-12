@@ -41,7 +41,7 @@ const M = (superclass) => class extends superclass
             {
                 code: 'stringM',
                 type: [String],
-                optional: true,
+                optional: false,
                 label: 'Multiple string',
             },
             {

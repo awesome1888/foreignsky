@@ -9,8 +9,15 @@ export default class Attribute
     {
         return function ()
         {
-            const value = this.field(name).value;
-            if (!_.isArrayNotEmpty(_.compact(value)))
+            let value = this.field(name).value;
+            if (!_.isArray(value))
+            {
+                return null;
+            }
+
+            value = value.filter(item => item !== undefined);
+
+            if (!_.isArrayNotEmpty(value))
             {
                 return 'required';
             }

@@ -11,6 +11,6 @@ export default class TestEntityForm extends EntityForm
 
     setTitleAfterDataLoad(item)
     {
-        this.setTitle(item.getTitle());
+        this.setTitle(item.getData().string);
     }
 }

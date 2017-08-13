@@ -12,7 +12,6 @@ export default class TestEntityDetailPage extends BasePage
     {
         // todo: better parse ID from the current path according to detailPath, but
         // todo: not rely on FlowRouter behaviour
-
         return (
             <Layout
                 title={this.props.title}
@@ -21,7 +20,7 @@ export default class TestEntityDetailPage extends BasePage
                     <div>
                         <Form
                             id={this.props.route.id}
-                            detailPageUrl={this.props.route.detailPath || ''}
+                            backPath={this.props.route.listPath || ''}
                         />
                         <br />
                         <br />

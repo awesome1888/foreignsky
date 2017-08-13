@@ -45,6 +45,10 @@ export default class AdminApplication extends Application
             if (_.isObjectNotEmpty(item.route))
             {
                 const params = {};
+                if (item.route.list)
+                {
+                    params.listPath = item.route.list.path;
+                }
                 if (item.route.detail)
                 {
                     params.detailPath = item.route.detail.path;

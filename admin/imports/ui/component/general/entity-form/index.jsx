@@ -70,7 +70,11 @@ export default class EntityForm extends Form
     onSubmit(model)
     {
         this.save(super.onSubmit(model)).then((res) => {
-            console.dir('success!');
+            if (_.isStringNotEmpty(this.props.backPath))
+            {
+                // todo: transfer modified item _id somehow, to highlight in the list
+                FlowRouter.go(this.props.backPath);
+            }
         }, (error) => {
             this.setState({
                 error: `save failed: ${error}`,

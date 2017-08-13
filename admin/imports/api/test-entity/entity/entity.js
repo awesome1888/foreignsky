@@ -25,16 +25,16 @@ const M = (superclass) => class Test extends superclass
             num: 1,
             numM: 1,
 
-            schema: 1,
-            schemaM: 1,
+            map: 1,
+            mapM: 1,
 
-            ref: {
+            link: {
                 title: 1,
                 sort: 1,
                 color: 1,
                 primary: 1,
             },
-            refM: {
+            linkM: {
                 title: 1,
                 sort: 1,
                 color: 1,

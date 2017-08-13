@@ -1,4 +1,4 @@
-import flatten from 'mongo-dot-notation';
+import {flatten} from 'mongo-dot-notation';
 import clone from 'clone';
 
 import Map from '../map/index.js';

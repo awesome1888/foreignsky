@@ -39,7 +39,6 @@ export default class Row extends BaseComponent
             return attribute.getRenderer();
         }
 
-        // todo: hardcoded for now, get from the map later
         if (attribute.isPrimary())
         {
             return RendererPrimary;

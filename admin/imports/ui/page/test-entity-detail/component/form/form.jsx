@@ -9,8 +9,8 @@ export default class TestEntityForm extends EntityForm
         return TestEntity;
     }
 
-    setTitleAfterDataLoad(item)
+    getItemTitle(item)
     {
-        this.setTitle(item.getData().string);
+        return item.getData().string || '';
     }
 }

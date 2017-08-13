@@ -9,12 +9,6 @@ import Form from '../form/form.jsx';
  */
 export default class EntityForm extends Form
 {
-    constructor(props)
-    {
-        super(props);
-        this.setTitle(`New ${this.getEntityTitle()}`);
-    }
-
     getEntity()
     {
         throw new Error('Not implemented');
@@ -25,13 +19,27 @@ export default class EntityForm extends Form
         return this.getEntity().getMap();
     }
 
-    getEntityTitle()
+    getItemTitle(item)
     {
-        return this.getEntity().getTitle();
+        return 'untitled';
     }
 
-    setTitleAfterDataLoad(item)
+    setTitle(item)
     {
+        let title = 'new item';
+        if (item)
+        {
+            const itemTitle = this.getItemTitle(item);
+            if (_.isStringNotEmpty(itemTitle))
+            {
+                title = itemTitle;
+            }
+            else
+            {
+                title = 'untitled';
+            }
+        }
+        super.setTitle(`${this.getEntity().getTitle()}: ${title}`);
     }
 
     async getModel()
@@ -42,7 +50,7 @@ export default class EntityForm extends Form
             const item = await this.getEntity().findById(id, {select: '*'});
             if (item)
             {
-                this.setTitleAfterDataLoad(item);
+                this.setTitle(item);
                 return item.getData();
             }
             else
@@ -52,6 +60,8 @@ export default class EntityForm extends Form
                 });
             }
         }
+
+        this.setTitle();
 
         return {};
     }

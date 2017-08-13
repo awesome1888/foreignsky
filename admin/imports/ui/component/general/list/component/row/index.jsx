@@ -8,7 +8,7 @@ import RendererDate from './component/renderer/date/date.jsx';
 import RendererBoolean from './component/renderer/boolean/boolean.jsx';
 import RendererPrimary from './component/renderer/primary/primary.jsx';
 
-export default class ListItem extends BaseComponent
+export default class Row extends BaseComponent
 {
     static propTypes = {
         className: PropTypes.oneOfType([
@@ -18,7 +18,7 @@ export default class ListItem extends BaseComponent
         ]),
         entity: PropTypes.func.isRequired,
         data: PropTypes.object,
-        map: PropTypes.array.isRequired,
+        map: PropTypes.object.isRequired,
         onListUpdate: PropTypes.func,
         detailPageUrl: PropTypes.string,
     };
@@ -34,18 +34,18 @@ export default class ListItem extends BaseComponent
 
     resolveRenderer(attribute)
     {
-        if (attribute.renderer)
+        if (attribute.getRenderer())
         {
-            return attribute.renderer;
+            return attribute.getRenderer();
         }
 
         // todo: hardcoded for now, get from the map later
-        if (attribute.code === 'title')
+        if (attribute.isPrimary())
         {
             return RendererPrimary;
         }
 
-        const type = attribute.type;
+        const type = attribute.getType();
 
         if (type === String)
         {
@@ -65,13 +65,13 @@ export default class ListItem extends BaseComponent
         return RendererGeneric;
     }
 
-    renderRenderer(item, attribute)
+    renderControl(item, attribute)
     {
         return React.createElement(
             this.resolveRenderer(attribute),
             {
-                code: attribute.code,
-                value: item.getAttributeValue(attribute.code),
+                code: attribute.getCode(),
+                value: item.getAttributeValue(attribute.getCode()),
                 item: item,
                 detailPageUrl: this.props.detailPageUrl,
             }
@@ -96,8 +96,8 @@ export default class ListItem extends BaseComponent
                         }
 
                         return (
-                            <td key={attribute.code}>
-                                {this.renderRenderer(item, attribute)}
+                            <td key={attribute.getCode()}>
+                                {this.renderControl(item, attribute)}
                             </td>
                         );
                     })

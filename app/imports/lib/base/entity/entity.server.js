@@ -64,19 +64,60 @@ export default class BaseEntity extends Entity
         return this.getCollection().rawCollection();
     }
 
+    /**
+     * todo: think about the result object...
+     * @param id
+     * @param data
+     * @returns {*}
+     */
     static save(id, data)
     {
-        console.dir('save?');
+        const collection = this.getCollection();
+        if (!id) {
+            return collection.insert(data);
+        } else {
+            if(collection.update({
+                _id: id,
+            }, {
+                $set: this.flatten(data),
+            }))
+            {
+                return id;
+            }
+
+            return false;
+        }
     }
 
+    /**
+     * todo: think about the result object...
+     * @param id
+     */
     static delete(id)
     {
+        if (!_.isStringNotEmpty(id))
+        {
+            return false;
+        }
 
+        return this.getCollection().remove({
+            _id: id,
+        });
     }
 
     static getRawCollection()
     {
         return this.getCollection().rawCollection();
+    }
+
+    save(data)
+    {
+        throw new Error('Not implemened: save()');
+    }
+
+    delete()
+    {
+        throw new Error('Not implemened: delete()');
     }
 
     /**

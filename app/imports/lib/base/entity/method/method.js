@@ -83,14 +83,11 @@ export default class extends Method
 
     save(id, data)
     {
-        console.dir('save');
-        console.dir(id);
-        console.dir(data);
+        return this.getEntity().save(id, data);
     }
 
     delete(id)
     {
-        console.dir('delete');
-        console.dir(id);
+        return this.getEntity().delete(id);
     }
 }

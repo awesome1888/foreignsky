@@ -91,9 +91,9 @@ export default class BaseEntity extends Entity
         });
     }
 
-    static makeMethodName(op)
+    static makeMethodName(name)
     {
-        return `${this.getCollection().getNameNormalized()}.${op}`;
+        return `${this.getCollection().getNameNormalized()}.${name}`;
     }
 
     async save(data)

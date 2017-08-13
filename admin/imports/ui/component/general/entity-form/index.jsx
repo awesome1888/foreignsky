@@ -58,12 +58,17 @@ export default class EntityForm extends Form
 
     async save(model)
     {
-        return this.getEntity().save(this.props.id, model);
+        let id = this.props.id;
+        if (id === '0')
+        {
+            id = null;
+        }
+
+        return this.getEntity().save(id, model);
     }
 
     onSubmit(model)
     {
-        console.dir('sending...');
         this.save(super.onSubmit(model)).then((res) => {
             console.dir('success!');
         }, (error) => {

@@ -153,9 +153,19 @@ export default class Attribute
         return this._data.custom || null;
     }
 
+    getTitle()
+    {
+        return this.getLabel() || this.getCode();
+    }
+
     isOptional()
     {
         return this._data.optional === true;
+    }
+
+    isPrimary()
+    {
+        return this._data.order === 0;
     }
 
     hasMinCount()

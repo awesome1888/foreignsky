@@ -3,7 +3,7 @@ import {Meteor} from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import PageNavigation from '../page-navigation/page-navigation.jsx';
-import Item from './component/item/item.jsx';
+import Row from './component/row/index.jsx';
 import BaseComponent from '../../../../lib/base/component/component.jsx';
 import App from '../../../application.jsx';
 import clone from 'clone';
@@ -57,15 +57,17 @@ export default class List extends BaseComponent
 
     reLoadData()
     {
+        this.setState({
+            countReady: false,
+            dataReady: false,
+        });
         this.loadData();
         this.loadCount();
     }
 
     loadData()
     {
-        const p = this.getEntity().find(Object.assign({
-            select: this.getAttributeCodes(),
-        }, this.getPageParameters()));
+        const p = this.getEntity().find(this.getQueryParameters());
 
         App.getInstance().wait(p);
 
@@ -115,68 +117,65 @@ export default class List extends BaseComponent
      */
     getListItemConstructor()
     {
-        return Item;
+        return Row;
     }
 
-    getMap()
-    {
-        if (!this._cache.map)
-        {
-            this._cache.map = this.declareMap();
-            this._cache.mapIndex = this._cache.map.reduce((result, attribute) => {
-                result[attribute.code] = attribute;
-                return result;
-            }, {});
-        }
-
-        return this._cache.map;
-    }
+    // getMap()
+    // {
+    //     if (!this._cache.map)
+    //     {
+    //         this._cache.map = this.declareMap();
+    //         this._cache.mapIndex = this._cache.map.reduce((result, attribute) => {
+    //             result[attribute.code] = attribute;
+    //             return result;
+    //         }, {});
+    //     }
+    //
+    //     return this._cache.map;
+    // }
 
     /**
      * Use this function to make hooks
      * @returns {*}
      */
-    declareMap()
+    // declareMap()
+    // {
+    //     return this.readMap();
+    // }
+
+    getMap()
     {
-        return this.readMap();
+        // todo: clone here!!!
+        return this.getEntity().getMap();
     }
 
-    readMap(chosenFields = null)
+    transformMap(map)
     {
-        let attributes = this.getEntity().getAttributes();
-        if (_.isObjectNotEmpty(chosenFields))
+        return map;
+    }
+
+    getMapTransformed()
+    {
+        if (!this._cache.map)
         {
-            attributes = attributes.filter(attribute => attribute.code in chosenFields);
-        }
-        else
-        {
-            chosenFields = {};
+            this._cache.map = this.transformMap(this.getMap());
+            // todo: pre-sort here by order!!!
         }
 
-        return attributes.map((attribute) => {
-            const copy = clone(attribute, false);
-            if (copy.code in chosenFields && _.isObject(chosenFields[copy]))
-            {
-                Object.assign(copy, _.intersectKeys(chosenFields[copy], {
-                    renderer: 1,
-                }));
-            }
-
-            return copy;
-        });
+        return this._cache.map;
     }
 
-    getMapIndex()
-    {
-        this.getMap();
+    // getMapIndex()
+    // {
+    //     this.getMap();
+    //
+    //     return this._cache.mapIndex;
+    // }
 
-        return this._cache.mapIndex;
-    }
-
-    getAttributeCodes()
-    {
-        return Object.keys(this.getMapIndex());
-    }
+    // getAttributeCodes()
+    // {
+    //     return Object.keys(this.getMapIndex());
+    // }
 
     /**
      * Returns link to the query instance, which execution result we want to display
@@ -279,9 +278,10 @@ export default class List extends BaseComponent
      * @returns {{limit: (number|*), skip: number}}
      * @access protected
      */
-    getPageParameters()
+    getQueryParameters()
     {
         return {
+            select: '*',
             limit: this.state.perPage,
             offset: this.state.perPage * (this.state.page - 1),
         };
@@ -326,12 +326,12 @@ export default class List extends BaseComponent
             <thead>
                 <tr>
                     {
-                        this.getMap().map(attribute => {
+                        this.getMapTransformed().map(attribute => {
                             return (
                                 <td
-                                    key={attribute.code}
+                                    key={attribute.getCode()}
                                 >
-                                    {attribute.label || attribute.code}
+                                    {attribute.getTitle()}
                                 </td>
                             );
                         })
@@ -345,7 +345,7 @@ export default class List extends BaseComponent
     {
         parameters = this.mapItemParameters(parameters);
         parameters.entity = this.getEntity();
-        parameters.map = this.getMap();
+        parameters.map = this.getMapTransformed();
         parameters.detailPageUrl = this.props.detailPageUrl;
         
         return React.createElement(
@@ -358,14 +358,16 @@ export default class List extends BaseComponent
     {
         return (
             <tbody>
-                {this.state.data.map(item => (
-                    this.renderListItem({
-                        key: item.getId(),
-                        data: item,
-                        onListUpdate: this.props.onListUpdate,
-                        map: this.map,
-                    })
-                ))}
+                {
+                    this.state.data.map(item => (
+                        this.renderListItem({
+                            key: item.getId(),
+                            data: item,
+                            onListUpdate: this.props.onListUpdate,
+                            map: this.map,
+                        })
+                    ))
+                }
             </tbody>
         );
     }

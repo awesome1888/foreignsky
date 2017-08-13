@@ -1,6 +1,6 @@
 import React from 'react';
 
-import RendererGeneric from '../../../../../../../component/general/list/component/item/component/renderer/generic/generic.jsx';
+import RendererGeneric from '../../../../../../../component/general/list/component/row/component/renderer/generic/generic.jsx';
 // import './style.less';
 
 export default class extends RendererGeneric

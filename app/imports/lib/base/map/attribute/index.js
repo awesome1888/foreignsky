@@ -158,6 +158,11 @@ export default class Attribute
         return this.getLabel() || this.getCode();
     }
 
+    getOrder()
+    {
+        return this._data.order;
+    }
+
     isOptional()
     {
         return this._data.optional === true;
@@ -165,7 +170,7 @@ export default class Attribute
 
     isPrimary()
     {
-        return this._data.order === 0;
+        return this.getOrder() === 0;
     }
 
     hasMinCount()

@@ -26,10 +26,13 @@ export default class Map
 
         if (_.isArrayNotEmpty(definition))
         {
+            let order = 0;
             definition.forEach((item) => {
+                item.order = order;
                 result.push(new Attribute(
                     item
                 ));
+                order += 1;
             });
         }
 

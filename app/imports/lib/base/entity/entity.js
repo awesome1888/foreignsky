@@ -331,6 +331,11 @@ export default class BaseEntity
             return this[getter].call(this);
         }
 
+        if (code in this._data)
+        {
+            return this._data[code];
+        }
+
         return undefined;
     }
 

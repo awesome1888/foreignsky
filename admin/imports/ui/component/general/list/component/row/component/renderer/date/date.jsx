@@ -19,9 +19,15 @@ export default class DateRenderer extends RendererGeneric
 
     render()
     {
+        const value = this.prepareValue();
+
         return (
             <div>
-                {moment(this.prepareValue()).format('LL')}
+                {
+                    _.isDate(value)
+                    &&
+                    moment(this.prepareValue()).format('LL')
+                }
             </div>
         );
     }

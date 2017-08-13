@@ -421,10 +421,6 @@ export default class List extends BaseComponent
                         </div>
 
                         {this.renderPageNav()}
-                        <br />
-                        <br />
-                        <br />
-                        <br />
                     </div>
                 }
             </div>

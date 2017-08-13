@@ -24,9 +24,6 @@ export default class TestEntityDetailPage extends BasePage
                         />
                         <br />
                         <br />
-                        <br />
-                        <br />
-                        <br />
                     </div>
                 }
             />

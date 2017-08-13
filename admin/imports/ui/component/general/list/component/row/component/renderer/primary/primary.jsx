@@ -16,8 +16,8 @@ export default class PrimaryFieldRenderer extends RendererGeneric
         // todo: get path template from settings
         return (
             <div>
-                <a href={path.replace('#ID#', this.getItemId())}>{this.prepareValue()}</a><br />
-                <span className="text_color_gray">Id: {this.getItemId()}</span>
+                {this.prepareValue()}<br />
+                <a href={path.replace('#ID#', this.getItemId())}>{this.getItemId()}</a>
             </div>
         );
     }

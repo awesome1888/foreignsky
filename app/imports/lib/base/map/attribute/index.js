@@ -66,6 +66,11 @@ export default class Attribute
         return _.isArray(this._data.type);
     }
 
+    isLinkArray()
+    {
+        return this.isArray() && this.isLinkItem();
+    }
+
     isStringItem()
     {
         const a = this._data;
@@ -99,7 +104,11 @@ export default class Attribute
     isLinkItem()
     {
         const a = this._data;
-        return this.isArray() && a.type[0].prototype instanceof Entity;
+        
+        // const res = this.isArray() && (a.type[0].prototype instanceof Entity);
+        // console.dir(this.getCode());
+
+        return this.isArray() && (a.type[0].prototype instanceof Entity);
     }
 
     isLinkAny()

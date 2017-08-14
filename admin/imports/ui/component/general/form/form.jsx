@@ -150,7 +150,7 @@ export default class Form extends BaseComponent
                 <div className="form__block">
                     <div className="form__block-inner">
                         {
-                            this.getMapTransformed().mapWithLinksReplace((attribute) => {
+                            this.getMapTransformed().map((attribute) => {
                                 return (
                                     <Row
                                         key={attribute.getCode()}

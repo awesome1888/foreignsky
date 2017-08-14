@@ -9,13 +9,18 @@ import filterDOMProps from 'uniforms/filterDOMProps';
 
 import RendererGeneric from '../generic/index.jsx';
 import Container from '../container/index.jsx';
+import Modal from '../../../../../general/modal/index.js';
 
 class RendererLinkList extends RendererGeneric
 {
     constructor(props)
     {
         super(props);
+        this.extendState({
+            formModalOpened: false,
+        });
         this.onItemAddClick = this.onItemAddClick.bind(this);
+        this.toggleFormModal = this.toggleFormModal.bind(this);
     }
 
     getItemControl()
@@ -77,13 +82,26 @@ class RendererLinkList extends RendererGeneric
     onItemAddClick()
     {
         const isLimitReached = this.isLimitReached();
-        const onChange = this.getOnChange();
-        const val = this.getValue();
 
         if (!isLimitReached)
         {
-            onChange(val.concat(['']));
+            this.toggleFormModal();
         }
+
+        // const onChange = this.getOnChange();
+        // const val = this.getValue();
+        //
+        // if (!isLimitReached)
+        // {
+        //     onChange(val.concat(['']));
+        // }
+    }
+
+    toggleFormModal()
+    {
+        this.setState({
+            formModalOpened: !this.state.formModalOpened,
+        });
     }
 
     renderAddButton()
@@ -105,9 +123,6 @@ class RendererLinkList extends RendererGeneric
 
     render()
     {
-        // console.dir(this.getName());
-        // console.dir(this.getValue());
-
         const children = this.getItemControl();
 
         return (
@@ -116,20 +131,27 @@ class RendererLinkList extends RendererGeneric
                 {...filterDOMProps(this.props)}
             >
                 <div>
+                    LINK!
                     {
                         this.getValue().map((item, index) => {
-                            return Children.map(children, child => {
-                                return React.cloneElement(child, {
-                                    key: index,
-                                    label: null,
-                                    name: this.makeChildName(child, index),
-                                });
-                            })
+                            return (
+                                <div>
+                                    Item! (there will be a hidden input)
+                                </div>
+                            );
                         })
                     }
                     <div>
                         {this.renderAddButton()}
                     </div>
+                    <Modal
+                        onClose={this.toggleFormModal}
+                        opened={this.state.formModalOpened}
+                    >
+                        <div>
+                            Form here!
+                        </div>
+                    </Modal>
                 </div>
             </Container>
         );

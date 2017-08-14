@@ -4,6 +4,7 @@ import RendererString from './../../component/renderer/string/index.jsx';
 import RendererBoolean from './../../component/renderer/boolean/index.jsx';
 import RendererDate from './../../component/renderer/date/index.jsx';
 import RendererList from './../../component/renderer/list/index.jsx';
+import RendererLinkList from './../../component/renderer/link-list/index.jsx';
 import RenderMap from './../../component/renderer/map/index.jsx';
 
 export default class Row extends React.Component
@@ -35,6 +36,12 @@ export default class Row extends React.Component
             // todo: it should be rendered as selectbox with
             // todo: either checkboxes or radio-buttons, depending on what we have in maxCount
             return null;
+        }
+
+        if (attribute.isLinkArray())
+        {
+            console.dir('its a link');
+            return RendererLinkList;
         }
 
         if (attribute.isArray())
@@ -78,11 +85,6 @@ export default class Row extends React.Component
             return RenderMap;
         }
 
-        if (attribute.isLinkItem())
-        {
-            return RendererString;
-        }
-
         return null;
     }
 
@@ -121,9 +123,15 @@ export default class Row extends React.Component
         let children = null;
         if (attribute.isArray())
         {
+            const renderer = this.resolveItemRenderer();
+            if (!renderer)
+            {
+                return children;
+            }
+
             children = [
                 React.createElement(
-                    this.resolveItemRenderer(),
+                    renderer,
                     Object.assign(
                         this.getControlChildrenParams(attribute),
                         {

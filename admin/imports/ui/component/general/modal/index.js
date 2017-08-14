@@ -37,11 +37,15 @@ export default class Modal extends BaseComponent
                         >
                             {this.props.children}
                         </div>
-                        <div
-                            className="mmodal__close"
-                            onClick={this.props.onClose}
-                            title="Close"
-                        />
+                        {
+                            this.isCloseable()
+                            &&
+                            <div
+                                className="mmodal__close"
+                                onClick={this.props.onClose}
+                                title="Close"
+                            />
+                        }
                     </div>
                 </div>
             </div>

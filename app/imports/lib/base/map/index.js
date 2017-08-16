@@ -200,4 +200,14 @@ export default class Map
 
         return new Attribute(f);
     }
+
+    clone()
+    {
+        const attributes = [];
+        this.forEach((attribute) => {
+            attributes.push(attribute.clone());
+        });
+
+        return new this.constructor(attributes);
+    }
 }

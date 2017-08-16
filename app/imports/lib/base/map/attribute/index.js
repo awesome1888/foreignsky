@@ -4,6 +4,7 @@ import Entity from '../../entity/entity.js';
 export default class Attribute
 {
     _data = null;
+    _parameters = null;
 
     static getStrictArrayCondition(name)
     {
@@ -147,6 +148,16 @@ export default class Attribute
         return this._data.type;
     }
 
+    getItemType()
+    {
+        if (this.isArray())
+        {
+            return this._data.type[0];
+        }
+
+        return null;
+    }
+
     getCode()
     {
         return this._data.code;
@@ -222,6 +233,7 @@ export default class Attribute
         return _.intersectKeys(this._data, {
             type: 1, optional: 1, allowedValues: 1,
             defaultValue: 1, custom: 1, label: 1,
+            maxCount: 1, minCount: 1,
         });
     }
 
@@ -233,5 +245,45 @@ export default class Attribute
     getItemRenderer()
     {
         return this._data.itemRenderer || null;
+    }
+
+    clone()
+    {
+        const copyData = _.pick(this._data, [
+            'code', 'optional', 'label', 'order',
+            'allowedValues', 'defaultValue', 'custom',
+        ]);
+
+        // now about type
+        let type = null;
+        if (this.isArray())
+        {
+            type = [];
+            if (this.isMapItem())
+            {
+                // clone sub-map
+                type.push(this.getItemType().clone());
+            }
+            else
+            {
+                type.push(this.getItemType());
+            }
+        }
+        else
+        {
+            if (this.isMap())
+            {
+                // clone map
+                type = this.getData().clone();
+            }
+            else
+            {
+                type = this.getItemType();
+            }
+        }
+
+        copyData.type = type;
+
+        return new this.constructor(copyData);
     }
 }

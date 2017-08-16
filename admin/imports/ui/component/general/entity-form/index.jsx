@@ -16,7 +16,7 @@ export default class EntityForm extends Form
 
     getMap()
     {
-        return this.getEntity().getMap();
+        return this.getEntity().getMap().clone();
     }
 
     getItemTitle(item)

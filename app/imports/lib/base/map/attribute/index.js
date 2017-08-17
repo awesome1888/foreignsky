@@ -117,6 +117,11 @@ export default class Attribute
         return this.isLink() || this.isLinkItem();
     }
 
+    isReference()
+    {
+        return !!this._data.isReference;
+    }
+
     getLinkCollection()
     {
         if (this.isLink())
@@ -126,6 +131,20 @@ export default class Attribute
         else if (this.isLinkItem())
         {
             return this._data.type[0].getCollection();
+        }
+
+        return null;
+    }
+
+    getAnyLinkType()
+    {
+        if (this.isLink())
+        {
+            return this.getType();
+        }
+        else if(this.isLinkItem())
+        {
+            return this.getItemType();
         }
 
         return null;
@@ -252,6 +271,7 @@ export default class Attribute
         const copyData = _.pick(this._data, [
             'code', 'optional', 'label', 'order',
             'allowedValues', 'defaultValue', 'custom',
+            'isReference',
         ]);
 
         // now about type
@@ -274,16 +294,46 @@ export default class Attribute
             if (this.isMap())
             {
                 // clone map
-                type = this.getData().clone();
+                type = this.getType().clone();
             }
             else
             {
-                type = this.getItemType();
+                type = this.getType();
             }
         }
 
         copyData.type = type;
 
         return new this.constructor(copyData);
+    }
+
+    setParameter(name, value)
+    {
+        if (!_.isStringNotEmpty(name))
+        {
+            return;
+        }
+
+        if (this._parameters === null)
+        {
+            this._parameters = {};
+        }
+
+        this._parameters[name] = value;
+    }
+
+    getParameter(name)
+    {
+        if (!_.isObject(this._parameters))
+        {
+            return null;
+        }
+
+        if (!(name in this._parameters))
+        {
+            return null;
+        }
+
+        return this._parameters[name];
     }
 }

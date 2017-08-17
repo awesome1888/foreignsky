@@ -1,4 +1,5 @@
 import React from 'react';
+import BaseComponent from '../../../../../../../lib/base/component/component.jsx';
 
 // https://github.com/vazco/uniforms/blob/master/INTRODUCTION.md#autofield-algorithm
 // https://github.com/vazco/uniforms/blob/master/API.md#connectfield
@@ -7,7 +8,7 @@ import React from 'react';
 /**
  * @abstract
  */
-export default class RendererGeneric extends React.Component
+export default class RendererGeneric extends BaseComponent
 {
     getAttribute()
     {

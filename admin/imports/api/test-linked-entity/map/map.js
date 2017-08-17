@@ -11,7 +11,7 @@ const M = (superclass) => class Map extends superclass
             },
             {
                 code: 'date',
-                type: Date,
+                type: String,
                 optional: false,
                 label: 'Field 2',
             },

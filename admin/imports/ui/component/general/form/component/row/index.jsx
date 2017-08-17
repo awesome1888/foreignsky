@@ -13,9 +13,19 @@ export default class Row extends React.Component
     {
         const attribute = this.getAttribute();
 
-        if (attribute.getRenderer())
+        const renderer = attribute.getParameter('renderer');
+        if (renderer)
         {
-            return attribute.getRenderer();
+            return renderer;
+        }
+
+        // special type of String or [String] fields which represent link fields in SimpleSchema
+        if (attribute.isReference())
+        {
+            if (attribute.isArray())
+            {
+                return RendererLinkList;
+            }
         }
 
         if (attribute.isString() || attribute.isNumber())
@@ -63,9 +73,10 @@ export default class Row extends React.Component
     {
         const attribute = this.getAttribute();
 
-        if (attribute.getItemRenderer())
+        const itemRenderer = attribute.getParameter('itemRenderer');
+        if (itemRenderer)
         {
-            return attribute.getItemRenderer();
+            return itemRenderer;
         }
 
         if (attribute.isStringItem() || attribute.isNumberItem())

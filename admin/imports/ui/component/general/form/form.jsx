@@ -108,6 +108,26 @@ export default class Form extends BaseComponent
         return sourceModel;
     }
 
+    renderRows()
+    {
+        const map = this.getMapTransformed();
+
+        return map.map((attribute) => {
+
+            if (attribute.isLinkAny())
+            {
+                attribute = map.makeRefAttribute(attribute);
+            }
+
+            return (
+                <Row
+                    key={attribute.getCode()}
+                    attribute={attribute}
+                />
+            );
+        })
+    }
+
     render()
     {
         const model = this.state.model;
@@ -150,14 +170,7 @@ export default class Form extends BaseComponent
                 <div className="form__block">
                     <div className="form__block-inner">
                         {
-                            this.getMapTransformed().map((attribute) => {
-                                return (
-                                    <Row
-                                        key={attribute.getCode()}
-                                        attribute={attribute}
-                                    />
-                                );
-                            })
+                            this.renderRows()
                         }
                     </div>
                 </div>

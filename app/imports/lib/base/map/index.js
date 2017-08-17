@@ -141,23 +141,6 @@ export default class Map
         return [];
     }
 
-    mapWithLinksReplace(cb)
-    {
-        if (_.isFunction(cb))
-        {
-            return this._attributes.map((item) => {
-                if (item.isLink() || item.isLinkItem())
-                {
-                    item = this.makeRefAttribute(item);
-                }
-
-                return cb(item);
-            });
-        }
-
-        return [];
-    }
-
     tuneAttribute(code, data = {})
     {
         // todo
@@ -173,6 +156,11 @@ export default class Map
         return `${code}Id`;
     }
 
+    /**
+     * Generates a reference field declaration that will represent the corresponding link-type field in SimpleSchema
+     * @param attribute
+     * @returns {{type: *, optional: *, regEx: RegExp, label: string, minCount: number}}
+     */
     makeRefField(attribute)
     {
         const field = {
@@ -180,7 +168,7 @@ export default class Map
             optional: attribute.getOptional(),
             regEx: SimpleSchema.RegEx.Id,
             label: 'Reference', // `Reference to ${attribute.getCode()}`,
-            minCount: 0,
+            minCount: 0, // we cant add "pre-defined" links
         };
         if (attribute.isArray() && !_.isFunction(attribute.getCustom()) && !attribute.isOptional())
         {
@@ -196,9 +184,14 @@ export default class Map
     makeRefAttribute(attribute)
     {
         const f = this.makeRefField(attribute);
+        f.isReference = true;
         f.code = this.makeRefCode(attribute.getCode());
 
-        return new Attribute(f);
+        const a = new Attribute(f);
+        a.setParameter('entity',  a.getAnyLinkType());
+        a.setParameter('linkCode',  attribute.getCode());
+
+        return a;
     }
 
     clone()

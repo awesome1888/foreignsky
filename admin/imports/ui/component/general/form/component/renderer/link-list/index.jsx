@@ -56,7 +56,7 @@ class RendererLinkList extends RendererGeneric
     {
         const a = this.getAttribute();
 
-        return this.isDisabled() || a.getMax() <= this.getValue().length;
+        return this.isDisabled() || a.getMaxCount() <= this.getValue().length;
     }
 
     getInitialCount()
@@ -125,18 +125,29 @@ class RendererLinkList extends RendererGeneric
     {
         const children = this.getItemControl();
 
+        console.dir(this.props);
+
         return (
             <Container
                 errorProps={this.props}
                 {...filterDOMProps(this.props)}
             >
                 <div>
-                    LINK!
                     {
                         this.getValue().map((item, index) => {
                             return (
-                                <div>
-                                    Item! (there will be a hidden input)
+                                <div
+                                    key={index}
+                                >
+                                    <div className="">
+                                        Item {index}
+                                    </div>
+                                    <input
+                                        type="hidden"
+                                        name={this.makeChildName()}
+                                        onChange={this.getOnChange(null, index)}
+                                        value={this.getValue()}
+                                    />
                                 </div>
                             );
                         })

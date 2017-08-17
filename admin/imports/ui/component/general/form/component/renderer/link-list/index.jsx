@@ -10,27 +10,109 @@ import filterDOMProps from 'uniforms/filterDOMProps';
 import RendererGeneric from '../generic/index.jsx';
 import Container from '../container/index.jsx';
 import Modal from '../../../../../general/modal/index.js';
+import entityMap from '../../../../../../../startup/client/entity-map.js';
 
 class RendererLinkList extends RendererGeneric
 {
+    _cache = {
+        items: {},
+        entity: null,
+    };
+
     constructor(props)
     {
         super(props);
         this.extendState({
             formModalOpened: false,
+            itemReady: false,
+            error: null,
         });
         this.onItemAddClick = this.onItemAddClick.bind(this);
         this.toggleFormModal = this.toggleFormModal.bind(this);
     }
 
-    getItemControl()
+    componentDidMount()
     {
-        if (this.props.children)
+        this.startDataReload();
+    }
+
+    startDataReload()
+    {
+        this.setState({
+            itemReady: false,
+        });
+        this.loadData().then(() => {
+            this.setState({
+                error: null,
+                itemReady: true,
+            });
+        }, (err) => {
+            this.setError(err);
+        });
+    }
+
+    async loadData()
+    {
+        const ids2Get = _.difference(this.getValue(), this.getCachedIds());
+
+        if (_.isArrayNotEmpty(ids2Get))
         {
-            return this.props.children;
+            const entity = this.getEntity();
+            const data = await entity.find({
+                select: [entity.getPrimaryAttributeCode()],
+                filter: {
+                    _id: {$in: this.getValue()}
+                },
+            });
+            data.forEach((item) => {
+                this.saveToCache(item);
+            });
         }
 
-        throw new ReferenceError('Unable to get child list element');
+        return true;
+    }
+
+    saveToCache(item)
+    {
+        const entity = this.getEntity();
+
+        this._cache.items[item.getId()] = {
+            _id: item.getId(),
+            label: item.getData()[entity.getPrimaryAttributeCode()],
+        };
+    }
+
+    getCachedIds()
+    {
+        return Object.keys(this._cache.items);
+    }
+
+    getCached(id)
+    {
+        return this._cache.items[id] || null;
+    }
+
+    getEntity()
+    {
+        if (!this._cache.entity)
+        {
+            const entity = this.props.attribute.getParameter('entity');
+            if (!entity) // todo: instanceof here
+            {
+                throw new ReferenceError('Illegal "entity" parameter for the attribute');
+            }
+
+            this._cache.entity = entity;
+        }
+
+        return this._cache.entity;
+    }
+
+    setError(error)
+    {
+        this.setState({
+            error,
+        });
     }
 
     getChildName()
@@ -59,15 +141,20 @@ class RendererLinkList extends RendererGeneric
         return this.isDisabled() || a.getMaxCount() <= this.getValue().length;
     }
 
-    getInitialCount()
+    isReady()
     {
-        if ('initialCount' in this.props)
-        {
-            return this.props.initialCount;
-        }
-
-        return 1;
+        return this.state.itemReady;
     }
+
+    // getInitialCount()
+    // {
+    //     if ('initialCount' in this.props)
+    //     {
+    //         return this.props.initialCount;
+    //     }
+    //
+    //     return 1;
+    // }
 
     getOnChange()
     {
@@ -87,6 +174,8 @@ class RendererLinkList extends RendererGeneric
         {
             this.toggleFormModal();
         }
+
+        
 
         // const onChange = this.getOnChange();
         // const val = this.getValue();
@@ -123,9 +212,12 @@ class RendererLinkList extends RendererGeneric
 
     render()
     {
-        const children = this.getItemControl();
+        if (!this.isReady())
+        {
+            return null;
+        }
 
-        console.dir(this.props);
+        const entity = this.getEntity();
 
         return (
             <Container
@@ -134,14 +226,19 @@ class RendererLinkList extends RendererGeneric
             >
                 <div>
                     {
-                        this.getValue().map((item, index) => {
+                        this.getValue().map((id, index) => {
+                            const data = this.getCached(id);
                             return (
                                 <div
                                     key={index}
                                 >
-                                    <div className="">
-                                        Item {index}
-                                    </div>
+                                    <a
+                                        href={entityMap.makeDetailPath(entity, data._id)}
+                                        target="_blank"
+                                        className=""
+                                    >
+                                        {data.label}
+                                    </a>
                                     <input
                                         type="hidden"
                                         name={this.makeChildName()}

@@ -234,11 +234,6 @@ export default class BaseEntity
         throw new Error(`Not implemented: ${fn}`);
     }
 
-    isEntity(arg)
-    {
-        return arg instanceof this.constructor;
-    }
-
     // todo: move on Map.resolveEntityConstructor()
     static resolveEntityConstructor(name)
     {
@@ -268,12 +263,22 @@ export default class BaseEntity
         return result;
     }
 
+    static getPrimaryAttributeCode()
+    {
+        return this.getMap().getPrimaryAttribute().getCode();
+    }
+
     constructor(data = {})
     {
         if (_.isObjectNotEmpty(data))
         {
             this._data = data;
         }
+    }
+
+    isEntity(arg)
+    {
+        return arg instanceof this.constructor;
     }
 
     getCollection()

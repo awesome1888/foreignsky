@@ -39,6 +39,10 @@ export default class Map
         return result;
     }
 
+    /**
+     * This should be defined for both client and server sides
+     * @returns {{}}
+     */
     getLinkedEntityMap()
     {
         return {};
@@ -188,7 +192,7 @@ export default class Map
         f.code = this.makeRefCode(attribute.getCode());
 
         const a = new Attribute(f);
-        a.setParameter('entity',  a.getAnyLinkType());
+        a.setParameter('entity',  attribute.getAnyLinkType());
         a.setParameter('linkCode',  attribute.getCode());
 
         return a;
@@ -202,5 +206,16 @@ export default class Map
         });
 
         return new this.constructor(attributes);
+    }
+
+    getPrimaryAttribute()
+    {
+        const first = this._attributes[0];
+        if (first instanceof Attribute)
+        {
+            return first;
+        }
+
+        return null;
     }
 }

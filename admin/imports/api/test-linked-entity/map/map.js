@@ -14,6 +14,7 @@ const M = (superclass) => class Map extends superclass
                 type: String,
                 optional: false,
                 label: 'Field 2',
+                defaultValue: 'test',
             },
             {
                 code: 'bool',

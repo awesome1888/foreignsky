@@ -11,12 +11,15 @@ import RendererGeneric from '../generic/index.jsx';
 import Container from '../container/index.jsx';
 import Modal from '../../../../../general/modal/index.js';
 import entityMap from '../../../../../../../startup/client/entity-map.js';
+import Form from '../../../../form/form.jsx';
 
 class RendererLinkList extends RendererGeneric
 {
     _cache = {
         items: {},
         entity: null,
+        map: null,
+        model: null,
     };
 
     constructor(props)
@@ -108,6 +111,11 @@ class RendererLinkList extends RendererGeneric
         return this._cache.entity;
     }
 
+    getMap()
+    {
+        return this.getEntity().getMap().clone();
+    }
+
     setError(error)
     {
         this.setState({
@@ -172,10 +180,12 @@ class RendererLinkList extends RendererGeneric
 
         if (!isLimitReached)
         {
-            this.toggleFormModal();
+            this.setState({
+                model: {},
+            }, () => {
+                this.toggleFormModal();
+            });
         }
-
-        
 
         // const onChange = this.getOnChange();
         // const val = this.getValue();
@@ -208,6 +218,37 @@ class RendererLinkList extends RendererGeneric
     renderDeleteButton()
     {
         // todo
+    }
+
+    transformMap(map)
+    {
+        return map;
+    }
+
+    transformModel()
+    {
+        return this.state.model;
+    }
+
+    transformModelBack(model)
+    {
+        return model;
+    }
+
+    getMapTransformed()
+    {
+        if (!this._cache.map)
+        {
+            this._cache.map = this.transformMap(this.getMap());
+            // todo: pre-sort here by order!!!
+        }
+
+        return this._cache.map;
+    }
+
+    isFormReady()
+    {
+        return _.isObject(this.state.model);
     }
 
     render()
@@ -256,9 +297,20 @@ class RendererLinkList extends RendererGeneric
                         onClose={this.toggleFormModal}
                         opened={this.state.formModalOpened}
                     >
-                        <div>
-                            Form here!
-                        </div>
+                        {
+                            !this.isFormReady()
+                            &&
+                            <div>Loading...</div>
+                        }
+                        {
+                            this.isFormReady()
+                            &&
+                            <Form
+                                map={this.getMapTransformed()}
+                                model={this.transformModel()}
+                                submitButtonLabel="Save"
+                            />
+                        }
                     </Modal>
                 </div>
             </Container>

@@ -27,12 +27,14 @@ export default class Form extends BaseComponent
         map: PropTypes.object,
         model: PropTypes.object,
         isFragment: PropTypes.bool,
+        submitButtonLabel: PropTypes.string,
     };
 
     static defaultProps = {
         className: '',
         model: {},
         isFragment: false,
+        submitButtonLabel: 'Send',
     };
 
     constructor(props)
@@ -191,7 +193,7 @@ export default class Form extends BaseComponent
             >
                 {body}
                 <div style={{marginTop: '10px'}}>
-                    <button type="submit">Send</button>
+                    <button type="submit">{this.props.submitButtonLabel}</button>
                 </div>
             </AutoForm>
         );

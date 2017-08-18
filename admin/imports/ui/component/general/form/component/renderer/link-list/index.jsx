@@ -21,6 +21,7 @@ class RendererLinkList extends RendererGeneric
         entity: null,
         map: null,
         model: null,
+        itemId: null,
     };
 
     constructor(props)
@@ -35,6 +36,7 @@ class RendererLinkList extends RendererGeneric
         this.onItemAddClick = this.onItemAddClick.bind(this);
         this.toggleFormModal = this.toggleFormModal.bind(this);
         this.onItemClick = this.onItemClick.bind(this);
+        this.onFormSubmit = this.onFormSubmit.bind(this);
     }
 
     componentDidMount()
@@ -42,8 +44,13 @@ class RendererLinkList extends RendererGeneric
         this.startDataReload();
     }
 
-    startDataReload()
+    startDataReload(clearCache = false)
     {
+        if (clearCache)
+        {
+            this._cache.items = {};
+        }
+
         this.setState({
             itemReady: false,
         });
@@ -63,6 +70,8 @@ class RendererLinkList extends RendererGeneric
 
         if (_.isArrayNotEmpty(ids2Get))
         {
+            console.dir(ids2Get);
+            
             const entity = this.getEntity();
             const data = await entity.find({
                 select: [entity.getPrimaryAttributeCode()],
@@ -157,16 +166,6 @@ class RendererLinkList extends RendererGeneric
         return this.state.itemReady;
     }
 
-    // getInitialCount()
-    // {
-    //     if ('initialCount' in this.props)
-    //     {
-    //         return this.props.initialCount;
-    //     }
-    //
-    //     return 1;
-    // }
-
     getOnChange()
     {
         if (_.isFunction(this.props.onChange))
@@ -182,6 +181,7 @@ class RendererLinkList extends RendererGeneric
         this.setState({
             modelReady: false,
             formError: null,
+            itemId: id,
         });
         this.toggleFormModal();
 
@@ -212,18 +212,38 @@ class RendererLinkList extends RendererGeneric
             this.setState({
                 model: {},
                 modelReady: true,
+                itemId: null,
             }, () => {
                 this.toggleFormModal();
             });
         }
+    }
 
-        // const onChange = this.getOnChange();
-        // const val = this.getValue();
-        //
-        // if (!isLimitReached)
-        // {
-        //     onChange(val.concat(['']));
-        // }
+    onFormSubmit(data)
+    {
+        const id = this.state.itemId;
+
+        this.getEntity().save(
+            id,
+            data
+        ).then((res) => {
+
+            if (!id)
+            {
+                // new item added, need to add this to values
+                const onChange = this.getOnChange();
+                const val = this.getValue();
+                
+                onChange(val.concat([res]));
+            }
+
+            this.startDataReload(true);
+            this.toggleFormModal();
+        }, (error) => {
+            this.setState({
+                formError: error,
+            });
+        });
     }
 
     toggleFormModal()
@@ -304,6 +324,11 @@ class RendererLinkList extends RendererGeneric
                     {
                         this.getValue().map((id, index) => {
                             const data = this.getCached(id);
+                            if (!data)
+                            {
+                                return null;
+                            }
+
                             return (
                                 <div
                                     key={index}
@@ -345,7 +370,7 @@ class RendererLinkList extends RendererGeneric
                                 {
                                     this.hasFormError()
                                     &&
-                                    <div>
+                                    <div className="form__error-message form__error-message_top">
                                         {this.state.formError}
                                     </div>
                                 }
@@ -353,6 +378,7 @@ class RendererLinkList extends RendererGeneric
                                     map={this.getMapTransformed()}
                                     model={this.transformModel()}
                                     submitButtonLabel="Save"
+                                    onSubmit={this.onFormSubmit}
                                 />
                             </div>
                         }

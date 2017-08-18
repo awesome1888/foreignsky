@@ -28,6 +28,8 @@ export default class Form extends BaseComponent
         model: PropTypes.object,
         isFragment: PropTypes.bool,
         submitButtonLabel: PropTypes.string,
+        onSubmit: PropTypes.func,
+
     };
 
     static defaultProps = {
@@ -35,6 +37,7 @@ export default class Form extends BaseComponent
         model: {},
         isFragment: false,
         submitButtonLabel: 'Send',
+        onSubmit: null,
     };
 
     constructor(props)
@@ -55,7 +58,6 @@ export default class Form extends BaseComponent
                 model
             });
         }, (error) => {
-            console.error(error);
             this.setState({
                 model: {},
                 error
@@ -102,7 +104,7 @@ export default class Form extends BaseComponent
     onSubmit(model)
     {
         const sourceModel = this.transformModelBack(model);
-
+        
         if (_.isFunction(this.props.onSubmit)) {
             this.props.onSubmit(sourceModel);
         }

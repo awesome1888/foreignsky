@@ -12,6 +12,7 @@ import Container from '../container/index.jsx';
 import Modal from '../../../../../general/modal/index.js';
 import entityMap from '../../../../../../../startup/client/entity-map.js';
 import Form from '../../../../form/form.jsx';
+import Util from '../../../../../../../lib/util.js';
 
 class RendererLinkList extends RendererGeneric
 {
@@ -28,10 +29,12 @@ class RendererLinkList extends RendererGeneric
         this.extendState({
             formModalOpened: false,
             itemReady: false,
+            modelReady: false,
             error: null,
         });
         this.onItemAddClick = this.onItemAddClick.bind(this);
         this.toggleFormModal = this.toggleFormModal.bind(this);
+        this.onItemClick = this.onItemClick.bind(this);
     }
 
     componentDidMount()
@@ -174,6 +177,32 @@ class RendererLinkList extends RendererGeneric
         return e => e;
     }
 
+    onItemClick(id, e)
+    {
+        this.setState({
+            modelReady: false,
+            formError: null,
+        });
+        this.toggleFormModal();
+
+        this.getEntity().findById(id, {
+            select: '*',
+        }).then((
+            item
+        ) => {
+            this.setState({
+                modelReady: true,
+                model: item.getData(),
+            });
+        }, (err) => {
+            this.setState({
+                formError: error,
+            });
+        });
+
+        e.preventDefault();
+    }
+
     onItemAddClick()
     {
         const isLimitReached = this.isLimitReached();
@@ -182,6 +211,7 @@ class RendererLinkList extends RendererGeneric
         {
             this.setState({
                 model: {},
+                modelReady: true,
             }, () => {
                 this.toggleFormModal();
             });
@@ -248,7 +278,12 @@ class RendererLinkList extends RendererGeneric
 
     isFormReady()
     {
-        return _.isObject(this.state.model);
+        return this.state.formModalOpened && this.state.modelReady;
+    }
+
+    hasFormError()
+    {
+        return _.isStringNotEmpty(this.state.formError);
     }
 
     render()
@@ -277,6 +312,7 @@ class RendererLinkList extends RendererGeneric
                                         href={entityMap.makeDetailPath(entity, data._id)}
                                         target="_blank"
                                         className=""
+                                        onClick={Util.passCtx(this.onItemClick, [data._id])}
                                     >
                                         {data.label}
                                     </a>
@@ -305,11 +341,20 @@ class RendererLinkList extends RendererGeneric
                         {
                             this.isFormReady()
                             &&
-                            <Form
-                                map={this.getMapTransformed()}
-                                model={this.transformModel()}
-                                submitButtonLabel="Save"
-                            />
+                            <div>
+                                {
+                                    this.hasFormError()
+                                    &&
+                                    <div>
+                                        {this.state.formError}
+                                    </div>
+                                }
+                                <Form
+                                    map={this.getMapTransformed()}
+                                    model={this.transformModel()}
+                                    submitButtonLabel="Save"
+                                />
+                            </div>
                         }
                     </Modal>
                 </div>

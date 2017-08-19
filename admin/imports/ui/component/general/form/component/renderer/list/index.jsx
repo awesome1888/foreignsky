@@ -9,6 +9,8 @@ import filterDOMProps from 'uniforms/filterDOMProps';
 
 import RendererGeneric from '../generic/index.jsx';
 import Container from '../container/index.jsx';
+import Util from '../../../../../../../lib/util.js';
+import './style.less';
 
 class RendererList extends RendererGeneric
 {
@@ -16,6 +18,7 @@ class RendererList extends RendererGeneric
     {
         super(props);
         this.onItemAddClick = this.onItemAddClick.bind(this);
+        this.onItemDeleteClick = this.onItemDeleteClick.bind(this);
     }
 
     getItemControl()
@@ -86,6 +89,16 @@ class RendererList extends RendererGeneric
         }
     }
 
+    onItemDeleteClick(index)
+    {
+        const onChange = this.getOnChange();
+        const value = this.getValue();
+
+        onChange([]
+            .concat(value.slice(0,  index))
+            .concat(value.slice(1 + index)));
+    }
+
     renderAddButton()
     {
         return (
@@ -115,15 +128,30 @@ class RendererList extends RendererGeneric
                 errorProps={this.props}
                 {...filterDOMProps(this.props)}
             >
-                <div>
+                <div className="form__list">
                     {
                         this.getValue().map((item, index) => {
                             return Children.map(children, child => {
-                                return React.cloneElement(child, {
-                                    key: index,
-                                    label: null,
-                                    name: this.makeChildName(child, index),
-                                });
+
+                                return (
+                                    <div className="form__list-item">
+                                        <div className="form__list-item-container">
+                                            {
+                                                React.cloneElement(child, {
+                                                    key: index,
+                                                    label: null,
+                                                    name: this.makeChildName(child, index),
+                                                })
+                                            }
+                                        </div>
+                                        <div className="form__list-item-buttons">
+                                            <button
+                                                type="button"
+                                                onClick={Util.passCtx(this.onItemDeleteClick, [index])}
+                                            >Delete</button>
+                                        </div>
+                                    </div>
+                                );
                             })
                         })
                     }

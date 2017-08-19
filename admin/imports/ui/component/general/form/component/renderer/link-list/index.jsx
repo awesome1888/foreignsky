@@ -34,9 +34,10 @@ class RendererLinkList extends RendererGeneric
             error: null,
         });
         this.onItemAddClick = this.onItemAddClick.bind(this);
-        this.toggleFormModal = this.toggleFormModal.bind(this);
         this.onItemClick = this.onItemClick.bind(this);
+        this.onItemDeleteClick = this.onItemDeleteClick.bind(this);
         this.onFormSubmit = this.onFormSubmit.bind(this);
+        this.toggleFormModal = this.toggleFormModal.bind(this);
     }
 
     componentDidMount()
@@ -70,8 +71,6 @@ class RendererLinkList extends RendererGeneric
 
         if (_.isArrayNotEmpty(ids2Get))
         {
-            console.dir(ids2Get);
-            
             const entity = this.getEntity();
             const data = await entity.find({
                 select: [entity.getPrimaryAttributeCode()],
@@ -201,6 +200,13 @@ class RendererLinkList extends RendererGeneric
         });
 
         e.preventDefault();
+    }
+
+    onItemDeleteClick(id)
+    {
+        const onChange = this.getOnChange();
+
+        onChange(_.difference(this.getValue(), [id]));
     }
 
     onItemAddClick()
@@ -347,6 +353,12 @@ class RendererLinkList extends RendererGeneric
                                         onChange={this.getOnChange(null, index)}
                                         value={this.getValue()}
                                     />
+                                    <button
+                                        onClick={Util.passCtx(this.onItemDeleteClick, [data._id])}
+                                        type="button"
+                                    >
+                                        Delete
+                                    </button>
                                 </div>
                             );
                         })

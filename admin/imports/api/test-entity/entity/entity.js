@@ -24,6 +24,7 @@ const M = (superclass) => class Test extends superclass
             boolM: 1,
             num: 1,
             numM: 1,
+            fixedSB: 1,
 
             map: 1,
             mapM: 1,

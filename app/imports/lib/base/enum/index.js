@@ -57,7 +57,7 @@ export default class Enum
 
     selectize()
     {
-
+        // todo
     }
 
     makeMap(keyAs = null, valueAs = null)

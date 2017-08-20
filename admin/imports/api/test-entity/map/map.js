@@ -1,5 +1,6 @@
 import Map from '../../../lib/base/map/index.js';
 import Attribute from '../../../lib/base/map/attribute/index.js';
+import sampleEnum from '../enum/sample.js';
 
 const M = (superclass) => class extends superclass
 {
@@ -63,6 +64,14 @@ const M = (superclass) => class extends superclass
                 optional: true,
                 defaultValue: [1, 2],
                 label: 'Multiple number',
+            },
+
+            {
+                code: 'fixedSB',
+                type: [String],
+                optional: true,
+                allowedValues: sampleEnum,
+                label: 'Select box',
             },
 
             {

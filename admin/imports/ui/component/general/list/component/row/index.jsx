@@ -34,9 +34,10 @@ export default class Row extends BaseComponent
 
     resolveRenderer(attribute)
     {
-        if (attribute.getRenderer())
+        const renderer = attribute.getParameter('renderer');
+        if (renderer)
         {
-            return attribute.getRenderer();
+            return renderer;
         }
 
         if (attribute.isPrimary())

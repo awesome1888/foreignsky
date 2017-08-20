@@ -1,6 +1,7 @@
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 
 import Attribute from './attribute/index.js';
+import Enum from '../enum/index.js';
 
 export default class Map
 {
@@ -101,6 +102,12 @@ export default class Map
                     {
                         // we do not accept "length 1" array of undefined as "filled" value
                         item.custom = Attribute.getStrictArrayCondition(a.getCode());
+                    }
+
+                    const aValues = a.getAllowedValues();
+                    if (aValues instanceof Enum)
+                    {
+                        item.allowedValues = aValues.getKeys();
                     }
 
                     schema[a.getCode()] = item;

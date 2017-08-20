@@ -247,6 +247,11 @@ export default class Attribute
         return false;
     }
 
+    getAllowedValues()
+    {
+        return this._data.allowedValues || null;
+    }
+
     getSchemaFields()
     {
         return _.intersectKeys(this._data, {
@@ -254,16 +259,6 @@ export default class Attribute
             defaultValue: 1, custom: 1, label: 1,
             maxCount: 1, minCount: 1,
         });
-    }
-
-    getRenderer()
-    {
-        return this._data.renderer || null;
-    }
-
-    getItemRenderer()
-    {
-        return this._data.itemRenderer || null;
     }
 
     clone()

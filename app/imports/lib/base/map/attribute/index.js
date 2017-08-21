@@ -1,5 +1,6 @@
 import Map from '../../map/index.js';
 import Entity from '../../entity/entity.js';
+import Enum from '../../enum/index.js';
 
 export default class Attribute
 {
@@ -73,28 +74,10 @@ export default class Attribute
         return this.isArray() && a.type[0] === String;
     }
 
-    /**
-     * @deprecated
-     * @returns {*}
-     */
-    isStringItem()
-    {
-        return this.isArrayOfString();
-    }
-
     isArrayOfNumber()
     {
         const a = this._data;
         return this.isArray() && a.type[0] === Number;
-    }
-
-    /**
-     * @deprecated
-     * @returns {*}
-     */
-    isNumberItem()
-    {
-        return this.isArrayOfNumber();
     }
 
     isArrayOfBoolean()
@@ -103,28 +86,10 @@ export default class Attribute
         return this.isArray() && a.type[0] === Boolean;
     }
 
-    /**
-     * @deprecated
-     * @returns {*}
-     */
-    isBooleanItem()
-    {
-        return this.isArrayOfBoolean();
-    }
-
     isArrayOfDate()
     {
         const a = this._data;
         return this.isArray() && a.type[0] === Date;
-    }
-
-    /**
-     * @deprecated
-     * @returns {*}
-     */
-    isDateItem()
-    {
-        return this.isArrayOfDate();
     }
 
     isArrayOfMap()
@@ -133,16 +98,7 @@ export default class Attribute
         return this.isArray() && a.type[0] instanceof Map;
     }
 
-    /**
-     * @deprecated
-     * @returns {*}
-     */
-    isMapItem()
-    {
-        return this.isArrayOfMap();
-    }
-
-    isLinkItem()
+    isArrayOfLink()
     {
         const a = this._data;
         return this.isArray() && (a.type[0].prototype instanceof Entity);
@@ -150,21 +106,7 @@ export default class Attribute
 
     isLinkAny()
     {
-        return this.isLink() || this.isLinkItem();
-    }
-
-    isArrayOfLink()
-    {
-        return this.isArray() && this.isLinkItem();
-    }
-
-    /**
-     * @deprecated
-     * @returns {*}
-     */
-    isLinkArray()
-    {
-        return this.isArrayOfLink();
+        return this.isLink() || this.isArrayOfLink();
     }
 
     isReference()
@@ -178,7 +120,7 @@ export default class Attribute
         {
             return this._data.type.getCollection();
         }
-        else if (this.isLinkItem())
+        else if (this.isArrayOfLink())
         {
             return this._data.type[0].getCollection();
         }
@@ -186,15 +128,15 @@ export default class Attribute
         return null;
     }
 
-    getAnyLinkType()
+    getLinkType()
     {
         if (this.isLink())
         {
             return this.getType();
         }
-        else if(this.isLinkItem())
+        else if(this.isArrayOfLink())
         {
-            return this.getItemType();
+            return this.getArrayType();
         }
 
         return null;
@@ -209,7 +151,9 @@ export default class Attribute
     isArrayOfStringDiscreet()
     {
         const a = this._data;
-        return this.isArray() && a.type[0] === String && _.isArray(a.allowedValues);
+        return  this.isArray()
+                && a.type[0] === String
+                && (_.isArray(a.allowedValues) || a.allowedValues instanceof Enum);
     }
 
     getData()
@@ -230,15 +174,6 @@ export default class Attribute
         }
 
         return null;
-    }
-
-    /**
-     * @deprecated
-     * @returns {*}
-     */
-    getItemType()
-    {
-        return this.getArrayType();
     }
 
     getCode()
@@ -343,14 +278,14 @@ export default class Attribute
         if (this.isArray())
         {
             type = [];
-            if (this.isMapItem())
+            if (this.isArrayOfMap())
             {
                 // clone sub-map
-                type.push(this.getItemType().clone());
+                type.push(this.getArrayType().clone());
             }
             else
             {
-                type.push(this.getItemType());
+                type.push(this.getArrayType());
             }
         }
         else

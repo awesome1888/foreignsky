@@ -48,7 +48,7 @@ export default class Row extends React.Component
             return null;
         }
 
-        if (attribute.isLinkArray())
+        if (attribute.isArrayOfLink())
         {
             console.dir('its a link');
             return RendererLinkList;
@@ -79,19 +79,19 @@ export default class Row extends React.Component
             return itemRenderer;
         }
 
-        if (attribute.isStringItem() || attribute.isNumberItem())
+        if (attribute.isArrayOfString() || attribute.isArrayOfNumber())
         {
             return RendererString;
         }
-        if (attribute.isDateItem())
+        if (attribute.isArrayOfDate())
         {
             return RendererDate;
         }
-        if (attribute.isBooleanItem())
+        if (attribute.isArrayOfBoolean())
         {
             return RendererBoolean;
         }
-        if (attribute.isMapItem())
+        if (attribute.isArrayOfMap())
         {
             return RenderMap;
         }
@@ -121,7 +121,7 @@ export default class Row extends React.Component
     {
         const params = {};
 
-        if (attribute.isMapItem())
+        if (attribute.isArrayOfMap())
         {
             params.map = attribute.getType()[0];
         }

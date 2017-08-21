@@ -70,7 +70,7 @@ export default class Map
             const links = {};
 
             this.forEach((a) => {
-                if (a.isLink() || a.isLinkItem())
+                if (a.isLink() || a.isArrayOfLink())
                 {
                     const isMultiple = a.isArray();
                     const refFieldCode = this.makeRefCode(a.getCode());
@@ -93,7 +93,7 @@ export default class Map
                     {
                         item.type = item.type.getSchema();
                     }
-                    else if(a.isMapItem())
+                    else if(a.isArrayOfMap())
                     {
                         item.type = [item.type[0].getSchema()];
                     }
@@ -199,7 +199,7 @@ export default class Map
         f.code = this.makeRefCode(attribute.getCode());
 
         const a = new Attribute(f);
-        a.setParameter('entity',  attribute.getAnyLinkType());
+        a.setParameter('entity',  attribute.getLinkType());
         a.setParameter('linkCode',  attribute.getCode());
 
         return a;

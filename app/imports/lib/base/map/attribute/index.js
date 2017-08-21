@@ -67,54 +67,104 @@ export default class Attribute
         return _.isArray(this._data.type);
     }
 
-    isLinkArray()
-    {
-        return this.isArray() && this.isLinkItem();
-    }
-
-    isStringItem()
+    isArrayOfString()
     {
         const a = this._data;
         return this.isArray() && a.type[0] === String;
     }
 
-    isNumberItem()
+    /**
+     * @deprecated
+     * @returns {*}
+     */
+    isStringItem()
+    {
+        return this.isArrayOfString();
+    }
+
+    isArrayOfNumber()
     {
         const a = this._data;
         return this.isArray() && a.type[0] === Number;
     }
 
-    isBooleanItem()
+    /**
+     * @deprecated
+     * @returns {*}
+     */
+    isNumberItem()
+    {
+        return this.isArrayOfNumber();
+    }
+
+    isArrayOfBoolean()
     {
         const a = this._data;
         return this.isArray() && a.type[0] === Boolean;
     }
 
-    isDateItem()
+    /**
+     * @deprecated
+     * @returns {*}
+     */
+    isBooleanItem()
+    {
+        return this.isArrayOfBoolean();
+    }
+
+    isArrayOfDate()
     {
         const a = this._data;
         return this.isArray() && a.type[0] === Date;
     }
 
-    isMapItem()
+    /**
+     * @deprecated
+     * @returns {*}
+     */
+    isDateItem()
+    {
+        return this.isArrayOfDate();
+    }
+
+    isArrayOfMap()
     {
         const a = this._data;
         return this.isArray() && a.type[0] instanceof Map;
     }
 
+    /**
+     * @deprecated
+     * @returns {*}
+     */
+    isMapItem()
+    {
+        return this.isArrayOfMap();
+    }
+
     isLinkItem()
     {
         const a = this._data;
-        
-        // const res = this.isArray() && (a.type[0].prototype instanceof Entity);
-        // console.dir(this.getCode());
-
         return this.isArray() && (a.type[0].prototype instanceof Entity);
     }
 
     isLinkAny()
     {
         return this.isLink() || this.isLinkItem();
+    }
+
+    isArrayOfLink()
+    {
+        return this.isArray() && this.isLinkItem();
+    }
+
+    /**
+     * @deprecated
+     * @returns {*}
+     */
+    isLinkArray()
+    {
+        return this.isArrayOfLink();
     }
 
     isReference()
@@ -150,6 +200,11 @@ export default class Attribute
         return null;
     }
 
+    getBaseType()
+    {
+        return this.getArrayType() || this.getType();
+    }
+
     // special
     isArrayOfStringDiscreet()
     {
@@ -167,7 +222,7 @@ export default class Attribute
         return this._data.type;
     }
 
-    getItemType()
+    getArrayType()
     {
         if (this.isArray())
         {
@@ -175,6 +230,15 @@ export default class Attribute
         }
 
         return null;
+    }
+
+    /**
+     * @deprecated
+     * @returns {*}
+     */
+    getItemType()
+    {
+        return this.getArrayType();
     }
 
     getCode()
@@ -210,6 +274,11 @@ export default class Attribute
     isPrimary()
     {
         return this.getOrder() === 0;
+    }
+
+    isAutoSelectable()
+    {
+        return this._data.autoSelect !== false;
     }
 
     hasMinCount()

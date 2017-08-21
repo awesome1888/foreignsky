@@ -225,4 +225,47 @@ export default class Map
 
         return null;
     }
+
+    getProjection()
+    {
+        const projection = {};
+        this.forEach((attribute) => {
+            let way = 1;
+            if (attribute.isMap() || attribute.isArrayOfMap())
+            {
+                way = attribute.getBaseType().getProjection();
+            }
+            if (attribute.isLink() || attribute.isArrayOfLink())
+            {
+                way = attribute.getBaseType().getMap().getProjection();
+            }
+
+            projection[attribute.getCode()] = way;
+        });
+
+        return projection;
+    }
+
+    getAutoSelectableProjection()
+    {
+        const projection = {};
+        this.forEach((attribute) => {
+            if (attribute.isAutoSelectable())
+            {
+                let way = 1;
+                if (attribute.isMap() || attribute.isArrayOfMap())
+                {
+                    way = attribute.getBaseType().getAutoSelectableProjection();
+                }
+                if (attribute.isLink() || attribute.isArrayOfLink())
+                {
+                    way = attribute.getBaseType().getMap().getAutoSelectableProjection();
+                }
+
+                projection[attribute.getCode()] = way;
+            }
+        });
+
+        return projection;
+    }
 }

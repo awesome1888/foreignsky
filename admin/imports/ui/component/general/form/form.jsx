@@ -29,7 +29,6 @@ export default class Form extends BaseComponent
         isFragment: PropTypes.bool,
         submitButtonLabel: PropTypes.string,
         onSubmit: PropTypes.func,
-
     };
 
     static defaultProps = {

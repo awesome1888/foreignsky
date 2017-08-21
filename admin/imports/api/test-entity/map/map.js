@@ -75,6 +75,14 @@ const M = (superclass) => class extends superclass
             },
 
             {
+                code: 'search',
+                type: String,
+                optional: true,
+                label: 'Super huge search index field',
+                autoSelect: false,
+            },
+
+            {
                 code: 'map',
                 type: new Map([
                     {

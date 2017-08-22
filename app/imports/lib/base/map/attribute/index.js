@@ -166,6 +166,11 @@ export default class Attribute
         return this._data.type;
     }
 
+    setType(type)
+    {
+        this._data.type = type;
+    }
+
     getArrayType()
     {
         if (this.isArray())
@@ -174,6 +179,14 @@ export default class Attribute
         }
 
         return null;
+    }
+
+    setArrayType(type)
+    {
+        if (this.isArray())
+        {
+            return this._data.type[0] = type;
+        }
     }
 
     getCode()
@@ -267,13 +280,14 @@ export default class Attribute
 
     clone()
     {
+        // copy base data by value
         const copyData = _.pick(this._data, [
             'code', 'optional', 'label', 'order',
             'allowedValues', 'defaultValue', 'custom',
             'isReference',
         ]);
 
-        // now about type
+        // copy type
         let type = null;
         if (this.isArray())
         {
@@ -302,6 +316,8 @@ export default class Attribute
         }
 
         copyData.type = type;
+
+        // copy parameters?
 
         return new this.constructor(copyData);
     }

@@ -60,62 +60,13 @@ export default class Map
         return resolver;
     }
 
-    decomposeMap()
+    decomposeMapCached()
     {
         if (!this._parts)
         {
             this._parts = {};
 
-            const schema = {};
-            const links = {};
-
-            this.forEach((a) => {
-                if (a.isLink() || a.isArrayOfLink())
-                {
-                    const isMultiple = a.isArray();
-                    const refFieldCode = this.makeRefCode(a.getCode());
-
-                    // links for grapher
-                    links[a.getCode()] = {
-                        type: isMultiple ? 'many' : 'one',
-                        collection: a.getLinkCollection(),
-                        field: refFieldCode,
-                    };
-
-                    // add ref fields
-                    schema[refFieldCode] = this.makeRefField(a);
-                }
-                else
-                {
-                    const item = a.getSchemaFields();
-
-                    if (a.isMap())
-                    {
-                        item.type = item.type.getSchema();
-                    }
-                    else if(a.isArrayOfMap())
-                    {
-                        item.type = [item.type[0].getSchema()];
-                    }
-
-                    if (a.isArray() && !_.isFunction(a.getCustom()) && !a.isOptional())
-                    {
-                        // we do not accept "length 1" array of undefined as "filled" value
-                        item.custom = Attribute.getStrictArrayCondition(a.getCode());
-                    }
-
-                    const aValues = a.getAllowedValues();
-                    if (aValues instanceof Enum)
-                    {
-                        item.allowedValues = aValues.getKeys();
-                    }
-
-                    schema[a.getCode()] = item;
-                }
-            });
-
-            // console.dir(schema);
-            // console.dir(links);
+            const {schema, links} = this.decomposeMap();
 
             this._parts.schema = new SimpleSchema(schema);
             this._parts.links = links;
@@ -124,14 +75,67 @@ export default class Map
         return this._parts;
     }
 
+    decomposeMap()
+    {
+        const schema = {};
+        const links = {};
+
+        this.forEach((a) => {
+            if (a.isLink() || a.isArrayOfLink())
+            {
+                const isMultiple = a.isArray();
+                const refFieldCode = this.makeRefCode(a.getCode());
+
+                // links for grapher
+                links[a.getCode()] = {
+                    type: isMultiple ? 'many' : 'one',
+                    collection: a.getLinkCollection(),
+                    field: refFieldCode,
+                };
+
+                // add ref fields
+                schema[refFieldCode] = this.makeRefField(a);
+            }
+            else
+            {
+                const item = a.getSchemaFields();
+
+                if (a.isMap())
+                {
+                    item.type = item.type.getSchema();
+                }
+                else if(a.isArrayOfMap())
+                {
+                    item.type = [item.type[0].getSchema()];
+                }
+
+                if (a.isArray() && !_.isFunction(a.getCustom()) && !a.isOptional())
+                {
+                    // we do not accept "length 1" array of undefined as "filled" value
+                    item.custom = Attribute.getStrictArrayCondition(a.getCode());
+                }
+
+                const aValues = a.getAllowedValues();
+                if (aValues instanceof Enum)
+                {
+                    item.allowedValues = aValues.getKeys();
+                }
+
+                schema[a.getCode()] = item;
+            }
+        });
+
+        return {schema, links};
+    }
+
     getSchema()
     {
-        return this.decomposeMap().schema;
+        return this.decomposeMapCached().schema;
     }
 
     getLinks()
     {
-        return this.decomposeMap().links;
+        return this.decomposeMapCached().links;
     }
 
     forEach(cb)
@@ -150,6 +154,50 @@ export default class Map
         }
 
         return [];
+    }
+
+    /**
+     * Returns a sub-map according by the filter
+     * @param filter
+     */
+    filter(filter)
+    {
+        if (!_.isFunction(filter))
+        {
+            filter = x => true;
+        }
+
+        const attributes = [];
+        this.forEach((attribute) => {
+
+            if (filter(attribute) === false)
+            {
+                return;
+            }
+
+            let attr = attribute.clone();
+
+            // filter sub-maps
+            if (attribute.isMap())
+            {
+                attr.setType(attr.getType().filter(filter));
+            }
+            else if(attribute.isArrayOfMap())
+            {
+                attr.setArrayType(attr.getArrayType().filter(filter));
+            }
+
+            attributes.push(attr);
+        });
+
+        console.dir(attributes);
+        
+        const inst = new this.constructor(attributes);
+
+        console.dir(this.constructor);
+        console.dir(inst);
+        
+        return inst;
     }
 
     tuneAttribute(code, data = {})

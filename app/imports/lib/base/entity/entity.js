@@ -35,9 +35,16 @@ export default class BaseEntity
      * // todo: make it cached
      * @returns {*}
      */
-    static getMap()
+    static getMap(filter = null)
     {
-        return this.getMapInstance();
+        const map = this.getMapInstance();
+
+        if (filter)
+        {
+            return map.filter(filter);
+        }
+
+        return map;
     }
 
     static getCollection()

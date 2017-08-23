@@ -1,5 +1,4 @@
 import Map from '../../../lib/base/map/index.js';
-import Attribute from '../../../lib/base/map/attribute/index.js';
 import sampleEnum from '../enum/sample.js';
 
 const M = (superclass) => class extends superclass

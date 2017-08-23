@@ -2,12 +2,18 @@ import React from 'react';
 import BaseEntity from '../../../lib/base/entity/entity.client.js';
 import Entity from './entity.js';
 import mix from '../../../lib/mixin.js';
+import map from '../map/map.client.js';
 
 export default class Embed extends mix(BaseEntity).with(Entity)
 {
     static getTitle()
     {
         return 'Embed area';
+    }
+
+    static getMapInstance()
+    {
+        return map;
     }
 
     static render(text, data, params = {})

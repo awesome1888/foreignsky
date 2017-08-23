@@ -67,6 +67,11 @@ export default class Map
         return resolver;
     }
 
+    $(name)
+    {
+        return this.resolveEntityConstructor(name);
+    }
+
     decomposeMapCached()
     {
         if (!this._parts)

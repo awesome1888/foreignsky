@@ -185,6 +185,9 @@ export default class Form extends BaseComponent
             return body;
         }
 
+        // const schema = tMap.getSchema();
+        // console.dir(schema);
+
         return (
             <AutoForm
                 schema={tMap.getSchema()}

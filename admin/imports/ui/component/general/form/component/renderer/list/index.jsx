@@ -44,10 +44,14 @@ class RendererList extends RendererGeneric
             childName = child.props.name;
         }
 
-        return joinName(
+        const name = joinName(
             this.getName(),
             index !== false ? childName.replace('$', index) : childName
         );
+
+        console.dir(name);
+
+        return name;
     }
 
     isLimitReached()
@@ -111,9 +115,16 @@ class RendererList extends RendererGeneric
         );
     }
 
-    renderDeleteButton()
+    renderDeleteButton(index)
     {
-        // todo
+        return (
+            <button
+                type="button"
+                onClick={Util.passCtx(this.onItemDeleteClick, [index])}
+            >
+                Delete
+            </button>
+        );
     }
 
     render()
@@ -145,10 +156,7 @@ class RendererList extends RendererGeneric
                                             }
                                         </div>
                                         <div className="form__list-item-buttons">
-                                            <button
-                                                type="button"
-                                                onClick={Util.passCtx(this.onItemDeleteClick, [index])}
-                                            >Delete</button>
+                                            {this.renderDeleteButton(index)}
                                         </div>
                                     </div>
                                 );

@@ -14,7 +14,7 @@ const M = (superclass) => class extends superclass
                 type: [
                     new Map([
                         {
-                            code: 'imageId',
+                            code: 'image',
                             type: fileLinked,
                         },
                         {
@@ -24,16 +24,18 @@ const M = (superclass) => class extends superclass
                         },
                         {
                             code: 'options',
-                            type: [new Map([
-                                {
-                                    code: 'key',
-                                    type: String,
-                                },
-                                {
-                                    code: 'value',
-                                    type: String, // todo: blackbox here!
-                                },
-                            ])],
+                            type: [
+                                new Map([
+                                    {
+                                        code: 'key',
+                                        type: String,
+                                    },
+                                    {
+                                        code: 'value',
+                                        type: String, // todo: blackbox here!
+                                    },
+                                ])
+                            ],
                             optional: true,
                         },
                     ])

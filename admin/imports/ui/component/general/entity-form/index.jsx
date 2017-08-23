@@ -16,10 +16,14 @@ export default class EntityForm extends Form
 
     getMap()
     {
-        return this.getEntity().getMap().filter((a) => {
+        const map = this.getEntity().getMap().filter((a) => {
             // show only auto-selectable attributes
             return a.isAutoSelectable();
         });
+        
+        console.dir(map);
+        
+        return map;
     }
 
     getItemTitle(item)

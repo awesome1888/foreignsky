@@ -19,6 +19,7 @@ import ArticleDetailPage from '../../ui/page/article-detail/index.jsx';
 import ArticleTagListPage from '../../ui/page/article.tag-list/index.jsx';
 import EmbedListPage from '../../ui/page/embed-list/index.jsx';
 import FileListPage from '../../ui/page/file-list/index.jsx';
+import FileDetailPage from '../../ui/page/file-detail/index.jsx';
 import TestEntityListPage from '../../ui/page/test-entity-list/index.jsx';
 import TestEntityDetailPage from '../../ui/page/test-entity-detail/index.jsx';
 import TestSubEntityListPage from '../../ui/page/test-sub-entity-list/index.jsx';
@@ -81,7 +82,7 @@ class AdminEntityMap extends EntityMap
                     },
                     detail: {
                         path: '/entity/file/#ID#/',
-                        controller: null, // fix later
+                        controller: FileDetailPage,
                     },
                 },
                 entity: File,

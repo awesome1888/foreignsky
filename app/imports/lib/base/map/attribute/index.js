@@ -206,7 +206,14 @@ export default class Attribute
 
     getTitle()
     {
-        return this.getLabel() || this.getCode();
+        const label = this.getLabel();
+        if (label)
+        {
+            return label;
+        }
+
+        const code = this.getCode();
+        return code.substr(0, 1).toUpperCase()+code.substr(1);
     }
 
     getOrder()

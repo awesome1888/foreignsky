@@ -6,18 +6,4 @@ export default new class extends Collection
     {
         super('file');
     }
-
-    getSchema()
-    {
-        return {
-            name: {
-                type: String,
-                optional: false,
-            },
-            path: {
-                type: String,
-                optional: false,
-            },
-        };
-    }
 }

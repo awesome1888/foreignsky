@@ -186,7 +186,7 @@ export default class Row extends React.Component
     renderLabel()
     {
         const attr = this.getAttribute();
-        return attr.getLabel() || attr.getCode() || '';
+        return attr.getTitle();
     }
 
     render()

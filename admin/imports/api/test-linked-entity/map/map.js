@@ -1,8 +1,8 @@
 const M = (superclass) => class Map extends superclass
 {
-    constructor()
+    constructor(definition)
     {
-        super([
+        super(definition || [
             {
                 code: 'string',
                 type: String,
@@ -15,6 +15,7 @@ const M = (superclass) => class Map extends superclass
                 optional: false,
                 label: 'Field 2',
                 defaultValue: 'test',
+                autoSelect: false,
             },
             {
                 code: 'bool',

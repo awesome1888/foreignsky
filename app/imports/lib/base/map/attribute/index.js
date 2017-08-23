@@ -30,7 +30,7 @@ export default class Attribute
 
     constructor(data)
     {
-        this._data = data;
+        this._data = this.check(data);
     }
 
     isString()
@@ -350,5 +350,21 @@ export default class Attribute
         }
 
         return this._parameters[name];
+    }
+
+    check(data)
+    {
+        // do some checking
+        if (!_.isStringNotEmpty(data.code))
+        {
+            throw new ReferenceError('Field has no code');
+        }
+
+        if (!data.type || (_.isArray(data.type) && !data.type.length))
+        {
+            throw new ReferenceError(`Field '${data.code}' has no type`);
+        }
+
+        return data;
     }
 }

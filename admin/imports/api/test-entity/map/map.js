@@ -4,13 +4,13 @@ import sampleEnum from '../enum/sample.js';
 
 const M = (superclass) => class extends superclass
 {
-    constructor()
+    constructor(definition)
     {
         super();
 
         const testLinked = this.resolveEntityConstructor('test');
 
-        this.setDefinition([
+        this.setDefinition(definition || [
             {
                 code: 'string',
                 type: String,

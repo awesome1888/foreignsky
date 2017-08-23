@@ -145,8 +145,10 @@ export default class List extends BaseComponent
 
     getMap()
     {
-        // todo: clone here!!!
-        return this.getEntity().getMap();
+        return this.getEntity().getMap().filter((a) => {
+            // show only auto-selectable attributes
+            return a.isAutoSelectable();
+        });
     }
 
     transformMap(map)

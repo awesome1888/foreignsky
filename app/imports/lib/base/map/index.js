@@ -29,11 +29,18 @@ export default class Map
         {
             let order = 0;
             definition.forEach((item) => {
-                item.order = order;
-                result.push(new Attribute(
-                    item
-                ));
-                order += 1;
+                if (item instanceof Attribute)
+                {
+                    result.push(item);
+                }
+                else
+                {
+                    item.order = order;
+                    result.push(new Attribute(
+                        item
+                    ));
+                    order += 1;
+                }
             });
         }
 
@@ -189,15 +196,8 @@ export default class Map
 
             attributes.push(attr);
         });
-
-        console.dir(attributes);
         
-        const inst = new this.constructor(attributes);
-
-        console.dir(this.constructor);
-        console.dir(inst);
-        
-        return inst;
+        return new this.constructor(attributes);
     }
 
     tuneAttribute(code, data = {})

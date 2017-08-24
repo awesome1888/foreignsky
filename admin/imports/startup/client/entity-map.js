@@ -17,6 +17,7 @@ import TestSubEntity from '../../api/test-linked-entity/entity/entity.client.js'
 import ArticleListPage from '../../ui/page/article-list/index.jsx';
 import ArticleDetailPage from '../../ui/page/article-detail/index.jsx';
 import ArticleTagListPage from '../../ui/page/article.tag-list/index.jsx';
+import ArticleTagDetailPage from '../../ui/page/article.tag-detail/index.jsx';
 import EmbedListPage from '../../ui/page/embed-list/index.jsx';
 import EmbedDetailPage from '../../ui/page/embed-detail/index.jsx';
 import FileListPage from '../../ui/page/file-list/index.jsx';
@@ -55,7 +56,7 @@ class AdminEntityMap extends EntityMap
                     },
                     detail: {
                         path: '/entity/article.tag/#ID#/',
-                        controller: null, // fix later
+                        controller: ArticleTagDetailPage,
                     },
                 },
                 entity: ArticleTag,

@@ -281,7 +281,7 @@ export default class Attribute
         return _.intersectKeys(this._data, {
             type: 1, optional: 1, allowedValues: 1,
             defaultValue: 1, custom: 1, label: 1,
-            maxCount: 1, minCount: 1,
+            maxCount: 1, minCount: 1, regEx: 1,
         });
     }
 
@@ -291,7 +291,7 @@ export default class Attribute
         const copyData = _.pick(this._data, [
             'code', 'optional', 'label', 'order',
             'allowedValues', 'defaultValue', 'custom',
-            'isReference',
+            'isReference', 'regEx',
         ]);
 
         // copy type

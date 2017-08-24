@@ -6,13 +6,13 @@ import Collection from '../config/collection.js';
  */
 const M = (superclass) =>  class Tag extends superclass
 {
-    static getCollection()
+    static getCollectionInstance()
     {
         return Collection;
     }
 
     getTitle() {
-        const t = this.data.title;
+        const t = this._data.title;
         if (_.isString(t))
         {
             return t.toLowerCase();
@@ -22,7 +22,7 @@ const M = (superclass) =>  class Tag extends superclass
     }
 
     getColor() {
-        return this.data.color || 'blue';
+        return this._data.color || 'blue';
     }
 };
 

@@ -120,29 +120,6 @@ export default class List extends BaseComponent
         return Row;
     }
 
-    // getMap()
-    // {
-    //     if (!this._cache.map)
-    //     {
-    //         this._cache.map = this.declareMap();
-    //         this._cache.mapIndex = this._cache.map.reduce((result, attribute) => {
-    //             result[attribute.code] = attribute;
-    //             return result;
-    //         }, {});
-    //     }
-    //
-    //     return this._cache.map;
-    // }
-
-    /**
-     * Use this function to make hooks
-     * @returns {*}
-     */
-    // declareMap()
-    // {
-    //     return this.readMap();
-    // }
-
     getMap()
     {
         return this.getEntity().getMap().filter((a) => {

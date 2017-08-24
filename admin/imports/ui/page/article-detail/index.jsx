@@ -18,10 +18,14 @@ export default class ArticleDetailPage extends BasePage
                 title={this.props.title}
                 motd={this.props.motd}
                 central={
-                    <Form
-                        id={this.props.route.id}
-                        detailPageUrl={this.props.route.detailPath || ''}
-                    />
+                    <div className="">
+                        <Form
+                            id={this.props.route.id}
+                            backPath={this.props.route.listPath || ''}
+                        />
+                        <br />
+                        <br />
+                    </div>
                 }
             />
         );

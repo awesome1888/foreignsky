@@ -215,6 +215,16 @@ export default class Map
         this._attributes = this._attributes.filter(item => item.getCode() !== code);
     }
 
+    leaveOnly(list)
+    {
+        if (!_.isArray(list))
+        {
+            return;
+        }
+
+        this._attributes = this._attributes.filter(item => list.indexOf(item.getCode()) >= 0);
+    }
+
     makeRefCode(code)
     {
         return `${code}Id`;
@@ -231,7 +241,6 @@ export default class Map
             type: attribute.isArray() ? [String] : String,
             optional: attribute.getOptional(),
             regEx: SimpleSchema.RegEx.Id,
-            label: 'Reference', // `Reference to ${attribute.getCode()}`,
             minCount: 0, // we cant add "pre-defined" links
         };
         if (attribute.isArray() && !_.isFunction(attribute.getCustom()) && !attribute.isOptional())
@@ -245,12 +254,18 @@ export default class Map
         return field;
     }
 
+    /**
+     * Create surrogate "link" field on the basis of the reference field
+     * @param attribute
+     * @returns {Attribute}
+     */
     makeRefAttribute(attribute)
     {
         const f = this.makeRefField(attribute);
         f.isReference = true;
         f.code = this.makeRefCode(attribute.getCode());
-
+        f.label = attribute.getTitle();
+        
         const a = new Attribute(f);
         a.setParameter('entity',  attribute.getLinkType());
         a.setParameter('linkCode',  attribute.getCode());

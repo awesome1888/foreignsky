@@ -9,14 +9,14 @@ export default class ArticleForm extends EntityForm
         return Article;
     }
 
-    setTitleAfterDataLoad(item)
+    getItemTitle(item)
     {
-        this.setTitle(item.getTitle());
+        return item.getTitle();
     }
 
     transformMap(map)
     {
-        map.removeAttribute('search');
+        // map.removeAttribute('search');
 
         // do some tuning, like renderer
 

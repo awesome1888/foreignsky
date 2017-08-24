@@ -33,7 +33,7 @@ export default class Header extends React.Component {
 									A
 								</a>
 								<div className="header__logo-text">
-									Nach Berlin!
+									Rocket Trabant!
 									<div className="header__logo-funny-desc">
 										Admin Panel. Behold, bitches!
 									</div>

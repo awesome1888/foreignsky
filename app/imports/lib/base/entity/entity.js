@@ -249,18 +249,6 @@ export default class BaseEntity
         throw new Error(`Not implemented: ${fn}`);
     }
 
-    // todo: move on Map.resolveEntityConstructor()
-    static resolveEntityConstructor(name)
-    {
-        const resolver = this.getEntityMap()[name];
-        if (!_.isFunction(resolver))
-        {
-            throw new Error(`Unable to get entity '${name}' class constructor`);
-        }
-
-        return resolver;
-    }
-
     // todo: deprecated, replace with getMap() and remove
     static getAttributes()
     {
@@ -291,14 +279,14 @@ export default class BaseEntity
         }
     }
 
-    isEntity(arg)
-    {
-        return arg instanceof this.constructor;
-    }
-
     getCollection()
     {
         return this.constructor.getCollection();
+    }
+
+    getMap(filter)
+    {
+        return this.constructor.getMap(filter);
     }
 
     getId()
@@ -325,22 +313,6 @@ export default class BaseEntity
     normalizeData(data)
     {
         return data;
-    }
-
-    getMap()
-    {
-        return this.getAttributes();
-    }
-
-    // todo: move all to getMap()
-    getAttributes()
-    {
-        return this.constructor.getAttributes().map((attribute) => {
-            const item = clone(attribute, false, 1);
-            item.value = this.getAttributeValue(attribute.code);
-
-            return item;
-        });
     }
 
     getAttributeValue(code)
@@ -370,7 +342,7 @@ export default class BaseEntity
                 }
                 if (_.isObjectNotEmpty(item)) {
                     // make entity
-                    const constr = this.constructor.resolveEntityConstructor(type);
+                    const constr = this.getMap().$(type);
                     point[k] = new constr(item);
 
                     return point[k];
@@ -409,5 +381,10 @@ export default class BaseEntity
         });
 
         return result;
+    }
+
+    isEntity(arg)
+    {
+        return arg instanceof this.constructor;
     }
 }

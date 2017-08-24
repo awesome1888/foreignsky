@@ -1,19 +1,16 @@
 import BaseEntity from '../../../lib/base/entity/entity.server.js';
 import Entity from './entity.js';
 import mix from '../../../lib/mixin.js';
-
-import Tag from '../../../api/article.tag/entity/entity.server.js'
+import map from '../map/map.server.js';
+// import Tag from '../../../api/article.tag/entity/entity.server.js'
 import File from '../../../api/file/entity/entity.server.js';
-import Embed from '../../../api/embed/entity/entity.server.js';
+// import Embed from '../../../api/embed/entity/entity.server.js';
 
 export default class Article extends mix(BaseEntity).with(Entity)
 {
-    static getEntityMap()
+    static getMapInstance()
     {
-        return {
-            tag: Tag,
-            embed: Embed,
-        };
+        return map;
     }
 
     static populateEmbedImages(items)

@@ -36,22 +36,26 @@ class RendererList extends RendererGeneric
         return '$';
     }
 
+    getName()
+    {
+        // fixing strange bug with name nesting...
+        // todo: solve it normally
+        let name = super.getName().split('.');
+        return name[name.length - 1];
+    }
+
     makeChildName(child = null, index = false)
     {
         let childName = this.getChildName();
-        if (child && _.isStringNotEmpty(child.props.name))
-        {
-            childName = child.props.name;
-        }
+        // if (child && _.isStringNotEmpty(child.props.name))
+        // {
+        //     childName = child.props.name;
+        // }
 
-        const name = joinName(
+        return joinName(
             this.getName(),
             index !== false ? childName.replace('$', index) : childName
         );
-
-        console.dir(name);
-
-        return name;
     }
 
     isLimitReached()
@@ -129,9 +133,6 @@ class RendererList extends RendererGeneric
 
     render()
     {
-        // console.dir(this.getName());
-        // console.dir(this.getValue());
-
         const children = this.getItemControl();
 
         return (
@@ -172,4 +173,6 @@ class RendererList extends RendererGeneric
     }
 }
 
-export default connectField(RendererList, {includeInChain: false});
+export default connectField(RendererList, {
+    includeInChain: false,
+});

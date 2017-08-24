@@ -50,7 +50,6 @@ export default class Row extends React.Component
 
         if (attribute.isArrayOfLink())
         {
-            console.dir('its a link');
             return RendererLinkList;
         }
 
@@ -165,7 +164,7 @@ export default class Row extends React.Component
         if (!constructor) {
             return null;
         }
-
+        
         return React.createElement(
             constructor,
             Object.assign(

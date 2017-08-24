@@ -29,4 +29,6 @@ class RendererMap extends RendererGeneric
     }
 }
 
-export default connectField(RendererMap, {});
+export default connectField(RendererMap, {
+    includeInChain: true,
+});

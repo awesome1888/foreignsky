@@ -8,6 +8,35 @@ const M = (superclass) => class extends superclass
 
         const fileLinked = this.$('file');
 
+        // this.setDefinition(definition || [
+        //     {
+        //         code: 'one',
+        //         type: [
+        //             new Map([
+        //                 {
+        //                     code: 'two',
+        //                     type: [
+        //
+        //                         String,
+        //                         // new Map([
+        //                         //     {
+        //                         //         code: 'pffff',
+        //                         //         type: [
+        //                         //
+        //                         //             String
+        //                         //
+        //                         //         ],
+        //                         //     },
+        //                         // ])
+        //
+        //                     ],
+        //                 },
+        //             ])
+        //         ],
+        //         optional: false,
+        //     },
+        // ]);
+
         this.setDefinition(definition || [
             {
                 code: 'item',

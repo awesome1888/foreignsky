@@ -139,7 +139,7 @@ export default class Form extends BaseComponent
             // probably the model is still loading
             return (<span>Loading...</span>);
         }
-        
+
         // console.dir(this.getMapTransformed());
         // console.dir(this.transformModel());
 
@@ -187,6 +187,15 @@ export default class Form extends BaseComponent
 
         // const schema = tMap.getSchema();
         // console.dir(schema);
+
+        // return (
+        //     <AutoForm
+        //         schema={tMap.getSchema()}
+        //         model={tModel}
+        //         onSubmit={this.onSubmit.bind(this)}
+        //         className="form"
+        //     />
+        // );
 
         return (
             <AutoForm

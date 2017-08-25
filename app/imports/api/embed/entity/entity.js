@@ -11,6 +11,11 @@ const M = (superclass) =>  class Embed extends superclass
         return Collection;
     }
 
+    static getCutawayAttributeCode()
+    {
+        return '_id';
+    }
+
     getRenderer()
     {
         return this._data.renderer || 'IMAGE';

@@ -283,7 +283,7 @@ export default class Map
         return new this.constructor(attributes);
     }
 
-    getPrimaryAttribute()
+    getCutawayAttribute()
     {
         const first = this._attributes[0];
         if (first instanceof Attribute)

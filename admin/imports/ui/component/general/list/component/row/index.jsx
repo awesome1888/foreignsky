@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import RendererGeneric from './component/renderer/generic/generic.jsx';
 import RendererDate from './component/renderer/date/date.jsx';
 import RendererBoolean from './component/renderer/boolean/boolean.jsx';
-import RendererPrimary from './component/renderer/primary/primary.jsx';
+import RendererCutaway from './component/renderer/cutaway/cutaway.jsx';
 
 export default class Row extends BaseComponent
 {
@@ -40,9 +40,9 @@ export default class Row extends BaseComponent
             return renderer;
         }
 
-        if (attribute.isPrimary())
+        if (attribute.isCutaway())
         {
-            return RendererPrimary;
+            return RendererCutaway;
         }
 
         const type = attribute.getType();

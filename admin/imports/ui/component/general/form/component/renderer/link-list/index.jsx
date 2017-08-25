@@ -73,7 +73,7 @@ class RendererLinkList extends RendererGeneric
         {
             const entity = this.getEntity();
             const data = await entity.find({
-                select: [entity.getPrimaryAttributeCode()],
+                select: [entity.getCutawayAttributeCode()],
                 filter: {
                     _id: {$in: this.getValue()}
                 },
@@ -92,7 +92,7 @@ class RendererLinkList extends RendererGeneric
 
         this._cache.items[item.getId()] = {
             _id: item.getId(),
-            label: item.getData()[entity.getPrimaryAttributeCode()],
+            label: item.getData()[entity.getCutawayAttributeCode()],
         };
     }
 
@@ -348,7 +348,7 @@ class RendererLinkList extends RendererGeneric
                                         className=""
                                         onClick={Util.passCtx(this.onItemClick, [data._id])}
                                     >
-                                        {data.label}
+                                        {data.label ? data.label.toString() : data._id}
                                     </a>
                                     <input
                                         type="hidden"

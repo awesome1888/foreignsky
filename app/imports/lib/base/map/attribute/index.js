@@ -226,7 +226,7 @@ export default class Attribute
         return this._data.optional === true;
     }
 
-    isPrimary()
+    isCutaway()
     {
         return this.getOrder() === 0;
     }

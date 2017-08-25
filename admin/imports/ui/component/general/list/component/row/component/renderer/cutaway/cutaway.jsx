@@ -3,7 +3,7 @@ import React from 'react';
 import RendererGeneric from '../generic/generic.jsx';
 // import './style.less';
 
-export default class PrimaryFieldRenderer extends RendererGeneric
+export default class CutawayRenderer extends RendererGeneric
 {
     getItemId()
     {

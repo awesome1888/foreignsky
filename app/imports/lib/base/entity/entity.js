@@ -266,9 +266,9 @@ export default class BaseEntity
         return result;
     }
 
-    static getPrimaryAttributeCode()
+    static getCutawayAttributeCode()
     {
-        return this.getMap().getPrimaryAttribute().getCode();
+        return this.getMap().getCutawayAttribute().getCode();
     }
 
     constructor(data = {})

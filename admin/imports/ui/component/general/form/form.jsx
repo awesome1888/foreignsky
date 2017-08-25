@@ -185,18 +185,6 @@ export default class Form extends BaseComponent
             return body;
         }
 
-        // const schema = tMap.getSchema();
-        // console.dir(schema);
-
-        // return (
-        //     <AutoForm
-        //         schema={tMap.getSchema()}
-        //         model={tModel}
-        //         onSubmit={this.onSubmit.bind(this)}
-        //         className="form"
-        //     />
-        // );
-
         return (
             <AutoForm
                 schema={tMap.getSchema()}
@@ -207,6 +195,11 @@ export default class Form extends BaseComponent
                 {body}
                 <div style={{marginTop: '10px'}}>
                     <button type="submit">{this.props.submitButtonLabel}</button>
+                    {
+                        _.isStringNotEmpty(this.props.backPath)
+                        &&
+                        <a href={this.props.backPath}>Back</a>
+                    }
                 </div>
             </AutoForm>
         );

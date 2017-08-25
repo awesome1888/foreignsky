@@ -188,7 +188,7 @@ class RendererLinkList extends RendererGeneric
         this.toggleFormModal();
 
         this.getEntity().findById(id, {
-            select: '*',
+            select: '#',
         }).then((
             item
         ) => {

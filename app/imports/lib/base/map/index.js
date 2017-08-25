@@ -306,6 +306,8 @@ export default class Map
             if (attribute.isLink() || attribute.isArrayOfLink())
             {
                 way = attribute.getBaseType().getMap().getProjection();
+                // get also the reference field value
+                projection[this.makeRefCode(attribute.getCode())] = 1;
             }
 
             projection[attribute.getCode()] = way;
@@ -328,6 +330,8 @@ export default class Map
                 if (attribute.isLink() || attribute.isArrayOfLink())
                 {
                     way = attribute.getBaseType().getMap().getAutoSelectableProjection();
+                    // get also the reference field value
+                    projection[this.makeRefCode(attribute.getCode())] = 1;
                 }
 
                 projection[attribute.getCode()] = way;

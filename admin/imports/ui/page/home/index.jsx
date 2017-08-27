@@ -5,6 +5,10 @@ import BasePage from '../../../lib/base/page/page.jsx';
 
 import Layout from '../../component/layout/layout.jsx';
 
+import 'semantic-ui-css/semantic.min.css';
+import { Button } from 'semantic-ui-react';
+import { Progress } from 'semantic-ui-react'
+
 export default class HomePage extends BasePage
 {
 	render()
@@ -14,7 +18,14 @@ export default class HomePage extends BasePage
                 title={this.props.title}
                 motd={this.props.motd}
                 central={
-                    ('Привет! Я - кость лобковаЯ!')
+                    <div className="">
+                        <Button>
+                            Click Here
+                        </Button>
+                        <Progress percent={10} size='tiny' className="shit">
+                            tiny
+                        </Progress>
+                    </div>
                 }
             />
         );

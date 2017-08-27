@@ -20,6 +20,8 @@
     "react-google-maps": "^4.11.0",
     "react-mounter": "^1.2.0",
     "react-router": "^4.0.0",
+    "semantic-ui-css": "^2.2.12",
+    "semantic-ui-react": "^0.71.5",
     "uniforms": "^1.19.1",
     "uniforms-unstyled": "^1.19.1"
   },

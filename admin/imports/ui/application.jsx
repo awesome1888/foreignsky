@@ -7,6 +7,10 @@ import TaskRunnerPage from './page/task-runner/index.jsx';
 
 import EntityMap from '../startup/client/entity-map.js';
 
+import Header from './component/header/index.jsx';
+import LoadOverlay from './component/load.overlay/index.jsx';
+import LoadIndicator from './component/load.indicator/index.jsx';
+
 export default class AdminApplication extends Application
 {
     static getHomePageController()
@@ -115,5 +119,34 @@ export default class AdminApplication extends Application
         tParams.title = this.state.title;
 
         return tParams;
+    }
+
+    render() {
+        const {main, routeProps} = this.props;
+
+        return (
+            <div className="layout">
+                {/*{*/}
+                    {/*this.showOverlay()*/}
+                    {/*&&*/}
+                    {/*<LoadOverlay*/}
+                        {/*ref={(instance) => {this.setOverlay(instance)}}*/}
+                    {/*/>*/}
+                {/*}*/}
+
+                <Header />
+                {/*{*/}
+                    {/*this.showIndicator()*/}
+                    {/*&&*/}
+                    {/*<LoadIndicator*/}
+                        {/*ref={(instance) => {this.setIndicator(instance)}}*/}
+                    {/*/>*/}
+                {/*}*/}
+                {React.createElement(main, this.transformPageParameters({
+                    route: routeProps,
+                }))}
+                {this.renderExtras()}
+            </div>
+        );
     }
 }

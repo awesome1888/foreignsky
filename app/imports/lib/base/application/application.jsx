@@ -253,31 +253,29 @@ export default class Application extends React.Component
         const {main, routeProps} = this.props;
 
         return (
-            <div id="app">
-                <div className="layout">
+            <div className="layout">
+                {
+                    this.showOverlay()
+                    &&
+                    <LoadOverlay
+                        ref={(instance) => {this.setOverlay(instance)}}
+                    />
+                }
+
+                <div className="layout__central layout__header">
+                    <Header />
                     {
-                        this.showOverlay()
+                        this.showIndicator()
                         &&
-                        <LoadOverlay
-                            ref={(instance) => {this.setOverlay(instance)}}
+                        <LoadIndicator
+                            ref={(instance) => {this.setIndicator(instance)}}
                         />
                     }
-
-                    <div className="layout__central layout__header">
-                        <Header />
-                        {
-                            this.showIndicator()
-                            &&
-                            <LoadIndicator
-                                ref={(instance) => {this.setIndicator(instance)}}
-                            />
-                        }
-                    </div>
-                    {React.createElement(main, this.transformPageParameters({
-                        route: routeProps,
-                    }))}
-                    {this.renderExtras()}
                 </div>
+                {React.createElement(main, this.transformPageParameters({
+                    route: routeProps,
+                }))}
+                {this.renderExtras()}
             </div>
         );
     }

@@ -3,7 +3,7 @@ import BaseComponent from '../../../lib/base/component/component.jsx';
 import Naviation from './component/navigation/navigation.jsx';
 import PropTypes from 'prop-types';
 
-import './style.less';
+// import './style.less';
 
 export default class Layout extends BaseComponent
 {
@@ -27,30 +27,42 @@ export default class Layout extends BaseComponent
     render(props)
     {
         return (
-            <div className="layout-map-full__central layout-map-full__central-body container">
-                <div className="layout-map-full__central-row row">
-                    <div className="layout-map-full__central-body-left col-xs-3">
-                        <div className="layout-map-full__side">
-                            {
-                                _.isStringNotEmpty(this.props.motd)
-                                &&
-                                <blockquote className="margin-top_2x margin-top_2x">
-                                    {this.props.motd}
-                                </blockquote>
-                            }
-                            <Naviation
-                                className="margin-bottom"
-                            />
+            <div className="ui container">
+                <div className="ui equal width grid">
+                    <div className="row">
+                        <div className="
+                            computer only
+                            tablet only
+                            column
+                        ">
+                            <div className="layout-map-full__side">
+                                {
+                                    _.isStringNotEmpty(this.props.motd)
+                                    &&
+                                    <blockquote className="margin-top_2x margin-top_2x">
+                                        {this.props.motd}
+                                    </blockquote>
+                                }
+                                <Naviation
+                                    className="margin-bottom"
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div className="layout-map-full__central-body-right col-xs-9">
-                        <div className="layout-map-full__central">
-                            {
-                                _.isStringNotEmpty(this.props.title)
-                                &&
-                                <h1>{this.props.title}</h1>
-                            }
-                            {this.renderCentral(props)}
+                        <div className="
+                            twelve wide computer
+                            twelve wide tablet
+                            sixteen wide mobile
+                            siz
+                            column
+                        ">
+                            <div className="layout-map-full__central">
+                                {
+                                    _.isStringNotEmpty(this.props.title)
+                                    &&
+                                    <h1>{this.props.title}</h1>
+                                }
+                                {this.renderCentral(props)}
+                            </div>
                         </div>
                     </div>
                 </div>

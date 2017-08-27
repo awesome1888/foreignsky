@@ -18,6 +18,7 @@ class RendererLinkList extends RendererGeneric
 {
     _cache = {
         items: {},
+        error: null,
         entity: null,
         map: null,
         model: null,
@@ -54,6 +55,7 @@ class RendererLinkList extends RendererGeneric
 
         this.setState({
             itemReady: false,
+            error: null,
         });
         this.loadData().then(() => {
             this.setState({
@@ -135,6 +137,16 @@ class RendererLinkList extends RendererGeneric
         this.setState({
             error,
         });
+    }
+
+    hasError()
+    {
+        return !!this.state.error;
+    }
+
+    getErrorText()
+    {
+        return this.state.error.toString();
     }
 
     getChildName()
@@ -262,23 +274,6 @@ class RendererLinkList extends RendererGeneric
         });
     }
 
-    renderAddButton()
-    {
-        return (
-            <button
-                type="button"
-                onClick={this.onItemAddClick}
-            >
-                + Add
-            </button>
-        );
-    }
-
-    renderDeleteButton()
-    {
-        // todo
-    }
-
     transformMap(map)
     {
         return map;
@@ -315,13 +310,39 @@ class RendererLinkList extends RendererGeneric
         return _.isStringNotEmpty(this.state.formError);
     }
 
+    renderAddButton()
+    {
+        return (
+            <button
+                type="button"
+                onClick={this.onItemAddClick}
+            >
+                + Add
+            </button>
+        );
+    }
+
+    renderDeleteButton()
+    {
+        // todo
+    }
+
     render()
     {
+        if (this.hasError())
+        {
+            return (
+                <div className="form__error">
+                    {this.getErrorText()}
+                </div>
+            );
+        }
+
         if (!this.isReady())
         {
             return null;
         }
-
+        
         const entity = this.getEntity();
 
         return (

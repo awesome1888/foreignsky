@@ -3,6 +3,7 @@ import React from 'react';
 import RendererString from './../../component/renderer/string/index.jsx';
 import RendererBoolean from './../../component/renderer/boolean/index.jsx';
 import RendererDate from './../../component/renderer/date/index.jsx';
+import RendererLink from './../../component/renderer/link/index.jsx';
 import RendererList from './../../component/renderer/list/index.jsx';
 import RendererLinkList from './../../component/renderer/link-list/index.jsx';
 import RenderMap from './../../component/renderer/map/index.jsx';
@@ -26,6 +27,10 @@ export default class Row extends React.Component
             {
                 return RendererLinkList;
             }
+            else
+            {
+                return RendererLink;
+            }
         }
 
         if (attribute.isString() || attribute.isNumber())
@@ -46,11 +51,6 @@ export default class Row extends React.Component
             // todo: it should be rendered as selectbox with
             // todo: either checkboxes or radio-buttons, depending on what we have in maxCount
             return null;
-        }
-
-        if (attribute.isArrayOfLink())
-        {
-            return RendererLinkList;
         }
 
         if (attribute.isArray())

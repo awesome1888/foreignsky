@@ -9,7 +9,7 @@ import EntityMap from '../startup/client/entity-map.js';
 
 import Header from './component/header/index.jsx';
 import LoadOverlay from './component/load.overlay/index.jsx';
-import LoadIndicator from './component/load.indicator/index.jsx';
+import LoadIndicator from './component/load-indicator/index.jsx';
 
 export default class AdminApplication extends Application
 {
@@ -135,13 +135,13 @@ export default class AdminApplication extends Application
                 {/*}*/}
 
                 <Header />
-                {/*{*/}
-                    {/*this.showIndicator()*/}
-                    {/*&&*/}
-                    {/*<LoadIndicator*/}
-                        {/*ref={(instance) => {this.setIndicator(instance)}}*/}
-                    {/*/>*/}
-                {/*}*/}
+                {
+                    this.showIndicator()
+                    &&
+                    <LoadIndicator
+                        ref={(instance) => {this.setIndicator(instance)}}
+                    />
+                }
                 {React.createElement(main, this.transformPageParameters({
                     route: routeProps,
                 }))}

@@ -1,11 +1,12 @@
 /* eslint-disable class-methods-use-this */
 
 import React from 'react';
+import { Button } from 'semantic-ui-react';
 
 import './style.less';
 
-export default class Header extends React.Component {
-
+export default class Header extends React.Component
+{
 	static propTypes = {
 		//appLoaded: PropTypes.boolean,
 	};
@@ -16,34 +17,37 @@ export default class Header extends React.Component {
 
 	render()
 	{
-		//const loading = this.props.appLoaded;
-
 		return (
             <div className="ui container">
                 <div className="ui grid">
-                    <div className="row">
-                        <div className="column">
-                            <div style={{border: '1px solid red'}}>
-                                Header!
-                            </div>
+                    <div className="header__row row">
+                        <div
+                            className="
+                                left floated five wide column
+                            "
+                        >
+                            <a
+                                className="header__logo"
+                                href="/"
+                            >
+                                Admin
+                            </a>
 
-                            {/*<div className="header__inner">*/}
-                            {/*<div className="header__logo">*/}
-                            {/*<a*/}
-                            {/*href="/"*/}
-                            {/*className="header__logo-img"*/}
-                            {/*title="Однажды тут будет красивый логотип"*/}
-                            {/*>*/}
-                            {/*A*/}
-                            {/*</a>*/}
-                            {/*<div className="header__logo-text">*/}
-                            {/*Rocket Trabant!*/}
-                            {/*<div className="header__logo-funny-desc">*/}
-                            {/*Admin Panel. Behold, bitches!*/}
-                            {/*</div>*/}
-                            {/*</div>*/}
-                            {/*</div>*/}
-                            {/*</div>*/}
+                        </div>
+                        <div
+                            className="
+                                right floated five wide column
+                            "
+                        >
+                            <div
+                                className="header__buttons"
+                            >
+                                <Button
+                                    size={'mini'}
+                                >
+                                    Logout
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </div>

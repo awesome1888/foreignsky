@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../../../ui/component/header/index.jsx';
 import LoadOverlay from '../../../ui/component/load.overlay/index.jsx';
-import LoadIndicator from '../../../ui/component/load.indicator/index.jsx';
+// import LoadIndicator from '../../../ui/component/load.indicator/index.jsx';
 // import Util from '../../util.js';
 import {DocHead} from 'meteor/kadira:dochead';
 import {FlowRouter} from 'meteor/kadira:flow-router';
@@ -264,13 +264,13 @@ export default class Application extends React.Component
 
                 <div className="layout__central layout__header">
                     <Header />
-                    {
-                        this.showIndicator()
-                        &&
-                        <LoadIndicator
-                            ref={(instance) => {this.setIndicator(instance)}}
-                        />
-                    }
+                    {/*{*/}
+                        {/*this.showIndicator()*/}
+                        {/*&&*/}
+                        {/*<LoadIndicator*/}
+                            {/*ref={(instance) => {this.setIndicator(instance)}}*/}
+                        {/*/>*/}
+                    {/*}*/}
                 </div>
                 {React.createElement(main, this.transformPageParameters({
                     route: routeProps,

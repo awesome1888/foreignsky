@@ -10,13 +10,11 @@ export default class Layout extends BaseComponent
     static propTypes = {
         central: PropTypes.object,
         title: PropTypes.string,
-        motd: PropTypes.string,
     };
 
     static defaultProps = {
         central: null,
         title: '',
-        motd: '',
     };
 
     renderCentral()
@@ -36,13 +34,6 @@ export default class Layout extends BaseComponent
                             column
                         ">
                             <div className="layout-map-full__side">
-                                {
-                                    _.isStringNotEmpty(this.props.motd)
-                                    &&
-                                    <blockquote className="margin-top_2x margin-top_2x">
-                                        {this.props.motd}
-                                    </blockquote>
-                                }
                                 <Naviation
                                     className="margin-bottom"
                                 />

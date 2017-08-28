@@ -175,7 +175,7 @@ export default class Application extends React.Component
 
     setPageTitle(title)
     {
-        let titlePostfix = 'Еще один блог еще одной семьи, переехавшей в Берлин.';
+        let titlePostfix = this.getMainTitle();
         title = this.makeTitle(title);
         if (title.length > 0)
         {
@@ -188,7 +188,7 @@ export default class Application extends React.Component
     {
         DocHead.addMeta({
             name: "description",
-            content: _.isStringNotEmpty(text) ? text : 'Еще один блог еще одной семьи, переехавшей в Берлин.',
+            content: _.isStringNotEmpty(text) ? text : this.getMainTitle(),
         });
     }
 
@@ -207,6 +207,11 @@ export default class Application extends React.Component
             name: "keywords",
             content: kw.join(', '),
         });
+    }
+
+    getMainTitle()
+    {
+        return 'Project name';
     }
 
     componentWillMount()

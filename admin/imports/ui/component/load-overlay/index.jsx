@@ -76,13 +76,12 @@ export default class LoadOverlay extends React.Component {
 			<div
 				className={classnames(
 					'load-overlay fade',
-					{'in': !this.state.transparent},
 					{'out': this.state.transparent},
 					{'none': !this.state.shown}
 				)}
 			>
 				<div className="load-overlay__greeting">
-					 Типичный текст, который вы читаете, пока ждете загрузку...
+					 Typical text you usually read while waiting the page to load :)
 				</div>
 			</div>
 		);

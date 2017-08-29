@@ -1,0 +1,20 @@
+// todo: self-host this
+@import (css) url("//fonts.googleapis.com/icon?family=Material+Icons");
+
+._icon(@code, @size: 16px) {
+	font-family: 'Material Icons', sans-serif;
+	font-size: @size;
+	height: 16px;
+	width: 16px;
+	&:before {
+		content: @code;
+	}
+}
+
+.icon_bug-report {
+	._icon('bug_report') !important;
+}
+
+.icon_build {
+	._icon('build') !important;
+}

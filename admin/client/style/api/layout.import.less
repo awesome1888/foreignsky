@@ -73,3 +73,19 @@
 ._no-padding-bottom() {
 	padding-bottom: 0;
 }
+
+._inline-float(@way: left) {
+	display: inline-block;
+	float: @way;
+}
+
+.inline-float_left {
+	._inline-float() !important;
+}
+.inline-float_right {
+	._inline-float(right) !important;
+}
+
+.w_100p {
+	width: 100% !important;
+}

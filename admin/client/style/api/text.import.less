@@ -1,9 +1,11 @@
 ._weight_600() {
 	font-weight: 600;
 }
+
 ._family_muli() {
 	font-family: 'Muli', sans-serif;
 }
+
 ._hcolor_darken(@color, @percent: 10%) {
 	color: @color;
 	&:focus {
@@ -12,4 +14,8 @@
 	&:hover {
 		color: darken(@color, @percent);
 	}
+}
+
+.lh_14px {
+	line-height: 14px !important;
 }

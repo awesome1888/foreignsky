@@ -100,6 +100,11 @@ export default class Form extends BaseComponent
         return this._cache.map;
     }
 
+    getForm()
+    {
+        return this._form || null;
+    }
+
     onSubmit(model)
     {
         const sourceModel = this.transformModelBack(model);
@@ -110,6 +115,12 @@ export default class Form extends BaseComponent
 
         return sourceModel;
     }
+
+    // onValidate(model, errors, callback) {
+    //     // sniff form errors here
+    //
+    //     return callback();
+    // }
 
     renderRows()
     {
@@ -191,6 +202,8 @@ export default class Form extends BaseComponent
                 model={tModel}
                 onSubmit={this.onSubmit.bind(this)}
                 className="form"
+                ref={(reference) => {this._form = reference;}}
+                // onValidate={this.onValidate.bind(this)}
             >
                 {body}
                 <div style={{marginTop: '10px'}}>

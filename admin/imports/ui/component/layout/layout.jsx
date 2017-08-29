@@ -28,7 +28,7 @@ export default class Layout extends BaseComponent
                 {
                     _.isStringNotEmpty(this.props.title)
                     &&
-                    <h1>{this.props.title}</h1>
+                    <h1 className="ui dividing header">{this.props.title}</h1>
                 }
                 {this.renderCentral(props)}
             </div>

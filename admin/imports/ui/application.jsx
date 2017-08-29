@@ -8,8 +8,10 @@ import TaskRunnerPage from './page/task-runner/index.jsx';
 import EntityMap from '../startup/client/entity-map.js';
 
 import Header from './component/header/index.jsx';
-import LoadOverlay from './component/load.overlay/index.jsx';
+import LoadOverlay from './component/load-overlay/index.jsx';
 import LoadIndicator from './component/load-indicator/index.jsx';
+
+import Naviation from './component/navigation/navigation.jsx';
 
 export default class AdminApplication extends Application
 {
@@ -115,13 +117,13 @@ export default class AdminApplication extends Application
 
         return (
             <div className="layout">
-                {/*{*/}
-                    {/*this.showOverlay()*/}
-                    {/*&&*/}
-                    {/*<LoadOverlay*/}
-                        {/*ref={(instance) => {this.setOverlay(instance)}}*/}
-                    {/*/>*/}
-                {/*}*/}
+                {
+                    this.showOverlay()
+                    &&
+                    <LoadOverlay
+                        ref={(instance) => {this.setOverlay(instance)}}
+                    />
+                }
 
                 <Header />
                 {
@@ -131,9 +133,35 @@ export default class AdminApplication extends Application
                         ref={(instance) => {this.setIndicator(instance)}}
                     />
                 }
-                {React.createElement(main, this.transformPageParameters({
-                    route: routeProps,
-                }))}
+
+                <div className="ui container">
+                    <div className="ui equal width grid">
+                        <div className="row">
+                            <div className="
+                                computer only
+                                tablet only
+                                column
+                            ">
+                                <Naviation
+                                    className="margin-bottom"
+                                />
+                            </div>
+                            <div className="
+                                twelve wide computer
+                                twelve wide tablet
+                                sixteen wide mobile
+                                siz
+                                column
+                            ">
+                                {
+                                    React.createElement(main, this.transformPageParameters({
+                                        route: routeProps,
+                                    }))
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 {this.renderExtras()}
             </div>
         );

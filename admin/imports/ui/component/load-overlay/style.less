@@ -1,0 +1,18 @@
+@import (reference) url('/client/style/index.less');
+
+.load-overlay {
+	._fixed();
+	._cover(46px);
+	background-color: @color_white;
+	._stratosphere();
+	._flex();
+	._flex-direction_column();
+	._flex-align-items_center();
+}
+
+.load-overlay__greeting {
+	height: 30%;
+	._flex();
+	._flex-direction_row();
+	._flex-align-items_end();
+}

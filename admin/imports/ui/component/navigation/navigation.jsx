@@ -1,8 +1,8 @@
 import React from 'react';
 import { Dropdown, Icon, Input, Menu } from 'semantic-ui-react';
-import BaseComponent from '../../../../../lib/base/component/component.jsx';
+import BaseComponent from '../../../lib/base/component/component.jsx';
 // import PropTypes from 'prop-types';
-import entityMap from '../../../../../startup/client/entity-map.js';
+import entityMap from '../../../startup/client/entity-map.js';
 // import Entity from '../../../../../lib/base/entity/entity.js';
 
 export default class Navigation extends BaseComponent

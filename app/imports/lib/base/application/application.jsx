@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../../../ui/component/header/index.jsx';
-import LoadOverlay from '../../../ui/component/load.overlay/index.jsx';
+// import LoadOverlay from '../../../ui/component/load.overlay/index.jsx';
 // import LoadIndicator from '../../../ui/component/load.indicator/index.jsx';
 // import Util from '../../util.js';
 import {DocHead} from 'meteor/kadira:dochead';
@@ -259,13 +259,13 @@ export default class Application extends React.Component
 
         return (
             <div className="layout">
-                {
-                    this.showOverlay()
-                    &&
-                    <LoadOverlay
-                        ref={(instance) => {this.setOverlay(instance)}}
-                    />
-                }
+                {/*{*/}
+                    {/*this.showOverlay()*/}
+                    {/*&&*/}
+                    {/*<LoadOverlay*/}
+                        {/*ref={(instance) => {this.setOverlay(instance)}}*/}
+                    {/*/>*/}
+                {/*}*/}
 
                 <div className="layout__central layout__header">
                     <Header />

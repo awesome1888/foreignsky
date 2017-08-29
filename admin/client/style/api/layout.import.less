@@ -63,6 +63,12 @@
 	flex-wrap: wrap;
 }
 
+._content_v_center() {
+	._flex();
+	._flex-justify-content_end();
+	._flex-align-items_center();
+}
+
 ._block() {
 	display: block;
 }
@@ -79,6 +85,19 @@
 	float: @way;
 }
 
+._none() {
+	display: none;
+}
+._fixed() {
+	position: fixed;
+}
+._cover(@t: 0, @b: 0, @l: 0, @r: 0) {
+	bottom: @b;
+	left: @l;
+	right: @r;
+	top: @t;
+}
+
 .inline-float_left {
 	._inline-float() !important;
 }
@@ -88,4 +107,7 @@
 
 .w_100p {
 	width: 100% !important;
+}
+.none {
+	._none() !important;
 }

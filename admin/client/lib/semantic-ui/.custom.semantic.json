@@ -8,7 +8,7 @@
     "divider": true,
     "flag": false,
     "header": true,
-    "icon": false,
+    "icon": true,
     "image": false,
     "input": false,
     "label": false,
@@ -27,7 +27,7 @@
     "table": true,
 
     "accordion": false,
-    "checkbox": false,
+    "checkbox": true,
     "dimmer": false,
     "dropdown": true,
     "embed": false,

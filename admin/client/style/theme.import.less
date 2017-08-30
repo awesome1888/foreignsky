@@ -7,20 +7,33 @@ body, h1, h2, h3 {
 	color: @color_almost-black !important;
 }
 
-//.ui {
-//	.menu {
-//		._b-radius() !important;
-//		._no-b-shadow() !important;
-//
-//		.item {
-//			color: @color_almost-black !important;
-//		}
-//	}
-//
-//	.button {
-//		._b-radius() !important;
-//	}
-//}
+.ui {
+	&.menu {
+		._b-radius() !important;
+		._no-b-shadow() !important;
+
+		.item {
+			color: @color_almost-black !important;
+		}
+
+		&.pagination {
+			&.mini {
+				font-size: 0.8rem !important;
+			}
+		}
+	}
+
+	.button {
+		._b-radius() !important;
+	}
+
+	&.table {
+		._b-radius() !important;
+		th {
+			._b-radius() !important;
+		}
+	}
+}
 
 .menu.visible {
 	._block() !important;

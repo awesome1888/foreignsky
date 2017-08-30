@@ -1,17 +1,62 @@
 {
   "definitions": {
     "site": true,
-    "api": false,
+    "reset": true,
+
     "button": true,
-    "grid": true,
     "container": true,
-    "progress": true,
+    "divider": true,
+    "flag": false,
+    "header": true,
+    "icon": false,
+    "image": false,
+    "input": false,
+    "label": false,
+    "list": false,
+    "loader": false,
+    "rail": false,
+    "reveal": false,
+    "segment": false,
+    "step": false,
+
+    "breadcrumb": false,
+    "form": true,
+    "grid": true,
     "menu": true,
+    "message": false,
     "table": true,
-    "dropdown": true
+
+    "accordion": false,
+    "checkbox": false,
+    "dimmer": false,
+    "dropdown": true,
+    "embed": false,
+    "modal": true,
+    "nag": false,
+    "popup": true,
+    "progress": true,
+    "rating": false,
+    "search": false,
+    "shape": false,
+    "sidebar": false,
+    "sticky": false,
+    "tab": false,
+    "transition": false,
+
+    "ad": false,
+    "card": false,
+    "comment": false,
+    "feed": false,
+    "item": false,
+    "statistic": false
   },
   "themes": {
     "material": true,
-    "default": true
+    "default": true,
+    "twitter": true,
+    "amazon": true,
+    "bootstrap3": true,
+    "raised": true,
+    "chubby": true
   }
 }

@@ -1,0 +1,17 @@
+{
+  "definitions": {
+    "site": true,
+    "api": false,
+    "button": true,
+    "grid": true,
+    "container": true,
+    "progress": true,
+    "menu": true,
+    "table": true,
+    "dropdown": true
+  },
+  "themes": {
+    "material": true,
+    "default": true
+  }
+}

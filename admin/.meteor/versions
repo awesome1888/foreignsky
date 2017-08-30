@@ -80,6 +80,8 @@ reload@1.1.11
 retry@1.0.9
 reywood:publish-composite@1.4.2
 routepolicy@1.0.12
+semantic:ui@2.2.6_5
+semantic:ui-data@2.2.6_4
 session@1.1.7
 spacebars@1.0.15
 spacebars-compiler@1.1.2

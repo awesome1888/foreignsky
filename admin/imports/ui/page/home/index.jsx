@@ -5,7 +5,6 @@ import BasePage from '../../../lib/base/page/page.jsx';
 
 import Layout from '../../component/layout/layout.jsx';
 
-import 'semantic-ui-css/semantic.min.css';
 import { Button } from 'semantic-ui-react';
 
 export default class HomePage extends BasePage

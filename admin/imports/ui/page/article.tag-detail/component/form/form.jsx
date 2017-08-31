@@ -4,7 +4,7 @@ import ArticleTagEntity from '../../../../../api/article.tag/entity/entity.clien
 
 export default class ArticleTagEntityForm extends EntityForm
 {
-    getEntity()
+    static getEntity()
     {
         return ArticleTagEntity;
     }

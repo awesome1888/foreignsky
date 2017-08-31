@@ -3,11 +3,12 @@ import Header from '../../../ui/component/header/index.jsx';
 // import LoadOverlay from '../../../ui/component/load.overlay/index.jsx';
 // import LoadIndicator from '../../../ui/component/load.indicator/index.jsx';
 // import Util from '../../util.js';
+import BaseComponent from '../component/component.jsx';
 import {DocHead} from 'meteor/kadira:dochead';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import {createRouter} from 'meteor/cultofcoders:meteor-react-routing';
 
-export default class Application extends React.Component
+export default class Application extends BaseComponent
 {
     static _router = null;
     static _instance = null;
@@ -156,7 +157,6 @@ export default class Application extends React.Component
 
     getRouter()
     {
-
     }
 
     makeTitle(title = '')
@@ -170,6 +170,7 @@ export default class Application extends React.Component
 
     setTitle(title = '')
     {
+        this.fire('set-title', title);
         this.setPageTitle(title);
     }
 

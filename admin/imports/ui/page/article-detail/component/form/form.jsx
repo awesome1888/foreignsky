@@ -4,7 +4,7 @@ import Article from '../../../../../api/article/entity/entity.client.js';
 
 export default class ArticleForm extends EntityForm
 {
-    getEntity()
+    static getEntity()
     {
         return Article;
     }
@@ -16,7 +16,7 @@ export default class ArticleForm extends EntityForm
 
     transformMap(map)
     {
-        // map.removeAttribute('search');
+        // map.removeAttribute('some attr');
 
         // do some tuning, like renderer
 

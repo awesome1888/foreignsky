@@ -4,7 +4,7 @@ import EmbedEntity from '../../../../../api/embed/entity/entity.client.js';
 
 export default class EmbedEntityForm extends EntityForm
 {
-    getEntity()
+    static getEntity()
     {
         return EmbedEntity;
     }

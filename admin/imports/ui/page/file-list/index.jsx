@@ -12,8 +12,7 @@ export default class FileListPage extends BasePage
     {
         return (
             <Layout
-                title={this.props.title}
-                motd={this.props.motd}
+                title={List.getEntity().getTitle()}
                 central={
                     <List
                         detailPageUrl={this.props.route.detailPath || ''}

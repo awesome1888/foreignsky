@@ -4,7 +4,7 @@ import FileEntity from '../../../../../api/file/entity/entity.client.js';
 
 export default class FileEntityForm extends EntityForm
 {
-    getEntity()
+    static getEntity()
     {
         return FileEntity;
     }

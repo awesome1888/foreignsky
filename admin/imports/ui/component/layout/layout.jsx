@@ -16,19 +16,44 @@ export default class Layout extends BaseComponent
         title: '',
     };
 
+    _title = null;
+
+    constructor(props)
+    {
+        super(props);
+        this.on('set-title', (e, title) => {
+            if (this._title)
+            {
+                this._title.innerHTML = title;
+            }
+        });
+    }
+
     renderCentral()
     {
         return this.props.central;
     }
 
+    getTitle()
+    {
+        return _.isStringNotEmpty(this.props.title) ? this.props.title : '';
+    }
+
     render(props)
     {
+        const title = this.getTitle();
+
         return (
             <div>
                 {
-                    _.isStringNotEmpty(this.props.title)
+                    !!title
                     &&
-                    <h1 className="ui dividing header">{this.props.title}</h1>
+                    <h1
+                        className="ui dividing header"
+                        ref={(ref) => {this._title = ref;}}
+                    >
+                        {title}
+                    </h1>
                 }
                 <div className="layout__central-container">
                     {this.renderCentral(props)}

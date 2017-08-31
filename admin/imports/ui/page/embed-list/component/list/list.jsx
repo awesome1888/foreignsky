@@ -4,8 +4,13 @@ import EmbedEntity from '../../../../../api/embed/entity/entity.client.js'
 
 export default class extends List
 {
-    getEntity()
+    static getEntity()
     {
         return EmbedEntity;
+    }
+
+    getEntity()
+    {
+        return this.constructor.getEntity();
     }
 }

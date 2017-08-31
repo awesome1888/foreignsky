@@ -15,8 +15,7 @@ export default class ArticleDetailPage extends BasePage
 
         return (
             <Layout
-                title={this.props.title}
-                motd={this.props.motd}
+                title={Form.getEntity().getTitle()}
                 central={
                     <div className="">
                         <Form

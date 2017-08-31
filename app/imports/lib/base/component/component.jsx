@@ -7,6 +7,7 @@ import App from '../../../ui/application.jsx';
 export default class BaseComponent extends Component
 {
     _cache = null;
+    _events = [];
 
     constructor(props)
     {
@@ -42,9 +43,9 @@ export default class BaseComponent extends Component
         }
 
         // un-bind events
-        if(_.isArrayNotEmpty(this.events))
+        if(_.isArrayNotEmpty(this._events))
         {
-            this.events.forEach((pair) => {
+            this._events.forEach((pair) => {
                 $(document).unbind(pair.event, pair.cb);
             });
         }
@@ -85,7 +86,7 @@ export default class BaseComponent extends Component
     on(event, cb)
     {
         $(document).on(event, cb);
-        this.events.push({
+        this._events.push({
             event,
             cb,
         });

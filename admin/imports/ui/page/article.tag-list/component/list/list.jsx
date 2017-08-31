@@ -4,18 +4,13 @@ import ArticleTag from '../../../../../api/article.tag/entity/entity.client.js'
 
 export default class ArticleTagList extends List
 {
-    declareMap()
+    static getEntity()
     {
-        return this.readMap({
-            'title': 1,
-            'sort': 1,
-            'color': 1,
-            'primary': 1,
-        });
+        return ArticleTag;
     }
 
     getEntity()
     {
-        return ArticleTag;
+        return this.constructor.getEntity();
     }
 }

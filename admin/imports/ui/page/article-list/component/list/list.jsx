@@ -6,9 +6,14 @@ import TagRenderer from './component/renderer/tag/tag.jsx';
 
 export default class ArticleList extends List
 {
-    getEntity()
+    static getEntity()
     {
         return Article;
+    }
+
+    getEntity()
+    {
+        return this.constructor.getEntity();
     }
 
     transformMap(map)

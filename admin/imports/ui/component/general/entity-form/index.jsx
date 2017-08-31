@@ -9,9 +9,14 @@ import Form from '../form/form.jsx';
  */
 export default class EntityForm extends Form
 {
-    getEntity()
+    static getEntity()
     {
         throw new Error('Not implemented');
+    }
+
+    getEntity()
+    {
+        return this.constructor.getEntity();
     }
 
     getMap()

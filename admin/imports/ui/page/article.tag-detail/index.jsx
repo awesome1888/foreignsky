@@ -14,8 +14,7 @@ export default class ArticleTagEntityDetailPage extends BasePage
         // todo: not rely on FlowRouter behaviour
         return (
             <Layout
-                title={this.props.title}
-                motd={this.props.motd}
+                title={Form.getEntity().getTitle()}
                 central={
                     <div>
                         <Form

@@ -43,7 +43,7 @@ export default class Navigation extends BaseComponent
 
     render()
     {
-        const { activeItem } = this.state || {}
+        const { activeItem } = this.state || {};
 
         // todo: generate this from the structure
         return (
@@ -61,7 +61,7 @@ export default class Navigation extends BaseComponent
                         }
                     </Dropdown.Menu>
                 </Dropdown>
-                <Menu.Item name='browse' active={activeItem === 'browse'} href="/task-runner">
+                <Menu.Item name='task_runner' active={activeItem === 'browse'} href="/task-runner">
                     <div className="icon_build inline-float_right lh_14px" />
                     Task Runner
                 </Menu.Item>

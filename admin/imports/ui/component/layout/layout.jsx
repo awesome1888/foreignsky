@@ -30,7 +30,9 @@ export default class Layout extends BaseComponent
                     &&
                     <h1 className="ui dividing header">{this.props.title}</h1>
                 }
-                {this.renderCentral(props)}
+                <div className="layout__central-container">
+                    {this.renderCentral(props)}
+                </div>
             </div>
         );
     }

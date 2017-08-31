@@ -9,12 +9,16 @@ import { Button } from 'semantic-ui-react';
 
 export default class HomePage extends BasePage
 {
+    getDefaultTitle()
+    {
+        return 'Home';
+    }
+
 	render()
     {
         return (
             <Layout
-                title={this.props.title}
-                motd={this.props.motd}
+                title={this.getDefaultTitle()}
                 central={
                     <div className="">
                         <Button>

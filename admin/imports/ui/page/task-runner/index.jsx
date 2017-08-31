@@ -17,8 +17,7 @@ export default class TaskRunnerPage extends BasePage
     {
         return (
             <Layout
-                title={this.props.title}
-                motd={this.props.motd}
+                title={this.getDefaultTitle()}
                 central={
                     <ShellUI />
                 }

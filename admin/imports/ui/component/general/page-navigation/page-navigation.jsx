@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 // import PageScroll from '../../../../lib/util/page-scroll/page-scroll.js';
 import BaseComponent from '../../../../lib/base/component/component.jsx';
 
+import { Icon, Menu } from 'semantic-ui-react';
+
 export default class PageNavigation extends BaseComponent
 {
     static propTypes = {
@@ -40,6 +42,22 @@ export default class PageNavigation extends BaseComponent
     render() {
         const pageCount = this.getPageCount();
         const page = this.getPage();
+
+        return (
+            <Menu floated='right' size='mini' pagination>
+                <Menu.Item as='a' icon>
+                    <Icon name='left chevron' />
+                </Menu.Item>
+                <Menu.Item as='a'>1</Menu.Item>
+                <Menu.Item as='a'>2</Menu.Item>
+                <Menu.Item as='a'>3</Menu.Item>
+                <Menu.Item as='a'>4</Menu.Item>
+                <Menu.Item as='a' icon>
+                    <Icon name='right chevron' />
+                </Menu.Item>
+            </Menu>
+        );
+
         return (
             <div>
                 {

@@ -9,7 +9,7 @@ import App from '../../../application.jsx';
 import EntityMap from '../../../../startup/client/entity-map.js';
 // import Util from '../../../../lib/util.js';
 
-import { Button, Checkbox, Icon, Table, Menu } from 'semantic-ui-react';
+import { Button, Table } from 'semantic-ui-react';
 
 /**
  * The basic component for making lists
@@ -374,16 +374,12 @@ export default class List extends BaseComponent
             return null;
         }
         return (
-            <div className="pagination_custom margin-top">
-                {
-                    <PageNavigation
-                        page={this.getPage()}
-                        pageSize={this.getPageSize()}
-                        count={this.getCount()}
-                        onPageSelect={this.onPageChange.bind(this)}
-                    />
-                }
-            </div>
+            <PageNavigation
+                page={this.getPage()}
+                pageSize={this.getPageSize()}
+                count={this.getCount()}
+                onPageSelect={this.onPageChange.bind(this)}
+            />
         );
     }
 
@@ -394,6 +390,11 @@ export default class List extends BaseComponent
      */
     render()
     {
+        if (!this.isReady())
+        {
+            return null;
+        }
+
         const url = EntityMap.makeDetailPath(this.getEntity(), 0);
         const title = this.getEntity().getTitle();
 
@@ -406,18 +407,7 @@ export default class List extends BaseComponent
                     <Table.Row>
                         <Table.HeaderCell />
                         <Table.HeaderCell colSpan='4'>
-                            <Menu floated='right' size='mini' pagination>
-                                <Menu.Item as='a' icon>
-                                    <Icon name='left chevron' />
-                                </Menu.Item>
-                                <Menu.Item as='a'>1</Menu.Item>
-                                <Menu.Item as='a'>2</Menu.Item>
-                                <Menu.Item as='a'>3</Menu.Item>
-                                <Menu.Item as='a'>4</Menu.Item>
-                                <Menu.Item as='a' icon>
-                                    <Icon name='right chevron' />
-                                </Menu.Item>
-                            </Menu>
+                            {this.renderPageNav()}
 
                             {/*icon*/}
                             <Button size='small' color='#fff' floated='right' href={url}>New {_.lCFirst(title)}</Button>
@@ -427,29 +417,6 @@ export default class List extends BaseComponent
                     </Table.Row>
                 </Table.Footer>
             </Table>
-        );
-
-        return (
-            <div
-                className={`data-block data-block_transparent ${this.props.className}`}
-            >
-                {
-                    this.isReady()
-                    &&
-                    <div className="">
-                        <table className="table table-striped table-bordered wide">
-
-
-                        </table>
-
-                        <div className="margin-bottom">
-                            <a href={this.props.detailPageUrl.replace('#ID#', '0')}>+ Add</a>
-                        </div>
-
-                        {this.renderPageNav()}
-                    </div>
-                }
-            </div>
         );
     }
 }

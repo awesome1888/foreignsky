@@ -11,6 +11,6 @@ export default class FileEntityForm extends EntityForm
 
     getItemTitle(item)
     {
-        return item.getData().string || '';
+        return item.getData().name || '';
     }
 }

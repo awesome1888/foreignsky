@@ -170,11 +170,6 @@ export default class Form extends BaseComponent
         const body = (
             <div>
                 {
-                    _.isStringNotEmpty(this.props.backPath)
-                    &&
-                    <a href={this.props.backPath}>Back</a>
-                }
-                {
                     this.state.error
                     &&
                     <div className="form__error-message form__error-message_top">

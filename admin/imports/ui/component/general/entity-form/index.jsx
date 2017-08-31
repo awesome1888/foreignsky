@@ -34,7 +34,7 @@ export default class EntityForm extends Form
 
     setTitle(item)
     {
-        let title = 'new item';
+        let title = 'new';
         if (item)
         {
             const itemTitle = this.getItemTitle(item);

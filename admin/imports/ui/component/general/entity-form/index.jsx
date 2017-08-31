@@ -77,7 +77,7 @@ export default class EntityForm extends Form
                     }
                 }, (err) => {
                     this.setState({
-                        error: err && err.reason ? err.reason : 'Error occured',
+                        error: err && err.reason ? err.reason : 'error occurred',
                     });
                     resolve({});
                 });

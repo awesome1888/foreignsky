@@ -2,6 +2,7 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import Form from '../form/form.jsx';
+import App from '../../../application.jsx';
 
 /**
  * The basic component for making forms: schema renderer
@@ -54,19 +55,33 @@ export default class EntityForm extends Form
     {
         const id = this.props.id;
 
-        if (_.isStringNotEmpty(id) && id !== '0') {
-            const item = await this.getEntity().findById(id, {select: '#'});
-            if (item)
-            {
-                this.setTitle(item);
-                return item.getData();
-            }
-            else
-            {
-                this.setState({
-                    error: 'element not found',
+        if (_.isStringNotEmpty(id) && id !== '0')
+        {
+            return new Promise((resolve, reject) => {
+                const p = this.getEntity().findById(id, {select: '#'});
+
+                App.getInstance().wait(p);
+
+                p.then((item) => {
+                    if (item)
+                    {
+                        this.setTitle(item);
+                        resolve(item.getData());
+                    }
+                    else
+                    {
+                        this.setState({
+                            error: 'element not found',
+                        });
+                        resolve({});
+                    }
+                }, (err) => {
+                    this.setState({
+                        error: err && err.reason ? err.reason : 'Error occured',
+                    });
+                    resolve({});
                 });
-            }
+            });
         }
 
         this.setTitle();

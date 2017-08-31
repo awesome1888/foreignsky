@@ -2,6 +2,8 @@ import React from 'react';
 import BaseComponent from '../../../../../../lib/base/component/component.jsx';
 import PropTypes from 'prop-types';
 
+import { Checkbox, Table } from 'semantic-ui-react';
+
 // renderers
 import RendererGeneric from './component/renderer/generic/generic.jsx';
 import RendererDate from './component/renderer/date/date.jsx';
@@ -84,11 +86,12 @@ export default class Row extends BaseComponent
         }
 
         const item = this.props.data;
-        
+
         return (
-            <tr
-                key={item.getId()}
-            >
+            <Table.Row key={item.getId()}>
+                <Table.Cell collapsing key="checkbox">
+                    <Checkbox slider />
+                </Table.Cell>
                 {
                     this.props.map.map((attribute) => {
                         if (!_.isObject(attribute)) {
@@ -96,12 +99,22 @@ export default class Row extends BaseComponent
                         }
 
                         return (
-                            <td key={attribute.getCode()}>
+                            <Table.Cell
+                                key={attribute.getCode()}
+                            >
                                 {this.renderControl(item, attribute)}
-                            </td>
+                            </Table.Cell>
                         );
                     })
                 }
+            </Table.Row>
+        );
+
+        return (
+            <tr
+                key={item.getId()}
+            >
+
             </tr>
         );
     }

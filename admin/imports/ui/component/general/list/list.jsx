@@ -6,6 +6,8 @@ import PageNavigation from '../page-navigation/page-navigation.jsx';
 import Row from './component/row/index.jsx';
 import BaseComponent from '../../../../lib/base/component/component.jsx';
 import App from '../../../application.jsx';
+import EntityMap from '../../../../startup/client/entity-map.js';
+// import Util from '../../../../lib/util.js';
 
 import { Button, Checkbox, Icon, Table, Menu } from 'semantic-ui-react';
 
@@ -303,41 +305,37 @@ export default class List extends BaseComponent
     renderHeader()
     {
         return (
-            <thead>
-                <tr>
+            <Table.Header>
+                <Table.Row>
+                    <Table.HeaderCell />
                     {
                         this.getMapTransformed().map(attribute => {
                             return (
-                                <td
+                                <Table.HeaderCell
                                     key={attribute.getCode()}
                                 >
                                     {attribute.getTitle()}
-                                </td>
+                                </Table.HeaderCell>
                             );
                         })
                     }
+                </Table.Row>
+            </Table.Header>
+        );
+
+        return (
+            <thead>
+                <tr>
+
                 </tr>
             </thead>
-        );
-    }
-
-    renderListItem(parameters = {})
-    {
-        parameters = this.mapItemParameters(parameters);
-        parameters.entity = this.getEntity();
-        parameters.map = this.getMapTransformed();
-        parameters.detailPageUrl = this.props.detailPageUrl;
-        
-        return React.createElement(
-            this.getListItemConstructor(),
-            parameters
         );
     }
 
     renderList()
     {
         return (
-            <tbody>
+            <Table.Body>
                 {
                     this.state.data.map(item => (
                         this.renderListItem({
@@ -348,7 +346,20 @@ export default class List extends BaseComponent
                         })
                     ))
                 }
-            </tbody>
+            </Table.Body>
+        );
+    }
+
+    renderListItem(parameters = {})
+    {
+        parameters = this.mapItemParameters(parameters);
+        parameters.entity = this.getEntity();
+        parameters.map = this.getMapTransformed();
+        parameters.detailPageUrl = this.props.detailPageUrl;
+
+        return React.createElement(
+            this.getListItemConstructor(),
+            parameters
         );
     }
 
@@ -383,47 +394,13 @@ export default class List extends BaseComponent
      */
     render()
     {
+        const url = EntityMap.makeDetailPath(this.getEntity(), 0);
+        const title = this.getEntity().getTitle();
+
         return (
             <Table compact celled definition>
-                <Table.Header>
-                    <Table.Row>
-                        <Table.HeaderCell />
-                        <Table.HeaderCell>Name</Table.HeaderCell>
-                        <Table.HeaderCell>Registration Date</Table.HeaderCell>
-                        <Table.HeaderCell>E-mail address</Table.HeaderCell>
-                        <Table.HeaderCell>Premium Plan</Table.HeaderCell>
-                    </Table.Row>
-                </Table.Header>
-
-                <Table.Body>
-                    <Table.Row>
-                        <Table.Cell collapsing>
-                            <Checkbox slider />
-                        </Table.Cell>
-                        <Table.Cell>John Lilki</Table.Cell>
-                        <Table.Cell>September 14, 2013</Table.Cell>
-                        <Table.Cell>jhlilk22@yahoo.com</Table.Cell>
-                        <Table.Cell>No</Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                        <Table.Cell collapsing>
-                            <Checkbox slider />
-                        </Table.Cell>
-                        <Table.Cell>Jamie Harington</Table.Cell>
-                        <Table.Cell>January 11, 2014</Table.Cell>
-                        <Table.Cell>jamieharingonton@yahoo.com</Table.Cell>
-                        <Table.Cell>Yes</Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                        <Table.Cell collapsing>
-                            <Checkbox slider />
-                        </Table.Cell>
-                        <Table.Cell>Jill Lewis</Table.Cell>
-                        <Table.Cell>May 11, 2014</Table.Cell>
-                        <Table.Cell>jilsewris22@yahoo.com</Table.Cell>
-                        <Table.Cell>Yes</Table.Cell>
-                    </Table.Row>
-                </Table.Body>
+                {this.renderHeader()}
+                {this.renderList()}
 
                 <Table.Footer fullWidth>
                     <Table.Row>
@@ -443,7 +420,7 @@ export default class List extends BaseComponent
                             </Menu>
 
                             {/*icon*/}
-                            <Button size='small' color='#fff' floated='right'>New article</Button>
+                            <Button size='small' color='#fff' floated='right' href={url}>New {_.lCFirst(title)}</Button>
 
                             <Button size='small' color='red'>Remove</Button>
                         </Table.HeaderCell>
@@ -461,8 +438,8 @@ export default class List extends BaseComponent
                     &&
                     <div className="">
                         <table className="table table-striped table-bordered wide">
-                            {this.renderHeader()}
-                            {this.renderList()}
+
+
                         </table>
 
                         <div className="margin-bottom">

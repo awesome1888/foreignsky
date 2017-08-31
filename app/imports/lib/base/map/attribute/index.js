@@ -212,8 +212,7 @@ export default class Attribute
             return label;
         }
 
-        const code = this.getCode();
-        return code.substr(0, 1).toUpperCase()+code.substr(1);
+        return _.uCFirst(this.getCode());
     }
 
     getOrder()

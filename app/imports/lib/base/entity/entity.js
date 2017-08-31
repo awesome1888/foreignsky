@@ -317,7 +317,7 @@ export default class BaseEntity
 
     getAttributeValue(code)
     {
-        const getter = 'get'+_.lCFirst(code);
+        const getter = 'get'+_.uCFirst(code);
         if (_.isFunction(this[getter]))
         {
             return this[getter].call(this);

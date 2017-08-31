@@ -4,25 +4,31 @@ _.mixin({
      * @param {*} value
      * @returns {boolean}
      */
-    isStringNotEmpty: function(value) {
+    isStringNotEmpty: function(value)
+    {
         return _.isString(value) && value.length > 0;
     },
+
     /**
      * Check if the argument is an array and it is not empty
      * @param {*} value
      * @returns {boolean}
      */
-    isArrayNotEmpty(value) {
+    isArrayNotEmpty(value)
+    {
         return _.isArray(value) && value.length > 0;
     },
+
     /**
      * Check if the argument is an object and it has some own keys
      * @param {*} value
      * @returns {boolean}
      */
-    isObjectNotEmpty(value) {
+    isObjectNotEmpty(value)
+    {
         return _.isObject(value) && Object.keys(value).length > 0;
     },
+
     makeMap(data, field, unsetKey = false)
     {
         if (_.isArrayNotEmpty(data))
@@ -40,6 +46,7 @@ _.mixin({
 
         return {};
     },
+
     getValue(obj, path)
     {
         if (typeof obj === 'undefined' || obj === null) return;
@@ -55,7 +62,18 @@ _.mixin({
 
         return obj; //eslint-disable-line
     },
+
     lCFirst(value)
+    {
+        if (_.isStringNotEmpty(value))
+        {
+            return value.substr(0, 1).toLowerCase() + value.substr(1);
+        }
+
+        return '';
+    },
+
+    uCFirst(value)
     {
         if (_.isStringNotEmpty(value))
         {
@@ -64,6 +82,7 @@ _.mixin({
 
         return '';
     },
+
     intersectKeys(one, two)
     {
         if (!_.isObject(one))

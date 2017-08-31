@@ -94,9 +94,9 @@ export default class AdminApplication extends Application
     setTitle(title = '')
     {
         super.setTitle(title);
-        this.setState({
-            title,
-        });
+        // this.setState({
+        //     title,
+        // });
     }
 
     getMainTitle()

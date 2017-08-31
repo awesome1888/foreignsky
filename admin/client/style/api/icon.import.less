@@ -4,8 +4,9 @@
 ._icon(@code, @size: 16px) {
 	font-family: 'Material Icons', sans-serif;
 	font-size: @size;
-	height: 16px;
-	width: 16px;
+	line-height: 100%;
+	height: @size;
+	width: @size;
 	&:before {
 		content: @code;
 	}
@@ -21,4 +22,8 @@
 
 .icon_storage {
 	._icon('storage') !important;
+}
+
+.icon_arrow-back {
+	._icon('arrow_back') !important;
 }

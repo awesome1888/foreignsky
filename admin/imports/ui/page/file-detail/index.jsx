@@ -10,16 +10,19 @@ export default class TestEntityDetailPage extends BasePage
 {
     render()
     {
+        const backUrl = this.props.route.listPath || '';
+
         // todo: better parse ID from the current path according to detailPath, but
         // todo: not rely on FlowRouter behaviour
         return (
             <Layout
                 title={Form.getEntity().getTitle()}
+                backUrl={backUrl}
                 central={
                     <div>
                         <Form
                             id={this.props.route.id}
-                            backPath={this.props.route.listPath || ''}
+                            backPath={backUrl}
                         />
                         <br />
                         <br />

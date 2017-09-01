@@ -12,18 +12,21 @@
 	}
 }
 
-.icon_bug-report {
-	._icon('bug_report') !important;
+._icon_build(@size: 16px) {
+	._icon('build', @size);
 }
-
 .icon_build {
-	._icon('build') !important;
+	._icon_build() !important;
 }
 
-.icon_storage {
-	._icon('storage') !important;
+._icon_storage(@size: 16px) {
+	._icon('storage', @size);
 }
 
-.icon_arrow-back {
-	._icon('arrow_back') !important;
+._icon_arrow-back(@size: 16px) {
+	._icon('arrow_back', @size);
+}
+
+._icon_keyboard-arrow-left(@size: 16px) {
+	._icon('keyboard_arrow_left', @size);
 }

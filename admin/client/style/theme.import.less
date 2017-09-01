@@ -9,7 +9,7 @@ body, h1, h2, h3 {
 
 .ui {
 	&.menu {
-		._b-radius() !important;
+		._border-rad() !important;
 		._no-b-shadow() !important;
 
 		.item {
@@ -24,13 +24,23 @@ body, h1, h2, h3 {
 	}
 
 	.button {
-		._b-radius() !important;
+		._border-rad() !important;
 	}
 
 	&.table {
-		._b-radius() !important;
+		._border-rad() !important;
 		th {
-			._b-radius() !important;
+			._border-rad() !important;
+		}
+	}
+
+	&.form {
+		.field {
+			input[type="text"],
+			input[type="password"],
+			textarea {
+				._border-rad() !important;
+			}
 		}
 	}
 }

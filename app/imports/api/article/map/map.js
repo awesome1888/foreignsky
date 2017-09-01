@@ -20,6 +20,7 @@ const M = (superclass) => class extends superclass
                 code: 'date',
                 type: Date,
                 optional: false,
+                defaultValue: new Date(),
             },
             {
                 code: 'text',

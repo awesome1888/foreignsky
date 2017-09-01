@@ -1,112 +1,43 @@
-@offset_half: 0.5rem;
-@offset: 1rem;
-
-@form__input-border-width: 1px;
-@form__input-padding-top: @offset_half;
-@form__row-common-top-padding: calc(~"@{form__input-padding-top} + @{form__input-border-width}");
+@import (reference) url('/client/style/index.less');
 
 .form {
 }
 
-.form__block {
-	font-size: 0.9rem;
-}
-
-.form__block-inner {
-	* > {
-		margin-bottom: 0.15rem;
-	}
-}
-
-.form__row {
-}
-
-.form__row-margin {
-	margin-right: -15.75px !important;
-}
-
-.form__column {
-	text-align: left;
-}
-
-.form__column {
-	text-align: left;
-}
-
-.form__column-no-left-pad {
-	padding-left: 0;
-}
-
-.form__column-no-padding {
-	text-align: left;
-	padding-right: 1rem;
-}
-
-.form__label {
-	//&:after {
-	//	content: ':';
-	//}
-}
-
-.form__label_padded {
-	padding-top: @form__row-common-top-padding;
-}
-
-.form__controls {
-}
-
-.form__controls_padded {
-	padding: @form__row-common-top-padding;
-}
-
-.form__block-row-group {
-	& > .form__row {
-		&:not(:last-child) {
-			margin-bottom: @offset;
-		}
+.form__container_error {
+	input[type="text"],
+	input[type="password"],
+	textarea {
+		._border(@color_blood-red) !important;
+		._b-color(lighten(@color_blood-red, 58%)) !important;
 	}
 }
 
 .form__error-message {
-	padding: 0.5rem;
-	font-size: 0.8rem;
-	background-color: #CF000F;
-	color: #e5e5e5 !important;
-	display: block;
+	._padding_x(0.5);
+	._f-size_x(1.2);
+	background-color: @color_blood-red;
+	color: @color_grey !important;
+	._block();
 }
 
 .form__error {
 	.form__error-message;
-	margin-top: 0.5rem;
+	._margin-t_x(0.5);
 }
 
 .form__error-message_top {
-	margin-bottom: 0.5rem;
-}
-
-.form__block-header {
-	text-align: left;
-	font-weight: bold;
+	.form__error-message;
+	._margin-b_x(0.5);
 }
 
 .form__footer {
-	margin-top: @offset;
+	._border-t();
+	._margin-t_x();
+	._padding-t_x();
 }
 
-// when "form__block_incorrect" class is set, form block gets red border
-.form__block_has-errors {
-	input[type="text"] {
-		border: 1px solid #CF000F !important;
-	}
-}
-
-.disabled {
-	cursor: not-allowed!important;
-}
-
-.form {
-	input[type="text"], textarea {
-		padding: @form__input-padding-top;
-		width: 100%;
-	}
+.form__footer-back {
+	._no-decoration();
+	._hcolor_darken();
+	font-size: 14px;
 }

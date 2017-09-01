@@ -14,13 +14,15 @@ export default class Container extends React.Component
 
     render()
     {
+        const hasError = this.hasError();
+
         return (
-            <div>
+            <div className={hasError ? 'form__container_error' : ''}>
                 {
                     this.props.children
                 }
                 {
-                    this.hasError()
+                    hasError
                     &&
                     <div className="form__error">{this.getErrorMessage()}</div>
                 }

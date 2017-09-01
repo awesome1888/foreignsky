@@ -8,6 +8,8 @@ import RendererList from './../../component/renderer/list/index.jsx';
 import RendererLinkList from './../../component/renderer/link-list/index.jsx';
 import RenderMap from './../../component/renderer/map/index.jsx';
 
+import { Button, Checkbox, Form } from 'semantic-ui-react';
+
 export default class Row extends React.Component
 {
     resolveRenderer()
@@ -193,20 +195,14 @@ export default class Row extends React.Component
         const a = this.getAttribute();
 
         return (
-            <div className="form__row row">
-                <div className="form__column col-md-3 col-sm-12">
-                    {
-                        !a.isBoolean()
-                        &&
-                        <div className="form__label form__label_padded">
-                            {this.renderLabel()}:
-                        </div>
-                    }
-                </div>
-                <div className="form__column col-md-9 col-sm-12">
-                    {this.renderControl(a)}
-                </div>
-            </div>
+            <Form.Field>
+                {
+                    !a.isBoolean()
+                    &&
+                    <label>{this.renderLabel()}</label>
+                }
+                {this.renderControl(a)}
+            </Form.Field>
         );
     }
 }

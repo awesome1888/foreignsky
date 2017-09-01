@@ -3,6 +3,9 @@ import React from 'react';
 import AutoForm from 'uniforms-unstyled/AutoForm';
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 
+import { Button } from 'semantic-ui-react';
+// import { Button, Checkbox, Form } from 'semantic-ui-react';
+
 import PropTypes from 'prop-types';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import BaseComponent from '../../../../lib/base/component/component.jsx';
@@ -176,13 +179,9 @@ export default class Form extends BaseComponent
                         Error occured: {this.state.error}
                     </div>
                 }
-                <div className="form__block">
-                    <div className="form__block-inner">
-                        {
-                            this.renderRows()
-                        }
-                    </div>
-                </div>
+                {
+                    this.renderRows()
+                }
             </div>
         );
 
@@ -196,18 +195,27 @@ export default class Form extends BaseComponent
                 schema={tMap.getSchema()}
                 model={tModel}
                 onSubmit={this.onSubmit.bind(this)}
-                className="form"
+                className="ui big form"
                 ref={(reference) => {this._form = reference;}}
                 // onValidate={this.onValidate.bind(this)}
             >
                 {body}
-                <div style={{marginTop: '10px'}}>
-                    <button type="submit">{this.props.submitButtonLabel}</button>
-                    {
-                        _.isStringNotEmpty(this.props.backPath)
-                        &&
-                        <a href={this.props.backPath}>Back</a>
-                    }
+                <div className="form__footer">
+                    <div className="group_x2">
+                        <Button color="green" size="large">
+                            {this.props.submitButtonLabel}
+                        </Button>
+                        {
+                            _.isStringNotEmpty(this.props.backPath)
+                            &&
+                            <a
+                                href={this.props.backPath}
+                                className="form__footer-back"
+                            >
+                                Back
+                            </a>
+                        }
+                    </div>
                 </div>
             </AutoForm>
         );

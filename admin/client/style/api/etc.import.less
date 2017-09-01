@@ -1,9 +1,23 @@
 ._transition(@what: all, @duration: 200ms) {
 	transition: @what @duration ease;
 }
-._b-radius(@amount: 1px) {
+._border-rad(@amount: 1px) {
 	border-radius: @amount;
 }
+._border(@color: @borderColor, @width: 1px) {
+	border: @width solid @color;
+}
+._border-t() {
+	border-top: 1px solid @borderColor;
+}
+._border-b() {
+	border-bottom: 1px solid @borderColor;
+}
+
+._b-color(@color) {
+	background-color: @color;
+}
+
 ._no-b-shadow() {
 	box-shadow: none;
 }

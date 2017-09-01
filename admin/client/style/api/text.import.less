@@ -1,4 +1,4 @@
-._weight_600() {
+._f-weight_600() {
 	font-weight: 600;
 }
 
@@ -25,4 +25,17 @@
 	&:hover {
 		text-decoration: none;
 	}
+}
+
+._f-size_x(@mp: 1) {
+	font-size: @offset * @mp;
+	line-height: 150%;
+}
+
+.f-size_x0p9 {
+	._f-size_x(0.9) !important;
+}
+
+.f-size_x1p25 {
+	._f-size_x(1.25) !important;
 }

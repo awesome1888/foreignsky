@@ -13,6 +13,35 @@
 	._padding-l_x(2);
 }
 
+#make_form__body_fragment_color(@color) {
+	._border-l(fade(@color, 50%), 4px);
+	&:hover,
+	&.form__body_fragment_hover {
+		._border-l(@color, 4px);
+	}
+	._transition();
+}
+
+.form__body_fragment_color_blue {
+	#make_form__body_fragment_color(#2185d0);
+}
+
+.form__body_fragment_color_green {
+	#make_form__body_fragment_color(#60b044);
+}
+
+.form__body_fragment_color_yellow {
+	#make_form__body_fragment_color(#fbbd08);
+}
+
+.form__body_fragment_color_orange {
+	#make_form__body_fragment_color(#f2711c);
+}
+
+.form__body_fragment_color_olive {
+	#make_form__body_fragment_color(#b5cc18);
+}
+
 .form__container_error {
 	input[type="text"],
 	input[type="password"],

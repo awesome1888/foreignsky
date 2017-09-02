@@ -114,12 +114,11 @@ class RendererList extends RendererGeneric
         if (!this._cache.color)
         {
             this._cache.color = _.sample([
-                ['#2185d0', 'blue'],
-                ['#60b044', 'green'],
-                ['#fbbd08', 'yellow'],
-                ['#767676', 'grey'],
-                ['#f2711c', 'orange'],
-                ['#b5cc18', 'olive'],
+                'blue',
+                'green',
+                'yellow',
+                'orange',
+                'olive',
             ]);
         }
 
@@ -133,7 +132,7 @@ class RendererList extends RendererGeneric
                 <Button
                     onClick={this.onItemAddClick}
                     size="mini"
-                    color={this.pickColor()[1]}
+                    color={this.pickColor()}
                     type="button"
                 >
                     New item
@@ -179,7 +178,7 @@ class RendererList extends RendererGeneric
                                                         key: index,
                                                         label: null,
                                                         name: this.makeChildName(child, index),
-                                                        borderColor: this.pickColor()[0],
+                                                        borderColor: this.pickColor(),
                                                     })
                                                 }
                                             </div>

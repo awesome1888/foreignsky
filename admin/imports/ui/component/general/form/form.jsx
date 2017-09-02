@@ -138,6 +138,28 @@ export default class Form extends BaseComponent
         return this.props.borderColor;
     }
 
+    pickColor()
+    {
+        const bc = this.getBorderColor();
+        if (bc)
+        {
+            return bc;
+        }
+
+        if (!this._cache.color)
+        {
+            this._cache.color = _.sample([
+                'blue',
+                'green',
+                'yellow',
+                'orange',
+                'olive',
+            ]);
+        }
+
+        return this._cache.color;
+    }
+
     renderRows()
     {
         const map = this.getMapTransformed();
@@ -161,7 +183,6 @@ export default class Form extends BaseComponent
     render()
     {
         const isFragment = this.isFragment();
-        const bc = this.getBorderColor();
         
         const model = this.state.model;
         if (model === null)
@@ -186,13 +207,15 @@ export default class Form extends BaseComponent
         // console.dir(tModel);
         // console.dir(tMap);
 
+        const className = ['form__body'];
+        if (isFragment) {
+            className.push('form__body_fragment');
+            className.push(`form__body_fragment_color_${this.pickColor()}`);
+        }
+
         const body = (
             <div
-                style={isFragment && bc  ? {borderLeftColor: bc} : {}}
-                className={classNames({
-                    form__body: true,
-                    form__body_fragment: isFragment,
-                })}
+                className={className.join(' ')}
             >
                 {
                     this.state.error

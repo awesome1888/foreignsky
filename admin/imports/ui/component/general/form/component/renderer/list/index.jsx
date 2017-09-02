@@ -114,9 +114,12 @@ class RendererList extends RendererGeneric
         if (!this._cache.color)
         {
             this._cache.color = _.sample([
-                'red',
-                'blue',
-                'green',
+                ['#2185d0', 'blue'],
+                ['#60b044', 'green'],
+                ['#fbbd08', 'yellow'],
+                ['#767676', 'grey'],
+                ['#f2711c', 'orange'],
+                ['#b5cc18', 'olive'],
             ]);
         }
 
@@ -130,7 +133,7 @@ class RendererList extends RendererGeneric
                 <Button
                     onClick={this.onItemAddClick}
                     size="mini"
-                    color="green"
+                    color={this.pickColor()[1]}
                     type="button"
                 >
                     New item
@@ -145,7 +148,6 @@ class RendererList extends RendererGeneric
             <Button
                 onClick={Util.passCtx(this.onItemDeleteClick, [index])}
                 size="mini"
-                color="red"
                 type="button"
                 className="no-margin"
             >
@@ -177,7 +179,7 @@ class RendererList extends RendererGeneric
                                                         key: index,
                                                         label: null,
                                                         name: this.makeChildName(child, index),
-                                                        borderColor: this.pickColor(),
+                                                        borderColor: this.pickColor()[0],
                                                     })
                                                 }
                                             </div>

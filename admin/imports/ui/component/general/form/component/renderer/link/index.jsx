@@ -6,6 +6,10 @@ import filterDOMProps from 'uniforms/filterDOMProps';
 // https://github.com/vazco/uniforms/blob/master/API.md#connectfield
 // https://github.com/vazco/uniforms/blob/master/packages/uniforms-unstyled/src/TextField.js
 
+import { Button, List } from 'semantic-ui-react';
+
+import './style.less';
+
 import RendererGeneric from '../generic/index.jsx';
 import Container from '../container/index.jsx';
 import Modal from '../../../../../general/modal/index.js';
@@ -280,24 +284,28 @@ class RendererLink extends RendererGeneric
     renderAddButton()
     {
         return (
-            <button
-                type="button"
+            <Button
                 onClick={this.onItemAddClick}
+                size="mini"
+                color="green"
+                type="button"
             >
-                + Add
-            </button>
+                New item
+            </Button>
         );
     }
 
     renderDeleteButton()
     {
         return (
-            <button
+            <Button
                 onClick={this.onItemDeleteClick}
+                size="mini"
                 type="button"
+                className="no-margin"
             >
                 Delete
-            </button>
+            </Button>
         );
     }
 
@@ -326,66 +334,74 @@ class RendererLink extends RendererGeneric
                 errorProps={this.props}
                 {...filterDOMProps(this.props)}
             >
-                <div>
+                <List divided verticalAlign='middle' className="margin-t no-margin-b">
                     {
                         (value && data)
                         &&
-                        <div>
-                            <a
-                                href={entityMap.makeDetailPath(entity, data._id)}
-                                target="_blank"
-                                className=""
-                                onClick={Util.passCtx(this.onItemClick, [data._id])}
-                            >
-                                {data.label ? data.label.toString() : data._id}
-                            </a>
-                            <input
-                                type="hidden"
-                                name={this.getName()}
-                                onChange={this.getOnChange()}
-                                value={this.getValue()}
-                            />
-                            {this.renderDeleteButton()}
-                        </div>
+                        <List.Item>
+                            <List.Content floated='right'>
+                                {this.renderDeleteButton()}
+                            </List.Content>
+                            <List.Content>
+                                <a
+                                    href={entityMap.makeDetailPath(entity, data._id)}
+                                    target="_blank"
+                                    className=""
+                                    onClick={Util.passCtx(this.onItemClick, [data._id])}
+                                >
+                                    {data.label ? data.label.toString() : data._id}
+                                </a>
+                                <div className="link-list__id">
+                                    {data._id}
+                                </div>
+                                <input
+                                    type="hidden"
+                                    name={this.getName()}
+                                    onChange={this.getOnChange()}
+                                    value={this.getValue()}
+                                />
+                            </List.Content>
+                        </List.Item>
+                    }
+                </List>
+
+                {
+                    !(value && data)
+                    &&
+                    <div className="margin-t">
+                        {this.renderAddButton()}
+                    </div>
+                }
+
+                <Modal
+                    onClose={this.toggleFormModal}
+                    opened={this.state.formModalOpened}
+                >
+                    {
+                        !this.isFormReady()
+                        &&
+                        <div>Loading...</div>
                     }
                     {
-                        !value
+                        this.isFormReady()
                         &&
                         <div>
-                            {this.renderAddButton()}
+                            {
+                                this.hasFormError()
+                                &&
+                                <div className="form__error-message form__error-message_top">
+                                    {this.state.formError}
+                                </div>
+                            }
+                            <Form
+                                map={this.getMapTransformed()}
+                                model={this.transformModel()}
+                                submitButtonLabel="Save"
+                                onSubmit={this.onFormSubmit}
+                            />
                         </div>
                     }
-
-                    <Modal
-                        onClose={this.toggleFormModal}
-                        opened={this.state.formModalOpened}
-                    >
-                        {
-                            !this.isFormReady()
-                            &&
-                            <div>Loading...</div>
-                        }
-                        {
-                            this.isFormReady()
-                            &&
-                            <div>
-                                {
-                                    this.hasFormError()
-                                    &&
-                                    <div className="form__error-message form__error-message_top">
-                                        {this.state.formError}
-                                    </div>
-                                }
-                                <Form
-                                    map={this.getMapTransformed()}
-                                    model={this.transformModel()}
-                                    submitButtonLabel="Save"
-                                    onSubmit={this.onFormSubmit}
-                                />
-                            </div>
-                        }
-                    </Modal>
-                </div>
+                </Modal>
             </Container>
         );
     }

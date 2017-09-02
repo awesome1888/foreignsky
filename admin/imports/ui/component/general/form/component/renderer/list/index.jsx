@@ -128,16 +128,14 @@ class RendererList extends RendererGeneric
     renderAddButton()
     {
         return (
-            <div className="padding-t">
-                <Button
-                    onClick={this.onItemAddClick}
-                    size="mini"
-                    color={this.pickColor()}
-                    type="button"
-                >
-                    New item
-                </Button>
-            </div>
+            <Button
+                onClick={this.onItemAddClick}
+                size="mini"
+                color={this.pickColor()}
+                type="button"
+            >
+                New item
+            </Button>
         );
     }
 
@@ -191,7 +189,7 @@ class RendererList extends RendererGeneric
                             })
                         }
                     </div>
-                    <div>
+                    <div className="padding-t">
                         {this.renderAddButton()}
                     </div>
                 </div>

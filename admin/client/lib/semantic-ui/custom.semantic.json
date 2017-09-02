@@ -12,7 +12,7 @@
     "image": false,
     "input": false,
     "label": false,
-    "list": false,
+    "list": true,
     "loader": false,
     "rail": false,
     "reveal": false,

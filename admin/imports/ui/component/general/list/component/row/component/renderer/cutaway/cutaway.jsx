@@ -26,8 +26,8 @@ export default class CutawayRenderer extends RendererGeneric
         // todo: get path template from settings
         return (
             <div>
-                {title}<br />
-                <a href={path.replace('#ID#', this.getItemId())}>{this.getItemId()}</a>
+                <a href={path.replace('#ID#', this.getItemId())}>{title}</a><br />
+                {this.getItemId()}
             </div>
         );
     }

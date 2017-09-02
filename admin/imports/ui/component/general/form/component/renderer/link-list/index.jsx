@@ -13,6 +13,10 @@ import entityMap from '../../../../../../../startup/client/entity-map.js';
 import Form from '../../../../form/form.jsx';
 import Util from '../../../../../../../lib/util.js';
 
+import { Button, List } from 'semantic-ui-react';
+
+import './style.less';
+
 import {RendererClass} from '../link/index.jsx';
 
 class RendererLinkList extends RendererClass
@@ -122,24 +126,28 @@ class RendererLinkList extends RendererClass
     renderAddButton()
     {
         return (
-            <button
-                type="button"
+            <Button
                 onClick={this.onItemAddClick}
+                size="mini"
+                color="green"
+                type="button"
             >
-                + Add
-            </button>
+                New item
+            </Button>
         );
     }
 
     renderDeleteButton(id)
     {
         return (
-            <button
+            <Button
                 onClick={Util.passCtx(this.onItemDeleteClick, [id])}
+                size="mini"
                 type="button"
+                className="no-margin"
             >
                 Delete
-            </button>
+            </Button>
         );
     }
 
@@ -166,7 +174,7 @@ class RendererLinkList extends RendererClass
                 errorProps={this.props}
                 {...filterDOMProps(this.props)}
             >
-                <div>
+                <List divided verticalAlign='middle' className="margin-t no-margin-b">
                     {
                         this.getValue().map((id, index) => {
                             const data = this.getCached(id);
@@ -176,61 +184,68 @@ class RendererLinkList extends RendererClass
                             }
 
                             return (
-                                <div
-                                    key={index}
-                                >
-                                    <a
-                                        href={entityMap.makeDetailPath(entity, data._id)}
-                                        target="_blank"
-                                        className=""
-                                        onClick={Util.passCtx(this.onItemClick, [data._id])}
-                                    >
-                                        {data.label ? data.label.toString() : data._id}
-                                    </a>
-                                    <input
-                                        type="hidden"
-                                        name={this.makeChildName()}
-                                        onChange={this.getOnChange(null, index)}
-                                        value={this.getValue()}
-                                    />
-                                    {this.renderDeleteButton(data._id)}
-                                </div>
+                                <List.Item key={id}>
+                                    <List.Content floated='right'>
+                                        {this.renderDeleteButton(data._id)}
+                                    </List.Content>
+                                    <List.Content>
+                                        <a
+                                            href={entityMap.makeDetailPath(entity, data._id)}
+                                            target="_blank"
+                                            className=""
+                                            onClick={Util.passCtx(this.onItemClick, [data._id])}
+                                        >
+                                            {data.label ? data.label.toString() : data._id}
+                                        </a>
+                                        <div className="link-list__id">
+                                            {id}
+                                        </div>
+                                        <input
+                                            type="hidden"
+                                            name={this.makeChildName()}
+                                            onChange={this.getOnChange(null, index)}
+                                            value={this.getValue()}
+                                        />
+                                    </List.Content>
+                                </List.Item>
                             );
                         })
                     }
-                    <div>
-                        {this.renderAddButton()}
-                    </div>
-                    <Modal
-                        onClose={this.toggleFormModal}
-                        opened={this.state.formModalOpened}
-                    >
-                        {
-                            !this.isFormReady()
-                            &&
-                            <div>Loading...</div>
-                        }
-                        {
-                            this.isFormReady()
-                            &&
-                            <div>
-                                {
-                                    this.hasFormError()
-                                    &&
-                                    <div className="form__error-message form__error-message_top">
-                                        {this.state.formError}
-                                    </div>
-                                }
-                                <Form
-                                    map={this.getMapTransformed()}
-                                    model={this.transformModel()}
-                                    submitButtonLabel="Save"
-                                    onSubmit={this.onFormSubmit}
-                                />
-                            </div>
-                        }
-                    </Modal>
+                </List>
+
+                <div className="margin-t">
+                    {this.renderAddButton()}
                 </div>
+
+                <Modal
+                    onClose={this.toggleFormModal}
+                    opened={this.state.formModalOpened}
+                >
+                    {
+                        !this.isFormReady()
+                        &&
+                        <div>Loading...</div>
+                    }
+                    {
+                        this.isFormReady()
+                        &&
+                        <div>
+                            {
+                                this.hasFormError()
+                                &&
+                                <div className="form__error-message form__error-message_top">
+                                    {this.state.formError}
+                                </div>
+                            }
+                            <Form
+                                map={this.getMapTransformed()}
+                                model={this.transformModel()}
+                                submitButtonLabel="Save"
+                                onSubmit={this.onFormSubmit}
+                            />
+                        </div>
+                    }
+                </Modal>
             </Container>
         );
     }

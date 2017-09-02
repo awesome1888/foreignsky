@@ -191,11 +191,6 @@ export default class Form extends BaseComponent
             return (<span>Loading...</span>);
         }
 
-        // console.dir(this.getMapTransformed());
-        // console.dir(this.transformModel());
-
-        // console.dir(this.props);
-
         const tModel = this.transformModel();
         const tMap = this.getMapTransformed();
         if (!(tMap instanceof Map))

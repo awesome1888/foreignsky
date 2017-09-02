@@ -11,10 +11,11 @@
 	._border-r();
 	._padding-r_x(0.5);
 	._padding-l_x(2);
+	._padding-tb_x(0.5);
 }
 
 #make_form__body_fragment_color(@color) {
-	._border-l(fade(@color, 50%), 4px);
+	._border-l(fade(@color, 30%), 4px);
 	&:hover,
 	&.form__body_fragment_hover {
 		._border-l(@color, 4px);

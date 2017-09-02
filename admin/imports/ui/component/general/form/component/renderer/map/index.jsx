@@ -23,6 +23,7 @@ class RendererMap extends RendererGeneric
                 <Form
                     map={this.props.map}
                     isFragment
+                    borderColor={this.props.borderColor}
                 />
             </Container>
         );

@@ -3,6 +3,8 @@ import connectField from 'uniforms/connectField';
 import joinName from 'uniforms/joinName';
 import filterDOMProps from 'uniforms/filterDOMProps';
 
+import { Button } from 'semantic-ui-react';
+
 // https://github.com/vazco/uniforms/blob/master/INTRODUCTION.md#autofield-algorithm
 // https://github.com/vazco/uniforms/blob/master/API.md#connectfield
 // https://github.com/vazco/uniforms/blob/master/packages/uniforms-unstyled/src/TextField.js
@@ -107,27 +109,48 @@ class RendererList extends RendererGeneric
             .concat(value.slice(1 + index)));
     }
 
+    pickColor()
+    {
+        if (!this._cache.color)
+        {
+            this._cache.color = _.sample([
+                'red',
+                'blue',
+                'green',
+            ]);
+        }
+
+        return this._cache.color;
+    }
+
     renderAddButton()
     {
         return (
-            <button
-                type="button"
-                onClick={this.onItemAddClick}
-            >
-                + Add
-            </button>
+            <div className="padding-t">
+                <Button
+                    onClick={this.onItemAddClick}
+                    size="mini"
+                    color="green"
+                    type="button"
+                >
+                    New item
+                </Button>
+            </div>
         );
     }
 
     renderDeleteButton(index)
     {
         return (
-            <button
-                type="button"
+            <Button
                 onClick={Util.passCtx(this.onItemDeleteClick, [index])}
+                size="mini"
+                color="red"
+                type="button"
+                className="no-margin"
             >
                 Delete
-            </button>
+            </Button>
         );
     }
 
@@ -141,29 +164,32 @@ class RendererList extends RendererGeneric
                 {...filterDOMProps(this.props)}
             >
                 <div className="form__list">
-                    {
-                        this.getValue().map((item, index) => {
-                            return Children.map(children, child => {
+                    <div className="form__list-items">
+                        {
+                            this.getValue().map((item, index) => {
+                                return Children.map(children, child => {
 
-                                return (
-                                    <div className="form__list-item">
-                                        <div className="form__list-item-container">
-                                            {
-                                                React.cloneElement(child, {
-                                                    key: index,
-                                                    label: null,
-                                                    name: this.makeChildName(child, index),
-                                                })
-                                            }
+                                    return (
+                                        <div className="form__list-item">
+                                            <div className="form__list-item-container">
+                                                {
+                                                    React.cloneElement(child, {
+                                                        key: index,
+                                                        label: null,
+                                                        name: this.makeChildName(child, index),
+                                                        borderColor: this.pickColor(),
+                                                    })
+                                                }
+                                            </div>
+                                            <div className="form__list-item-buttons">
+                                                {this.renderDeleteButton(index)}
+                                            </div>
                                         </div>
-                                        <div className="form__list-item-buttons">
-                                            {this.renderDeleteButton(index)}
-                                        </div>
-                                    </div>
-                                );
+                                    );
+                                })
                             })
-                        })
-                    }
+                        }
+                    </div>
                     <div>
                         {this.renderAddButton()}
                     </div>

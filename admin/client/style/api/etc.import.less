@@ -7,11 +7,17 @@
 ._border(@color: @borderColor, @width: 1px) {
 	border: @width solid @color;
 }
-._border-t() {
-	border-top: 1px solid @borderColor;
+._border-t(@color: @borderColor, @width: 1px) {
+	border-top: @width solid @color;
 }
-._border-b() {
-	border-bottom: 1px solid @borderColor;
+._border-b(@color: @borderColor, @width: 1px) {
+	border-bottom: @width solid @color;
+}
+._border-l(@color: @borderColor, @width: 1px) {
+	border-left: @width solid @color;
+}
+._border-r(@color: @borderColor, @width: 1px) {
+	border-right: @width solid @color;
 }
 
 ._b-color(@color) {

@@ -2,6 +2,7 @@ import React from 'react';
 //import ValidatedForm from 'uniforms-unstyled/ValidatedForm';
 import AutoForm from 'uniforms-unstyled/AutoForm';
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
+import classNames from 'classnames';
 
 import { Button } from 'semantic-ui-react';
 // import { Button, Checkbox, Form } from 'semantic-ui-react';
@@ -32,6 +33,7 @@ export default class Form extends BaseComponent
         isFragment: PropTypes.bool,
         submitButtonLabel: PropTypes.string,
         onSubmit: PropTypes.func,
+        borderColor: PropTypes.string,
     };
 
     static defaultProps = {
@@ -40,6 +42,7 @@ export default class Form extends BaseComponent
         isFragment: false,
         submitButtonLabel: 'Send',
         onSubmit: null,
+        borderColor: '',
     };
 
     constructor(props)
@@ -125,6 +128,16 @@ export default class Form extends BaseComponent
     //     return callback();
     // }
 
+    isFragment()
+    {
+        return !!this.props.isFragment;
+    }
+
+    getBorderColor()
+    {
+        return this.props.borderColor;
+    }
+
     renderRows()
     {
         const map = this.getMapTransformed();
@@ -147,6 +160,9 @@ export default class Form extends BaseComponent
 
     render()
     {
+        const isFragment = this.isFragment();
+        const bc = this.getBorderColor();
+        
         const model = this.state.model;
         if (model === null)
         {
@@ -171,7 +187,13 @@ export default class Form extends BaseComponent
         // console.dir(tMap);
 
         const body = (
-            <div>
+            <div
+                style={isFragment && bc  ? {borderLeftColor: bc} : {}}
+                className={classNames({
+                    form__body: true,
+                    form__body_fragment: isFragment,
+                })}
+            >
                 {
                     this.state.error
                     &&
@@ -185,7 +207,7 @@ export default class Form extends BaseComponent
             </div>
         );
 
-        if (this.props.isFragment)
+        if (isFragment)
         {
             return body;
         }

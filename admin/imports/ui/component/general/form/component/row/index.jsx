@@ -8,7 +8,7 @@ import RendererList from './../../component/renderer/list/index.jsx';
 import RendererLinkList from './../../component/renderer/link-list/index.jsx';
 import RenderMap from './../../component/renderer/map/index.jsx';
 
-import { Button, Checkbox, Form } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 
 export default class Row extends React.Component
 {
@@ -197,7 +197,7 @@ export default class Row extends React.Component
         return (
             <Form.Field>
                 {
-                    !a.isBoolean()
+                    a.getParameter('show-label') !== false
                     &&
                     <label>{this.renderLabel()}</label>
                 }

@@ -12,6 +12,7 @@ import { Button } from 'semantic-ui-react';
 import RendererGeneric from '../generic/index.jsx';
 import Container from '../container/index.jsx';
 import Util from '../../../../../../../lib/util.js';
+import ModalConfirm from '../../../../modal-confirm/index.jsx';
 import './style.less';
 
 class RendererList extends RendererGeneric
@@ -19,6 +20,9 @@ class RendererList extends RendererGeneric
     constructor(props)
     {
         super(props);
+        // this.extendState({
+        //     confirmModalOpened: false,
+        // });
         this.onItemAddClick = this.onItemAddClick.bind(this);
         this.onItemDeleteClick = this.onItemDeleteClick.bind(this);
     }
@@ -101,12 +105,20 @@ class RendererList extends RendererGeneric
 
     onItemDeleteClick(index)
     {
-        const onChange = this.getOnChange();
-        const value = this.getValue();
+        this._deleteConfirm.ask(
+            'Do you want to remove the selected sub-item? The the content of the sub-item will be permanently lost after the main item is saved.',
+            'An important question'
+        ).then((answer) => {
+            if (answer)
+            {
+                const onChange = this.getOnChange();
+                const value = this.getValue();
 
-        onChange([]
-            .concat(value.slice(0,  index))
-            .concat(value.slice(1 + index)));
+                onChange([]
+                    .concat(value.slice(0,  index))
+                    .concat(value.slice(1 + index)));
+            }
+        });
     }
 
     pickColor()
@@ -160,6 +172,7 @@ class RendererList extends RendererGeneric
         return (
             <Container
                 errorProps={this.props}
+                ref={ ref => { this._container = ref; }}
                 {...filterDOMProps(this.props)}
             >
                 <div className="form__list">
@@ -193,6 +206,13 @@ class RendererList extends RendererGeneric
                         {this.renderAddButton()}
                     </div>
                 </div>
+
+                <ModalConfirm ref={ref => { this._deleteConfirm = ref; }} />
+
+                {/*<ModalConfirm*/}
+                    {/*text="Do you want to remove the item?"*/}
+                    {/*opened={this.confirmModalOpened}*/}
+                {/*/>*/}
             </Container>
         );
     }

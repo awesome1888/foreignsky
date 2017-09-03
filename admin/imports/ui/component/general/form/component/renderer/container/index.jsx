@@ -1,9 +1,18 @@
 import React from 'react';
 
 import { Form } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
 export default class Container extends React.Component
 {
+    static propTypes = {
+        showLabel: PropTypes.bool,
+    };
+
+    static defaultProps = {
+        showLabel: true,
+    };
+
     hasError()
     {
         return _.isObject(this.props.errorProps.error);
@@ -17,6 +26,17 @@ export default class Container extends React.Component
     getAttribute()
     {
         return this.props.attribute || null;
+    }
+
+    showLabel()
+    {
+        const a = this.getAttribute();
+        if (a && a.hasParameter('show-label'))
+        {
+            return a.getParameter('show-label') !== false;
+        }
+
+        return !!this.props.showLabel;
     }
 
     renderLabel()
@@ -37,7 +57,7 @@ export default class Container extends React.Component
         return (
             <Form.Field className={className.join(' ')} error={hasError}>
                 {
-                    this.getAttribute().getParameter('show-label') !== false
+                    this.showLabel()
                     &&
                     <label>{this.renderLabel()}</label>
                 }

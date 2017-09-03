@@ -118,7 +118,10 @@ export default class Row extends React.Component
 
     getControlChildrenParams(attribute)
     {
-        const params = {};
+        const params = {
+            attribute,
+            showLabel: false, // dont show label in list items
+        };
 
         if (attribute.isArrayOfMap())
         {

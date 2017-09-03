@@ -410,9 +410,9 @@ export default class List extends BaseComponent
                             {this.renderPageNav()}
 
                             {/*icon*/}
-                            <Button size='small' color='#fff' floated='right' href={url}>New {_.lCFirst(title)}</Button>
+                            <Button size='small' color='green' floated='right' href={url}>New {_.lCFirst(title)}</Button>
 
-                            <Button size='small' color='red'>Remove</Button>
+                            <Button size='small'>Delete</Button>
                         </Table.HeaderCell>
                     </Table.Row>
                 </Table.Footer>

@@ -328,6 +328,11 @@ export default class Attribute
         return new this.constructor(copyData);
     }
 
+    hasParameter(name)
+    {
+        return this._parameters && name in this._parameters;
+    }
+
     setParameter(name, value)
     {
         if (!_.isStringNotEmpty(name))

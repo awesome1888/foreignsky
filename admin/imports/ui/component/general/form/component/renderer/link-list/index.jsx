@@ -8,7 +8,6 @@ import filterDOMProps from 'uniforms/filterDOMProps';
 // https://github.com/vazco/uniforms/blob/master/packages/uniforms-unstyled/src/TextField.js
 
 import Container from '../container/index.jsx';
-// import Modal from '../../../../../general/modal/index.js';
 import entityMap from '../../../../../../../startup/client/entity-map.js';
 import Form from '../../../../form/form.jsx';
 import Util from '../../../../../../../lib/util.js';

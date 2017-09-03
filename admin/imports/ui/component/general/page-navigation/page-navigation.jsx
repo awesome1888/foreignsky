@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 // import PageScroll from '../../../../lib/util/page-scroll/page-scroll.js';
 import BaseComponent from '../../../../lib/base/component/component.jsx';
 
-import { Icon, Menu } from 'semantic-ui-react';
+import { Menu } from 'semantic-ui-react';
 
 export default class PageNavigation extends BaseComponent
 {
@@ -21,7 +21,7 @@ export default class PageNavigation extends BaseComponent
         onPageSelect: null,
     };
 
-    onClick(page) {
+    onPageClick(page) {
         // PageScroll.scrollTo();
         if (_.isFunction(this.props.onPageSelect))
         {
@@ -36,60 +36,84 @@ export default class PageNavigation extends BaseComponent
 
     getPage()
     {
-        return this.props.page;
+        return this.props.page || 1;
+    }
+
+    getRadius()
+    {
+        return 2;
+    }
+
+    getRange()
+    {
+        const pageCount = this.getPageCount();
+        const page = this.getPage();
+        const radius = this.getRadius();
+
+        const r = [page - radius, page + radius];
+        if (r[0] < 1)
+        {
+            r[1] += 1 - r[0];
+            r[0] = 1;
+            if (r[1] > pageCount)
+            {
+                r[1] = pageCount;
+            }
+        }
+
+        if (r[1] > pageCount)
+        {
+            r[0] -= r[1] - pageCount;
+            r[1] = pageCount;
+            if (r[0] < 1)
+            {
+                r[0] = 1;
+            }
+        }
+
+        return r;
+    }
+
+    renderRange() {
+        const r = [];
+        const range = this.getRange();
+
+        for(let k = range[0]; k <= range[1]; k++)
+        {
+            r.push(
+                <Menu.Item
+                    // href={`?page=${k}`}
+                    key={k}
+                    active={this.getPage() === k}
+                    onClick={this.onPageClick.bind(this, k)}
+                >
+                    {k}
+                </Menu.Item>
+            );
+        }
+
+        return r;
     }
 
     render() {
-        const pageCount = this.getPageCount();
-        const page = this.getPage();
-
         return (
             <Menu floated='right' size='mini' pagination>
-                <Menu.Item as='a' icon>
-                    <Icon name='left chevron' />
+                <Menu.Item
+                    // href="?page=1"
+                    icon
+                    onClick={this.onPageClick.bind(this, 1)}
+                >
+                    <div className='left chevron' />
                 </Menu.Item>
-                <Menu.Item as='a'>1</Menu.Item>
-                <Menu.Item as='a'>2</Menu.Item>
-                <Menu.Item as='a'>3</Menu.Item>
-                <Menu.Item as='a'>4</Menu.Item>
-                <Menu.Item as='a' icon>
-                    <Icon name='right chevron' />
+                {this.renderRange()}
+                <Menu.Item
+                    // href={`?page=${this.getPageCount()}`}
+                    icon
+                    onClick={this.onPageClick.bind(this, this.getPageCount())}
+                >
+                    <div className='right chevron' />
                 </Menu.Item>
             </Menu>
-        );
-
-        return (
-            <div>
-                {
-                    page > 1
-                    &&
-                    <div className="pagination__group">
-                        <a className="pagination__link" href="" onClick={this.onClick.bind(this, 1)} >
-                            <img className="pagination__icon" src="/images/icons/page_first.png" alt="" />
-                        </a>
-                        <a className="pagination__link" href="" onClick={this.onClick.bind(this, page - 1)}>
-                            <img className="pagination__icon" src="/images/icons/page_prev.png" alt="" />
-                        </a>
-                    </div>
-                }
-                <div className="pagination__group">
-                    <span className="pagination__current-page">
-                      Page <span className="text_weight_bold">{page}</span> of <span className="text_weight_bold">{pageCount}</span>
-                    </span>
-                </div>
-                {
-                    page < pageCount
-                    &&
-                    <div className="pagination__group">
-                        <a className="pagination__link" href="" onClick={this.onClick.bind(this, page + 1)}>
-                            <img className="pagination__icon" src="/images/icons/page_next.png" alt="" />
-                        </a>
-                        <a className="pagination__link" href="" onClick={this.onClick.bind(this, pageCount)} >
-                            <img className="pagination__icon" src="/images/icons/page_last.png" alt="" />
-                        </a>
-                    </div>
-                }
-            </div>
         );
     }
 }

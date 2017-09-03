@@ -70,6 +70,7 @@ export default class List extends BaseComponent
 
     loadData()
     {
+        console.dir(this.getQueryParameters());
         const p = this.getEntity().find(this.getQueryParameters());
 
         App.getInstance().wait(p);
@@ -94,6 +95,7 @@ export default class List extends BaseComponent
             this.setState({
                 page,
             });
+            this.loadData();
         }
     }
 
@@ -408,11 +410,8 @@ export default class List extends BaseComponent
                         <Table.HeaderCell />
                         <Table.HeaderCell colSpan='4'>
                             {this.renderPageNav()}
-
-                            {/*icon*/}
-                            <Button size='small' color='green' floated='right' href={url}>New {_.lCFirst(title)}</Button>
-
-                            <Button size='small'>Delete</Button>
+                            <Button size='large' color='green' floated='right' href={url}>New {_.lCFirst(title)}</Button>
+                            <Button size='large'>Delete</Button>
                         </Table.HeaderCell>
                     </Table.Row>
                 </Table.Footer>

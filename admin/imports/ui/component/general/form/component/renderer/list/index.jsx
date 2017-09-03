@@ -20,9 +20,6 @@ class RendererList extends RendererGeneric
     constructor(props)
     {
         super(props);
-        // this.extendState({
-        //     confirmModalOpened: false,
-        // });
         this.onItemAddClick = this.onItemAddClick.bind(this);
         this.onItemDeleteClick = this.onItemDeleteClick.bind(this);
     }
@@ -208,11 +205,6 @@ class RendererList extends RendererGeneric
                 </div>
 
                 <ModalConfirm ref={ref => { this._deleteConfirm = ref; }} />
-
-                {/*<ModalConfirm*/}
-                    {/*text="Do you want to remove the item?"*/}
-                    {/*opened={this.confirmModalOpened}*/}
-                {/*/>*/}
             </Container>
         );
     }

@@ -15,6 +15,7 @@ import Container from '../container/index.jsx';
 import entityMap from '../../../../../../../startup/client/entity-map.js';
 import Form from '../../../../form/form.jsx';
 import Util from '../../../../../../../lib/util.js';
+import ModalConfirm from '../../../../modal-confirm/index.jsx';
 
 class RendererLink extends RendererGeneric
 {
@@ -197,9 +198,15 @@ class RendererLink extends RendererGeneric
 
     onItemDeleteClick(id)
     {
-        const onChange = this.getOnChange();
-
-        onChange('');
+        this._deleteConfirm.ask(
+            'Do you want to detach the selected item? You will be able to re-attach this item in any time later.',
+            'An important question'
+        ).then((answer) => {
+            if (answer)
+            {
+                this.getOnChange()('');
+            }
+        });
     }
 
     onItemAddClick()
@@ -428,6 +435,8 @@ class RendererLink extends RendererGeneric
                         </Button>
                     </Modal.Actions>
                 </Modal>
+
+                <ModalConfirm ref={ref => { this._deleteConfirm = ref; }} />
             </Container>
         );
     }

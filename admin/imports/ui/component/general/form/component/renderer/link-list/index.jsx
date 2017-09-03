@@ -11,6 +11,7 @@ import Container from '../container/index.jsx';
 import entityMap from '../../../../../../../startup/client/entity-map.js';
 import Form from '../../../../form/form.jsx';
 import Util from '../../../../../../../lib/util.js';
+import ModalConfirm from '../../../../modal-confirm/index.jsx';
 
 import { Button, List, Modal } from 'semantic-ui-react';
 
@@ -74,9 +75,15 @@ class RendererLinkList extends RendererClass
 
     onItemDeleteClick(id)
     {
-        const onChange = this.getOnChange();
-
-        onChange(_.difference(this.getValue(), [id]));
+        this._deleteConfirm.ask(
+            'Do you want to detach the selected item? You will be able to re-attach this item in any time later.',
+            'An important question'
+        ).then((answer) => {
+            if (answer)
+            {
+                this.getOnChange()(_.difference(this.getValue(), [id]));
+            }
+        });
     }
 
     onItemAddClick()
@@ -262,6 +269,8 @@ class RendererLinkList extends RendererClass
                         </Button>
                     </Modal.Actions>
                 </Modal>
+
+                <ModalConfirm ref={ref => { this._deleteConfirm = ref; }} />
             </Container>
         );
     }

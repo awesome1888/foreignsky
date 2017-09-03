@@ -8,12 +8,12 @@ import filterDOMProps from 'uniforms/filterDOMProps';
 // https://github.com/vazco/uniforms/blob/master/packages/uniforms-unstyled/src/TextField.js
 
 import Container from '../container/index.jsx';
-import Modal from '../../../../../general/modal/index.js';
+// import Modal from '../../../../../general/modal/index.js';
 import entityMap from '../../../../../../../startup/client/entity-map.js';
 import Form from '../../../../form/form.jsx';
 import Util from '../../../../../../../lib/util.js';
 
-import { Button, List } from 'semantic-ui-react';
+import { Button, List, Modal } from 'semantic-ui-react';
 
 import './style.less';
 
@@ -218,33 +218,48 @@ class RendererLinkList extends RendererClass
                 </div>
 
                 <Modal
+                    open={this.state.formModalOpened}
                     onClose={this.toggleFormModal}
-                    opened={this.state.formModalOpened}
+                    dimmer="blurring"
+                    closeIcon
                 >
-                    {
-                        !this.isFormReady()
-                        &&
-                        <div>Loading...</div>
-                    }
-                    {
-                        this.isFormReady()
-                        &&
-                        <div>
-                            {
-                                this.hasFormError()
-                                &&
-                                <div className="form__error-message form__error-message_top">
-                                    {this.state.formError}
-                                </div>
-                            }
-                            <Form
-                                map={this.getMapTransformed()}
-                                model={this.transformModel()}
-                                submitButtonLabel="Save"
-                                onSubmit={this.onFormSubmit}
-                            />
-                        </div>
-                    }
+                    <Modal.Header>{this.isModeEdit() ? 'Item edit' : 'New item'}</Modal.Header>
+                    <Modal.Content scrolling>
+                        {
+                            !this.isFormReady()
+                            &&
+                            <div>Loading...</div>
+                        }
+                        {
+                            this.isFormReady()
+                            &&
+                            <div>
+                                {
+                                    this.hasFormError()
+                                    &&
+                                    <div className="form__error-message form__error-message_top">
+                                        {this.state.formError}
+                                    </div>
+                                }
+                                <Form
+                                    map={this.getMapTransformed()}
+                                    model={this.transformModel()}
+                                    submitButtonLabel="Save"
+                                    onSubmit={this.onFormSubmit}
+                                    showFooter={false}
+                                    ref={(ref) => { this._form = ref; }}
+                                />
+                            </div>
+                        }
+                    </Modal.Content>
+                    <Modal.Actions>
+                        <Button
+                            color="green"
+                            onClick={this.onFormSubmitClick}
+                        >
+                            Save
+                        </Button>
+                    </Modal.Actions>
                 </Modal>
             </Container>
         );

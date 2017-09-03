@@ -41,6 +41,7 @@ class RendererLink extends RendererGeneric
         this.onItemClick = this.onItemClick.bind(this);
         this.onItemDeleteClick = this.onItemDeleteClick.bind(this);
         this.onFormSubmit = this.onFormSubmit.bind(this);
+        this.onFormSubmitClick = this.onFormSubmitClick.bind(this);
         this.toggleFormModal = this.toggleFormModal.bind(this);
     }
 
@@ -213,6 +214,11 @@ class RendererLink extends RendererGeneric
         });
     }
 
+    onFormSubmitClick()
+    {
+        this._form.submit();
+    }
+
     onFormSubmit(data)
     {
         const id = this.state.itemId;
@@ -274,6 +280,11 @@ class RendererLink extends RendererGeneric
     isFormReady()
     {
         return this.state.formModalOpened && this.state.modelReady;
+    }
+
+    isModeEdit()
+    {
+        return _.isObject(this.state.model) && _.isStringNotEmpty(this.state.model._id);
     }
 
     hasFormError()

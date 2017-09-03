@@ -4,6 +4,7 @@
 ._icon(@code, @size: 16px) {
 	font-family: 'Material Icons', sans-serif;
 	font-size: @size;
+	font-style: normal;
 	line-height: 100%;
 	height: @size;
 	width: @size;
@@ -29,4 +30,8 @@
 
 ._icon_keyboard-arrow-left(@size: 16px) {
 	._icon('keyboard_arrow_left', @size);
+}
+
+._icon_clear(@size: 16px) {
+	._icon('clear', @size);
 }

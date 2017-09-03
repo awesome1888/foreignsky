@@ -34,15 +34,17 @@ export default class Form extends BaseComponent
         submitButtonLabel: PropTypes.string,
         onSubmit: PropTypes.func,
         borderColor: PropTypes.string,
+        showFooter: PropTypes.bool,
     };
 
     static defaultProps = {
         className: '',
         model: {},
         isFragment: false,
-        submitButtonLabel: 'Send',
+        submitButtonLabel: 'Save',
         onSubmit: null,
         borderColor: '',
+        showFooter: true,
     };
 
     constructor(props)
@@ -109,6 +111,11 @@ export default class Form extends BaseComponent
     getForm()
     {
         return this._form || null;
+    }
+
+    submit()
+    {
+        return this.getForm().submit();
     }
 
     onSubmit(model)
@@ -240,23 +247,27 @@ export default class Form extends BaseComponent
                 // onValidate={this.onValidate.bind(this)}
             >
                 {body}
-                <div className="form__footer">
-                    <div className="group_x2">
-                        <Button color="green" size="large">
-                            {this.props.submitButtonLabel}
-                        </Button>
-                        {
-                            _.isStringNotEmpty(this.props.backPath)
-                            &&
-                            <a
-                                href={this.props.backPath}
-                                className="form__footer-back"
-                            >
-                                Back
-                            </a>
-                        }
+                {
+                    this.props.showFooter
+                    &&
+                    <div className="form__footer">
+                        <div className="group_x2">
+                            <Button color="green" size="large">
+                                {this.props.submitButtonLabel}
+                            </Button>
+                            {
+                                _.isStringNotEmpty(this.props.backPath)
+                                &&
+                                <a
+                                    href={this.props.backPath}
+                                    className="form__footer-back"
+                                >
+                                    Back
+                                </a>
+                            }
+                        </div>
                     </div>
-                </div>
+                }
             </AutoForm>
         );
     }

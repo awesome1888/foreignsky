@@ -8,8 +8,6 @@ import RendererList from './../../component/renderer/list/index.jsx';
 import RendererLinkList from './../../component/renderer/link-list/index.jsx';
 import RenderMap from './../../component/renderer/map/index.jsx';
 
-import { Form } from 'semantic-ui-react';
-
 export default class Row extends React.Component
 {
     resolveRenderer()
@@ -158,7 +156,12 @@ export default class Row extends React.Component
         return children;
     }
 
-    renderControl()
+    getAttribute()
+    {
+        return this.props.attribute || {};
+    }
+
+    render()
     {
         const attribute = this.getAttribute();
 
@@ -166,7 +169,7 @@ export default class Row extends React.Component
         if (!constructor) {
             return null;
         }
-        
+
         return React.createElement(
             constructor,
             Object.assign(
@@ -176,33 +179,6 @@ export default class Row extends React.Component
                 }
             ),
             this.getControlChildren(attribute)
-        );
-    }
-
-    getAttribute()
-    {
-        return this.props.attribute || {};
-    }
-
-    renderLabel()
-    {
-        const attr = this.getAttribute();
-        return attr.getTitle();
-    }
-
-    render()
-    {
-        const a = this.getAttribute();
-
-        return (
-            <Form.Field>
-                {
-                    a.getParameter('show-label') !== false
-                    &&
-                    <label>{this.renderLabel()}</label>
-                }
-                {this.renderControl(a)}
-            </Form.Field>
         );
     }
 }

@@ -36,7 +36,8 @@ export default class ListGeneric extends BaseComponent {
 
     _scrolled = false;
 
-    constructor(params) {
+    constructor(params)
+    {
         super(params);
         this.extendState({
             page: this.getQueryPage(),
@@ -57,20 +58,25 @@ export default class ListGeneric extends BaseComponent {
 
     // component init routines
 
-    componentWillMount() {
+    componentWillMount()
+    {
         this._scrolled = false;
     }
 
-    componentDidMount() {
+    componentDidMount()
+    {
         this.startDataReload();
     }
 
-    componentDidUpdate() {
+    componentDidUpdate()
+    {
         this.scrollIfReady();
     }
 
-    scrollIfReady() {
-        if (this.isReady() && !this._scrolled) {
+    scrollIfReady()
+    {
+        if (this.isReady() && !this._scrolled)
+        {
             // PageScroll.scrollToStored();
             this._scrolled = true;
         }
@@ -84,7 +90,8 @@ export default class ListGeneric extends BaseComponent {
      * @returns void
      * @access protected
      */
-    startDataReload() {
+    startDataReload()
+    {
         this.getQueryParameters().then((parameters) => {
             this._cache.queryParams = parameters;
             this.reLoadData();
@@ -97,7 +104,8 @@ export default class ListGeneric extends BaseComponent {
      * @returns void
      * @access protected
      */
-    reLoadData() {
+    reLoadData()
+    {
         this.setState({
             countReady: false,
             dataReady: false,
@@ -109,7 +117,8 @@ export default class ListGeneric extends BaseComponent {
     /**
      * An alias for startDataReload(), you can pass this to nested components
      */
-    onListUpdate() {
+    onListUpdate()
+    {
         this.startDataReload();
     }
 
@@ -201,13 +210,15 @@ export default class ListGeneric extends BaseComponent {
      * @returns {Promise.<{}>}
      * @access protected
      */
-    async getQueryParameters() {
+    async getQueryParameters()
+    {
         return {
             select: '*', // select all by default
         };
     }
 
-    mixPageParameters(params) {
+    mixPageParameters(params)
+    {
         return Object.assign(_.clone(params), {
             limit: this.state.perPage,
             offset: this.state.perPage * (this.state.page - 1),
@@ -254,7 +265,8 @@ export default class ListGeneric extends BaseComponent {
         return this._cache.map;
     }
 
-    loadData() {
+    loadData()
+    {
         const qParams = this._cache.queryParams;
         if (!qParams)
         {
@@ -265,20 +277,21 @@ export default class ListGeneric extends BaseComponent {
         App.getInstance().wait(p);
 
         p.then((res) => {
-            this.setItems(res);
+            this.setData(res);
         }, (err) => {
             this.showConsoleError('Unable to get items (maybe forgot to expose?)', err);
         });
     }
 
-    transformModel(item)
+    transformModel(data)
     {
-        return item;
+        return data;
     }
 
-    setItems(items) {
+    setData(data)
+    {
         this.setState({
-            items: items.map(this.transformModel),
+            data: data.map(this.transformModel),
             dataReady: true,
         });
     }
@@ -315,7 +328,8 @@ export default class ListGeneric extends BaseComponent {
      * @returns {number}
      * @access protected
      */
-    getCount() {
+    getCount()
+    {
         return this.state.total;
     }
 
@@ -327,7 +341,8 @@ export default class ListGeneric extends BaseComponent {
      * @returns void
      * @access protected
      */
-    onPageChange(page) {
+    onPageChange(page)
+    {
         if (page !== this.state.page) {
             this.setQueryPage(page); // update page in url
             this.setState({
@@ -343,7 +358,8 @@ export default class ListGeneric extends BaseComponent {
      * @returns {number}
      * @access protected
      */
-    getPageSize() {
+    getPageSize()
+    {
         return 10;
     }
 
@@ -357,7 +373,8 @@ export default class ListGeneric extends BaseComponent {
      * @returns {Number}
      * @access protected
      */
-    getQueryPage() {
+    getQueryPage()
+    {
         return parseInt(FlowRouter.getQueryParam('page') || 1, 10);
     }
 
@@ -366,7 +383,8 @@ export default class ListGeneric extends BaseComponent {
      * @param {Number} page
      * @access protected
      */
-    setQueryPage(page) {
+    setQueryPage(page)
+    {
         FlowRouter.setQueryParams({page});
     }
 
@@ -420,7 +438,8 @@ export default class ListGeneric extends BaseComponent {
      * @returns {boolean}
      * @access protected
      */
-    isReady() {
+    isReady()
+    {
         return (
             this._cache.queryParams // async qparams ready
             &&
@@ -486,7 +505,7 @@ export default class ListGeneric extends BaseComponent {
         return (
             <Table.Body>
                 {
-                    this.state.items.map(item => (
+                    this.state.data.map(item => (
                         this.renderListItem({
                             key: item.getId(),
                             data: item,
@@ -504,8 +523,10 @@ export default class ListGeneric extends BaseComponent {
      * @returns {XML|null}
      * @access protected
      */
-    renderPageNav() {
-        if (!this.isReady() || (this.getCount() <= this.state.perPage)) {
+    renderPageNav()
+    {
+        if (!this.isReady() || (this.getCount() <= this.state.perPage))
+        {
             return null;
         }
 
@@ -524,8 +545,8 @@ export default class ListGeneric extends BaseComponent {
      * @returns {XML}
      * @access protected
      */
-    render() {
-
+    render()
+    {
         if (!this.isReady())
         {
             return null;

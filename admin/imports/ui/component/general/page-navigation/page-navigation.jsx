@@ -21,11 +21,34 @@ export default class PageNavigation extends BaseComponent
         onPageSelect: null,
     };
 
+    constructor(props)
+    {
+        super(props);
+        this.onPreviousPageClick = this.onPreviousPageClick.bind(this);
+        this.onNextPageClick = this.onNextPageClick.bind(this);
+    }
+
     onPageClick(page) {
         // PageScroll.scrollTo();
         if (_.isFunction(this.props.onPageSelect))
         {
             this.props.onPageSelect(page);
+        }
+    }
+
+    onPreviousPageClick()
+    {
+        if (this.getPage() > 1)
+        {
+            this.onPageClick(this.getPage() - 1);
+        }
+    }
+
+    onNextPageClick()
+    {
+        if (this.getPage() < this.getPageCount())
+        {
+            this.onPageClick(this.getPage() + 1);
         }
     }
 
@@ -101,7 +124,7 @@ export default class PageNavigation extends BaseComponent
                 <Menu.Item
                     // href="?page=1"
                     icon
-                    onClick={this.onPageClick.bind(this, 1)}
+                    onClick={this.onPreviousPageClick}
                 >
                     <div className='left chevron' />
                 </Menu.Item>
@@ -109,7 +132,7 @@ export default class PageNavigation extends BaseComponent
                 <Menu.Item
                     // href={`?page=${this.getPageCount()}`}
                     icon
-                    onClick={this.onPageClick.bind(this, this.getPageCount())}
+                    onClick={this.onNextPageClick}
                 >
                     <div className='right chevron' />
                 </Menu.Item>

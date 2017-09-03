@@ -224,32 +224,34 @@ class RendererLinkList extends RendererClass
                 >
                     <Modal.Header>{this.isModeEdit() ? 'Item edit' : 'New item'}</Modal.Header>
                     <Modal.Content scrolling>
-                        {
-                            !this.isFormReady()
-                            &&
-                            <div>Loading...</div>
-                        }
-                        {
-                            this.isFormReady()
-                            &&
-                            <div>
-                                {
-                                    this.hasFormError()
-                                    &&
-                                    <div className="form__error-message form__error-message_top">
-                                        {this.state.formError}
-                                    </div>
-                                }
-                                <Form
-                                    map={this.getMapTransformed()}
-                                    model={this.transformModel()}
-                                    submitButtonLabel="Save"
-                                    onSubmit={this.onFormSubmit}
-                                    showFooter={false}
-                                    ref={(ref) => { this._form = ref; }}
-                                />
-                            </div>
-                        }
+                        <Modal.Description>
+                            {
+                                !this.isFormReady()
+                                &&
+                                <div>Loading...</div>
+                            }
+                            {
+                                this.isFormReady()
+                                &&
+                                <div>
+                                    {
+                                        this.hasFormError()
+                                        &&
+                                        <div className="form__error-message form__error-message_top">
+                                            {this.state.formError}
+                                        </div>
+                                    }
+                                    <Form
+                                        map={this.getMapTransformed()}
+                                        model={this.transformModel()}
+                                        submitButtonLabel="Save"
+                                        onSubmit={this.onFormSubmit}
+                                        showFooter={false}
+                                        ref={(ref) => { this._form = ref; }}
+                                    />
+                                </div>
+                            }
+                        </Modal.Description>
                     </Modal.Content>
                     <Modal.Actions>
                         <Button

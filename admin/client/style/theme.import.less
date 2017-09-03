@@ -21,6 +21,10 @@ body, h1, h2, h3 {
 				font-size: 0.8rem !important;
 			}
 		}
+
+		&.visible {
+			._block() !important;
+		}
 	}
 
 	.button {
@@ -47,8 +51,12 @@ body, h1, h2, h3 {
 	.close.icon {
 		._icon_clear(30px);
 	}
-}
 
-.menu.visible {
-	._block() !important;
+	&.modal {
+		.scrolling {
+			&.content {
+				._scroll-v();
+			}
+		}
+	}
 }

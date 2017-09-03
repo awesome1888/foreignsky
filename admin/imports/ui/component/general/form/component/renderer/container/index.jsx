@@ -6,11 +6,13 @@ import PropTypes from 'prop-types';
 export default class Container extends React.Component
 {
     static propTypes = {
-        showLabel: PropTypes.bool,
+        listMode: PropTypes.bool,
+        className: PropTypes.string,
     };
 
     static defaultProps = {
-        showLabel: true,
+        listMode: false,
+        className: '',
     };
 
     hasError()
@@ -36,7 +38,7 @@ export default class Container extends React.Component
             return a.getParameter('show-label') !== false;
         }
 
-        return !!this.props.showLabel;
+        return !this.props.listMode;
     }
 
     renderLabel()
@@ -49,6 +51,10 @@ export default class Container extends React.Component
         const hasError = this.hasError();
         
         const className = ['form__row'];
+        if (_.isStringNotEmpty(this.props.className))
+        {
+            className.push(this.props.className);
+        }
         if (hasError)
         {
             className.push('form__container_error');

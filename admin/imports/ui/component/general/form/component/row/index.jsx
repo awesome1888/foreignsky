@@ -120,7 +120,7 @@ export default class Row extends React.Component
     {
         const params = {
             attribute,
-            showLabel: false, // dont show label in list items
+            listMode: true, // dont show label in list items and other minor stuff
         };
 
         if (attribute.isArrayOfMap())

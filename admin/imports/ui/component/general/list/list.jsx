@@ -3,11 +3,12 @@ import {Meteor} from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import PageNavigation from '../page-navigation/page-navigation.jsx';
-import Row from './component/row/index.jsx';
 import BaseComponent from '../../../../lib/base/component/component.jsx';
+// import PageScroll from '../../../../lib/util/page-scroll/page-scroll.js';
+
+import Row from './component/row/index.jsx';
 import App from '../../../application.jsx';
 import EntityMap from '../../../../startup/client/entity-map.js';
-// import Util from '../../../../lib/util.js';
 
 import { Button, Table } from 'semantic-ui-react';
 
@@ -15,8 +16,8 @@ import { Button, Table } from 'semantic-ui-react';
  * The basic component for making lists
  * @abstract
  */
-export default class List extends BaseComponent
-{
+export default class ListGeneric extends BaseComponent {
+
     static propTypes = {
         className: PropTypes.oneOfType([
             PropTypes.string,
@@ -33,33 +34,70 @@ export default class List extends BaseComponent
         detailPageUrl: '',
     };
 
-    constructor(params)
-    {
+    _scrolled = false;
+
+    constructor(params) {
         super(params);
         this.extendState({
             page: this.getQueryPage(),
             perPage: this.getPageSize(),
+            // chosenFilters: this.loadFiltersFromURL(),
+
             total: 0,
+            items: [],
             countReady: false,
             dataReady: false,
-            // chosenFilters: this.loadFiltersFromURL(),
-            data: [],
         });
-        this.url = FlowRouter.current().path;
+        this._cache.query = null;
+        this._cache.queryParams = null;
+        this.url = null;
+
+        this.transformModel = this.transformModel.bind(this);
     }
 
-    componentDidMount()
-    {
-        this.reLoadData();
+    // component init routines
+
+    componentWillMount() {
+        this._scrolled = false;
     }
 
-    componentWillUpdate()
-    {
-        this.checkUrl();
+    componentDidMount() {
+        this.startDataReload();
     }
 
-    reLoadData()
-    {
+    componentDidUpdate() {
+        this.scrollIfReady();
+    }
+
+    scrollIfReady() {
+        if (this.isReady() && !this._scrolled) {
+            // PageScroll.scrollToStored();
+            this._scrolled = true;
+        }
+    }
+
+    // data load routines
+
+    /**
+     * Main routine that starts after the component get mounted
+     * or every time the component get updated
+     * @returns void
+     * @access protected
+     */
+    startDataReload() {
+        this.getQueryParameters().then((parameters) => {
+            this._cache.queryParams = parameters;
+            this.reLoadData();
+        });
+    }
+
+    /**
+     * Reloads current data and count, based on the cached query parameters given
+     * inside startDataReload()
+     * @returns void
+     * @access protected
+     */
+    reLoadData() {
         this.setState({
             countReady: false,
             dataReady: false,
@@ -68,61 +106,128 @@ export default class List extends BaseComponent
         this.loadCount();
     }
 
-    loadData()
-    {
-        console.dir(this.getQueryParameters());
-        const p = this.getEntity().find(this.getQueryParameters());
+    /**
+     * An alias for startDataReload(), you can pass this to nested components
+     */
+    onListUpdate() {
+        this.startDataReload();
+    }
 
-        App.getInstance().wait(p);
+    // loadFiltersFromURL() {
+    //     const chosenFilters = {};
+    //     const fs = this.getFilterSettings();
+    //     if (!_.isObjectNotEmpty(fs)) {
+    //         return chosenFilters;
+    //     }
+    //     _.each(fs.fields, (filter) => {
+    //         if (FlowRouter.getQueryParam(filter.field)) {
+    //             chosenFilters[filter.field] = [];
+    //             _.each(FlowRouter.getQueryParam(filter.field).split(';'), (value) => {
+    //                 if (filter.type === BarFilterTypes.SEARCHBOX) {
+    //                     chosenFilters[filter.field].push(value);
+    //                 } else if (_.contains(filter.values.map(el => el.value), value)) {
+    //                     chosenFilters[filter.field].push(value);
+    //                 }
+    //             });
+    //         }
+    //     });
+    //     return chosenFilters;
+    // }
 
-        p.then((res) => {
-            this.setState({
-                data: res,
-                dataReady: true,
-            });
+    // getCurrentFilter() {
+    //     return this.state.chosenFilters;
+    // }
+    //
+    // onReset() {
+    //     this.resetUrl();
+    // }
+    //
+    // getCleanChosenFilters() {
+    //     return {};
+    // }
+
+    // getCleanUrlParameters() {
+    //     const params = {};
+    //     params.page = null;
+    //     _.each(this.getFilterSettings().fields, (filter) => {
+    //         params[filter.field] = null;
+    //     });
+    //
+    //     return params;
+    // }
+
+    // resetUrl() {
+    //     FlowRouter.setQueryParams(this.getCleanUrlParameters());
+    // }
+
+    /**
+     * On filter rest, set page, chosen filters to empty and url
+     */
+    // handleFiltersReset() {
+    //     this.resetUrl();
+    //
+    //     this.reInitializeList(this.getCleanChosenFilters());
+    // }
+
+    /**
+     * On change filters, get new data and set url
+     * @param filter
+     * @param values
+     */
+    // handleFilterChange(filter, values) {
+    //     const chosenFilters = _.clone(this.getCurrentFilter());
+    //     chosenFilters[filter] = values.map(el => el.value);
+    //
+    //     const params = {};
+    //     params.page = 1;
+    //     params[filter] = chosenFilters[filter].join(';');
+    //     FlowRouter.setQueryParams(params);
+    //
+    //     this.reInitializeList(chosenFilters);
+    // }
+
+    // reInitializeList(chosenFilters) {
+    //     this.setState({
+    //         chosenFilters,
+    //         page: 1,
+    //     }, () => {
+    //         this.startDataReload();
+    //     });
+    // }
+
+    /**
+     * Returns query parameters. It can be async in implementations, for example, if
+     * we need to get some remote criteria asynchronously before building the list
+     * @returns {Promise.<{}>}
+     * @access protected
+     */
+    async getQueryParameters() {
+        return {
+            select: '*', // select all by default
+        };
+    }
+
+    mixPageParameters(params) {
+        return Object.assign(_.clone(params), {
+            limit: this.state.perPage,
+            offset: this.state.perPage * (this.state.page - 1),
         });
     }
 
     /**
-     * Updates list when page changes
-     * @param {Number} page
-     * @returns void
+     * Returns link to the query instance, which execution result we want to display
+     * in the list.
+     * @abstract
      * @access protected
      */
-    onPageChange(page) {
-        if (page !== this.state.page) {
-            this.setQueryPage(page);
-            this.setState({
-                page,
-            });
-            this.loadData();
-        }
-    }
-
-    checkUrl() {
-        const urlNow = FlowRouter.current().path;
-        const urlBefore = this.url;
-        if (urlNow !== urlBefore) {
-            this.url = urlNow;
-            this.reLoadData();
-        }
-    }
-
-    /**
-     * An alias for reLoadData(), you can pass this to nested components
-     */
-    onListUpdate() {
-        this.reLoadData();
-    }
-
-    /**
-     * Returns link to the inner list component class
-     * @returns {ListInner}
-     * @access protected
-     */
-    getListItemConstructor()
+    getEntity()
     {
-        return Row;
+        if (this.props.entity !== null)
+        {
+            return this.props.entity;
+        }
+
+        throw new Meteor.Error('Entity not set');
     }
 
     getMap()
@@ -149,33 +254,123 @@ export default class List extends BaseComponent
         return this._cache.map;
     }
 
-    // getMapIndex()
-    // {
-    //     this.getMap();
-    //
-    //     return this._cache.mapIndex;
-    // }
+    loadData() {
+        const qParams = this._cache.queryParams;
+        if (!qParams)
+        {
+            throw new Meteor.Error('Calling loadData() while query params are not ready');
+        }
+        const p = this.getEntity().find(this.mixPageParameters(qParams));
 
-    // getAttributeCodes()
-    // {
-    //     return Object.keys(this.getMapIndex());
-    // }
+        App.getInstance().wait(p);
+
+        p.then((res) => {
+            this.setItems(res);
+        }, (err) => {
+            this.showConsoleError('Unable to get items (maybe forgot to expose?)', err);
+        });
+    }
+
+    transformModel(item)
+    {
+        return item;
+    }
+
+    setItems(items) {
+        this.setState({
+            items: items.map(this.transformModel),
+            dataReady: true,
+        });
+    }
 
     /**
-     * Returns link to the query instance, which execution result we want to display
-     * in the list.
-     * @abstract
+     * Loads record count by executing the given query
+     * @returns void
      * @access protected
      */
-    getEntity()
+    loadCount()
     {
-        if (this.props.entity !== null)
+        const qParams = this._cache.queryParams;
+        if (!qParams)
         {
-            return this.props.entity;
+            throw new Meteor.Error('Calling loadCount() while query params are not ready');
         }
 
-        throw new Meteor.Error('Entity not set');
+        this.getEntity().getCount(qParams.filter || {}).then((res) => {
+            this.setCount(res);
+            this.setTitle(this.getTitle());
+        });
     }
+
+    setCount(count)
+    {
+        this.setState({
+            total: parseInt(count),
+            countReady: true,
+        });
+    }
+
+    /**
+     * Retrives count from the state
+     * @returns {number}
+     * @access protected
+     */
+    getCount() {
+        return this.state.total;
+    }
+
+    // pagination
+
+    /**
+     * Updates list when page changes
+     * @param {Number} page
+     * @returns void
+     * @access protected
+     */
+    onPageChange(page) {
+        if (page !== this.state.page) {
+            this.setQueryPage(page); // update page in url
+            this.setState({
+                page,
+            }, () => {
+                this.loadData();
+            });
+        }
+    }
+
+    /**
+     * Returns the page size for the page navigator
+     * @returns {number}
+     * @access protected
+     */
+    getPageSize() {
+        return 10;
+    }
+
+    getPage()
+    {
+        return this.state.page;
+    }
+
+    /**
+     * Returns page number specified in the URL
+     * @returns {Number}
+     * @access protected
+     */
+    getQueryPage() {
+        return parseInt(FlowRouter.getQueryParam('page') || 1, 10);
+    }
+
+    /**
+     * Sets page number back to the URL
+     * @param {Number} page
+     * @access protected
+     */
+    setQueryPage(page) {
+        FlowRouter.setQueryParams({page});
+    }
+
+    // presentation
 
     /**
      * Returns title prefix, if any
@@ -195,80 +390,6 @@ export default class List extends BaseComponent
     getLabels()
     {
         return ['#COUNT# item', '#COUNT# items', 'no items'];
-    }
-
-    /**
-     * Returns page number specified in the URL
-     * @returns {Number}
-     * @access protected
-     */
-    getQueryPage()
-    {
-        return parseInt(FlowRouter.getQueryParam('page') || 1, 10);
-    }
-
-    /**
-     * Sets page number back to the URL
-     * @param {Number} page
-     * @access protected
-     */
-    setQueryPage(page)
-    {
-        FlowRouter.setQueryParams({page});
-    }
-
-    getPage()
-    {
-        return this.state.page;
-    }
-
-    /**
-     * Loads record count by executing the given query
-     * @returns void
-     * @access protected
-     */
-    loadCount()
-    {
-        this.getEntity().getCount().then((res) => {
-            this.setState({
-                count: parseInt(res),
-                countReady: true,
-            });
-            this.setTitle(this.getTitle());
-        });
-    }
-
-    /**
-     * Retrives count from the state
-     * @returns {number}
-     * @access protected
-     */
-    getCount() {
-        return this.state.count;
-    }
-
-    /**
-     * Returns the page size for the page navigator
-     * @returns {number}
-     * @access protected
-     */
-    getPageSize()
-    {
-        return 10;
-    }
-
-    /**
-     * Returns page navigation parameters for the query
-     * @returns {{limit: (number|*), skip: number}}
-     * @access protected
-     */
-    getQueryParameters()
-    {
-        return {
-            select: '*',
-            limit: this.state.perPage,
-            offset: this.state.perPage * (this.state.page - 1),
-        };
     }
 
     getTitle()
@@ -299,11 +420,32 @@ export default class List extends BaseComponent
      * @returns {boolean}
      * @access protected
      */
-    isReady()
-    {
-        return this.state.dataReady && this.state.countReady;
+    isReady() {
+        return (
+            this._cache.queryParams // async qparams ready
+            &&
+            this.state.countReady // we loaded count
+            &&
+            this.state.dataReady // we loaded items
+        );
     }
 
+    /**
+     * Returns link to the inner list component class
+     * @returns {ListInner}
+     * @access protected
+     */
+    getListItemConstructor()
+    {
+        return Row;
+    }
+
+    /**
+     * Renders list title
+     * @param prefix
+     * @returns {XML}
+     * @access protected
+     */
     renderHeader()
     {
         return (
@@ -324,32 +466,6 @@ export default class List extends BaseComponent
                 </Table.Row>
             </Table.Header>
         );
-
-        return (
-            <thead>
-                <tr>
-
-                </tr>
-            </thead>
-        );
-    }
-
-    renderList()
-    {
-        return (
-            <Table.Body>
-                {
-                    this.state.data.map(item => (
-                        this.renderListItem({
-                            key: item.getId(),
-                            data: item,
-                            onListUpdate: this.props.onListUpdate,
-                            map: this.map,
-                        })
-                    ))
-                }
-            </Table.Body>
-        );
     }
 
     renderListItem(parameters = {})
@@ -365,16 +481,34 @@ export default class List extends BaseComponent
         );
     }
 
+    renderItems()
+    {
+        return (
+            <Table.Body>
+                {
+                    this.state.items.map(item => (
+                        this.renderListItem({
+                            key: item.getId(),
+                            data: item,
+                            onListUpdate: this.props.onListUpdate,
+                            map: this.map,
+                        })
+                    ))
+                }
+            </Table.Body>
+        );
+    }
+
     /**
      * Renders page navigator
      * @returns {XML|null}
      * @access protected
      */
-    renderPageNav()
-    {
-        if (this.getCount() <= this.state.perPage) {
+    renderPageNav() {
+        if (!this.isReady() || (this.getCount() <= this.state.perPage)) {
             return null;
         }
+
         return (
             <PageNavigation
                 page={this.getPage()}
@@ -390,8 +524,8 @@ export default class List extends BaseComponent
      * @returns {XML}
      * @access protected
      */
-    render()
-    {
+    render() {
+
         if (!this.isReady())
         {
             return null;
@@ -403,7 +537,7 @@ export default class List extends BaseComponent
         return (
             <Table compact celled definition>
                 {this.renderHeader()}
-                {this.renderList()}
+                {this.renderItems()}
 
                 <Table.Footer fullWidth>
                     <Table.Row>

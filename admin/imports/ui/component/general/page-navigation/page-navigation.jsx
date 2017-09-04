@@ -12,6 +12,7 @@ export default class PageNavigation extends BaseComponent
         pageSize: PropTypes.number.isRequired,
         count: PropTypes.number.isRequired,
         onPageSelect: PropTypes.func.isRequired,
+        isSmall: PropTypes.bool,
     };
 
     static defaultProps = {
@@ -19,6 +20,7 @@ export default class PageNavigation extends BaseComponent
         pageSize: 10,
         count: 0,
         onPageSelect: null,
+        isSmall: false,
     };
 
     constructor(props)
@@ -120,7 +122,12 @@ export default class PageNavigation extends BaseComponent
 
     render() {
         return (
-            <Menu floated='right' size='mini' pagination>
+            <Menu
+                floated='right'
+                size='mini'
+                pagination
+                className={this.props.isSmall ? 'pagenav_small' : ''}
+            >
                 <Menu.Item
                     // href="?page=1"
                     icon

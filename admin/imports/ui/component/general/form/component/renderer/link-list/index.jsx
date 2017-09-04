@@ -12,6 +12,7 @@ import entityMap from '../../../../../../../startup/client/entity-map.js';
 import Form from '../../../../form/form.jsx';
 import Util from '../../../../../../../lib/util.js';
 import ModalConfirm from '../../../../modal-confirm/index.jsx';
+import PageNavigation from '../../../../page-navigation/page-navigation.jsx';
 
 import { Button, List, Modal } from 'semantic-ui-react';
 
@@ -21,6 +22,15 @@ import {RendererClass} from '../link/index.jsx';
 
 class RendererLinkList extends RendererClass
 {
+    constructor(props)
+    {
+        super(props);
+        this.extendState({
+            page: 1,
+            count: 0,
+        });
+    }
+
     async loadData()
     {
         const ids2Get = _.difference(this.getValue(), this.getCachedIds());
@@ -37,9 +47,27 @@ class RendererLinkList extends RendererClass
             data.forEach((item) => {
                 this.saveToCache(item);
             });
+            this.setState({
+                count: this.getValue().length,
+            });
         }
 
         return true;
+    }
+
+    getPage()
+    {
+        return this.state.page || 1;
+    }
+
+    getCount()
+    {
+        return this.state.count || 0;
+    }
+
+    getPageSize()
+    {
+        return 5;
     }
 
     getCachedIds()
@@ -71,6 +99,16 @@ class RendererLinkList extends RendererClass
         const a = this.getAttribute();
 
         return this.isDisabled() || a.getMaxCount() <= this.getValue().length;
+    }
+
+    getRange()
+    {
+        const start = this.getPageSize() * (this.getPage() - 1);
+        const end = start + this.getPageSize();
+
+        return [
+            start, end,
+        ];
     }
 
     onItemDeleteClick(id)
@@ -129,6 +167,13 @@ class RendererLinkList extends RendererClass
         });
     }
 
+    onPageChange(page)
+    {
+        this.setState({
+            page,
+        });
+    }
+
     renderAddButton()
     {
         return (
@@ -140,6 +185,24 @@ class RendererLinkList extends RendererClass
             >
                 New item
             </Button>
+        );
+    }
+
+    renderPageNav()
+    {
+        if (this.getCount() <= this.getPageSize())
+        {
+            return null;
+        }
+
+        return (
+            <PageNavigation
+                page={this.getPage()}
+                pageSize={this.getPageSize()}
+                count={this.getCount()}
+                onPageSelect={this.onPageChange.bind(this)}
+                isSmall
+            />
         );
     }
 
@@ -155,6 +218,79 @@ class RendererLinkList extends RendererClass
                 Delete
             </Button>
         );
+    }
+
+    renderVisibleItems()
+    {
+        const entity = this.getEntity();
+
+        const range = this.getRange();
+        return this.getValue().map((id, index) => {
+            const data = this.getCached(id);
+            if (!data)
+            {
+                return null;
+            }
+
+            if (index < range[0] || index > range[1])
+            {
+                return null;
+            }
+
+            return (
+                <List.Item key={id}>
+                    <List.Content floated='right'>
+                        {this.renderDeleteButton(data._id)}
+                    </List.Content>
+                    <List.Content>
+                        <a
+                            href={entityMap.makeDetailPath(entity, data._id)}
+                            target="_blank"
+                            className=""
+                            onClick={Util.passCtx(this.onItemClick, [data._id])}
+                        >
+                            {data.label ? data.label.toString() : data._id}
+                        </a>
+                        <div className="link-list__id">
+                            {id}
+                        </div>
+                        <input
+                            type="hidden"
+                            name={this.makeChildName()}
+                            onChange={this.getOnChange(null, index)}
+                            value={id}
+                        />
+                    </List.Content>
+                </List.Item>
+            );
+        });
+    }
+
+    renderInvisibleItems()
+    {
+        const range = this.getRange();
+        return this.getValue().map((id, index) => {
+            const data = this.getCached(id);
+            if (!data)
+            {
+                return null;
+            }
+
+            if (index < range[0] || index > range[1])
+            {
+                return (
+                    <input
+                        key={id}
+                        type="hidden"
+                        name={this.makeChildName()}
+                        onChange={this.getOnChange(null, index)}
+                        value={id}
+                    />
+                );
+            }
+
+            return null;
+        });
     }
 
     render()
@@ -173,54 +309,20 @@ class RendererLinkList extends RendererClass
             return null;
         }
 
-        const entity = this.getEntity();
-
         return (
             <Container
                 errorProps={this.props}
                 {...filterDOMProps(this.props)}
             >
                 <List divided verticalAlign='middle' className="margin-t no-margin-b">
-                    {
-                        this.getValue().map((id, index) => {
-                            const data = this.getCached(id);
-                            if (!data)
-                            {
-                                return null;
-                            }
-
-                            return (
-                                <List.Item key={id}>
-                                    <List.Content floated='right'>
-                                        {this.renderDeleteButton(data._id)}
-                                    </List.Content>
-                                    <List.Content>
-                                        <a
-                                            href={entityMap.makeDetailPath(entity, data._id)}
-                                            target="_blank"
-                                            className=""
-                                            onClick={Util.passCtx(this.onItemClick, [data._id])}
-                                        >
-                                            {data.label ? data.label.toString() : data._id}
-                                        </a>
-                                        <div className="link-list__id">
-                                            {id}
-                                        </div>
-                                        <input
-                                            type="hidden"
-                                            name={this.makeChildName()}
-                                            onChange={this.getOnChange(null, index)}
-                                            value={this.getValue()}
-                                        />
-                                    </List.Content>
-                                </List.Item>
-                            );
-                        })
-                    }
+                    {this.renderVisibleItems()}
                 </List>
+
+                {this.renderInvisibleItems()}
 
                 <div className="margin-t">
                     {this.renderAddButton()}
+                    {this.renderPageNav()}
                 </div>
 
                 <Modal

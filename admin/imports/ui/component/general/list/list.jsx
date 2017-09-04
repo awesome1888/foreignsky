@@ -220,8 +220,8 @@ export default class ListGeneric extends BaseComponent {
     mixPageParameters(params)
     {
         return Object.assign(_.clone(params), {
-            limit: this.state.perPage,
-            offset: this.state.perPage * (this.state.page - 1),
+            limit: this.getPageSize(),
+            offset: this.getPageSize() * (this.getPage() - 1),
         });
     }
 

@@ -1,6 +1,8 @@
 import {Meteor} from 'meteor/meteor';
 import React from 'react';
 
+import { Form } from 'semantic-ui-react';
+
 import './style.less';
 
 export default class UI extends React.Component {
@@ -23,13 +25,22 @@ export default class UI extends React.Component {
 
     componentWillMount() {
         Meteor.call('shell.registration.list', (err, res) => {
-            let jobs = [];
+            let jobs = {};
             if (!err && _.isObjectNotEmpty(res.jobs)) {
                 jobs = res.jobs;
             }
 
+            const items = [];
+            _.forEach(jobs, (item, code) => {
+                items.push({
+                    key: code,
+                    value: code,
+                    text: item.name,
+                });
+            });
+            
             this.setState({
-                jobs,
+                jobs: items,
                 ready: true,
             });
         });
@@ -57,41 +68,28 @@ export default class UI extends React.Component {
         });
     }
 
+    onSumbit()
+    {
+        console.dir(this._select);
+        
+        const code = this._select.value;
+        console.dir(code);
+    }
+
     renderButtons() {
         return (
-            <div className="row group_vertical_inline">
-                <div className="col-sm-1">
-                    <div className="padding-top_half text_size_minor">
-                        Run job:
-                    </div>
-                </div>
-                <div className="col-sm-11">
-                    <div className="group_inline group_vertical_inline">
-                        <select
-                            ref={(c) => { this.shellName = c; }}
-                            key="optionsShell"
-                        >
-                            {
-                            _.map(this.state.jobs, (item, code) => (
-                                <option
-                                    value={code}
-                                    key={`button_${code}`}
-                                >
-                                    {_.isStringNotEmpty(item.name) ? item.name : code}
-                                </option>
-                            ))
-                            }
-                        </select>
-                        <button
-                            className="button button_blue"
-                            onClick={this.execute.bind(this)}
-                            key="button"
-                        >
-                            Run
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <Form
+                onSubmit={this.onSumbit.bind(this)}
+            >
+                <Form.Group widths='equal'>
+                    <Form.Select
+                        options={this.state.jobs}
+                        placeholder='Choose the task'
+                        ref={ ref => {this._select = ref; } }
+                    />
+                    <Form.Button>Execute</Form.Button>
+                </Form.Group>
+            </Form>
         );
     }
 
@@ -106,44 +104,35 @@ export default class UI extends React.Component {
 
         return (
             <div className={this.props.className}>
-                <div className="group_vertical">
-                    <div className="data-block-stack">
+                <div className="group_x">
+                    {this.renderButtons()}
 
-                        <div className="data-block">
-                            <div className="data-block__content data-block__content_adaptive padding-top-bottom">
-                                {this.renderButtons()}
-                            </div>
-                        </div>
-
-                        <div className="data-block">
-                            <div className="data-block__content data-block__content_adaptive output-panel">
-                                {
-                                    this.state.loading
-                                    &&
-                                    <div>
-                                        Executing...
-                                    </div>
-                                }
-                                {
-                                    !this.state.loading
-                                    &&
-                                    this.state.data
-                                }
-                            </div>
-                        </div>
-
+                    <div className="shell-ui__output">
                         {
-                            this.state.executed
+                            this.state.loading
                             &&
-                            <div className="data-block">
-                                <div
-                                    className="data-block__content data-block__content_adaptive padding-top-bottom_half text_size_small text_color_gray"
-                                >
-                                    Execution time: {this.state.time} seconds
-                                </div>
+                            <div>
+                                Executing...
                             </div>
                         }
+                        {
+                            !this.state.loading
+                            &&
+                            this.state.data
+                        }
                     </div>
+
+                    {
+                        this.state.executed
+                        &&
+                        <div className="data-block">
+                            <div
+                                className="data-block__content data-block__content_adaptive padding-top-bottom_half text_size_small text_color_gray"
+                            >
+                                Execution time: {this.state.time} seconds
+                            </div>
+                        </div>
+                    }
 
                     {
                         _.isObjectNotEmpty(this.state.durations)

@@ -71,6 +71,12 @@
 	._flex-align-items_center();
 }
 
+._content_v_center_h_left() {
+	._flex();
+	._flex-justify-content_start();
+	._flex-align-items_center();
+}
+
 ._content_v_center_h_center() {
 	._flex();
 	._flex-justify-content_center();
@@ -117,6 +123,10 @@
 ._size(@w: auto, @h: @w) {
 	width: @w;
 	height: @h;
+}
+._width_btw_x(@start: 1, @end: @start) {
+	min-width: @start * @offset;
+	max-width: @end * @offset;
 }
 
 // padding
@@ -209,8 +219,8 @@
 	//}
 }
 
-._group_x(@mp: 1){
-	#make_group(@mp);
+._group_x(@mp: 1, @mp-v: 1){
+	#make_group(@mp, @mp-v);
 }
 
 // primitives

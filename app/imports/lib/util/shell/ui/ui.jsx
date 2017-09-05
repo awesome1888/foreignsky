@@ -1,17 +1,19 @@
 import {Meteor} from 'meteor/meteor';
 import React from 'react';
 
-import { Form } from 'semantic-ui-react';
+import BaseComponent from '../../../base/component/component.jsx';
+import { Button } from 'semantic-ui-react';
 
 import './style.less';
 
-export default class UI extends React.Component {
-
+export default class UI extends BaseComponent
+{
     static defaultProps = {
         className: '',
     };
 
-    constructor(params) {
+    constructor(params)
+    {
         super(params);
         this.state = {
             loading: false,
@@ -23,7 +25,13 @@ export default class UI extends React.Component {
         };
     }
 
-    componentWillMount() {
+    componentWillMount()
+    {
+        this.loadJobs();
+    }
+
+    loadJobs()
+    {
         Meteor.call('shell.registration.list', (err, res) => {
             let jobs = {};
             if (!err && _.isObjectNotEmpty(res.jobs)) {
@@ -34,11 +42,10 @@ export default class UI extends React.Component {
             _.forEach(jobs, (item, code) => {
                 items.push({
                     key: code,
-                    value: code,
-                    text: item.name,
+                    value: item.name,
                 });
             });
-            
+
             this.setState({
                 jobs: items,
                 ready: true,
@@ -46,50 +53,95 @@ export default class UI extends React.Component {
         });
     }
 
-    execute() {
-        const jobId = this.shellName.value;
+    getJobs()
+    {
+        return this.state.jobs;
+    }
 
+    run(code) {
         if (this.state.loading) {
             return;
         }
 
         this.setState({loading: true});
-        Meteor.call('shell.execute', jobId, (err, res) => {
-            if (!err) {
-                this.setState({
-                    loading: false,
-                    executed: true,
-                    time: res.duration || 0,
-                    data: res.data,
-                    durations: res.durations || {},
-                    times: res.times || {},
-                });
-            }
+        this.execute('shell.execute', [code]).then((res) => {
+            console.dir(res);
+            this.setState({
+                loading: false,
+                executed: true,
+                time: res.duration || 0,
+                data: res.data,
+                durations: res.durations || {},
+                times: res.times || {},
+            });
         });
     }
 
     onSumbit()
     {
-        console.dir(this._select);
-        
         const code = this._select.value;
-        console.dir(code);
+        if (code)
+        {
+            this.run(code);
+        }
     }
 
     renderButtons() {
+
         return (
-            <Form
-                onSubmit={this.onSumbit.bind(this)}
-            >
-                <Form.Group widths='equal'>
-                    <Form.Select
-                        options={this.state.jobs}
-                        placeholder='Choose the task'
-                        ref={ ref => {this._select = ref; } }
-                    />
-                    <Form.Button>Execute</Form.Button>
-                </Form.Group>
-            </Form>
+            <div className="shell-ui__panel">
+                <select
+                    className="shell-ui__selectbox"
+                    ref={ ref => {this._select = ref; } }
+                >
+                    {
+                        this.getJobs().map((job) => {
+                            return (
+                                <option
+                                    value={job.key}
+                                    key={job.key}
+                                >
+                                    {job.value}
+                                </option>
+                            );
+                        })
+                    }
+                </select>
+                <Button
+                    color="green"
+                    onClick={this.onSumbit.bind(this)}
+                >
+                    Execute
+                </Button>
+            </div>
+        );
+    }
+
+    renderStatistics()
+    {
+        return (
+            <div className="shell-ui__statistics">
+                <div className="">
+                    <span className="shell-ui__statistics-header">Execution time:</span>
+                    <div className="">
+                        {this.state.time} seconds
+                    </div>
+                </div>
+                {
+                    _.isObjectNotEmpty(this.state.durations)
+                    &&
+                    <div className="">
+                        Durations:
+                    </div>
+                }
+                {
+                    _.isObjectNotEmpty(this.state.times)
+                    &&
+                    <div className="">
+                        Times:
+                    </div>
+                }
+            </div>
         );
     }
 
@@ -125,55 +177,7 @@ export default class UI extends React.Component {
                     {
                         this.state.executed
                         &&
-                        <div className="data-block">
-                            <div
-                                className="data-block__content data-block__content_adaptive padding-top-bottom_half text_size_small text_color_gray"
-                            >
-                                Execution time: {this.state.time} seconds
-                            </div>
-                        </div>
-                    }
-
-                    {
-                        _.isObjectNotEmpty(this.state.durations)
-                        &&
-                        <div className="data-block">
-                            <div className="data-block__title text_size_minor">
-                                Durations
-                            </div>
-                            <div className="data-block__content data-block__content_adaptive">
-                                <div className="group_vertical">
-                                    {
-                                        _.map(this.state.durations, item => (
-                                            <div key={`duration-${item.label}-${item.total}`}>
-                                                {item.label} &mdash; {item.total} seconds
-                                            </div>
-                                        ))
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    }
-
-                    {
-                        _.isObjectNotEmpty(this.state.times)
-                        &&
-                        <div className="data-block">
-                            <div className="data-block__title text_size_minor">
-                                Call times
-                            </div>
-                            <div className="data-block__content data-block__content_adaptive">
-                                <div className="group_vertical">
-                                    {
-                                        _.map(this.state.times, item => (
-                                            <div key={`times-${item.label}-${item.count}`}>
-                                                {item.label} &mdash; {item.count} times called
-                                            </div>
-                                        ))
-                                    }
-                                </div>
-                            </div>
-                        </div>
+                        this.renderStatistics()
                     }
                 </div>
             </div>

@@ -1,3 +1,25 @@
-.output-panel {
-  white-space: pre-wrap;
+@import (reference) url('/client/style/index.less');
+
+.shell-ui__panel {
+	._content_v_center_h_left();
+	._group_x(1, 0);
+}
+
+.shell-ui__selectbox {
+	._padding_x(0.6);
+	._width_btw_x(10, 20);
+}
+
+.shell-ui__output {
+	._pre();
+}
+
+.shell-ui__statistics {
+	._group_x();
+	._border-t();
+	._padding-t_x();
+}
+
+.shell-ui__statistics-header {
+	._f-weight(600);
 }

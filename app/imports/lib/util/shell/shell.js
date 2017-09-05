@@ -83,10 +83,12 @@ const ShellClass = class Shell {
             Shell.startTime('MAIN');
             Shell.jobs[jobId].action.apply(Shell, [this]);
         } catch (e) {
-            Shell.getConsole().log('!====== ERROR OCCURED:');
-            Shell.getConsole().log(e.message);
             if (e instanceof Error) {
                 Shell.getConsole().dir(e.stack);
+            }
+            else
+            {
+                Shell.getConsole().log(e.message);
             }
         }
 

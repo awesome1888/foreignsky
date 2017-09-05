@@ -48,11 +48,18 @@ class RendererLinkList extends RendererClass
                 this.saveToCache(item);
             });
             this.setState({
-                count: this.getValue().length,
+                count: this.getValueActual().length,
             });
         }
 
         return true;
+    }
+
+    getValueActual()
+    {
+        return this.getValue().map((id) => {
+            return this.getCached(id);
+        }).filter(x => !!x);
     }
 
     getPage()
@@ -225,20 +232,14 @@ class RendererLinkList extends RendererClass
         const entity = this.getEntity();
 
         const range = this.getRange();
-        return this.getValue().map((id, index) => {
-            const data = this.getCached(id);
-            if (!data)
-            {
-                return null;
-            }
-
+        return this.getValueActual().map((data, index) => {
             if (index < range[0] || index > range[1])
             {
                 return null;
             }
 
             return (
-                <List.Item key={id}>
+                <List.Item key={data._id}>
                     <List.Content floated='right'>
                         {this.renderDeleteButton(data._id)}
                     </List.Content>
@@ -252,13 +253,13 @@ class RendererLinkList extends RendererClass
                             {data.label ? data.label.toString() : data._id}
                         </a>
                         <div className="link-list__id">
-                            {id}
+                            {data._id}
                         </div>
                         <input
                             type="hidden"
                             name={this.makeChildName()}
                             onChange={this.getOnChange(null, index)}
-                            value={id}
+                            value={data._id}
                         />
                     </List.Content>
                 </List.Item>
@@ -269,22 +270,16 @@ class RendererLinkList extends RendererClass
     renderInvisibleItems()
     {
         const range = this.getRange();
-        return this.getValue().map((id, index) => {
-            const data = this.getCached(id);
-            if (!data)
-            {
-                return null;
-            }
-
+        return this.getValueActual().map((data, index) => {
             if (index < range[0] || index > range[1])
             {
                 return (
                     <input
-                        key={id}
+                        key={data._id}
                         type="hidden"
                         name={this.makeChildName()}
                         onChange={this.getOnChange(null, index)}
-                        value={id}
+                        value={data._id}
                     />
                 );
             }

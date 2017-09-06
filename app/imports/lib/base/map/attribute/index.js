@@ -148,12 +148,11 @@ export default class Attribute
     }
 
     // special
-    isArrayOfStringDiscreet()
+    isStringDiscreet()
     {
         const a = this._data;
-        return  this.isArray()
-                && a.type[0] === String
-                && (_.isArray(a.allowedValues) || a.allowedValues instanceof Enum);
+        return (this.isArrayOfString() || this.isString())
+                && a.allowedValues instanceof Enum;
     }
 
     getData()

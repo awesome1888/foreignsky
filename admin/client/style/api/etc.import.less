@@ -19,11 +19,16 @@
 ._border-r(@color: @borderColor, @width: 1px) {
 	border-right: @width solid @color;
 }
+._no-border()
+{
+	._border(transparent, 0);
+}
+
 .border-t {
 	._border-t() !important;
 }
 
-._b-color(@color) {
+._b-color(@color: @color_white) {
 	background-color: @color;
 }
 
@@ -49,6 +54,14 @@
 
 ._no-select() {
 	user-select: none;
+}
+
+._no-outline() {
+	outline: none;
+}
+
+._no-appearance() {
+	-webkit-appearance: none;
 }
 
 ._scroll-v(@height: 70vh) {

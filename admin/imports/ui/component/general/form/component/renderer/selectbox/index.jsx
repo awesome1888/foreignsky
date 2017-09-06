@@ -9,46 +9,70 @@ import filterDOMProps from 'uniforms/filterDOMProps';
 import RendererGeneric from '../generic/index.jsx';
 import Container from '../container/index.jsx';
 
-class RendererSelectbox extends RendererGeneric
-{
-    renderInput()
-    {
-        const onChange = this.props.onChange;
+import './style.less';
 
-        return (
-            <input
-                checked={this.getValue()}
-                disabled={this.getDisabled()}
-                name={this.getName()}
-                onChange={() => this.getDisabled() || onChange(!this.getValue())}
-                type="checkbox"
-            />
-        );
+class RendererSelectBox extends RendererGeneric
+{
+    getEnum()
+    {
+        return this.getAttribute().getAllowedValues();
+    }
+
+    isMultiple()
+    {
+        return this.getAttribute().isArray();
+    }
+
+    getUnifiedValue()
+    {
+        const actualValue = this.getValue();
+
+        if (this.isMultiple() && _.isArrayNotEmpty(actualValue))
+        {
+            return actualValue.filter(x => !!x);
+        }
+        if (!this.isMultiple() && actualValue)
+        {
+            return [actualValue];
+        }
+
+        return [];
     }
 
     render()
     {
+        const value = this.getUnifiedValue();
+        
         return (
             <Container
                 errorProps={this.props}
                 {...filterDOMProps(this.props)}
             >
-                {
-                    this.hasLabel()
-                    &&
-                    <label>
-                        {this.renderInput()}
-                        {this.getLabel()}
-                    </label>
-                }
-                {
-                    !this.hasLabel()
-                    &&
-                    this.renderInput()
-                }
+                <div className="selectbox">
+                    <div className="selectbox__container">
+                        <div className="selectbox__container-inner">
+                            {
+                                value.map((item) => {
+                                    return (
+                                        <div className="selectbox__item_selected" key={item}>
+                                            {this.getEnum().getValue(item)}
+                                            <input
+                                                value={item}
+                                                name={this.getName()}
+                                                type="hidden"
+                                            />
+                                        </div>
+                                    );
+                                })
+                            }
+                            <input type="text" className="selectbox__input" />
+                        </div>
+                    </div>
+                </div>
+
             </Container>
         );
     }
 }
 
-export default connectField(RendererSelectbox, {});
+export default connectField(RendererSelectBox, {});

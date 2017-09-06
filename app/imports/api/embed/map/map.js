@@ -1,4 +1,5 @@
 import Map from '../../../lib/base/map/index.js';
+import Enum from '../../../lib/base/enum/index.js';
 
 const M = (superclass) => class extends superclass
 {
@@ -9,6 +10,24 @@ const M = (superclass) => class extends superclass
         const fileLinked = this.$('file');
 
         this.setDefinition(definition || [
+            {
+                code: 'oneShit',
+                type: String,
+                allowedValues: new Enum([
+                    {value: 'Gallery', key: 'GALLERY'},
+                    {value: 'Image', key: 'IMAGE'},
+                ]),
+                optional: false,
+            },
+            {
+                code: 'anotherShit',
+                type: [String],
+                allowedValues: new Enum([
+                    {value: 'Gallery', key: 'GALLERY'},
+                    {value: 'Image', key: 'IMAGE'},
+                ]),
+                optional: false,
+            },
             {
                 code: 'item',
                 type: [
@@ -45,6 +64,10 @@ const M = (superclass) => class extends superclass
             {
                 code: 'renderer',
                 type: String,
+                // allowedValues: new Enum([
+                //     {value: 'Gallery', key: 'GALLERY'},
+                //     {value: 'Image', key: 'IMAGE'},
+                // ]),
                 optional: false,
             },
             {

@@ -1,0 +1,48 @@
+@import (reference) url('/client/style/index.less');
+
+.selectbox {
+
+}
+
+.selectbox__container {
+	._border-rad();
+	._border();
+	._transition();
+	._no-margin();
+	._no-outline();
+	._no-appearance();
+	._b-color();
+
+	._padding_x(0.4);
+
+	//tap-highlight-color: rgba(255, 255, 255, 0);
+	//line-height: 1.2142em;
+	//padding: 0.73905385em 1.07692308em;
+	//font-size: 1em;
+	//color: rgba(0, 0, 0, 0.87);
+	//box-shadow: 0em 0em 0em 0em transparent inset;
+}
+
+.selectbox__container-inner {
+	._group_x(0.4) !important;
+	._content_v_center_h_left();
+}
+
+.selectbox__input {
+	// fighting with semantic ui nesting, setting !important everywhere
+	// ._no-margin() !important;
+	._padding_x(0.5, 0.5, 0.5, 0) !important;
+	._no-border() !important;
+}
+
+.selectbox__dropdown {
+
+}
+
+.selectbox__item_selected {
+	._padding-tb-lr_x(0.4, 1);
+	._border-rad();
+	background-color: @blue;
+	color: @color_white;
+	._f-size_x(1.2);
+}

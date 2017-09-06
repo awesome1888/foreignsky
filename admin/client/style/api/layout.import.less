@@ -130,8 +130,11 @@
 }
 
 // padding
-._padding_x(@mp: 1) {
-	padding: @mp * @offset;
+._padding_x(@mp-t: 1, @mp-r: @mp-t, @mp-b: @mp-t, @mp-l: @mp-t) {
+	padding-top: @mp-t * @offset;
+	padding-right: @mp-r * @offset;
+	padding-bottom: @mp-b * @offset;
+	padding-left: @mp-l * @offset;
 }
 ._padding-r_x(@mp: 1) {
 	padding-right: @mp * @offset;
@@ -152,6 +155,10 @@
 ._padding-tb_x(@mp: 1) {
 	padding-top: @mp * @offset;
 	padding-bottom: @mp * @offset;
+}
+._padding-tb-lr_x(@mp: 1, @mp-lr: @mp) {
+	._padding-tb_x(@mp);
+	._padding-lr_x(@mp-lr);
 }
 ._no-padding() {
 	padding: 0;
@@ -219,7 +226,7 @@
 	//}
 }
 
-._group_x(@mp: 1, @mp-v: 1){
+._group_x(@mp: 1, @mp-v: @mp){
 	#make_group(@mp, @mp-v);
 }
 

@@ -9,6 +9,9 @@ import './style.less';
 
 export default class LoadIndicator extends React.Component {
 
+    timer = null;
+    pool = [];
+
     constructor(props)
     {
         super(props);
@@ -16,9 +19,8 @@ export default class LoadIndicator extends React.Component {
         this.state = {
             percent: 0,
         };
-        this.timer = null;
 
-        this.lockPool = Util.debounce(this.lockPool);
+        this.lockPool = Util.debounce(this.lockPool.bind(this));
     }
 
     componentDidMount()
@@ -51,6 +53,7 @@ export default class LoadIndicator extends React.Component {
             this.active = false;
             this.setPercent(100);
             this.locked = false;
+            this.pool = [];
         });
     }
 

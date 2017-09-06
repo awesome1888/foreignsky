@@ -17,7 +17,7 @@ export default class LoadIndicator extends React.Component {
 		};
 		this.timer = null;
 
-		this.lockPool = Util.debounce(this.lockPool);
+		this.lockPool = Util.debounce(this.lockPool.bind(this));
 	}
 
 	componentDidMount()
@@ -45,12 +45,15 @@ export default class LoadIndicator extends React.Component {
 	lockPool()
 	{
 		this.locked = true;
-		Promise.all(this.pool).then(() => {
+
+        Promise.all(this.pool).then(() => {
 			Meteor.clearTimeout(this.timer);
 			this.active = false;
 			this.setPercent(100);
 			this.locked = false;
-		});
+        }, (err) => {
+		    console.dir(err);
+        });
 	}
 
 	launch()

@@ -31,19 +31,18 @@ export default class Util
 		return p;
 	}
 
-	static debounce(fn, timeout = 100)
-	{
-		let timer = 0;
+    static debounce(fn, timeout = 100)
+    {
+        let timer = 0;
 
-		return function(...args)
-		{
-			clearTimeout(timer);
+        return (...args) => {
+            clearTimeout(timer);
 
-			timer = Meteor.setTimeout(() => {
-				fn.apply(this, args);
-			}, timeout || 100);
-		}
-	}
+            timer = Meteor.setTimeout(() => {
+                fn(args);
+            }, timeout || 100);
+        };
+    }
 
 	static noop()
 	{

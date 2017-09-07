@@ -13,6 +13,14 @@ import './style.less';
 
 class RendererSelectBox extends RendererGeneric
 {
+    constructor(props)
+    {
+        super(props);
+        this.extendState({
+            opened: false,
+        });
+    }
+
     getEnum()
     {
         return this.getAttribute().getAllowedValues();
@@ -37,6 +45,11 @@ class RendererSelectBox extends RendererGeneric
         }
 
         return [];
+    }
+
+    getItems(search = '')
+    {
+        return this.getEnum().selectize(search);
     }
 
     render()
@@ -68,24 +81,18 @@ class RendererSelectBox extends RendererGeneric
                             <input type="text" className="selectbox__input" />
                         </div>
                         <div className="selectbox__dropdown">
-                            <label className="selectbox__dropdown-item">
-                                <input type="checkbox" className="selectbox__dropdown-item-checkbox" />
-                                <div className="selectbox__dropdown-item-text">
-                                    Gallery
-                                </div>
-                            </label>
-                            <label className="selectbox__dropdown-item">
-                                <input type="checkbox" className="selectbox__dropdown-item-checkbox" />
-                                <div className="selectbox__dropdown-item-text">
-                                    Image
-                                </div>
-                            </label>
-                            <label className="selectbox__dropdown-item">
-                                <input type="checkbox" className="selectbox__dropdown-item-checkbox" />
-                                <div className="selectbox__dropdown-item-text">
-                                    Another shit
-                                </div>
-                            </label>
+                            {
+                                this.getItems().map((item) => {
+                                    return (
+                                        <label className="selectbox__dropdown-item" key={item.value+item.label}>
+                                            <input type="checkbox" className="selectbox__dropdown-item-checkbox" />
+                                            <div className="selectbox__dropdown-item-text">
+                                                {item.label}
+                                            </div>
+                                        </label>
+                                    );
+                                })
+                            }
                         </div>
                     </div>
                 </div>

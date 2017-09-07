@@ -55,9 +55,14 @@ export default class Enum
         }, []);
     }
 
-    selectize()
+    selectize(search = '')
     {
-        // todo
+        return this.map((item) => {
+            return {
+                value: item.key,
+                label: item.value,
+            };
+        });
     }
 
     makeMap(keyAs = null, valueAs = null)
@@ -69,5 +74,15 @@ export default class Enum
             result[item[keyAs]] = item[valueAs];
             return result;
         }, {});
+    }
+
+    map(cb)
+    {
+        if (_.isFunction(cb))
+        {
+            return this._items.map(cb);
+        }
+
+        return [];
     }
 }

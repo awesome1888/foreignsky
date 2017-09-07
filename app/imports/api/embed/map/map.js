@@ -25,6 +25,12 @@ const M = (superclass) => class extends superclass
                 allowedValues: new Enum([
                     {value: 'Gallery', key: 'GALLERY'},
                     {value: 'Image', key: 'IMAGE'},
+                    {value: 'Gallery1', key: 'GALLERY1'},
+                    {value: 'Image1', key: 'IMAGE1'},
+                    {value: 'Gallery2', key: 'GALLERY2'},
+                    {value: 'Image2', key: 'IMAGE2'},
+                    {value: 'Gallery3', key: 'GALLERY3'},
+                    {value: 'Image3', key: 'IMAGE3'},
                 ]),
                 optional: false,
             },

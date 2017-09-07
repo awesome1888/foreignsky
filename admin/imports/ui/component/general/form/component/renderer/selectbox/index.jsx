@@ -67,6 +67,26 @@ class RendererSelectBox extends RendererGeneric
                             }
                             <input type="text" className="selectbox__input" />
                         </div>
+                        <div className="selectbox__dropdown">
+                            <label className="selectbox__dropdown-item">
+                                <input type="checkbox" className="selectbox__dropdown-item-checkbox" />
+                                <div className="selectbox__dropdown-item-text">
+                                    Gallery
+                                </div>
+                            </label>
+                            <label className="selectbox__dropdown-item">
+                                <input type="checkbox" className="selectbox__dropdown-item-checkbox" />
+                                <div className="selectbox__dropdown-item-text">
+                                    Image
+                                </div>
+                            </label>
+                            <label className="selectbox__dropdown-item">
+                                <input type="checkbox" className="selectbox__dropdown-item-checkbox" />
+                                <div className="selectbox__dropdown-item-text">
+                                    Another shit
+                                </div>
+                            </label>
+                        </div>
                     </div>
                 </div>
 

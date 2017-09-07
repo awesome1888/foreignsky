@@ -12,7 +12,7 @@
 	._no-outline();
 	._no-appearance();
 	._b-color();
-
+	._relative();
 	._padding_x(0.4);
 
 	//tap-highlight-color: rgba(255, 255, 255, 0);
@@ -36,7 +36,32 @@
 }
 
 .selectbox__dropdown {
+	._absolute(100%, -1px, auto, -1px);
+	._border();
+	._everest();
+	._b-color(@color_white);
+}
 
+.selectbox__dropdown-item {
+	._block();
+	._padding_x(0.7);
+	._hand();
+	._transition();
+
+	&:hover {
+		._b-color(@color_grey);
+	}
+}
+
+.selectbox__dropdown-item-checkbox {
+	._absolute();
+	._block();
+	._size(17px);
+	._no-margin();
+}
+
+.selectbox__dropdown-item-text {
+	._padding-l_x(2);
 }
 
 .selectbox__item_selected {

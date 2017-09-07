@@ -10,15 +10,15 @@ const M = (superclass) => class extends superclass
         const fileLinked = this.$('file');
 
         this.setDefinition(definition || [
-            {
-                code: 'oneShit',
-                type: String,
-                allowedValues: new Enum([
-                    {value: 'Gallery', key: 'GALLERY'},
-                    {value: 'Image', key: 'IMAGE'},
-                ]),
-                optional: false,
-            },
+            // {
+            //     code: 'oneShit',
+            //     type: String,
+            //     allowedValues: new Enum([
+            //         {value: 'Gallery', key: 'GALLERY'},
+            //         {value: 'Image', key: 'IMAGE'},
+            //     ]),
+            //     optional: false,
+            // },
             {
                 code: 'anotherShit',
                 type: [String],

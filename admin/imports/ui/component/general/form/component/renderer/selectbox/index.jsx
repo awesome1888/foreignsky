@@ -97,10 +97,17 @@ class RendererSelectBox extends RendererGeneric
     {
         if (e.key === 'Backspace' && this._search.value === '')
         {
-            // remove last item
-            const newVal = _.clone(this.getValue());
-            newVal.pop();
-            this.onChange(newVal);
+            if (this.isMultiple())
+            {
+                // remove last item
+                const newVal = _.clone(this.getValue());
+                newVal.pop();
+                this.onChange(newVal);
+            }
+            else
+            {
+                this.onChange('');
+            }
         }
     }
 
@@ -194,9 +201,22 @@ class RendererSelectBox extends RendererGeneric
 
     onItemRemoveClick(item, e)
     {
-        this.onChange(_.difference(this.getValue(), [item]));
+        if (this.isMultiple())
+        {
+            this.onChange(_.difference(this.getValue(), [item]));
+        }
+        else
+        {
+            this.onChange('');
+        }
         // to prevent the conflict with .onContainerClick()
         e.stopPropagation();
+    }
+
+    onItemSelect(item)
+    {
+        this.onChange(item);
+        this.closeDropDown();
     }
 
     onItemToggleChange(item)
@@ -211,6 +231,38 @@ class RendererSelectBox extends RendererGeneric
         }
 
         this.focusSearch();
+    }
+
+    renderDropDownItem(item)
+    {
+        if (!this.isMultiple())
+        {
+            return (
+                <div
+                    className="selectbox__dropdown-item"
+                    key={item.value+item.label}
+                    onClick={this.onItemSelect.bind(this, item.value)}
+                >
+                    <div className="selectbox__dropdown-item-text">
+                        {item.label}
+                    </div>
+                </div>
+            );
+        }
+
+        return (
+            <label className="selectbox__dropdown-item" key={item.value+item.label}>
+                <input
+                    type="checkbox"
+                    className="selectbox__dropdown-item-checkbox"
+                    checked={this.isItemSelected(item.value)}
+                    onChange={this.onItemToggleChange.bind(this, item.value)}
+                />
+                <div className="selectbox__dropdown-item-text padding-l_x2">
+                    {item.label}
+                </div>
+            </label>
+        );
     }
 
     render()
@@ -277,19 +329,7 @@ class RendererSelectBox extends RendererGeneric
                                 >
                                     {
                                         this.state.items.map((item) => {
-                                            return (
-                                                <label className="selectbox__dropdown-item" key={item.value+item.label}>
-                                                    <input
-                                                        type="checkbox"
-                                                        className="selectbox__dropdown-item-checkbox"
-                                                        checked={this.isItemSelected(item.value)}
-                                                        onChange={this.onItemToggleChange.bind(this, item.value)}
-                                                    />
-                                                    <div className="selectbox__dropdown-item-text">
-                                                        {item.label}
-                                                    </div>
-                                                </label>
-                                            );
+                                            return (this.renderDropDownItem(item));
                                         })
                                     }
                                 </div>

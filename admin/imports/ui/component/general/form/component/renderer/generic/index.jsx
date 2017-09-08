@@ -58,6 +58,12 @@ export default class RendererGeneric extends BaseComponent
             return e => '';
         }
 
+        // for things like text inputs
         return e => this.props.onChange(e.target.value);
+    }
+
+    onChange(value)
+    {
+        this.getOnChange()(value);
     }
 }

@@ -57,7 +57,16 @@ export default class Enum
 
     selectize(search = '')
     {
-        return this.map((item) => {
+        let source = this._items;
+        if (_.isStringNotEmpty(search))
+        {
+            search = search.toLowerCase();
+            source = source.filter((item) => {
+                return item.key.toLowerCase().indexOf(search) >= 0 || item.value.toLowerCase().indexOf(search) >= 0;
+            });
+        }
+
+        return source.map((item) => {
             return {
                 value: item.key,
                 label: item.value,

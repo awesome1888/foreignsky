@@ -128,9 +128,19 @@
 	width: @w;
 	height: @h;
 }
-._width_btw_x(@start: 1, @end: @start) {
+._width_btw_x(@start: 1, @end: none) {
 	min-width: @start * @offset;
-	max-width: @end * @offset;
+
+	& when not(@end = none) {
+		max-width: @end * @offset;
+	}
+}
+._height_btw_x(@start: 1, @end: none) {
+	min-height: @start * @offset;
+
+	& when not(@end = none) {
+		max-height: @end * @offset;
+	}
 }
 
 // padding

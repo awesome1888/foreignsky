@@ -1,7 +1,6 @@
 @import (reference) url('/client/style/index.less');
 
 .selectbox {
-
 }
 
 .selectbox__container {
@@ -14,33 +13,45 @@
 	._b-color();
 	._relative();
 	._padding_x(0.4);
-
-	//tap-highlight-color: rgba(255, 255, 255, 0);
-	//line-height: 1.2142em;
-	//padding: 0.73905385em 1.07692308em;
-	//font-size: 1em;
-	//color: rgba(0, 0, 0, 0.87);
-	//box-shadow: 0em 0em 0em 0em transparent inset;
 }
 
 .selectbox__container-inner {
 	._group_x(0.4) !important;
-	._content_v_center_h_left();
+	._content_v_center_h_left(true);
 }
 
 .selectbox__input {
 	// fighting with semantic ui nesting, setting !important everywhere
-	// ._no-margin() !important;
 	._padding_x(0.5, 0.5, 0.5, 0) !important;
+	._margin-l_x();
 	._no-border() !important;
+	._width_btw_x(1, 10);
 }
 
-.selectbox__item_selected {
+.selectbox__item-selected {
 	._padding-tb-lr_x(0.4, 1);
 	._border-rad();
 	._b-color(@blue);
 	._f-color(@color_white);
 	._f-size_x(1.2);
+	._width_btw_x(3, 15);
+	._no-wrap();
+	._no-overflow(ellipsis);
+}
+
+.selectbox__item-selected_closeable {
+	._padding-r_x(2.5);
+	._relative();
+}
+
+.selectbox__item-selected-close {
+	._absolute(0, 0);
+	._padding_x(0.6);
+	._hand();
+}
+
+.selectbox__item-selected-close-icon {
+	._icon_clear();
 }
 
 .selectbox__dropdown {
@@ -48,7 +59,7 @@
 	._border();
 	._everest();
 	._b-color(@color_white);
-	._scroll-v_x(14);
+	._scroll-v_x(21);
 }
 
 .selectbox__dropdown-item {

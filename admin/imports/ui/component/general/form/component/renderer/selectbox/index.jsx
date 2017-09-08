@@ -96,13 +96,16 @@ class RendererSelectBox extends RendererGeneric
                             {
                                 value.map((item) => {
                                     return (
-                                        <div className="selectbox__item_selected" key={item}>
+                                        <div className="selectbox__item-selected selectbox__item-selected_closeable" key={item}>
                                             {this.getEnum().getValue(item)}
                                             <input
                                                 value={item}
                                                 name={this.getName()}
                                                 type="hidden"
                                             />
+                                            <div className="selectbox__item-selected-close">
+                                                <div className="selectbox__item-selected-close-icon" />
+                                            </div>
                                         </div>
                                     );
                                 })

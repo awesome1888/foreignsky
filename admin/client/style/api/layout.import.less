@@ -71,10 +71,14 @@
 	._flex-align-items_center();
 }
 
-._content_v_center_h_left() {
+._content_v_center_h_left(@stacking: false) {
 	._flex();
 	._flex-justify-content_start();
 	._flex-align-items_center();
+
+	& when (@stacking = true) {
+		._flex-wrap_wrap();
+	}
 }
 
 ._content_v_center_h_center() {

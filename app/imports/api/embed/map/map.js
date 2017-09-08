@@ -23,7 +23,7 @@ const M = (superclass) => class extends superclass
                 code: 'anotherShit',
                 type: [String],
                 allowedValues: new Enum([
-                    {value: 'Gallery', key: 'GALLERY'},
+                    {value: 'Gallery Gallery Gallery Gallery Gallery Gallery Gallery Gallery Gallery Gallery Gallery Gallery Gallery Gallery Gallery Gallery Gallery Gallery Gallery Gallery', key: 'GALLERY'},
                     {value: 'Image', key: 'IMAGE'},
                     {value: 'Gallery1', key: 'GALLERY1'},
                     {value: 'Image1', key: 'IMAGE1'},

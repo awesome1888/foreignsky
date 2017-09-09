@@ -36,7 +36,7 @@ export default class ListGeneric extends BaseComponent {
     };
 
     _scrolled = false;
-    _toDelete = {};
+    _selected = {};
     _deleteConfirm = null;
 
     constructor(params)
@@ -112,7 +112,7 @@ export default class ListGeneric extends BaseComponent {
      */
     reLoadData()
     {
-        this._toDelete = {};
+        this._selected = {};
         this.setState({
             countReady: false,
             dataReady: false,
@@ -131,18 +131,18 @@ export default class ListGeneric extends BaseComponent {
 
     onItemSelectorChange(way, item)
     {
-        this._toDelete[item.getId()] = way;
+        this._selected[item.getId()] = way;
     }
 
     onDeleteSelectedClick()
     {
-        if (!_.isObjectNotEmpty(this._toDelete))
+        if (!_.isObjectNotEmpty(this._selected))
         {
             return;
         }
 
         const toDelete = [];
-        _.forEach(this._toDelete, (state, id) => {
+        _.forEach(this._selected, (state, id) => {
             if (state)
             {
                 toDelete.push(id);

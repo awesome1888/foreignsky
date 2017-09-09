@@ -9,6 +9,7 @@ import BaseComponent from '../../../../lib/base/component/component.jsx';
 import Row from './component/row/index.jsx';
 import App from '../../../application.jsx';
 import EntityMap from '../../../../startup/client/entity-map.js';
+import ModalConfirm from '../modal-confirm/index.jsx';
 
 import { Button, Table } from 'semantic-ui-react';
 
@@ -35,6 +36,8 @@ export default class ListGeneric extends BaseComponent {
     };
 
     _scrolled = false;
+    _toDelete = {};
+    _deleteConfirm = null;
 
     constructor(params)
     {
@@ -54,6 +57,9 @@ export default class ListGeneric extends BaseComponent {
         this.url = null;
 
         this.transformModel = this.transformModel.bind(this);
+
+        this.onDeleteSelectedClick = this.onDeleteSelectedClick.bind(this);
+        this.onItemSelectorChange = this.onItemSelectorChange.bind(this);
     }
 
     // component init routines
@@ -106,6 +112,7 @@ export default class ListGeneric extends BaseComponent {
      */
     reLoadData()
     {
+        this._toDelete = {};
         this.setState({
             countReady: false,
             dataReady: false,
@@ -120,6 +127,46 @@ export default class ListGeneric extends BaseComponent {
     onListUpdate()
     {
         this.startDataReload();
+    }
+
+    onItemSelectorChange(way, item)
+    {
+        this._toDelete[item.getId()] = way;
+    }
+
+    onDeleteSelectedClick()
+    {
+        if (!_.isObjectNotEmpty(this._toDelete))
+        {
+            return;
+        }
+
+        const toDelete = [];
+        _.forEach(this._toDelete, (state, id) => {
+            if (state)
+            {
+                toDelete.push(id);
+            }
+        });
+
+        if (!_.isArrayNotEmpty(toDelete))
+        {
+            return;
+        }
+
+        this._deleteConfirm.ask(
+            `Do you want to remove selected items (${toDelete.length})? The items will be permanently lost.`,
+            'An important question'
+        ).then((answer) => {
+            if (answer)
+            {
+                this.getEntity().remove({
+                    _id: {$in: toDelete},
+                }).then(() => {
+                    this.startDataReload();
+                });
+            }
+        });
     }
 
     // loadFiltersFromURL() {
@@ -511,6 +558,7 @@ export default class ListGeneric extends BaseComponent {
                             data: item,
                             onListUpdate: this.props.onListUpdate,
                             map: this.map,
+                            onSelectorChange: this.onItemSelectorChange,
                         })
                     ))
                 }
@@ -556,21 +604,29 @@ export default class ListGeneric extends BaseComponent {
         const title = this.getEntity().getTitle();
 
         return (
-            <Table compact celled definition>
-                {this.renderHeader()}
-                {this.renderItems()}
+            <div>
+                <Table compact celled definition>
+                    {this.renderHeader()}
+                    {this.renderItems()}
 
-                <Table.Footer fullWidth>
-                    <Table.Row>
-                        <Table.HeaderCell />
-                        <Table.HeaderCell colSpan='4'>
-                            {this.renderPageNav()}
-                            <Button size='large' color='green' floated='right' href={url}>New {_.lCFirst(title)}</Button>
-                            <Button size='large' data-save-scroll>Delete</Button>
-                        </Table.HeaderCell>
-                    </Table.Row>
-                </Table.Footer>
-            </Table>
+                    <Table.Footer fullWidth>
+                        <Table.Row>
+                            <Table.HeaderCell />
+                            <Table.HeaderCell colSpan='4'>
+                                {this.renderPageNav()}
+                                <Button size='large' color='green' floated='right' href={url}>New {_.lCFirst(title)}</Button>
+                                <Button
+                                    size="large"
+                                    onClick={this.onDeleteSelectedClick}
+                                >
+                                    Delete
+                                </Button>
+                            </Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Footer>
+                </Table>
+                <ModalConfirm ref={ref => { this._deleteConfirm = ref; }} />
+            </div>
         );
     }
 }

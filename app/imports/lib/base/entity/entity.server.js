@@ -91,18 +91,11 @@ export default class BaseEntity extends Entity
 
     /**
      * todo: think about the result object...
-     * @param id
+     * @param filter
      */
-    static delete(id)
+    static remove(filter = {})
     {
-        if (!_.isStringNotEmpty(id))
-        {
-            return false;
-        }
-
-        return this.getCollection().remove({
-            _id: id,
-        });
+        return this.getCollection().remove(filter);
     }
 
     static getRawCollection()
@@ -110,12 +103,12 @@ export default class BaseEntity extends Entity
         return this.getCollection().rawCollection();
     }
 
-    save(data)
+    save(id, data)
     {
         throw new Error('Not implemened: save()');
     }
 
-    delete()
+    remove(filter = {})
     {
         throw new Error('Not implemened: delete()');
     }

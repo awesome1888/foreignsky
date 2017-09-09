@@ -30,8 +30,8 @@ export default class extends Method
             save: {
                 body: 'save',
             },
-            delete: {
-                body: 'delete',
+            remove: {
+                body: 'remove',
             },
         };
     }
@@ -70,9 +70,9 @@ export default class extends Method
         return this.getEntity().createQuery(parameters).fetch();
     }
 
-    getCount(parameters)
+    getCount(filter)
     {
-        const q = this.getEntity().createQuery(parameters);
+        const q = this.getEntity().createQuery(filter);
 
         // due to some fucking reason we dont have getCount() in Query
         // on server-side anymore 0_o
@@ -86,8 +86,8 @@ export default class extends Method
         return this.getEntity().save(id, data);
     }
 
-    delete(id)
+    remove(filter)
     {
-        return this.getEntity().delete(id);
+        return this.getEntity().remove(filter);
     }
 }

@@ -56,9 +56,9 @@ export default class BaseEntity extends Entity
         return [];
     }
 
-    static async getCount(condition = {})
+    static async getCount(filter = {})
     {
-        let count = parseInt(await this.executeMethod('getCount', [condition]));
+        let count = parseInt(await this.executeMethod('getCount', [filter]));
         if (isNaN(count))
         {
             return 0;
@@ -72,9 +72,14 @@ export default class BaseEntity extends Entity
         return await this.executeMethod('save', [id, data]);
     }
 
-    static async delete(id)
+    static async remove(filter = {})
     {
-        return await this.executeMethod('delete', [id]);
+        return await this.executeMethod('remove', [filter]);
+    }
+
+    static async removeById(id)
+    {
+        return await this.remove({_id: id});
     }
 
     static async executeMethod(name, args)
@@ -96,12 +101,12 @@ export default class BaseEntity extends Entity
         return `${this.getCollection().getNameNormalized()}.${name}`;
     }
 
-    async save(data)
+    async save(id, data)
     {
         throw new Error('Not implemened: save()');
     }
 
-    async delete()
+    async remove(filter = {})
     {
         throw new Error('Not implemened: delete()');
     }

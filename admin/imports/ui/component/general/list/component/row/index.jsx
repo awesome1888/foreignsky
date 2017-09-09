@@ -23,6 +23,7 @@ export default class Row extends BaseComponent
         map: PropTypes.object.isRequired,
         onListUpdate: PropTypes.func,
         detailPageUrl: PropTypes.string,
+        onSelectorChange: PropTypes.func,
     };
 
     static defaultProps = {
@@ -32,7 +33,23 @@ export default class Row extends BaseComponent
         map: [],
         onListUpdate: null,
         detailPageUrl: '',
+        onSelectorChange: null,
     };
+
+    constructor(props)
+    {
+        super(props);
+        this.onSelectorChange = this.onSelectorChange.bind(this);
+    }
+
+    onSelectorChange()
+    {
+        const checked = !this._checkbox.state.checked;
+        if (_.isFunction(this.props.onSelectorChange))
+        {
+            this.props.onSelectorChange(checked, this.props.data);
+        }
+    }
 
     resolveRenderer(attribute)
     {
@@ -90,7 +107,11 @@ export default class Row extends BaseComponent
         return (
             <Table.Row key={item.getId()}>
                 <Table.Cell collapsing key="checkbox">
-                    <Checkbox slider />
+                    <Checkbox
+                        slider
+                        onChange={this.onSelectorChange}
+                        ref={ ref => {this._checkbox = ref; }}
+                    />
                 </Table.Cell>
                 {
                     this.props.map.map((attribute) => {

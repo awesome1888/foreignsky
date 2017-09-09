@@ -1,8 +1,8 @@
 import React from 'react';
 import Header from '../../../ui/component/header/index.jsx';
-// import LoadOverlay from '../../../ui/component/load.overlay/index.jsx';
-// import LoadIndicator from '../../../ui/component/load.indicator/index.jsx';
-// import Util from '../../util.js';
+import LoadOverlay from '../../../ui/component/load-overlay/index.jsx';
+import LoadIndicator from '../../../ui/component/load-indicator/index.jsx';
+import Util from '../../util.js';
 import BaseComponent from '../component/component.jsx';
 import {DocHead} from 'meteor/kadira:dochead';
 import {FlowRouter} from 'meteor/kadira:flow-router';
@@ -86,6 +86,8 @@ export default class Application extends BaseComponent
         };
     }
 
+    _appContainer = null;
+
     constructor(props)
     {
         super(props);
@@ -101,6 +103,60 @@ export default class Application extends BaseComponent
         this.setPageTitle();
         this.setDescription();
         this.setKeywords();
+
+        this.onGlobalClick = this.onGlobalClick.bind(this);
+    }
+
+    getGlobalSelectorMap()
+    {
+        return [];
+    }
+
+    componentWillMount()
+    {
+        this.constructor._instance = this;
+    }
+
+    componentDidMount()
+    {
+        if(this.getOverlay())
+        {
+            this.getOverlay().waitAll();
+        }
+
+        // shit-fix
+        if (this.getIndicator())
+        {
+            const p = new Promise((resolve) => {resolve()});
+            this.getIndicator().waitOne(p);
+        }
+
+        /**
+         * Have to use native JS to avoid problems with FlowRouter when clicking on href-s.
+         * We use capturing to prevent being affected with cancelBubble.
+         */
+        if (this._appContainer && _.isArrayNotEmpty(this.getGlobalSelectorMap())) {
+            this._appContainer.addEventListener('click', this.onGlobalClick, true);
+        }
+    }
+
+    /**
+     * That will never happen, but anyway :)
+     */
+    componentWillUnMount() {
+        if (this._appContainer) {
+            this._appContainer.removeEventListener('click', this.onGlobalClick, true);
+        }
+    }
+
+    onGlobalClick(e) {
+        let node;
+        this.getGlobalSelectorMap().forEach((item) => {
+            node = Util.findClosestParent(e.target, item.selector);
+            if (node) {
+                item.callback(node);
+            }
+        });
     }
 
     extendState(extra)
@@ -215,26 +271,6 @@ export default class Application extends BaseComponent
         return 'Project name';
     }
 
-    componentWillMount()
-    {
-        this.constructor._instance = this;
-    }
-
-    componentDidMount()
-    {
-        if(this.getOverlay())
-        {
-            this.getOverlay().waitAll();
-        }
-
-        // shit-fix
-        if (this.getIndicator())
-        {
-            const p = new Promise((resolve) => {resolve()});
-            this.getIndicator().waitOne(p);
-        }
-    }
-
     showOverlay()
     {
         return true;
@@ -259,25 +295,26 @@ export default class Application extends BaseComponent
         const {main, routeProps} = this.props;
 
         return (
-            <div className="layout">
-                {/*{*/}
-                    {/*this.showOverlay()*/}
-                    {/*&&*/}
-                    {/*<LoadOverlay*/}
-                        {/*ref={(instance) => {this.setOverlay(instance)}}*/}
-                    {/*/>*/}
-                {/*}*/}
+            <div
+                className="layout"
+                ref={(ref) => { this._appContainer = ref; }}
+            >
+                {
+                    this.showOverlay()
+                    &&
+                    <LoadOverlay
+                        ref={(instance) => {this.setOverlay(instance)}}
+                    />
+                }
 
-                <div className="layout__central layout__header">
-                    <Header />
-                    {/*{*/}
-                        {/*this.showIndicator()*/}
-                        {/*&&*/}
-                        {/*<LoadIndicator*/}
-                            {/*ref={(instance) => {this.setIndicator(instance)}}*/}
-                        {/*/>*/}
-                    {/*}*/}
-                </div>
+                <Header />
+                {
+                    this.showIndicator()
+                    &&
+                    <LoadIndicator
+                        ref={(instance) => {this.setIndicator(instance)}}
+                    />
+                }
                 {React.createElement(main, this.transformPageParameters({
                     route: routeProps,
                 }))}

@@ -104,6 +104,18 @@ export default class AdminApplication extends Application
         return 'Admin';
     }
 
+    // getGlobalSelectorMap()
+    // {
+    //     return [
+    //         {
+    //             selector: '[data-save-scroll="true"]',
+    //             callback: () => {
+    //                 console.dir('hello there!');
+    //             },
+    //         },
+    //     ];
+    // }
+
     transformPageParameters(params)
     {
         const tParams = super.transformPageParameters(params);
@@ -116,7 +128,10 @@ export default class AdminApplication extends Application
         const {main, routeProps} = this.props;
 
         return (
-            <div className="layout">
+            <div
+                className="layout"
+                ref={(ref) => { this._appContainer = ref; }}
+            >
                 {
                     this.showOverlay()
                     &&

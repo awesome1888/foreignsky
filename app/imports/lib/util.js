@@ -99,4 +99,30 @@ export default class Util
             return 0;
         };
     }
+
+    static findClosestParent(node, condition) {
+        let depth = 0;
+
+        // seach by the css selector
+        let fn = (n) => {
+            return $(node).is(condition);
+        };
+        if (_.isElement(condition))
+        {
+            // search by exact node match
+            fn = (n) => {
+                return condition === n;
+            };
+        }
+
+        while (node && depth < 50) {
+            if (fn(node)) {
+                return node;
+            }
+            node = node.parentElement;
+            depth += 1;
+        }
+
+        return null;
+    }
 }

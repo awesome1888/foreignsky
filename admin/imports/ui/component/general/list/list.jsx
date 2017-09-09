@@ -566,7 +566,7 @@ export default class ListGeneric extends BaseComponent {
                         <Table.HeaderCell colSpan='4'>
                             {this.renderPageNav()}
                             <Button size='large' color='green' floated='right' href={url}>New {_.lCFirst(title)}</Button>
-                            <Button size='large'>Delete</Button>
+                            <Button size='large' data-save-scroll>Delete</Button>
                         </Table.HeaderCell>
                     </Table.Row>
                 </Table.Footer>

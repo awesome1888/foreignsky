@@ -1,0 +1,29 @@
+@import (reference) url('/client/style/index.less');
+
+.date-picker__opener {
+	._flex();
+}
+
+.date-picker__display {
+	._content_v_bottom_h_left();
+	._hand();
+}
+
+.date-picker__display-icon {
+	._icon_date-range(22px);
+	._margin-l_x(0.5);
+}
+
+.date-picker__grid {
+	._group_x() !important;
+}
+
+.date-picker__grid-row {
+	._flex() !important;
+	._flex-justify-content_space-between();
+}
+
+.date-picker__grid-day {
+	._size_x(3) !important;
+	._no-padding-lr() !important;
+}

@@ -51,6 +51,7 @@ body, h1, h2, h3 {
 			input[type="text"],
 			input[type="password"],
 			textarea,
+			select,
 			.selection.dropdown {
 				._border-rad() !important;
 			}
@@ -93,5 +94,12 @@ body, h1, h2, h3 {
 .pagenav_small {
 	.item {
 		._padding-tb_x(0.5) !important;
+	}
+}
+
+@media only screen and (min-width: 1200px) {
+	.ui.modal_size_mini-custom.modal {
+		width: 400px;
+		margin: 0 0 0 -270px;
 	}
 }

@@ -51,12 +51,12 @@
     "statistic": false
   },
   "themes": {
-    "material": true,
+    "material": false,
     "default": true,
-    "twitter": true,
+    "twitter": false,
     "amazon": true,
-    "bootstrap3": true,
-    "raised": true,
-    "chubby": true
+    "bootstrap3": false,
+    "raised": false,
+    "chubby": false
   }
 }

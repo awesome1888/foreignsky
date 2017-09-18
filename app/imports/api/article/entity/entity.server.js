@@ -2,9 +2,7 @@ import BaseEntity from '../../../lib/base/entity/entity.server.js';
 import Entity from './entity.js';
 import mix from '../../../lib/mixin.js';
 import map from '../map/map.server.js';
-// import Tag from '../../../api/article.tag/entity/entity.server.js'
 import File from '../../../api/file/entity/entity.server.js';
-// import Embed from '../../../api/embed/entity/entity.server.js';
 
 export default class Article extends mix(BaseEntity).with(Entity)
 {
@@ -13,44 +11,12 @@ export default class Article extends mix(BaseEntity).with(Entity)
         return map;
     }
 
-    static populateEmbedImages(items)
+    static onBeforeSave(id, data)
     {
-        if (_.isArrayNotEmpty(items))
+        // if text gets updated, update the search field too
+        if (!('search' in data) && _.isStringNotEmpty(data.text))
         {
-            let ids = {};
-            const bind = [];
-            items.forEach((item) => {
-                if (_.isArrayNotEmpty(item.embed))
-                {
-                    item.embed.forEach((eItem) => {
-
-                        if (_.isArrayNotEmpty(eItem.item))
-                        {
-                            eItem.item.forEach((eiItem) => {
-                                if (_.isStringNotEmpty(eiItem.imageId))
-                                {
-                                    ids[eiItem.imageId] = true;
-                                    bind.push(eiItem);
-                                }
-                            });
-                        }
-
-                    });
-                }
-            });
-
-            ids = Object.keys(ids);
-            if (_.isArrayNotEmpty(ids))
-            {
-                const fIndex = _.makeMap(File.getCollection().find({_id: {$in: ids}}).fetch(), '_id');
-                bind.forEach((item) => {
-                    item.image = null;
-                    if (item.imageId in fIndex)
-                    {
-                        item.image = fIndex[item.imageId];
-                    }
-                });
-            }
+            data.search = data.text.toUpperCase();
         }
     }
 }

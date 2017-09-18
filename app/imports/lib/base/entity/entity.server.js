@@ -68,13 +68,24 @@ export default class BaseEntity extends Entity
      * todo: think about the result object...
      * @param id
      * @param data
-     * @returns {*}
+     * @returns boolean|string todo: probably return Result here
      */
     static save(id, data)
     {
+        if (!_.isObject(data))
+        {
+            return false;
+        }
+
         const collection = this.getCollection();
-        if (!id) {
-            return collection.insert(data);
+        if (this.onBeforeSave(id, data) === false)
+        {
+            return false;
+        }
+        if (!_.isStringNotEmpty(id)) {
+            id = collection.insert(data);
+            this.onAfterSave(id, data);
+            return id;
         } else {
             if(collection.update({
                 _id: id,
@@ -82,6 +93,7 @@ export default class BaseEntity extends Entity
                 $set: this.flatten(data),
             }))
             {
+                this.onAfterSave(id, data);
                 return id;
             }
 
@@ -92,15 +104,44 @@ export default class BaseEntity extends Entity
     /**
      * todo: think about the result object...
      * @param filter
+     * @return boolean todo: probably return Result here
      */
     static remove(filter = {})
     {
-        return this.getCollection().remove(filter);
+        if (this.onBeforeRemove(filter) === false)
+        {
+            return false;
+        }
+        if (this.getCollection().remove(filter))
+        {
+            this.onAfterRemove(filter);
+            return true;
+        }
+
+        return false;
     }
 
     static getRawCollection()
     {
         return this.getCollection().rawCollection();
+    }
+
+    // static hooks
+
+    static onBeforeSave()
+    {
+    }
+
+    static onAfterSave()
+    {
+    }
+
+    static onBeforeRemove()
+    {
+    }
+
+    static onAfterRemove()
+    {
     }
 
     save(id, data)

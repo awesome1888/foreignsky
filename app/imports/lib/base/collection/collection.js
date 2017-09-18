@@ -13,7 +13,7 @@ export default class BaseCollection extends Mongo.Collection
         // this.attachSchema(this.getSchema());
         // this.addLinks(this.getLinks());
         // this.createIndexes();
-        // this.applyHooks();
+        this.applyHooks();
     }
 
     initializeFromSource(map)
@@ -22,6 +22,17 @@ export default class BaseCollection extends Mongo.Collection
         this.setLinks(map.getLinks());
 
         this.setInitialized();
+    }
+
+    /**
+     * This will apply low-level hooks on the collection
+     */
+    applyHooks()
+    {
+        // this.before.insert((id, data) => {
+        // });
+        // this.before.update((id, data, fieldNames, modifier) => {
+        // });
     }
 
     getSchema()
@@ -54,8 +65,18 @@ export default class BaseCollection extends Mongo.Collection
         return this._initialized;
     }
 
-    // getIndexes() {
-    //     return [];
+    // getIndexes()
+    // {
+    //     return [
+    //         {
+    //             fields: {
+    //                 search: "text",
+    //             },
+    //             options: {
+    //                 name: 'search',
+    //             },
+    //         }
+    //     ];
     // }
 
     getName() {

@@ -125,4 +125,19 @@ export default class Util
 
         return null;
     }
+
+    static transformCamel(string)
+    {
+        if (!_.isStringNotEmpty(string))
+        {
+            return '';
+        }
+
+        if (!this._tcRegExp)
+        {
+            this._tcRegExp = /([A-Z]{1})/g;
+        }
+
+        return _.uCFirst(string.replace(this._tcRegExp, ' $1').trim());
+    }
 }

@@ -1,6 +1,7 @@
 import Map from '../../map/index.js';
 import Entity from '../../entity/entity.js';
 import Enum from '../../enum/index.js';
+import Util from '../../../util.js';
 
 export default class Attribute
 {
@@ -211,7 +212,7 @@ export default class Attribute
             return label;
         }
 
-        return _.uCFirst(this.getCode());
+        return Util.transformCamel(this.getCode());
     }
 
     getOrder()

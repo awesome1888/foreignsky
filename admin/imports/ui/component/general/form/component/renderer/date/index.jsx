@@ -46,6 +46,130 @@ class RendererDate extends RendererGeneric
 
     }
 
+    generateGrid(date)
+    {
+        if (!_.isDate(date))
+        {
+            date = Date.now();
+        }
+
+        let b = moment.utc(this.dateLocalToUTC(date));
+        let f = moment.utc(this.dateLocalToUTC(date));
+
+        const cMonth = f.month();
+        const timeLine = [];
+
+        // generate our calendar grid backward
+        let i = 0;
+        let pad = 1;
+        let decreasePad = false;
+        while (i < 50) {
+            b = b.add(-1, 'day');
+
+            if (cMonth !== b.month() && !decreasePad)
+            {
+                // went out of the current month borders, now need to pad
+                // console.dir('bday = '+b.day());
+                pad = b.day();
+                decreasePad = true;
+            }
+
+            if (pad <= 0)
+            {
+                break;
+            }
+
+            timeLine.unshift({
+                wd: b.day(),
+                d: b.date(),
+                m: b.month(),
+                y: b.year(),
+            });
+
+            if (decreasePad) {
+                pad -= 1;
+            }
+            i += 1; // emergency exit
+        }
+
+        i = 0;
+        pad = 1;
+        decreasePad = false;
+        while (i < 50) {
+            timeLine.push({
+                wd: f.day(),
+                d: f.date(),
+                m: f.month(),
+                y: f.year(),
+            });
+
+            f = f.add(1, 'day');
+            if (cMonth !== f.month() && !decreasePad)
+            {
+                // went out of the current month borders, now need to pad
+                // we pad to 6 full weeks to display: 6 weeks * 7 days = 42 days to display
+                pad = 42 - timeLine.length;
+                decreasePad = true;
+            }
+
+            if (pad <= 0)
+            {
+                break;
+            }
+
+            if (decreasePad) {
+                pad -= 1;
+            }
+            i += 1; // emergency exit
+        }
+
+        // now group by weeks
+        const byWeeks = [];
+        let cWeek = [];
+        timeLine.forEach((day) => {
+            if (day.wd === 1 && _.isArrayNotEmpty(cWeek)) // week starts with monday, monday has number 1
+            {
+                byWeeks.push(cWeek);
+                cWeek = [];
+            }
+
+            cWeek.push(day);
+        });
+        // push the last if not empty, just in case...
+        if (_.isArrayNotEmpty(cWeek))
+        {
+            byWeeks.push(cWeek);
+        }
+
+        return {
+            cMonth,
+            grid: byWeeks
+        };
+    }
+
+    /**
+     * Returns the same date, but with the timezone set to UTC (as it would be if we were in GMT zone now)
+     * @param date
+     * @returns {Date}
+     */
+    dateLocalToUTC(date)
+    {
+        // console.dir(date.toString());
+        // console.dir('h = '+date.getHours());
+        // console.dir('m = '+date.getMinutes());
+        // console.dir('s = '+date.getSeconds());
+
+        return new Date(Date.UTC(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            date.getHours(), // hour
+            date.getMinutes(), // minute
+            date.getSeconds(), // second
+            date.getMilliseconds() // millisecond
+        ));
+    }
+
     renderMYSelectors()
     {
         return (
@@ -76,27 +200,30 @@ class RendererDate extends RendererGeneric
         );
     }
 
-    renderGridRow(from, to)
+    renderWeek(week, i, cMonth)
     {
         const row = [];
-        for(let k = from; k <= to; k++)
-        {
+
+        week.forEach((day) => {
             row.push(
                 <Button
                     basic
                     color='red'
                     inverted
                     onClick={this.onCloseClick.bind(this, false)}
-                    className="date-picker__grid-day"
-                    key={k}
+                    className={`date-picker__grid-day ${day.m !== cMonth ? 'date-picker__grid-day_other-month' : ''}`}
+                    key={`${day.d}-${day.m}-${day.y}`}
                 >
-                    {k}
+                    {day.d}
                 </Button>
             );
-        }
+        });
 
         return (
-            <div className="date-picker__grid-row-outer">
+            <div
+                className="date-picker__grid-row-outer"
+                key={i}
+            >
                 <div className="date-picker__grid-row">
                     {row}
                 </div>
@@ -106,18 +233,25 @@ class RendererDate extends RendererGeneric
 
     renderGrid()
     {
+        const data = this.generateGrid(this.getValue());
+
         return (
             <div className="date-picker__grid">
-                {this.renderGridRow(1, 7)}
-                {this.renderGridRow(8, 14)}
-                {this.renderGridRow(15, 21)}
-                {this.renderGridRow(22, 28)}
+                {
+                    data.grid.map((week, i) => {
+                        return this.renderWeek(week, i, data.cMonth);
+                    })
+                }
             </div>
         );
     }
 
     renderSelector()
     {
+        if (!this.state.opened) {
+            return null;
+        }
+
         return (
             <Modal
                 open={this.state.opened}
@@ -154,6 +288,8 @@ class RendererDate extends RendererGeneric
 
     renderDate()
     {
+        // DD MMMM YYYY HH:mm:ss
+
         return (
             <div className="">
                 {moment(this.getValue()).format('DD MMMM YYYY')}

@@ -21,9 +21,7 @@ export default class HomePage extends BasePage
                 title={this.getDefaultTitle()}
                 central={
                     <div className="">
-                        <Button>
-                            Click Here
-                        </Button>
+                        Here there be dragons
                     </div>
                 }
             />

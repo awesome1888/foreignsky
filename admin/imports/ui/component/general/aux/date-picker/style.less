@@ -1,0 +1,41 @@
+@import (reference) url('/client/style/index.less');
+
+.date-picker {
+}
+
+.date-picker__grid {
+	._group_x() !important;
+}
+
+.date-picker__grid-row {
+	._flex() !important;
+	._flex-justify-content_space-between();
+}
+
+._date-picker__grid-day_hl() {
+	._border(@orangeFocus, 2px);
+	._f-color(@orangeFocus);
+}
+
+.date-picker__grid-day {
+	._size_x(3) !important;
+	._content_v_center_h_center();
+	._hand();
+	._border(@color_silver, 2px);
+	._b-color(@blackHover);
+	._transition();
+	._border-rad();
+
+	&:hover {
+		._date-picker__grid-day_hl();
+	}
+}
+
+.date-picker__grid-day_other-month {
+	._border(@color_dusk, 2px);
+	._f-color(@color_dusk);
+}
+
+.date-picker__grid-day_current {
+	._date-picker__grid-day_hl();
+}

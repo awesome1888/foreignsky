@@ -31,6 +31,7 @@ export default class DatePicker extends BaseComponent
         super(props);
         this.extendState({
             opened: false,
+            passed: this.makeCurrent(),
         });
 
         this.onUpdateClick = this.onUpdateClick.bind(this);
@@ -53,14 +54,34 @@ export default class DatePicker extends BaseComponent
         }
     }
 
-    getCurrent()
+    makeCurrent()
     {
         if (_.isDate(this.props.current))
         {
-            return this.props.current;
+            return new Date(this.props.current);
         }
 
         return Date.now();
+    }
+
+    getCurrent()
+    {
+        return this.state.passed;
+    }
+
+    getCurrentDate()
+    {
+        return this.getCurrent().getUTCDate();
+    }
+
+    getCurrentMonth()
+    {
+        return this.getCurrent().getUTCMonth();
+    }
+
+    getCurrentYear()
+    {
+        return this.getCurrent().getUTCFullYear();
     }
 
     getTitle()
@@ -192,6 +213,9 @@ export default class DatePicker extends BaseComponent
 
     renderMYSelectors()
     {
+        const cMonth = this.getCurrentMonth();
+        const cYear = this.getCurrentYear();
+        
         return (
             <Form
                 inverted
@@ -203,17 +227,30 @@ export default class DatePicker extends BaseComponent
                         width={10}
                     >
                         <select name="" id="">
-                            <option value="1">January</option>
-                            <option value="2">February</option>
-                            <option value="3">March</option>
-                            <option value="4">April</option>
+                            <option value="0" selected={cMonth === 0}>January</option>
+                            <option value="1" selected={cMonth === 1}>February</option>
+                            <option value="2" selected={cMonth === 2}>March</option>
+                            <option value="3" selected={cMonth === 3}>April</option>
+                            <option value="4" selected={cMonth === 4}>May</option>
+                            <option value="5" selected={cMonth === 5}>June</option>
+                            <option value="6" selected={cMonth === 6}>July</option>
+                            <option value="7" selected={cMonth === 7}>August</option>
+                            <option value="8" selected={cMonth === 8}>September</option>
+                            <option value="9" selected={cMonth === 9}>October</option>
+                            <option value="10" selected={cMonth === 10}>November</option>
+                            <option value="11" selected={cMonth === 11}>December</option>
                         </select>
                     </Form.Field>
                     <Form.Field
                         inverted
                         width={6}
+                        className="date-picker__selector-year"
                     >
-                        <input type="text" value="1988" />
+                        <input type="text" value={cYear} readOnly />
+                        <div className="date-picker__selector-year-buttons">
+                            <div className="date-picker__selector-year-add" />
+                            <div className="date-picker__selector-year-remove" />
+                        </div>
                     </Form.Field>
                 </Form.Group>
             </Form>
@@ -280,7 +317,7 @@ export default class DatePicker extends BaseComponent
                 className="modal_size_mini-custom"
                 closeOnDimmerClick={false}
             >
-                <Header icon='date' content={`Pick-a-${this.getTitle()}`} />
+                <Header icon='date' content={`Pick-a-${this.getTitle()}, Inc.`} />
                 <Modal.Content>
                     {this.renderMYSelectors()}
                     {this.renderGrid()}

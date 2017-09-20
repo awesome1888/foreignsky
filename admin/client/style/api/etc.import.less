@@ -28,8 +28,14 @@
 	._border-t() !important;
 }
 
-._b-color(@color: @color_white) {
+._b-color(@color: @color_white, @h-color: false) {
 	background-color: @color;
+
+	& when not(@h-color = true) {
+		&:hover {
+			background-color: @h-color;
+		}
+	}
 }
 
 ._no-bg() {

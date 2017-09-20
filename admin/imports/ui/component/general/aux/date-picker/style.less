@@ -39,3 +39,30 @@
 .date-picker__grid-day_current {
 	._date-picker__grid-day_hl();
 }
+
+.date-picker__selector-year {
+	._relative();
+}
+
+.date-picker__selector-year-buttons {
+	._group_x(0.25);
+	._absolute(6px, 13px);
+	._content_v_center_h_left();
+}
+
+.date-picker__selector-year-add,
+.date-picker__selector-year-remove {
+	._f-color(@color_white);
+	._b-color(@color_silver, darken(@color_silver, 10%));
+	._hand();
+	._border-rad(2px);
+	._transition();
+}
+
+.date-picker__selector-year-add {
+	._icon_add(20px, 3px);
+}
+
+.date-picker__selector-year-remove {
+	._icon_remove(20px, 3px);
+}

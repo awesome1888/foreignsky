@@ -1,13 +1,19 @@
 // todo: self-host this
 @import (css) url("//fonts.googleapis.com/icon?family=Material+Icons");
 
-._icon(@code, @size: 16px) {
+._icon(@code, @size: 16px, @padding: false) {
 	font-family: 'Material Icons', sans-serif;
 	font-size: @size;
 	font-style: normal;
 	line-height: 100%;
 	height: @size;
 	width: @size;
+	box-sizing: content-box;
+
+	& when not(@padding = false) {
+		padding: @padding;
+	}
+
 	&:before {
 		content: @code;
 	}
@@ -50,4 +56,12 @@
 
 ._icon_date-range(@size: 16px) {
 	._icon('date_range', @size);
+}
+
+._icon_add(@size: 16px, @padding: false) {
+	._icon('add', @size, @padding);
+}
+
+._icon_remove(@size: 16px, @padding: false) {
+	._icon('remove', @size, @padding);
 }

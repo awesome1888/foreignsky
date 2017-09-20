@@ -18,7 +18,7 @@
 }
 
 .date-picker__grid-day {
-	._size_x(3) !important;
+	._size_x(3);
 	._content_v_center_h_center();
 	._hand();
 	._border(@color_silver, 2px);
@@ -40,13 +40,17 @@
 	._date-picker__grid-day_hl();
 }
 
+.date-picker__selector-month {
+	._no-outline();
+}
+
 .date-picker__selector-year {
 	._relative();
 }
 
 .date-picker__selector-year-buttons {
 	._group_x(0.25);
-	._absolute(6px, 13px);
+	._absolute(5px, 13px);
 	._content_v_center_h_left();
 }
 

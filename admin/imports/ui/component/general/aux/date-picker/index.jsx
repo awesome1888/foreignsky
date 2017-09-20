@@ -226,7 +226,7 @@ export default class DatePicker extends BaseComponent
                         inverted
                         width={10}
                     >
-                        <select name="" id="">
+                        <select className="date-picker__selector-month">
                             <option value="0" selected={cMonth === 0}>January</option>
                             <option value="1" selected={cMonth === 1}>February</option>
                             <option value="2" selected={cMonth === 2}>March</option>

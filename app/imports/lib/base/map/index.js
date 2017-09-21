@@ -6,6 +6,7 @@ import Enum from '../enum/index.js';
 export default class Map
 {
     _attributes = [];
+    _aIndex = null;
     _parts = null;
 
     constructor(definition)
@@ -87,12 +88,21 @@ export default class Map
         return this._parts;
     }
 
+    /**
+     * Converts current map into a SimpleSchema and Grapher Links
+     * @returns {{schema: {}, links: {}}}
+     */
     decomposeMap()
     {
         const schema = {};
         const links = {};
 
         this.forEach((a) => {
+            if (!(a instanceof Attribute))
+            {
+                return;
+            }
+
             if (a.isLink() || a.isArrayOfLink())
             {
                 const isMultiple = a.isArray();
@@ -189,40 +199,23 @@ export default class Map
 
             let attr = attribute.clone();
 
-            // filter sub-maps
-            if (attribute.isMap())
+            if (attribute instanceof Attribute)
             {
-                attr.setType(attr.getType().filter(filter));
-            }
-            else if(attribute.isArrayOfMap())
-            {
-                attr.setArrayType(attr.getArrayType().filter(filter));
+                // filter sub-maps
+                if (attribute.isMap())
+                {
+                    attr.setType(attr.getType().filter(filter));
+                }
+                else if(attribute.isArrayOfMap())
+                {
+                    attr.setArrayType(attr.getArrayType().filter(filter));
+                }
             }
 
             attributes.push(attr);
         });
         
         return new this.constructor(attributes);
-    }
-
-    tuneAttribute(code, data = {})
-    {
-        // todo
-    }
-
-    removeAttribute(code)
-    {
-        this._attributes = this._attributes.filter(item => item.getCode() !== code);
-    }
-
-    leaveOnly(list)
-    {
-        if (!_.isArray(list))
-        {
-            return;
-        }
-
-        this._attributes = this._attributes.filter(item => list.indexOf(item.getCode()) >= 0);
     }
 
     makeRefCode(code)
@@ -273,6 +266,11 @@ export default class Map
         return a;
     }
 
+    getAttributeByCode(code)
+    {
+
+    }
+
     clone()
     {
         const attributes = [];
@@ -294,10 +292,19 @@ export default class Map
         return null;
     }
 
+    /**
+     * Generates mongo query projection (which fields to select) according the current map
+     * @returns {{}}
+     */
     getProjection()
     {
         const projection = {};
         this.forEach((attribute) => {
+            if (!(attribute instanceof Attribute))
+            {
+                return;
+            }
+
             let way = 1;
             if (attribute.isMap() || attribute.isArrayOfMap())
             {
@@ -316,10 +323,20 @@ export default class Map
         return projection;
     }
 
+    /**
+     * Generates mongo query projection (which fields to select) according the current map.
+     * In this case, fields, marked as autoSelect: false will not be selected
+     * @returns {{}}
+     */
     getAutoSelectableProjection()
     {
         const projection = {};
         this.forEach((attribute) => {
+            if (!(attribute instanceof Attribute))
+            {
+                return;
+            }
+
             if (attribute.isAutoSelectable())
             {
                 let way = 1;
@@ -339,5 +356,33 @@ export default class Map
         });
 
         return projection;
+    }
+
+    // tune functions
+
+    tuneAttribute(code, data = {})
+    {
+        // todo
+    }
+
+    removeAttribute(code)
+    {
+        this._attributes = this._attributes.filter(item => item.getCode() !== code);
+        delete this._aIndex[code];
+    }
+
+    /**
+     * Remove all attributes but specified in the list
+     * @param list
+     */
+    leaveOnly(list)
+    {
+        if (!_.isArray(list))
+        {
+            return;
+        }
+
+        this._attributes = this._attributes.filter(item => list.indexOf(item.getCode()) >= 0);
+        this._aIndex = null;
     }
 }

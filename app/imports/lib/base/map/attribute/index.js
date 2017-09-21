@@ -34,6 +34,11 @@ export default class Attribute
         this._data = this.check(data);
     }
 
+    isAttribute()
+    {
+        return true;
+    }
+
     isString()
     {
         return this._data.type === String;

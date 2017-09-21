@@ -25,8 +25,6 @@ export default class ArticleDetailPage extends BasePage
                             id={this.props.route.id}
                             backPath={backUrl}
                         />
-                        <br />
-                        <br />
                     </div>
                 }
             />

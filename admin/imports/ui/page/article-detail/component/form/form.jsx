@@ -16,9 +16,11 @@ export default class ArticleForm extends EntityForm
 
     transformMap(map)
     {
-        // map.removeAttribute('some attr');
-
-        // do some tuning, like renderer
+        // display title and date in the one row
+        // map.group([
+        //     'title',
+        //     'date',
+        // ]);
 
         return map;
     }

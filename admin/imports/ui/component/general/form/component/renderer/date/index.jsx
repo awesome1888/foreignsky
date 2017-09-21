@@ -26,6 +26,7 @@ class RendererDate extends RendererGeneric
 
         this.onCloseClick = this.onCloseClick.bind(this);
         this.onOpenClick = this.onOpenClick.bind(this);
+        this.onChange = this.onChange.bind(this);
     }
 
     onCloseClick()
@@ -42,14 +43,23 @@ class RendererDate extends RendererGeneric
         });
     }
 
+    onChange(value)
+    {
+        this.setState({
+            opened: false,
+        });
+        this.props.onChange(value);
+    }
+
     renderSelector()
     {
         return (
             <DatePicker
                 title={this.props.attribute.getTitle()}
-                current={this.getValue()}
+                chosen={this.getValue()}
                 opened={this.state.opened}
                 onClose={this.onCloseClick}
+                onChange={this.onChange}
             />
         );
     }

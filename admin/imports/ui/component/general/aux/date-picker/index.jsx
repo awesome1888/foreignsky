@@ -12,7 +12,7 @@ export default class DatePicker extends BaseComponent
 {
     static propTypes = {
         opened: PropTypes.bool,
-        current: PropTypes.date,
+        chosen: PropTypes.date,
         title: PropTypes.string,
         onChange: PropTypes.func,
         onClose: PropTypes.func,
@@ -20,29 +20,35 @@ export default class DatePicker extends BaseComponent
 
     static defaultProps = {
         opened: false,
-        current: null,
+        chosen: null,
         title: 'Date',
         onChange: null,
         onClose: null,
     };
+
+    _monthSelector = null;
 
     constructor(props)
     {
         super(props);
         this.extendState({
             opened: false,
-            passed: this.makeCurrent(),
+            displayed: this.makeDisplayed(),
+            chosen: this.props.chosen,
         });
-
+        
         this.onUpdateClick = this.onUpdateClick.bind(this);
         this.onCloseClick = this.onCloseClick.bind(this);
+        this.onMonthChange = this.onMonthChange.bind(this);
+        this.onYearIncrementClick = this.onYearIncrementClick.bind(this);
+        this.onYearDecrementClick = this.onYearDecrementClick.bind(this);
     }
 
     onUpdateClick()
     {
         if (_.isFunction(this.props.onChange))
         {
-            this.props.onChange('new value');
+            this.props.onChange(this.dateUTCToLocal(this.getChosen()));
         }
     }
 
@@ -54,34 +60,117 @@ export default class DatePicker extends BaseComponent
         }
     }
 
-    makeCurrent()
+    onMonthChange()
     {
-        if (_.isDate(this.props.current))
+        this.setState({
+            displayed: this.makeDate(1, this._monthSelector.value),
+        });
+    }
+
+    onYearIncrementClick()
+    {
+        this.setState({
+            displayed: this.makeDate(1, false, this.getDisplayedYear() + 1),
+        });
+    }
+
+    onYearDecrementClick()
+    {
+        this.setState({
+            displayed: this.makeDate(1, false, this.getDisplayedYear() - 1),
+        });
+    }
+
+    onDateClick(moment)
+    {
+        const date = this.makeDate(moment.d, moment.m, moment.y);
+
+        this.setState({
+            displayed: date,
+            chosen: date,
+        });
+    }
+    
+    makeDate(date = false, month = false, year = false)
+    {
+        date = date || this.getDisplayedDate();
+        month = month !== false ? month : this.getDisplayedMonth();
+        year = year !== false ? year : this.getDisplayedYear();
+
+        return new Date(Date.UTC(
+            year,
+            month,
+            date,
+            0, // hour
+            0, // minute
+            0, // second
+            0 // millisecond
+        ));
+    }
+
+    makeDisplayed()
+    {
+        if (_.isDate(this.props.chosen))
         {
-            return new Date(this.props.current);
+            return new Date(this.props.chosen);
         }
 
-        return Date.now();
+        return new Date(Date.now());
     }
 
-    getCurrent()
+    getDisplayed()
     {
-        return this.state.passed;
+        return this.state.displayed;
     }
 
-    getCurrentDate()
+    getDisplayedDate()
     {
-        return this.getCurrent().getUTCDate();
+        return this.getDisplayed().getUTCDate();
     }
 
-    getCurrentMonth()
+    getDisplayedMonth()
     {
-        return this.getCurrent().getUTCMonth();
+        return this.getDisplayed().getUTCMonth();
     }
 
-    getCurrentYear()
+    getDisplayedYear()
     {
-        return this.getCurrent().getUTCFullYear();
+        return this.getDisplayed().getUTCFullYear();
+    }
+
+    getChosen()
+    {
+        return this.state.chosen;
+    }
+
+    getChosenDate()
+    {
+        if (_.isDate(this.getChosen()))
+        {
+            return this.getChosen().getUTCDate();
+        }
+
+        return false;
+    }
+
+    getChosenMonth()
+    {
+        if (_.isDate(this.getChosen()))
+        {
+            return this.getChosen().getUTCMonth();
+        }
+
+        return false;
+    }
+
+    getChosenYear()
+    {
+        if (_.isDate(this.getChosen()))
+        {
+            return this.getChosen().getUTCFullYear();
+        }
+
+        return false;
     }
 
     getTitle()
@@ -91,13 +180,16 @@ export default class DatePicker extends BaseComponent
 
     generateGrid()
     {
-        const date = this.getCurrent();
+        const date = this.getDisplayed();
 
         let b = moment.utc(this.dateLocalToUTC(date));
         let f = moment.utc(this.dateLocalToUTC(date));
 
         const cMonth = f.month();
         const timeLine = [];
+
+        const isChosenMonthYear = b.month() === this.getChosenMonth() && b.year() === this.getChosenYear();
+        const chosenDate = this.getChosenDate();
 
         // generate our calendar grid backward
         let i = 0;
@@ -108,7 +200,7 @@ export default class DatePicker extends BaseComponent
 
             if (cMonth !== b.month() && !decreasePad)
             {
-                // went out of the current month borders, now need to pad
+                // went out of the chosen month borders, now need to pad
                 // console.dir('bday = '+b.day());
                 pad = b.day();
                 decreasePad = true;
@@ -124,6 +216,7 @@ export default class DatePicker extends BaseComponent
                 d: b.date(),
                 m: b.month(),
                 y: b.year(),
+                c: !decreasePad && isChosenMonthYear && b.date() === chosenDate,
             });
 
             if (decreasePad) {
@@ -141,13 +234,13 @@ export default class DatePicker extends BaseComponent
                 d: f.date(),
                 m: f.month(),
                 y: f.year(),
-                c: !i, // current day
+                c: !decreasePad && isChosenMonthYear && f.date() === chosenDate,
             });
 
             f = f.add(1, 'day');
             if (cMonth !== f.month() && !decreasePad)
             {
-                // went out of the current month borders, now need to pad
+                // went out of the chosen month borders, now need to pad
                 // we pad to 6 full weeks to display: 6 weeks * 7 days = 42 days to display
                 pad = 42 - timeLine.length;
                 decreasePad = true;
@@ -211,10 +304,23 @@ export default class DatePicker extends BaseComponent
         ));
     }
 
+    dateUTCToLocal(date)
+    {
+        return new Date(
+            date.getUTCFullYear(),
+            date.getUTCMonth(),
+            date.getUTCDate(),
+            date.getUTCHours(), // hour
+            date.getUTCMinutes(), // minute
+            date.getUTCSeconds(), // second
+            date.getUTCMilliseconds() // millisecond
+        );
+    }
+
     renderMYSelectors()
     {
-        const cMonth = this.getCurrentMonth();
-        const cYear = this.getCurrentYear();
+        const cMonth = this.getDisplayedMonth();
+        const cYear = this.getDisplayedYear();
         
         return (
             <Form
@@ -226,7 +332,11 @@ export default class DatePicker extends BaseComponent
                         inverted
                         width={10}
                     >
-                        <select className="date-picker__selector-month">
+                        <select
+                            className="date-picker__selector-month"
+                            onChange={this.onMonthChange}
+                            ref={(ref) => { this._monthSelector = ref; }}
+                        >
                             <option value="0" selected={cMonth === 0}>January</option>
                             <option value="1" selected={cMonth === 1}>February</option>
                             <option value="2" selected={cMonth === 2}>March</option>
@@ -248,8 +358,14 @@ export default class DatePicker extends BaseComponent
                     >
                         <input type="text" value={cYear} readOnly />
                         <div className="date-picker__selector-year-buttons">
-                            <div className="date-picker__selector-year-add" />
-                            <div className="date-picker__selector-year-remove" />
+                            <div
+                                className="date-picker__selector-year-add"
+                                onClick={this.onYearIncrementClick}
+                            />
+                            <div
+                                className="date-picker__selector-year-remove"
+                                onClick={this.onYearDecrementClick}
+                            />
                         </div>
                     </Form.Field>
                 </Form.Group>
@@ -265,9 +381,9 @@ export default class DatePicker extends BaseComponent
 
             row.push(
                 <div
-                    // onClick={this.onCloseClick.bind(this, false)}
+                    onClick={this.onDateClick.bind(this, day)}
                     className={
-                        `date-picker__grid-day ${day.c ? 'date-picker__grid-day_current' : ''} ${day.m !== cMonth ? 'date-picker__grid-day_other-month' : ''}`
+                        `date-picker__grid-day ${day.c ? 'date-picker__grid-day_chosen' : ''} ${day.m !== cMonth ? 'date-picker__grid-day_other-month' : ''}`
                     }
                     key={`${day.d}-${day.m}-${day.y}`}
                 >

@@ -51,8 +51,14 @@
 	line-height: 150%;
 }
 
-._f-color(@color: @color_almost-black) {
+._f-color(@color: @color_almost-black, @h-color: false) {
 	color: @color;
+
+	& when not(@h-color = false) {
+		&:hover {
+			color: @h-color;
+		}
+	}
 }
 
 ._t-center() {

@@ -64,17 +64,7 @@ class RendererDate extends RendererGeneric
         );
     }
 
-    renderDate()
-    {
-        // DD MMMM YYYY HH:mm:ss
-
-        return (
-            <div className="">
-                {moment(this.getValue()).format('DD MMMM YYYY')}
-            </div>
-        );
-    }
-
+    // DD MMMM YYYY HH:mm:ss
     render()
     {
         return (
@@ -88,7 +78,11 @@ class RendererDate extends RendererGeneric
                         onClick={this.onOpenClick}
                     >
                         <div className="date-field__display">
-                            {this.renderDate()}
+                            <input
+                                type="text"
+                                readOnly
+                                value={moment(this.getValue()).format('DD MMMM YYYY')}
+                            />
                             <div className="date-field__display-icon" />
                         </div>
                     </div>

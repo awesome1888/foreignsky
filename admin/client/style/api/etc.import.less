@@ -31,7 +31,7 @@
 ._b-color(@color: @color_white, @h-color: false) {
 	background-color: @color;
 
-	& when not(@h-color = true) {
+	& when not(@h-color = false) {
 		&:hover {
 			background-color: @h-color;
 		}

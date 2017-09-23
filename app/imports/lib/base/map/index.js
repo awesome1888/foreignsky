@@ -266,9 +266,43 @@ export default class Map
         return a;
     }
 
-    getAttributeByCode(code)
+    getAttribute(code)
     {
+        this.createIndex();
 
+        if (this._aIndex[code])
+        {
+            return this._aIndex[code].attribute;
+        }
+
+        return null;
+    }
+
+    getAttributeIndex(code)
+    {
+        this.createIndex();
+
+        if (this._aIndex[code])
+        {
+            return this._aIndex[code].i;
+        }
+
+        return -1;
+    }
+
+    createIndex()
+    {
+        if (!this._aIndex) {
+            this._aIndex = this._attributes.reduce((result, item, i) => {
+                result[item.getCode()] = {attribute: item, i};
+                return result;
+            }, {});
+        }
+    }
+
+    clearCaches()
+    {
+        this._aIndex = null;
     }
 
     clone()
@@ -368,7 +402,7 @@ export default class Map
     removeAttribute(code)
     {
         this._attributes = this._attributes.filter(item => item.getCode() !== code);
-        delete this._aIndex[code];
+        this.clearCaches();
     }
 
     /**
@@ -383,6 +417,33 @@ export default class Map
         }
 
         this._attributes = this._attributes.filter(item => list.indexOf(item.getCode()) >= 0);
-        this._aIndex = null;
+        this.clearCaches();
+    }
+
+    insertAttributeAfter(code, afterCode = null)
+    {
+        if (this._attributes.length < 2)
+        {
+            return;
+        }
+
+        const i = this.getAttributeIndex(code);
+        if (i >= 0) // attribute is present
+        {
+            if (_.isStringNotEmpty(afterCode))
+            {
+                const attr = this._attributes.splice(i, 1);
+                this.clearCaches();
+                const aI = this.getAttributeIndex(afterCode);
+                this._attributes.splice(aI + 1, 0, attr[0]);
+            }
+            else
+            {
+                const attr = this._attributes.splice(0, 1);
+                this._attributes.unshift(attr[0]);
+            }
+        }
+
+        this.clearCaches();
     }
 }

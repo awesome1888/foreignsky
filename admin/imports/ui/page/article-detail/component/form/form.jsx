@@ -22,6 +22,11 @@ export default class ArticleForm extends EntityForm
         //     'date',
         // ]);
 
+        map.getAttribute('public').setParameter('show-label', false);
+        map.insertAttributeAfter('tag', 'title');
+
+        console.dir(map);
+
         return map;
     }
 }

@@ -22,9 +22,11 @@ export default class Row extends React.Component
         form: null,
     };
 
-    resolveRenderer()
+    resolveRenderer(attribute)
     {
-        const attribute = this.getAttribute();
+        // const attribute = this.getAttribute();
+
+        // console.dir('resolving for '+attribute.getCode());
 
         const renderer = attribute.getParameter('renderer');
         if (renderer)
@@ -83,10 +85,8 @@ export default class Row extends React.Component
         return null;
     }
 
-    resolveItemRenderer()
+    resolveItemRenderer(attribute)
     {
-        const attribute = this.getAttribute();
-
         const itemRenderer = attribute.getParameter('itemRenderer');
         if (itemRenderer)
         {
@@ -160,7 +160,7 @@ export default class Row extends React.Component
         {
             if (attribute.isArray())
             {
-                const renderer = this.resolveItemRenderer();
+                const renderer = this.resolveItemRenderer(attribute);
                 if (!renderer)
                 {
                     return children;
@@ -194,9 +194,9 @@ export default class Row extends React.Component
         return this.props.form || null;
     }
 
-    renderAttribute(attribute)
+    renderAttribute(attribute, parameters = {})
     {
-        const constructor = this.resolveRenderer();
+        const constructor = this.resolveRenderer(attribute);
         if (!constructor) {
             return null;
         }
@@ -207,7 +207,8 @@ export default class Row extends React.Component
                 this.getControlParams(attribute),
                 {
                     name: attribute.getCode(),
-                }
+                },
+                parameters
             ),
             this.getControlChildren(attribute)
         );
@@ -215,8 +216,6 @@ export default class Row extends React.Component
 
     render()
     {
-        const a = this.getAttribute();
-        console.dir('> render row for '+a.getCode());
-        return this.renderAttribute(a);
+        return this.renderAttribute(this.getAttribute());
     }
 }

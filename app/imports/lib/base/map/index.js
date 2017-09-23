@@ -431,7 +431,7 @@ export default class Map
         if (_.isStringNotEmpty(attribute))
         {
             // existing attribute
-            i = this.getAttributeIndex(code);
+            i = this.getAttributeIndex(attribute);
         }
         else if(_.isObject(attribute))
         {

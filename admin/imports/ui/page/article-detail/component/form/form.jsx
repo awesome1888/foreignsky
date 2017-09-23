@@ -17,14 +17,18 @@ export default class ArticleForm extends EntityForm
 
     transformMap(map)
     {
-        map.getAttribute('public').setParameter('show-label', false);
         map.insertAttributeAfter(new AttributeGroup({
             attributes: [
-                {code: 'title', size: 10},
-                {code: 'date', size: 6},
+                {code: 'title', size: 'eleven'},
+                {code: 'date', size: 'five'},
             ]
         }));
-        
+
+        map.insertAttributeAfter('headerImage');
+
+        map.getAttribute('public').setParameter('show-label', false);
+        map.getAttribute('headerImage').setParameter('show-label', false);
+
         return map;
     }
 }

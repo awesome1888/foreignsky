@@ -27,20 +27,20 @@ const M = (superclass) => class extends superclass
                 type: String,
                 optional: false,
             },
-            {
-                code: 'location',
-                type: new Map([
-                    {
-                        code: 'latitude',
-                        type: Number,
-                    },
-                    {
-                        code: 'longitude',
-                        type: Number,
-                    }
-                ]),
-                optional: true,
-            },
+            // {
+            //     code: 'location',
+            //     type: new Map([
+            //         {
+            //             code: 'latitude',
+            //             type: Number,
+            //         },
+            //         {
+            //             code: 'longitude',
+            //             type: Number,
+            //         }
+            //     ]),
+            //     optional: true,
+            // },
             {
                 code: 'search',
                 type: String,

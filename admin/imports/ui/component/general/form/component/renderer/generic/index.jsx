@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import BaseComponent from '../../../../../../../lib/base/component/component.jsx';
 
 // https://github.com/vazco/uniforms/blob/master/INTRODUCTION.md#autofield-algorithm
@@ -10,6 +11,26 @@ import BaseComponent from '../../../../../../../lib/base/component/component.jsx
  */
 export default class RendererGeneric extends BaseComponent
 {
+    static propTypes = {
+        form: PropTypes.object.isRequired,
+        row: PropTypes.object.isRequired,
+    };
+
+    static defaultProps = {
+        form: null,
+        row: null,
+    };
+
+    getForm()
+    {
+        return this.props.form || null;
+    }
+
+    getRow()
+    {
+        return this.props.row || null;
+    }
+
     getAttribute()
     {
         return this.props.attribute || null;

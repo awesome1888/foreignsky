@@ -1,5 +1,7 @@
 import Renderer from '../renderer/group/index.jsx';
 
+// import PropTypes from 'prop-types';
+
 export default class AttributeGroup
 {
     _data = null;
@@ -19,7 +21,7 @@ export default class AttributeGroup
     getCode()
     {
         // todo: generate code from codes of grouped fields
-        return 'group__';
+        return 'group__'+Object.keys(this.getAttributeCodesObject()).join('_');
     }
 
     getData()
@@ -30,6 +32,14 @@ export default class AttributeGroup
     getTitle()
     {
         return this._data.title || '';
+    }
+
+    getAttributeCodesObject()
+    {
+        return this._data.attributes.reduce((result, attribute) => {
+            result[attribute.code] = true;
+            return result;
+        }, {});
     }
 
     clone()
@@ -75,6 +85,25 @@ export default class AttributeGroup
 
     check(data)
     {
+        if (!_.isArrayNotEmpty(data.attributes))
+        {
+            data.attributes = [];
+        }
+
         return data;
+    }
+
+    getAttributes()
+    {
+        return this._data.attributes.map((attribute) => {
+            if (!_.isStringNotEmpty(attribute.code))
+            {
+                return null;
+            }
+            return {
+                code: attribute.code,
+                size: attribute.size,
+            };
+        });
     }
 }

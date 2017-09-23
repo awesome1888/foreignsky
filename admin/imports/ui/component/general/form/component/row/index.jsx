@@ -118,6 +118,8 @@ export default class Row extends React.Component
         const params = {
             attribute,
             form: this.props.form,
+            row: this,
+            key: attribute.getCode(),
         };
 
         if (attribute instanceof Attribute)
@@ -214,7 +216,7 @@ export default class Row extends React.Component
     render()
     {
         const a = this.getAttribute();
-        this.getForm().setRendered(a);
+        console.dir('> render row for '+a.getCode());
         return this.renderAttribute(a);
     }
 }

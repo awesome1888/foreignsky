@@ -11,6 +11,7 @@ import {FlowRouter} from 'meteor/kadira:flow-router';
 import BaseComponent from '../../../../lib/base/component/component.jsx';
 import Map from '../../../../lib/base/map/index.js';
 import Attribute from '../../../../lib/base/map/attribute/index.js';
+import AttributeGroup from './component/attribute-group/index.jsx';
 
 import Row from './component/row/index.jsx';
 
@@ -46,8 +47,6 @@ export default class Form extends BaseComponent
         borderColor: '',
         showFooter: true,
     };
-
-    _rendered = {};
 
     constructor(props)
     {
@@ -147,6 +146,11 @@ export default class Form extends BaseComponent
         return a instanceof Attribute;
     }
 
+    isAttributeGroup(a)
+    {
+        return a instanceof AttributeGroup;
+    }
+
     getBorderColor()
     {
         return this.props.borderColor;
@@ -174,38 +178,28 @@ export default class Form extends BaseComponent
         return this._cache.color;
     }
 
-    resetRendered()
-    {
-        this._rendered = {};
-    }
-
-    /**
-     * @public
-     */
-    setRendered(a)
-    {
-        this._rendered[a.getCode()] = true;
-    }
-
-    /**
-     * @public
-     */
-    wasRendered(a)
-    {
-        return a.getCode() in this._rendered;
-    }
-
     renderRows()
     {
-        this.resetRendered();
-
         const map = this.getMapTransformed();
+        const toRender = {};
 
+        // we need to scan for groups first, to mark attributes that will be rendered in groups
+        map.forEach((attribute) => {
+            if (this.isAttributeGroup(attribute))
+            {
+                Object.assign(toRender, attribute.getAttributeCodesObject());
+            }
+        });
+
+        let code;
         return map.map((attribute) => {
-            if (this.wasRendered(attribute))
+            code = attribute.getCode();
+
+            if (code in toRender)
             {
                 return null;
             }
+            toRender[code] = true;
 
             if (this.isAttribute(attribute) && attribute.isLinkAny())
             {
@@ -214,7 +208,7 @@ export default class Form extends BaseComponent
 
             return (
                 <Row
-                    key={attribute.getCode()}
+                    key={code}
                     attribute={attribute}
                     form={this}
                 />
@@ -241,15 +235,14 @@ export default class Form extends BaseComponent
             return null;
         }
 
-        // console.dir(tModel);
-        // console.dir(tMap);
-
         const className = ['form__body'];
         if (isFragment) {
             className.push('form__body_fragment');
             className.push(`form__body_fragment_color_${this.pickColor()}`);
         }
 
+        console.dir('>>>>> RENDER FUCKING FORM');
+        
         const body = (
             <div
                 className={className.join(' ')}

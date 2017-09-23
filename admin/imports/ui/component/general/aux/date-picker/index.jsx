@@ -32,16 +32,27 @@ export default class DatePicker extends BaseComponent
     {
         super(props);
         this.extendState({
-            opened: false,
             displayed: this.makeDisplayed(),
             chosen: this.props.chosen,
         });
-        
+
         this.onUpdateClick = this.onUpdateClick.bind(this);
         this.onCloseClick = this.onCloseClick.bind(this);
         this.onMonthChange = this.onMonthChange.bind(this);
         this.onYearIncrementClick = this.onYearIncrementClick.bind(this);
         this.onYearDecrementClick = this.onYearDecrementClick.bind(this);
+    }
+
+    componentWillReceiveProps(props)
+    {
+        if ('opened' in props && props.opened)
+        {
+            // picker will be opened
+            this.setState({
+                displayed: this.makeDisplayed(), // reset displayed
+                chosen: props.chosen,
+            });
+        }
     }
 
     onUpdateClick()
@@ -431,7 +442,7 @@ export default class DatePicker extends BaseComponent
                 onClose={this.onCloseClick}
                 basic
                 className="modal_size_mini-custom"
-                closeOnDimmerClick={false}
+                closeOnDimmerClick={true}
             >
                 <Header icon='date' content={`Pick-a-${this.getTitle()}, Inc.`} />
                 <Modal.Content>

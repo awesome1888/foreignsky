@@ -240,8 +240,6 @@ export default class Form extends BaseComponent
             className.push('form__body_fragment');
             className.push(`form__body_fragment_color_${this.pickColor()}`);
         }
-
-        console.dir('>>>>> RENDER FUCKING FORM');
         
         const body = (
             <div

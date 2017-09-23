@@ -25,6 +25,7 @@ export default class ArticleForm extends EntityForm
         }));
 
         map.insertAttributeAfter('headerImage');
+        map.insertAttributeAfter('location', 'embed');
 
         map.getAttribute('public').setParameter('show-label', false);
         map.getAttribute('headerImage').setParameter('show-label', false);

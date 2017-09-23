@@ -33,7 +33,7 @@ export default class DatePicker extends BaseComponent
         super(props);
         this.extendState({
             displayed: this.makeDisplayed(),
-            chosen: this.props.chosen,
+            chosen: this.dateLocalToUTC(this.props.chosen),
         });
 
         this.onUpdateClick = this.onUpdateClick.bind(this);
@@ -50,7 +50,7 @@ export default class DatePicker extends BaseComponent
             // picker will be opened
             this.setState({
                 displayed: this.makeDisplayed(), // reset displayed
-                chosen: props.chosen,
+                chosen: this.dateLocalToUTC(props.chosen),
             });
         }
     }
@@ -101,7 +101,7 @@ export default class DatePicker extends BaseComponent
             chosen: date,
         });
     }
-    
+
     makeDate(date = false, month = false, year = false)
     {
         date = date || this.getDisplayedDate();
@@ -123,10 +123,10 @@ export default class DatePicker extends BaseComponent
     {
         if (_.isDate(this.props.chosen))
         {
-            return new Date(this.props.chosen);
+            return this.dateLocalToUTC(this.props.chosen);
         }
 
-        return new Date(Date.now());
+        return this.dateLocalToUTC(new Date(Date.now()));
     }
 
     getDisplayed()
@@ -193,8 +193,8 @@ export default class DatePicker extends BaseComponent
     {
         const date = this.getDisplayed();
 
-        let b = moment.utc(this.dateLocalToUTC(date));
-        let f = moment.utc(this.dateLocalToUTC(date));
+        let b = moment.utc(date);
+        let f = moment.utc(date);
 
         const cMonth = f.month();
         const timeLine = [];
@@ -299,6 +299,11 @@ export default class DatePicker extends BaseComponent
      */
     dateLocalToUTC(date)
     {
+        if (!_.isDate(date))
+        {
+            return null;
+        }
+
         // console.dir(date.toString());
         // console.dir('h = '+date.getHours());
         // console.dir('m = '+date.getMinutes());

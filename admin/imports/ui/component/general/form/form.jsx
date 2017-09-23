@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import BaseComponent from '../../../../lib/base/component/component.jsx';
 import Map from '../../../../lib/base/map/index.js';
+import Attribute from '../../../../lib/base/map/attribute/index.js';
 
 import Row from './component/row/index.jsx';
 
@@ -45,6 +46,8 @@ export default class Form extends BaseComponent
         borderColor: '',
         showFooter: true,
     };
+
+    _rendered = {};
 
     constructor(props)
     {
@@ -139,6 +142,11 @@ export default class Form extends BaseComponent
         return !!this.props.isFragment;
     }
 
+    isAttribute(a)
+    {
+        return a instanceof Attribute;
+    }
+
     getBorderColor()
     {
         return this.props.borderColor;
@@ -166,13 +174,40 @@ export default class Form extends BaseComponent
         return this._cache.color;
     }
 
+    resetRendered()
+    {
+        this._rendered = {};
+    }
+
+    /**
+     * @public
+     */
+    setRendered(a)
+    {
+        this._rendered[a.getCode()] = true;
+    }
+
+    /**
+     * @public
+     */
+    wasRendered(a)
+    {
+        return a.getCode() in this._rendered;
+    }
+
     renderRows()
     {
+        this.resetRendered();
+
         const map = this.getMapTransformed();
 
         return map.map((attribute) => {
+            if (this.wasRendered(attribute))
+            {
+                return null;
+            }
 
-            if (attribute.isLinkAny())
+            if (this.isAttribute(attribute) && attribute.isLinkAny())
             {
                 attribute = map.makeRefAttribute(attribute);
             }
@@ -181,6 +216,7 @@ export default class Form extends BaseComponent
                 <Row
                     key={attribute.getCode()}
                     attribute={attribute}
+                    form={this}
                 />
             );
         })

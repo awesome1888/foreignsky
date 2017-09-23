@@ -420,27 +420,48 @@ export default class Map
         this.clearCaches();
     }
 
-    insertAttributeAfter(code, afterCode = null)
+    insertAttributeAfter(attribute, afterCode = null)
     {
-        if (this._attributes.length < 2)
+        // if (this._attributes.length < 2)
+        // {
+        //     return;
+        // }
+
+        let i = false;
+        if (_.isStringNotEmpty(attribute))
         {
-            return;
+            // existing attribute
+            i = this.getAttributeIndex(code);
+        }
+        else if(_.isObject(attribute))
+        {
+            // newly created attribute
+            // not only instances of Attribute are suitable here, but you should
+            // know what you are doing
+            i = -1;
         }
 
-        const i = this.getAttributeIndex(code);
-        if (i >= 0) // attribute is present
+        if (i !== false)
         {
-            if (_.isStringNotEmpty(afterCode))
+            let attr;
+            if (i >= 0) // move an existing attribute
             {
-                const attr = this._attributes.splice(i, 1);
+                attr = this._attributes.splice(i, 1)[0];
                 this.clearCaches();
-                const aI = this.getAttributeIndex(afterCode);
-                this._attributes.splice(aI + 1, 0, attr[0]);
             }
             else
             {
-                const attr = this._attributes.splice(0, 1);
-                this._attributes.unshift(attr[0]);
+                attr = attribute;
+            }
+
+            if (_.isStringNotEmpty(afterCode))
+            {
+                const aI = this.getAttributeIndex(afterCode);
+                this._attributes.splice(aI + 1, 0, attr);
+            }
+            else
+            {
+                this._attributes.unshift(attr);
             }
         }
 

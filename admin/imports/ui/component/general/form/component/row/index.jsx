@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import RendererString from './../../component/renderer/string/index.jsx';
 import RendererBoolean from './../../component/renderer/boolean/index.jsx';
@@ -9,8 +10,18 @@ import RendererLinkList from './../../component/renderer/link-list/index.jsx';
 import RenderMap from './../../component/renderer/map/index.jsx';
 import RenderSelectBox from './../../component/renderer/selectbox/index.jsx';
 
+import Attribute from '../../../../../../lib/base/map/attribute/index.js';
+
 export default class Row extends React.Component
 {
+    static propTypes = {
+        form: PropTypes.object.isRequired,
+    };
+
+    static defaultProps = {
+        form: null,
+    };
+
     resolveRenderer()
     {
         const attribute = this.getAttribute();
@@ -19,6 +30,11 @@ export default class Row extends React.Component
         if (renderer)
         {
             return renderer;
+        }
+
+        if (!(attribute instanceof Attribute))
+        {
+            return null;
         }
 
         // special type of String or [String] fields which represent link fields in SimpleSchema
@@ -101,15 +117,19 @@ export default class Row extends React.Component
     {
         const params = {
             attribute,
+            form: this.props.form,
         };
 
-        if (attribute.isArray())
+        if (attribute instanceof Attribute)
         {
-            params.initialCount = attribute.hasMinCount() ? attribute.getMinCount() : 1;
-        }
-        if (attribute.isMap())
-        {
-            params.map = attribute.getType();
+            if (attribute.isArray())
+            {
+                params.initialCount = attribute.hasMinCount() ? attribute.getMinCount() : 1;
+            }
+            if (attribute.isMap())
+            {
+                params.map = attribute.getType();
+            }
         }
 
         return params;
@@ -133,26 +153,30 @@ export default class Row extends React.Component
     getControlChildren(attribute)
     {
         let children = null;
-        if (attribute.isArray())
-        {
-            const renderer = this.resolveItemRenderer();
-            if (!renderer)
-            {
-                return children;
-            }
 
-            children = [
-                React.createElement(
-                    renderer,
-                    Object.assign(
-                        this.getControlChildrenParams(attribute),
-                        {
-                            name: '$',
-                            key: '-1',
-                        }
+        if (attribute instanceof Attribute)
+        {
+            if (attribute.isArray())
+            {
+                const renderer = this.resolveItemRenderer();
+                if (!renderer)
+                {
+                    return children;
+                }
+
+                children = [
+                    React.createElement(
+                        renderer,
+                        Object.assign(
+                            this.getControlChildrenParams(attribute),
+                            {
+                                name: '$',
+                                key: '-1',
+                            }
+                        )
                     )
-                )
-            ];
+                ];
+            }
         }
 
         return children;
@@ -163,10 +187,13 @@ export default class Row extends React.Component
         return this.props.attribute || {};
     }
 
-    render()
+    getForm()
     {
-        const attribute = this.getAttribute();
+        return this.props.form || null;
+    }
 
+    renderAttribute(attribute)
+    {
         const constructor = this.resolveRenderer();
         if (!constructor) {
             return null;
@@ -182,5 +209,12 @@ export default class Row extends React.Component
             ),
             this.getControlChildren(attribute)
         );
+    }
+
+    render()
+    {
+        const a = this.getAttribute();
+        this.getForm().setRendered(a);
+        return this.renderAttribute(a);
     }
 }

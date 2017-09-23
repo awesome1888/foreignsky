@@ -12,7 +12,7 @@ export default class DatePicker extends BaseComponent
 {
     static propTypes = {
         opened: PropTypes.bool,
-        chosen: PropTypes.date,
+        chosen: PropTypes.instanceOf(Date),
         title: PropTypes.string,
         onChange: PropTypes.func,
         onClose: PropTypes.func,

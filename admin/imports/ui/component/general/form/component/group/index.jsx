@@ -1,3 +1,5 @@
+import Renderer from '../renderer/group/index.jsx';
+
 export default class AttributeGroup
 {
     _data = null;
@@ -6,11 +8,18 @@ export default class AttributeGroup
     constructor(data)
     {
         this._data = this.check(data);
+        this.setParameter('renderer', Renderer);
     }
 
     isAttribute()
     {
         return false;
+    }
+
+    getCode()
+    {
+        // todo: generate code from codes of grouped fields
+        return 'group__';
     }
 
     getData()

@@ -3,6 +3,8 @@ import EntityForm from '../../../../component/general/entity-form/index.jsx';
 import AttributeGroup from '../../../../component/general/form/component/attribute-group/index.jsx';
 import Article from '../../../../../api/article/entity/entity.client.js';
 
+import RichRenderer from '../../../../component/general/form/component/renderer/rich/index.jsx';
+
 export default class ArticleForm extends EntityForm
 {
     static getEntity()
@@ -29,6 +31,8 @@ export default class ArticleForm extends EntityForm
 
         map.getAttribute('public').setParameter('show-label', false);
         map.getAttribute('headerImage').setParameter('show-label', false);
+
+        map.getAttribute('text').setParameter('renderer', RichRenderer);
 
         return map;
     }

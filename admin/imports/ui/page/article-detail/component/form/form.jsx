@@ -4,6 +4,7 @@ import AttributeGroup from '../../../../component/general/form/component/attribu
 import Article from '../../../../../api/article/entity/entity.client.js';
 
 import RichRenderer from '../../../../component/general/form/component/renderer/rich/index.jsx';
+import TagSelectorRenderer from './component/tag-selector/index.jsx';
 
 export default class ArticleForm extends EntityForm
 {
@@ -37,6 +38,8 @@ export default class ArticleForm extends EntityForm
 
         // render text as rich editor
         map.getAttribute('text').setParameter('renderer', RichRenderer);
+        // render tag list as tag selector
+        // map.getAttribute('tag').setParameter('renderer', TagSelectorRenderer);
 
         return map;
     }

@@ -260,8 +260,13 @@ export default class Map
         f.label = attribute.getTitle();
         
         const a = new Attribute(f);
-        a.setParameter('entity',  attribute.getLinkType());
-        a.setParameter('linkCode',  attribute.getCode());
+        a.setParameter('entity', attribute.getLinkType());
+        a.setParameter('linkCode', attribute.getCode());
+
+        // copy all parameters from the parent attribute
+        attribute.forEachParameter((pValue, pCode) => {
+            a.setParameter(pCode, pValue);
+        });
 
         return a;
     }

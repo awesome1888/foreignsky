@@ -24,10 +24,7 @@ export default class Row extends React.Component
 
     resolveRenderer(attribute)
     {
-        // const attribute = this.getAttribute();
-
         // console.dir('resolving for '+attribute.getCode());
-
         const renderer = attribute.getParameter('renderer');
         if (renderer)
         {

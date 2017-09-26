@@ -368,6 +368,11 @@ export default class Attribute
         return this._parameters[name];
     }
 
+    forEachParameter(cb)
+    {
+        return _.forEach(this._parameters, cb);
+    }
+
     check(data)
     {
         // do some checking

@@ -2,7 +2,16 @@ import React from 'react';
 import connectField from 'uniforms/connectField';
 import filterDOMProps from 'uniforms/filterDOMProps';
 import TinyMCE from 'react-tinymce';
-import tinymce from 'tinymce'; // dont remove, implicitly used
+
+// dont remove the following, this are being implicitly used
+import tinymce from 'tinymce';
+// tinymce theme
+import modern from 'tinymce/themes/modern';
+// tinymce plugins
+import link from 'tinymce/plugins/link';
+import textcolor from 'tinymce/plugins/textcolor';
+import colorpicker from 'tinymce/plugins/colorpicker';
+import image from 'tinymce/plugins/image';
 
 // https://github.com/vazco/uniforms/blob/master/INTRODUCTION.md#autofield-algorithm
 // https://github.com/vazco/uniforms/blob/master/API.md#connectfield
@@ -25,17 +34,23 @@ class RichRenderer extends RendererGeneric
                 errorProps={this.props}
                 {...filterDOMProps(this.props)}
             >
-                <TinyMCE
-                    content={this.getValue()}
-                    config={{
-                        // plugins: 'autolink link image lists print preview',
-                        toolbar: 'undo redo | bold italic forecolor backcolor | alignleft aligncenter alignright | removeformat',
-                        themes: "modern",
-                        theme_url: '/tinymce/theme/theme.min.js',
-                        skin_url: '/tinymce/skin/lightgray/',
-                    }}
-                    onChange={this.onContentChange.bind(this)}
-                />
+                <div className="border-r">
+                    <TinyMCE
+                        content={this.getValue()}
+                        className="tinymce-deface"
+                        config={{
+                            plugins: 'link colorpicker textcolor image',
+                            // plugins: 'print preview fullpage powerpaste searchreplace autolink directionality advcode visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount tinymcespellchecker a11ychecker imagetools mediaembed  linkchecker contextmenu colorpicker textpattern help',
+                            toolbar: 'undo redo | bold italic forecolor backcolor | alignleft aligncenter alignright | removeformat',
+                            // toolbar: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
+                            themes: "modern",
+                            // theme_url: '/tinymce/theme/theme.min.js',
+                            skin_url: '/tinymce/skin/lightgray/',
+                            height: 300,
+                        }}
+                        onChange={this.onContentChange.bind(this)}
+                    />
+                </div>
 
                 <input
                     type="hidden"

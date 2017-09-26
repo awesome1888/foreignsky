@@ -20,6 +20,11 @@ export default class AttributeGroup
 
     getCode()
     {
+        if (_.isStringNotEmpty(this._data.code))
+        {
+            return this._data.code;
+        }
+
         // todo: generate code from codes of grouped fields
         return 'group__'+Object.keys(this.getAttributeCodesObject()).join('_');
     }

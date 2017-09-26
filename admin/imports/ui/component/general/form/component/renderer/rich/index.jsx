@@ -2,6 +2,7 @@ import React from 'react';
 import connectField from 'uniforms/connectField';
 import filterDOMProps from 'uniforms/filterDOMProps';
 import TinyMCE from 'react-tinymce';
+import tinymce from 'tinymce'; // dont remove, implicitly used
 
 // https://github.com/vazco/uniforms/blob/master/INTRODUCTION.md#autofield-algorithm
 // https://github.com/vazco/uniforms/blob/master/API.md#connectfield
@@ -14,7 +15,7 @@ class RichRenderer extends RendererGeneric
 {
     onContentChange(e)
     {
-        console.log(e.target.getContent());
+        this.props.onChange(e.target.getContent());
     }
 
     render()
@@ -25,10 +26,13 @@ class RichRenderer extends RendererGeneric
                 {...filterDOMProps(this.props)}
             >
                 <TinyMCE
-                    content="<p>This is the initial content of the editor</p>"
+                    content={this.getValue()}
                     config={{
-                        plugins: 'autolink link image lists print preview',
-                        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright',
+                        // plugins: 'autolink link image lists print preview',
+                        toolbar: 'undo redo | bold italic forecolor backcolor | alignleft aligncenter alignright | removeformat',
+                        themes: "modern",
+                        theme_url: '/tinymce/theme/theme.min.js',
+                        skin_url: '/tinymce/skin/lightgray/',
                     }}
                     onChange={this.onContentChange.bind(this)}
                 />

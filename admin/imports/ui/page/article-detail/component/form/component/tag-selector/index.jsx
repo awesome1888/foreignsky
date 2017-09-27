@@ -7,8 +7,8 @@ import Util from '../../../../../../../lib/util.js';
 // https://github.com/vazco/uniforms/blob/master/API.md#connectfield
 // https://github.com/vazco/uniforms/blob/master/packages/uniforms-unstyled/src/TextField.js
 
-import RendererGeneric from '../../../../../../component/general/form/component/renderer/generic/index.jsx';
-import Container from '../../../../../../component/general/form/component/renderer/container/index.jsx';
+import RendererGeneric from '../generic/index.jsx';
+import Container from '../container/index.jsx';
 
 import './style.less';
 
@@ -24,6 +24,7 @@ class RendererTagSelector extends RendererGeneric
         super(props);
         this.extendState({
             opened: false,
+            up: false,
             items: [],
         });
 
@@ -33,13 +34,28 @@ class RendererTagSelector extends RendererGeneric
         this.onDocumentClick = this.onDocumentClick.bind(this);
         this.onSearchKeyDown = this.onSearchKeyDown.bind(this);
         this.onSearchKeyUp = _.debounce(this.onSearchKeyUp.bind(this), 300);
+        this.onWindowMetricChange = _.throttle(this.onWindowMetricChange.bind(this), 300);
+    }
 
+    componentDidMount()
+    {
         $(window.document).on('click', this.onDocumentClick);
     }
 
     componentWillUnmount()
     {
         $(window.document).off('click', this.onDocumentClick);
+        this.unBindMetricChange();
+    }
+
+    bindMetricChange() {
+        $(window).on('scroll', this.onWindowMetricChange);
+        $(window).on('resize', this.onWindowMetricChange);
+    }
+
+    unBindMetricChange() {
+        $(window).off('scroll', this.onWindowMetricChange);
+        $(window).off('resize', this.onWindowMetricChange);
     }
 
     onDropDownScroll(e)
@@ -58,6 +74,10 @@ class RendererTagSelector extends RendererGeneric
                 e.preventDefault();
             }
         }
+    }
+
+    onWindowMetricChange() {
+        this.updateDirection();
     }
 
     onDocumentClick(e)
@@ -119,6 +139,36 @@ class RendererTagSelector extends RendererGeneric
         });
     }
 
+    updateDirection() {
+        const pos = this._dropdown.getBoundingClientRect();
+
+        if (window.innerHeight > pos.height) {
+            if (!this.isUp() && (pos.top + pos.height >= window.innerHeight)) {
+                this.setUp();
+            }
+
+            if (this.isUp() && pos.top <= 0) {
+                this.setDown();
+            }
+        }
+    }
+
+    isUp() {
+        return this.state.up;
+    }
+
+    setUp() {
+        this.setState({
+            up: true,
+        });
+    }
+
+    setDown() {
+        this.setState({
+            up: false,
+        });
+    }
+
     getHeight(el)
     {
         return el.getBoundingClientRect().height;
@@ -166,12 +216,21 @@ class RendererTagSelector extends RendererGeneric
         {
             this.setState({
                 opened: true,
+                up: false,
                 items: this.getItems(search),
-            }, cb);
+            }, () => {
+                this.bindMetricChange();
+                this.updateDirection();
+                if (_.isFunction(cb)) {
+                    cb();
+                }
+            });
         }
         else
         {
-            cb();
+            if (_.isFunction(cb)) {
+                cb();
+            }
         }
     }
 
@@ -182,6 +241,7 @@ class RendererTagSelector extends RendererGeneric
             this.setState({
                 opened: false,
             });
+            this.unBindMetricChange();
         }
     }
 
@@ -319,7 +379,7 @@ class RendererTagSelector extends RendererGeneric
                             this.isOpened() && this.state.items.length > 0
                             &&
                             <div
-                                className="selectbox__dropdown"
+                                className={`selectbox__dropdown ${this.isUp() ? 'selectbox__dropdown_up' : ''}`}
                                 ref={ ref => {this._dropdown = ref; }}
                                 onWheel={this.onDropDownScroll}
                             >

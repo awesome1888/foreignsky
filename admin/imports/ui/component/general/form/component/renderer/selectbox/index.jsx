@@ -24,6 +24,7 @@ class RendererSelectBox extends RendererGeneric
         super(props);
         this.extendState({
             opened: false,
+            up: false,
             items: [],
         });
 
@@ -33,13 +34,28 @@ class RendererSelectBox extends RendererGeneric
         this.onDocumentClick = this.onDocumentClick.bind(this);
         this.onSearchKeyDown = this.onSearchKeyDown.bind(this);
         this.onSearchKeyUp = _.debounce(this.onSearchKeyUp.bind(this), 300);
+        this.onWindowMetricChange = _.throttle(this.onWindowMetricChange.bind(this), 300);
+    }
 
+    componentDidMount()
+    {
         $(window.document).on('click', this.onDocumentClick);
     }
 
     componentWillUnmount()
     {
         $(window.document).off('click', this.onDocumentClick);
+        this.unBindMetricChange();
+    }
+
+    bindMetricChange() {
+        $(window).on('scroll', this.onWindowMetricChange);
+        $(window).on('resize', this.onWindowMetricChange);
+    }
+
+    unBindMetricChange() {
+        $(window).off('scroll', this.onWindowMetricChange);
+        $(window).off('resize', this.onWindowMetricChange);
     }
 
     onDropDownScroll(e)
@@ -58,6 +74,10 @@ class RendererSelectBox extends RendererGeneric
                 e.preventDefault();
             }
         }
+    }
+
+    onWindowMetricChange() {
+        this.updateDirection();
     }
 
     onDocumentClick(e)
@@ -119,6 +139,36 @@ class RendererSelectBox extends RendererGeneric
         });
     }
 
+    updateDirection() {
+        const pos = this._dropdown.getBoundingClientRect();
+
+        if (window.innerHeight > pos.height) {
+            if (!this.isUp() && (pos.top + pos.height >= window.innerHeight)) {
+                this.setUp();
+            }
+
+            if (this.isUp() && pos.top <= 0) {
+                this.setDown();
+            }
+        }
+    }
+
+    isUp() {
+        return this.state.up;
+    }
+
+    setUp() {
+        this.setState({
+            up: true,
+        });
+    }
+
+    setDown() {
+        this.setState({
+            up: false,
+        });
+    }
+
     getHeight(el)
     {
         return el.getBoundingClientRect().height;
@@ -166,12 +216,21 @@ class RendererSelectBox extends RendererGeneric
         {
             this.setState({
                 opened: true,
+                up: false,
                 items: this.getItems(search),
-            }, cb);
+            }, () => {
+                this.bindMetricChange();
+                this.updateDirection();
+                if (_.isFunction(cb)) {
+                    cb();
+                }
+            });
         }
         else
         {
-            cb();
+            if (_.isFunction(cb)) {
+                cb();
+            }
         }
     }
 
@@ -182,6 +241,7 @@ class RendererSelectBox extends RendererGeneric
             this.setState({
                 opened: false,
             });
+            this.unBindMetricChange();
         }
     }
 
@@ -319,7 +379,7 @@ class RendererSelectBox extends RendererGeneric
                             this.isOpened() && this.state.items.length > 0
                             &&
                             <div
-                                className="selectbox__dropdown"
+                                className={`selectbox__dropdown ${this.isUp() ? 'selectbox__dropdown_up' : ''}`}
                                 ref={ ref => {this._dropdown = ref; }}
                                 onWheel={this.onDropDownScroll}
                             >

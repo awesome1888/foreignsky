@@ -7,12 +7,12 @@ import Util from '../../../../../../../lib/util.js';
 // https://github.com/vazco/uniforms/blob/master/API.md#connectfield
 // https://github.com/vazco/uniforms/blob/master/packages/uniforms-unstyled/src/TextField.js
 
-import RendererGeneric from '../../../../../../component/general/form/component/renderer/generic/index.jsx';
+import {ControllerClass as RendererLinkList} from '../../../../../../component/general/form/component/renderer/link-list/index.jsx';
 import Container from '../../../../../../component/general/form/component/renderer/container/index.jsx';
 
 import './style.less';
 
-class RendererTagSelector extends RendererGeneric
+class RendererTagSelector extends RendererLinkList
 {
     _dropdown = null;
     _bounds = null;
@@ -39,11 +39,13 @@ class RendererTagSelector extends RendererGeneric
 
     componentDidMount()
     {
+        super.componentDidMount();
         $(window.document).on('click', this.onDocumentClick);
     }
 
     componentWillUnmount()
     {
+        super.componentWillUnmount();
         $(window.document).off('click', this.onDocumentClick);
         this.unBindMetricChange();
     }
@@ -325,81 +327,112 @@ class RendererTagSelector extends RendererGeneric
         );
     }
 
+    renderField()
+    {
+
+    }
+
     render()
     {
-        const value = this.getUnifiedValue();
+        console.dir('!!!');
+        console.dir(this.state);
+        console.dir(this._cache);
+        
+        if (this.hasError())
+        {
+            return (
+                <div className="form__error">
+                    {this.getErrorText()}
+                </div>
+            );
+        }
 
         return (
             <Container
                 errorProps={this.props}
                 {...filterDOMProps(this.props)}
             >
-                <div
-                    className="selectbox"
-                    ref={ ref => {this._scope = ref; }}
-                >
-                    <div className="selectbox__container">
-                        <div
-                            className="selectbox__container-inner"
-                            onClick={this.onContainerClick}
-                        >
-                            {
-                                value.map((item) => {
-                                    return (
-                                        <div className="selectbox__item-selected selectbox__item-selected_removable" key={item}>
-                                            {this.getEnum().getValue(item)}
-                                            <input
-                                                value={item}
-                                                name={this.getName()}
-                                                type="hidden"
-                                            />
-                                            <div
-                                                className="selectbox__item-selected-remove"
-                                                onClick={Util.passCtx(this.onItemRemoveClick, [item])}
-                                            >
-                                                <div className="selectbox__item-selected-remove-icon" />
-                                            </div>
-                                        </div>
-                                    );
-                                })
-                            }
-                            {
-                                this.isOpened()
-                                &&
-                                <input
-                                    type="text"
-                                    className="selectbox__input"
-                                    ref={ ref => {this._search = ref; }}
-                                    onKeyDown={this.onSearchKeyDown}
-                                    onKeyUp={this.onSearchKeyUp}
-                                />
-                            }
-                        </div>
-                        {
-                            this.isOpened() && this.state.items.length > 0
-                            &&
-                            <div
-                                className={`selectbox__dropdown ${this.isUp() ? 'selectbox__dropdown_up' : ''}`}
-                                ref={ ref => {this._dropdown = ref; }}
-                                onWheel={this.onDropDownScroll}
-                            >
-                                <div
-                                    className="selectbox__dropdown-scope"
-                                    ref={ ref => {this._bounds = ref; }}
-                                >
-                                    {
-                                        this.state.items.map((item) => {
-                                            return (this.renderDropDownItem(item));
-                                        })
-                                    }
-                                </div>
-                            </div>
-                        }
-                    </div>
-                </div>
-
+                {
+                    this.isReady()
+                    &&
+                    this.renderField()
+                }
             </Container>
         );
+
+    //     const value = this.getUnifiedValue();
+    //
+    //     return (
+    //         <Container
+    //             errorProps={this.props}
+    //             {...filterDOMProps(this.props)}
+    //         >
+    //             <div
+    //                 className="selectbox"
+    //                 ref={ ref => {this._scope = ref; }}
+    //             >
+    //                 <div className="selectbox__container">
+    //                     <div
+    //                         className="selectbox__container-inner"
+    //                         onClick={this.onContainerClick}
+    //                     >
+    //                         {
+    //                             value.map((item) => {
+    //                                 return (
+    //                                     <div className="selectbox__item-selected selectbox__item-selected_removable" key={item}>
+    //                                         {this.getEnum().getValue(item)}
+    //                                         <input
+    //                                             value={item}
+    //                                             name={this.getName()}
+    //                                             type="hidden"
+    //                                         />
+    //                                         <div
+    //                                             className="selectbox__item-selected-remove"
+    //                                             onClick={Util.passCtx(this.onItemRemoveClick, [item])}
+    //                                         >
+    //                                             <div className="selectbox__item-selected-remove-icon" />
+    //                                         </div>
+    //                                     </div>
+    //                                 );
+    //                             })
+    //                         }
+    //                         {
+    //                             this.isOpened()
+    //                             &&
+    //                             <input
+    //                                 type="text"
+    //                                 className="selectbox__input"
+    //                                 ref={ ref => {this._search = ref; }}
+    //                                 onKeyDown={this.onSearchKeyDown}
+    //                                 onKeyUp={this.onSearchKeyUp}
+    //                             />
+    //                         }
+    //                     </div>
+    //                     {
+    //                         this.isOpened() && this.state.items.length > 0
+    //                         &&
+    //                         <div
+    //                             className={`selectbox__dropdown ${this.isUp() ? 'selectbox__dropdown_up' : ''}`}
+    //                             ref={ ref => {this._dropdown = ref; }}
+    //                             onWheel={this.onDropDownScroll}
+    //                         >
+    //                             <div
+    //                                 className="selectbox__dropdown-scope"
+    //                                 ref={ ref => {this._bounds = ref; }}
+    //                             >
+    //                                 {
+    //                                     this.state.items.map((item) => {
+    //                                         return (this.renderDropDownItem(item));
+    //                                     })
+    //                                 }
+    //                             </div>
+    //                         </div>
+    //                     }
+    //                 </div>
+    //             </div>
+    //
+    //         </Container>
+    //     );
     }
 }
 

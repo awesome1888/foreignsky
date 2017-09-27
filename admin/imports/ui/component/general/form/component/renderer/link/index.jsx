@@ -442,5 +442,5 @@ class RendererLink extends RendererGeneric
     }
 };
 
-export const RendererClass = RendererLink;
 export default connectField(RendererLink, {});
+export const ControllerClass = RendererLink;

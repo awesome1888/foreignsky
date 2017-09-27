@@ -39,7 +39,7 @@ export default class ArticleForm extends EntityForm
         // render text as rich editor
         map.getAttribute('text').setParameter('renderer', RichRenderer);
         // render tag list as tag selector
-        // map.getAttribute('tag').setParameter('renderer', TagSelectorRenderer);
+        map.getAttribute('tag').setParameter('renderer', TagSelectorRenderer);
 
         return map;
     }

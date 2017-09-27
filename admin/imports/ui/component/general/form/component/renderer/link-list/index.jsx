@@ -18,9 +18,9 @@ import { Button, List, Modal } from 'semantic-ui-react';
 
 import './style.less';
 
-import {RendererClass} from '../link/index.jsx';
+import {ControllerClass as Link} from '../link/index.jsx';
 
-class RendererLinkList extends RendererClass
+class RendererLinkList extends Link
 {
     constructor(props)
     {
@@ -374,3 +374,4 @@ class RendererLinkList extends RendererClass
 }
 
 export default connectField(RendererLinkList, {includeInChain: false});
+export const ControllerClass = RendererLinkList;

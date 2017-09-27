@@ -7,8 +7,8 @@ import Util from '../../../../../../../lib/util.js';
 // https://github.com/vazco/uniforms/blob/master/API.md#connectfield
 // https://github.com/vazco/uniforms/blob/master/packages/uniforms-unstyled/src/TextField.js
 
-import RendererGeneric from '../generic/index.jsx';
-import Container from '../container/index.jsx';
+import RendererGeneric from '../../../../../../component/general/form/component/renderer/generic/index.jsx';
+import Container from '../../../../../../component/general/form/component/renderer/container/index.jsx';
 
 import './style.less';
 

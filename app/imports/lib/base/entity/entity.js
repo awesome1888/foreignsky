@@ -310,6 +310,11 @@ export default class BaseEntity
         this._data = data;
     }
 
+    exportData()
+    {
+        return _.clone(this.getData());
+    }
+
     normalizeData(data)
     {
         return data;

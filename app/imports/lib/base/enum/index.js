@@ -6,9 +6,9 @@ export default class Enum
 
     constructor(declaration)
     {
-        if (!_.isArrayNotEmpty(declaration))
+        if (!_.isArray(declaration))
         {
-            throw new TypeError('Not a declaration');
+            throw new TypeError('Illegal enum declaration');
         }
 
         this._items = declaration;

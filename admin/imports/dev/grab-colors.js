@@ -13,6 +13,8 @@ var page = require('webpage').create();
 //var url = system.args[1];
 var url = 'http://bootflat.github.io/color-picker.html';
 var output = './output.txt';
+var outputLess = './output-palette.txt';
+var outputPrimitives = './output-primitives.txt';
 
 ////////////////////////////////
 ////////////////////////////////
@@ -50,8 +52,11 @@ page.open(url, function(status) {
         });
 
         var strResult = '';
+        var strResultLess = '';
+        var strResultLessPrimitives = '';
         for(var k = 0; k < result.length; k++) {
             var code = result[k].name.replace(/[\-\s+]/g, '_');
+            var lessCode = code.replace(/_/g, '-').toLowerCase();
 
             var name = result[k].name.toLowerCase().split(' ');
             var newName = [];
@@ -60,10 +65,16 @@ page.open(url, function(status) {
             }
             newName = newName.join(' ');
 
-            strResult += "{value: '"+newName+"', key: '"+code+"', hex: '"+result[k].value.replace('#', '')+"'},\n";
+            var hex = result[k].value.replace('#', '').toLowerCase().substr(0, 6);
+
+            strResult += "{value: '"+newName+"', key: '"+code+"', hex: '"+hex+"'},\n";
+            strResultLess += "@color_"+lessCode+": #"+hex+";\n";
+            strResultLessPrimitives += ".b-color_"+lessCode+"() {\n\t._b-color(@color_"+lessCode+") !important;\n}\n\n";
         }
 
         fs.write(output, strResult, 'w');
+        fs.write(outputLess, strResultLess, 'w');
+        fs.write(outputPrimitives, strResultLessPrimitives, 'w');
         // system.stdout.writeLine('\nHello, system.stdout.writeLine!');
 
         phantom.exit();

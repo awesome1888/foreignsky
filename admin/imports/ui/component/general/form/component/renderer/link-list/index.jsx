@@ -39,7 +39,7 @@ class RendererLinkList extends Link
         {
             const entity = this.getEntity();
             const data = await entity.find({
-                select: [entity.getCutawayAttributeCode()],
+                select: this.getItemSelectFields(),
                 filter: {
                     _id: {$in: this.getValue()}
                 },

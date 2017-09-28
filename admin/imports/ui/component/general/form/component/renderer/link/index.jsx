@@ -50,7 +50,7 @@ class RendererLink extends RendererGeneric
         this.startDataReload();
     }
 
-    startDataReload(clearCache = false)
+    async startDataReload(clearCache = false)
     {
         if (clearCache)
         {
@@ -70,6 +70,11 @@ class RendererLink extends RendererGeneric
         });
     }
 
+    getItemSelectFields()
+    {
+        return [this.getEntity().getCutawayAttributeCode()];
+    }
+
     async loadData()
     {
         const id = this.getValue();
@@ -80,10 +85,11 @@ class RendererLink extends RendererGeneric
         }
 
         const entity = this.getEntity();
+        const fields = this.getItemSelectFields();
         const item = await entity.findById(id, {
-            select: [entity.getCutawayAttributeCode()],
+            select: fields,
         });
-        
+
         if (item)
         {
             this.saveToCache(item);
@@ -107,10 +113,10 @@ class RendererLink extends RendererGeneric
     {
         const entity = this.getEntity();
 
-        this._cache.items[item.getId()] = {
-            _id: item.getId(),
-            label: item.getData()[entity.getCutawayAttributeCode()],
-        };
+        const data = item.exportData();
+        data.label = item.getData()[entity.getCutawayAttributeCode()];
+
+        this._cache.items[item.getId()] = data;
     }
 
     getEntity()
@@ -151,6 +157,7 @@ class RendererLink extends RendererGeneric
 
     getErrorText()
     {
+        console.error(this.state.error);
         return this.state.error.toString();
     }
 

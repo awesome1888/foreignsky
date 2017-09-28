@@ -69,7 +69,7 @@ page.open(url, function(status) {
 
             strResult += "{value: '"+newName+"', key: '"+code+"', hex: '"+hex+"'},\n";
             strResultLess += "@color_"+lessCode+": #"+hex+";\n";
-            strResultLessPrimitives += ".b-color_"+lessCode+"() {\n\t._b-color(@color_"+lessCode+") !important;\n}\n\n";
+            strResultLessPrimitives += ".b-color_"+lessCode+" {\n\t._b-color(@color_"+lessCode+") !important;\n}\n\n";
         }
 
         fs.write(output, strResult, 'w');

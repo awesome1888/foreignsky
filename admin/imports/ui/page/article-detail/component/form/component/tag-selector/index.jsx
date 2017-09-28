@@ -51,16 +51,6 @@ class RendererTagSelector extends RendererLinkList
         });
     }
 
-    getItemSelectFields()
-    {
-        const fields = super.getItemSelectFields();
-
-        // get also color...
-        fields.push('color');
-
-        return fields;
-    }
-
     createEnum(tags)
     {
         const items = [];
@@ -71,8 +61,6 @@ class RendererTagSelector extends RendererLinkList
                 color: tag.getColor(),
             });
         });
-
-        console.dir(items);
 
         this._enum = new Enum(items);
     }
@@ -89,9 +77,6 @@ class RendererTagSelector extends RendererLinkList
 
     render()
     {
-        console.dir(this.state);
-        console.dir(this._cache);
-        
         if (this.hasError())
         {
             return (

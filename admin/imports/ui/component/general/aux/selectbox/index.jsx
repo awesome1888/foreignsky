@@ -392,18 +392,26 @@ export default class SelectBox extends BaseComponent
                         onClick={this.onContainerClick}
                     >
                         {
-                            value.map((item) => {
+                            value.map((key) => {
+                                const item = this.getEnum().getItemByKey(key);
+
+                                let color = item.color || '';
+                                if (color)
+                                {
+                                    color = `b-color_${color}`;
+                                }
+
                                 return (
-                                    <div className="selectbox__item-selected selectbox__item-selected_removable" key={item}>
-                                        {this.getEnum().getValue(item)}
+                                    <div className={`selectbox__item-selected selectbox__item-selected_removable ${color}`} key={key}>
+                                        {this.getEnum().getValue(key)}
                                         <input
-                                            value={item}
+                                            value={key}
                                             name={this.getName()}
                                             type="hidden"
                                         />
                                         <div
                                             className="selectbox__item-selected-remove"
-                                            onClick={Util.passCtx(this.onItemRemoveClick, [item])}
+                                            onClick={Util.passCtx(this.onItemRemoveClick, [key])}
                                         >
                                             <div className="selectbox__item-selected-remove-icon" />
                                         </div>

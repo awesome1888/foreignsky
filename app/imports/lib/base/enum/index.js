@@ -1,8 +1,13 @@
+/**
+ * todo: possible move to immutable.js?
+ */
+
 export default class Enum
 {
     _items = [];
     _k2v = null;
     _v2k = null;
+    _k2o = null;
 
     constructor(declaration)
     {
@@ -28,6 +33,7 @@ export default class Enum
     {
         if (!this._v2k)
         {
+            // todo: this will not work well with value duplicates
             this._v2k = this.makeMap('key', 'value');
         }
 
@@ -53,6 +59,24 @@ export default class Enum
             }
             return result;
         }, []);
+    }
+
+    getItemByKey(key)
+    {
+        if (!this._k2o)
+        {
+            this._k2o = this._items.reduce((result, item) => {
+                result[item.key] = item;
+                return result;
+            }, {});
+        }
+
+        return this._k2o[key] || null;
+    }
+
+    getItemsByValue()
+    {
+        // todo: (mind the plural notation)
     }
 
     selectize(search = '')

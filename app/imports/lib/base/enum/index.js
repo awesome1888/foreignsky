@@ -62,6 +62,7 @@ export default class Enum
         {
             search = search.toLowerCase();
             source = source.filter((item) => {
+                // todo: search also by additional keys in the item
                 return item.key.toLowerCase().indexOf(search) >= 0 || item.value.toLowerCase().indexOf(search) >= 0;
             });
         }

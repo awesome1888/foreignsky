@@ -80,7 +80,18 @@ export default class RendererGeneric extends BaseComponent
         }
 
         // for things like text inputs
-        return e => this.props.onChange(e.target.value);
+        return (value) => {
+            if (_.isObject(value) && 'target' in value)
+            {
+                // it could be Proxy came from React, but we cant be sure, kz we cant do "value instanceof Proxy"
+                return this.props.onChange(value.target.value);
+            }
+            else
+            {
+                // something else, array or scalar
+                return this.props.onChange(value);
+            }
+        };
     }
 
     onChange(value)

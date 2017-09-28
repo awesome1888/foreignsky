@@ -18,6 +18,7 @@ export default class SelectBox extends BaseComponent
         name: PropTypes.string,
         onChange: PropTypes.func,
         multiple: PropTypes.bool,
+        itemSelectedClassName: PropTypes.string,
     };
 
     static defaultProps = {
@@ -26,6 +27,7 @@ export default class SelectBox extends BaseComponent
         name: '',
         onChange: null,
         multiple: true,
+        itemSelectedClassName: '',
     };
 
     _dropdown = null;
@@ -402,7 +404,7 @@ export default class SelectBox extends BaseComponent
                                 }
 
                                 return (
-                                    <div className={`selectbox__item-selected selectbox__item-selected_removable ${color}`} key={key}>
+                                    <div className={`selectbox__item-selected selectbox__item-selected_removable ${color} ${this.props.itemSelectedClassName}`} key={key}>
                                         {this.getEnum().getValue(key)}
                                         <input
                                             value={key}

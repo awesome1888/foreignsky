@@ -11,6 +11,8 @@ import Container from '../../../../../../component/general/form/component/render
 import SelectBox from '../../../../../../component/general/aux/selectbox/index.jsx';
 import Enum from '../../../../../../../lib/base/enum/index.js';
 
+import { Popup } from 'semantic-ui-react';
+
 import './style.less';
 
 class RendererTagSelector extends RendererLinkList
@@ -75,6 +77,18 @@ class RendererTagSelector extends RendererLinkList
         return this.state.tagsReady && super.isReady();
     }
 
+    renderColorPicker()
+    {
+        return (
+            <Popup
+                flowing
+                hoverable
+            >
+                Alalalala
+            </Popup>
+        );
+    }
+
     render()
     {
         if (this.hasError())
@@ -99,8 +113,12 @@ class RendererTagSelector extends RendererLinkList
                         items={this.getEnum()}
                         multiple
                         onChange={this.onChange.bind(this)}
+                        itemSelectedClassName="round"
                     />
                 }
+
+                {this.renderColorPicker()}
+
             </Container>
         );
     }

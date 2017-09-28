@@ -51,6 +51,7 @@ export default class SelectBox extends BaseComponent
         this.onSearchKeyDown = this.onSearchKeyDown.bind(this);
         this.onSearchKeyUp = _.debounce(this.onSearchKeyUp.bind(this), 300);
         this.onWindowMetricChange = _.throttle(this.onWindowMetricChange.bind(this), 300);
+        this.onDocumentKeyDown = this.onDocumentKeyDown.bind(this);
     }
 
     componentDidMount()
@@ -61,17 +62,19 @@ export default class SelectBox extends BaseComponent
     componentWillUnmount()
     {
         $(window.document).off('click', this.onDocumentClick);
-        this.unBindMetricChange();
+        this.unBindDropDownEvents();
     }
 
-    bindMetricChange() {
+    bindDropDownEvents() {
         $(window).on('scroll', this.onWindowMetricChange);
         $(window).on('resize', this.onWindowMetricChange);
+        $(window.document).on('keydown', this.onDocumentKeyDown);
     }
 
-    unBindMetricChange() {
+    unBindDropDownEvents() {
         $(window).off('scroll', this.onWindowMetricChange);
         $(window).off('resize', this.onWindowMetricChange);
+        $(window.document).off('keydown', this.onDocumentKeyDown);
     }
 
     onDropDownScroll(e)
@@ -94,6 +97,12 @@ export default class SelectBox extends BaseComponent
 
     onWindowMetricChange() {
         this.updateDirection();
+    }
+
+    onDocumentKeyDown(e) {
+        if (e.key === 'Escape') {
+            this.closeDropDown();
+        }
     }
 
     onDocumentClick(e)
@@ -262,7 +271,7 @@ export default class SelectBox extends BaseComponent
                 up: false,
                 displayedItems: this.getItems(search),
             }, () => {
-                this.bindMetricChange();
+                this.bindDropDownEvents();
                 this.updateDirection();
                 if (_.isFunction(cb)) {
                     cb();
@@ -284,7 +293,7 @@ export default class SelectBox extends BaseComponent
             this.setState({
                 opened: false,
             });
-            this.unBindMetricChange();
+            this.unBindDropDownEvents();
         }
     }
 

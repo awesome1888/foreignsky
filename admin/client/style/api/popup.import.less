@@ -1,11 +1,13 @@
-@popup_border-radius: 4px;
+@popup_border-radius: 2px;
 @popup_corner-size: 20px;
+
+@popup_margin: (@popup_corner-size / 2) + 2px;
 
 .popup {
 	._absolute();
 	._border-rad(@popup_border-radius);
 	._border();
-	margin-top: (@popup_corner-size / 2) + 2px;
+	margin-top: @popup_margin;
 
 	._elbrus();
 	&:after {
@@ -15,6 +17,16 @@
 		._b-color(@color_white);
 		._border();
 		._rotate(45deg);
+	}
+}
+
+.popup_top {
+	bottom: 0;
+	margin-top: 0;
+	margin-bottom: @popup_margin;
+
+	&:after {
+		._absolute(auto, auto, -8px, 20px);
 	}
 }
 

@@ -413,17 +413,21 @@ export default class SelectBox extends BaseComponent
                                         key={key}
                                         onClick={_.isFunction(this.props.onItemClick) ? Util.passCtx(this.props.onItemClick, [key]) : null}
                                     >
-                                        {this.getEnum().getValue(key)}
-                                        <input
-                                            value={key}
-                                            name={this.getName()}
-                                            type="hidden"
-                                        />
-                                        <div
-                                            className="selectbox__item-selected-remove"
-                                            onClick={Util.passCtx(this.onItemRemoveClick, [key])}
-                                        >
-                                            <div className="selectbox__item-selected-remove-icon" />
+                                        <div className="selectbox__item-selected-inner">
+                                            <div className="selectbox__item-selected-text">
+                                                {this.getEnum().getValue(key)}
+                                            </div>
+                                            <input
+                                                value={key}
+                                                name={this.getName()}
+                                                type="hidden"
+                                            />
+                                            <div
+                                                className="selectbox__item-selected-remove"
+                                                onClick={Util.passCtx(this.onItemRemoveClick, [key])}
+                                            >
+                                                <div className="selectbox__item-selected-remove-icon" />
+                                            </div>
                                         </div>
                                     </div>
                                 );

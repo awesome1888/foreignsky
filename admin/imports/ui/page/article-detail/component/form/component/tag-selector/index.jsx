@@ -91,14 +91,30 @@ class RendererTagSelector extends RendererLinkList
     renderColorPicker()
     {
         return (
-            null
+            <div className="popup popup_top">
+                <div className="popup__inner">
+                    <div className="popup__content">
+                        <div className="tag-selector__create-tag">
+                            I am a color picker
+                        </div>
+                    </div>
+                </div>
+            </div>
         );
     }
 
     renderCreateButton()
     {
         return (
-            null
+            <div className="popup">
+                <div className="popup__inner">
+                    <div className="popup__content">
+                        <div className="tag-selector__create-tag">
+                            <a href="">Create new tag</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         );
     }
 
@@ -131,20 +147,11 @@ class RendererTagSelector extends RendererLinkList
                             itemSelectedClassName="round hand"
                             ref={(ref) => {this._selectbox = ref;}}
                             afterInputContainer={
-                                <div className="popup">
-                                    <div className="popup__inner">
-                                        <div className="popup__content">
-                                            <div className="tag-selector__create-tag">
-                                                <a href="">Create new tag</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                this.renderCreateButton()
                             }
                         />
 
                         {this.renderColorPicker()}
-                        {this.renderCreateButton()}
                     </div>
                 }
             </Container>

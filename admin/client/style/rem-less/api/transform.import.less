@@ -1,0 +1,13 @@
+._transform(@string) {
+	-webkit-transform: @string;
+	-moz-transform: @string;
+	-ms-transform: @string;
+	-o-transform: @string;
+	transform: @string;
+}
+
+._rotate(@deg) {
+	._transform(rotate(@deg));
+}
+
+// todo: all the rest :)

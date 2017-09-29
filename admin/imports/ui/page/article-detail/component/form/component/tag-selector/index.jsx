@@ -11,13 +11,12 @@ import Container from '../../../../../../component/general/form/component/render
 import SelectBox from '../../../../../../component/general/aux/selectbox/index.jsx';
 import Enum from '../../../../../../../lib/base/enum/index.js';
 
-import { Popup } from 'semantic-ui-react';
-
 import './style.less';
 
 class RendererTagSelector extends RendererLinkList
 {
     _enum = null;
+    _selectbox = null;
 
     constructor(props)
     {
@@ -25,6 +24,9 @@ class RendererTagSelector extends RendererLinkList
         this.extendState({
             tagsReady: false,
         });
+
+        this.onChange = this.onChange.bind(this);
+        this.onItemClick = this.onItemClick.bind(this);
     }
 
     componentDidMount()
@@ -37,6 +39,15 @@ class RendererTagSelector extends RendererLinkList
     {
         console.dir(value);
         super.onChange(value);
+    }
+
+    onItemClick(key, p, e)
+    {
+        console.dir('click');
+        console.dir(key);
+
+        p.stopPropagation();
+        this._selectbox.closeDropDown();
     }
 
     async startTagReload()
@@ -80,12 +91,14 @@ class RendererTagSelector extends RendererLinkList
     renderColorPicker()
     {
         return (
-            <Popup
-                flowing
-                hoverable
-            >
-                Alalalala
-            </Popup>
+            null
+        );
+    }
+
+    renderCreateButton()
+    {
+        return (
+            null
         );
     }
 
@@ -108,17 +121,32 @@ class RendererTagSelector extends RendererLinkList
                 {
                     this.isReady()
                     &&
-                    <SelectBox
-                        value={this.getValue()}
-                        items={this.getEnum()}
-                        multiple
-                        onChange={this.onChange.bind(this)}
-                        itemSelectedClassName="round"
-                    />
+                    <div className="">
+                        <SelectBox
+                            value={this.getValue()}
+                            items={this.getEnum()}
+                            multiple
+                            onChange={this.onChange}
+                            onItemClick={this.onItemClick}
+                            itemSelectedClassName="round hand"
+                            ref={(ref) => {this._selectbox = ref;}}
+                            afterInputContainer={
+                                <div className="popup">
+                                    <div className="popup__inner">
+                                        <div className="popup__content">
+                                            <div className="tag-selector__create-tag">
+                                                <a href="">Create new tag</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        />
+
+                        {this.renderColorPicker()}
+                        {this.renderCreateButton()}
+                    </div>
                 }
-
-                {this.renderColorPicker()}
-
             </Container>
         );
     }

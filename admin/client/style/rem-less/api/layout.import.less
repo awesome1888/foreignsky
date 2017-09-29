@@ -267,6 +267,29 @@
 	margin-bottom: 0 !important;
 }
 
+// z-index
+@z_step: 100;
+@z_orbit: 99999999;
+@z_stratosphere: @z_orbit - @z_step;
+@z_everest: @z_stratosphere - @z_step;
+@z_elbrus: @z_everest - @z_step;
+
+._orbit(){
+	z-index: @z_orbit;
+}
+
+._stratosphere(){
+	z-index: @z_stratosphere;
+}
+
+._everest(){
+	z-index: @z_everest;
+}
+
+._elbrus(){
+	z-index: @z_elbrus;
+}
+
 // groups
 #make_group(@mp-h: 1, @mp-v: @mp-h, @rev-h: false, @ref-v: false) {
 	& > * {

@@ -1,0 +1,30 @@
+@popup_border-radius: 4px;
+@popup_corner-size: 20px;
+
+.popup {
+	._absolute();
+	._border-rad(@popup_border-radius);
+	._border();
+	margin-top: (@popup_corner-size / 2) + 2px;
+
+	._elbrus();
+	&:after {
+		content: '';
+		._absolute(-8px, auto, auto, 20px);
+		._size(@popup_corner-size);
+		._b-color(@color_white);
+		._border();
+		._rotate(45deg);
+	}
+}
+
+.popup__inner {
+	z-index: @z_elbrus + 10;
+	._relative();
+	._border-rad(@popup_border-radius);
+	._b-color(@color_white);
+}
+
+.popup__content {
+	._padding_x();
+}

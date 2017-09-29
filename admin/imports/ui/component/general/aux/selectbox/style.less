@@ -21,18 +21,20 @@
 	._height_btw_x(2.9);
 }
 
+.selectbox__input-container {
+	._relative();
+	&:first-child {
+		._padding-l_x(0.5) !important;
+	}
+}
+
 .selectbox__input {
 	// fighting with semantic ui nesting, setting !important everywhere
-	._padding_x(0.5, 0.5, 0.5, 0) !important;
-	._margin-l_x();
+	._padding_x(0.5, 0.5, 0.5, 0.5) !important;
 	._no-border() !important;
 	._width_btw_x(1, 10);
 	._no-bg() !important;
 	._f-color() !important;
-
-	&:first-child {
-		._padding-l_x() !important;
-	}
 }
 
 .selectbox__item-selected {

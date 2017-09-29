@@ -17,8 +17,10 @@ export default class SelectBox extends BaseComponent
         ]),
         name: PropTypes.string,
         onChange: PropTypes.func,
+        onItemClick: PropTypes.func,
         multiple: PropTypes.bool,
         itemSelectedClassName: PropTypes.string,
+        afterInputContainer: PropTypes.object,
     };
 
     static defaultProps = {
@@ -26,8 +28,10 @@ export default class SelectBox extends BaseComponent
         items: [],
         name: '',
         onChange: null,
+        onItemClick: null,
         multiple: true,
         itemSelectedClassName: '',
+        afterInputContainer: null,
     };
 
     _dropdown = null;
@@ -404,7 +408,11 @@ export default class SelectBox extends BaseComponent
                                 }
 
                                 return (
-                                    <div className={`selectbox__item-selected selectbox__item-selected_removable ${color} ${this.props.itemSelectedClassName}`} key={key}>
+                                    <div
+                                        className={`selectbox__item-selected selectbox__item-selected_removable ${color} ${this.props.itemSelectedClassName}`}
+                                        key={key}
+                                        onClick={_.isFunction(this.props.onItemClick) ? Util.passCtx(this.props.onItemClick, [key]) : null}
+                                    >
                                         {this.getEnum().getValue(key)}
                                         <input
                                             value={key}
@@ -424,13 +432,16 @@ export default class SelectBox extends BaseComponent
                         {
                             this.isOpened()
                             &&
-                            <input
-                                type="text"
-                                className="selectbox__input"
-                                ref={ ref => {this._search = ref; }}
-                                onKeyDown={this.onSearchKeyDown}
-                                onKeyUp={this.onSearchKeyUp}
-                            />
+                            <div className="selectbox__input-container">
+                                <input
+                                    type="text"
+                                    className="selectbox__input"
+                                    ref={ ref => {this._search = ref; }}
+                                    onKeyDown={this.onSearchKeyDown}
+                                    onKeyUp={this.onSearchKeyUp}
+                                />
+                                {this.props.afterInputContainer}
+                            </div>
                         }
                     </div>
                     {

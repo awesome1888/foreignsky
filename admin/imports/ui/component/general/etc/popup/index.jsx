@@ -1,42 +1,37 @@
 import React from 'react';
 
-import BaseComponent from '../../../../../lib/base/component/component.jsx';
-
 import './style.less';
 import PropTypes from 'prop-types';
 
-export default class Popup extends BaseComponent
+import PopupPane from '../popup-pane/index.jsx';
+
+export default class Popup extends PopupPane
 {
     static propTypes = {
         position: PropTypes.oneOf(['top', 'bottom']),
         opened: PropTypes.bool,
-        showCloseButton: PropTypes.bool,
+        onClose: PropTypes.func,
+        //showCloseButton: PropTypes.bool,
     };
 
     static defaultProps = {
         position: 'bottom',
         opened: false,
-        showCloseButton: false,
+        onClose: null,
+        //showCloseButton: false,
     };
 
-    constructor(props)
+    getClassName()
     {
-        super(props);
-        this.extendState({
-        });
+        return `popup popup_${this.props.position}`;
     }
 
-    render()
+    renderChildren()
     {
         return (
-            <div
-                className={`popup popup_${this.props.position} ${this.props.opened ? '' : 'no-display'}`}
-                ref={ ref => {this._scope = ref; }}
-            >
-                <div className="popup__inner">
-                    <div className="popup__content">
-                        {this.props.children}
-                    </div>
+            <div className="popup__inner">
+                <div className="popup__content">
+                    {this.props.children}
                 </div>
             </div>
         );

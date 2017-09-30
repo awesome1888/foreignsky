@@ -49,6 +49,7 @@ export default class ColorPicker extends BaseComponent
                             className="color-picker__sample"
                             title={item.value}
                             onClick={this.onItemClick.bind(this, item.key)}
+                            key={item.key}
                         >
                             <div className={`color-picker__sample-inner b-color_${item.keyLess}`} />
                         </div>

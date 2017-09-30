@@ -22,7 +22,6 @@ class RendererTagSelector extends RendererLinkList
     _selectbox = null;
     _colorPicker = null;
     _scope = null;
-    _currentItemId = null;
 
     constructor(props)
     {
@@ -30,10 +29,12 @@ class RendererTagSelector extends RendererLinkList
         this.extendState({
             tagsReady: false,
             colorPopupOpened: false,
+            currentItemId: null,
         });
 
         this.onChange = this.onChange.bind(this);
         this.onItemClick = this.onItemClick.bind(this);
+        this.closeTagPopup = this.closeTagPopup.bind(this);
     }
 
     componentDidMount()
@@ -44,12 +45,12 @@ class RendererTagSelector extends RendererLinkList
 
     onColorClick(colorCode, color)
     {
-        if (this._currentItemId)
+        if (this.state.currentItemId)
         {
             // update tag color
-            this.getEntity().save(this._currentItemId, {color: color.keyLess}).then((res) => {
+            this.getEntity().save(this.state.currentItemId, {color: color.keyLess}).then((res) => {
                 // just updating the tag locally, no need to re-fetch it from the db
-                this.getEnum().getItemByKey(this._currentItemId).color = color.keyLess;
+                this.getEnum().getItemByKey(this.state.currentItemId).color = color.keyLess;
 
                 // force to re-render
                 this.setState({
@@ -65,11 +66,13 @@ class RendererTagSelector extends RendererLinkList
     {
         if (this._colorPicker && this._scope)
         {
-            this._currentItemId = key;
+            this.setState({
+                currentItemId: key,
+            });
             
             const itemNode = $(`.selectbox__item-id-${key}`, this._scope).get(0);
             if (itemNode) {
-                itemNode.appendChild(this._colorPicker.getRootNode());
+                itemNode.appendChild(this._colorPicker);
                 this.openTagPopup();
             }
         }
@@ -80,16 +83,24 @@ class RendererTagSelector extends RendererLinkList
 
     openTagPopup()
     {
-        this.setState({
-            colorPopupOpened: true,
-        });
+        if (!this.state.colorPopupOpened)
+        {
+            console.dir('open!');
+            this.setState({
+                colorPopupOpened: true,
+            });
+        }
     }
 
     closeTagPopup()
     {
-        this.setState({
-            colorPopupOpened: false,
-        });
+        if (this.state.colorPopupOpened)
+        {
+            console.dir('close!');
+            this.setState({
+                colorPopupOpened: false,
+            });
+        }
     }
 
     async startTagReload()
@@ -133,18 +144,30 @@ class RendererTagSelector extends RendererLinkList
     renderColorPicker()
     {
         return (
-            <Popup
-                position="top"
+            <div
                 ref={(ref) => {this._colorPicker = ref;}}
-                opened={this.state.colorPopupOpened}
             >
-                <ColorPicker
-                    onColorClick={this.onColorClick.bind(this)}
-                />
-                <div className="border-t padding-t_x0p5 margin-t_x0p5">
-                    <a href="" className="no-decoration">Edit tag</a>
-                </div>
-            </Popup>
+                {
+                    this.state.colorPopupOpened
+                    &&
+                    <Popup
+                        position="top"
+                        opened={true}
+                        // onClose={this.closeTagPopup}
+                    >
+                        <ColorPicker
+                            onColorClick={this.onColorClick.bind(this)}
+                        />
+                        <div className="border-t padding-t_x0p5 margin-t_x0p5">
+                            <a
+                                href={`/entity/article.tag/${this.state.currentItemId}/`}
+                                className="no-decoration"
+                                target="_blank"
+                            >Edit tag</a>
+                        </div>
+                    </Popup>
+                }
+            </div>
         );
     }
 

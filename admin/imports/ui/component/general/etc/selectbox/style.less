@@ -15,10 +15,18 @@
 	._padding_x(0.4);
 }
 
+// sounds crazy
+._selectbox__relative-stratosphere() {
+	._stratosphere();
+	._relative();
+}
+
 .selectbox__container-inner {
 	._group_x(0.4) !important;
 	._content_v_center_h_left(true);
 	._height_btw_x(2.9);
+
+	._selectbox__relative-stratosphere();
 }
 
 .selectbox__input-container {
@@ -26,6 +34,8 @@
 	&:first-child {
 		._padding-l_x(0.5) !important;
 	}
+
+	._selectbox__relative-stratosphere();
 }
 
 .selectbox__input {

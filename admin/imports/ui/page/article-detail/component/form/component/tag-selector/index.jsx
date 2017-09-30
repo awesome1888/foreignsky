@@ -285,6 +285,7 @@ class RendererTagSelector extends RendererLinkList
             <Popup
                 opened={true}
                 globalClickClose={false}
+                className="stratosphere"
             >
                 <div className="tag-selector__create-tag">
                     <a

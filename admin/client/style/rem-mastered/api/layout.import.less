@@ -365,6 +365,14 @@
 	box-sizing: border-box;
 }
 
+._clearfix() {
+	&::after {
+		display: block;
+		content: "";
+		clear: both;
+	}
+}
+
 //.height-trick_30p {
 //	#make_height-trick(30%);
 //}

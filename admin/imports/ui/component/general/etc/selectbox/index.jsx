@@ -39,7 +39,6 @@ export default class SelectBox extends BaseComponent
     _dropdown = null;
     _bounds = null;
     _search = null;
-    _scope = null;
 
     _enum = null;
 

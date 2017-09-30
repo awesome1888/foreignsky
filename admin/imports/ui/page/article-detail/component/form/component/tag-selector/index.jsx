@@ -8,8 +8,11 @@ import filterDOMProps from 'uniforms/filterDOMProps';
 
 import {ControllerClass as RendererLinkList} from '../../../../../../component/general/form/component/renderer/link-list/index.jsx';
 import Container from '../../../../../../component/general/form/component/renderer/container/index.jsx';
-import SelectBox from '../../../../../../component/general/aux/selectbox/index.jsx';
+import SelectBox from '../../../../../../component/general/etc/selectbox/index.jsx';
 import Enum from '../../../../../../../lib/base/enum/index.js';
+
+import Popup from '../../../../../../component/general/etc/popup/index.jsx';
+import ColorPicker from '../../../../../../component/general/etc/color-picker/index.jsx';
 
 import './style.less';
 
@@ -17,12 +20,16 @@ class RendererTagSelector extends RendererLinkList
 {
     _enum = null;
     _selectbox = null;
+    _colorPicker = null;
+    _scope = null;
+    _currentItemId = null;
 
     constructor(props)
     {
         super(props);
         this.extendState({
             tagsReady: false,
+            colorPopupOpened: false,
         });
 
         this.onChange = this.onChange.bind(this);
@@ -35,19 +42,54 @@ class RendererTagSelector extends RendererLinkList
         super.componentDidMount();
     }
 
-    onChange(value)
+    onColorClick(colorCode, color)
     {
-        console.dir(value);
-        super.onChange(value);
+        if (this._currentItemId)
+        {
+            // update tag color
+            this.getEntity().save(this._currentItemId, {color: color.keyLess}).then((res) => {
+                // just updating the tag locally, no need to re-fetch it from the db
+                this.getEnum().getItemByKey(this._currentItemId).color = color.keyLess;
+
+                // force to re-render
+                this.setState({
+                    tagsReady: true,
+                });
+
+                this.closeTagPopup();
+            });
+        }
     }
 
-    onItemClick(key, p, e)
+    onItemClick(key, p)
     {
-        console.dir('click');
-        console.dir(key);
+        if (this._colorPicker && this._scope)
+        {
+            this._currentItemId = key;
+            
+            const itemNode = $(`.selectbox__item-id-${key}`, this._scope).get(0);
+            if (itemNode) {
+                itemNode.appendChild(this._colorPicker.getRootNode());
+                this.openTagPopup();
+            }
+        }
 
         p.stopPropagation();
         this._selectbox.closeDropDown();
+    }
+
+    openTagPopup()
+    {
+        this.setState({
+            colorPopupOpened: true,
+        });
+    }
+
+    closeTagPopup()
+    {
+        this.setState({
+            colorPopupOpened: false,
+        });
     }
 
     async startTagReload()
@@ -91,30 +133,29 @@ class RendererTagSelector extends RendererLinkList
     renderColorPicker()
     {
         return (
-            <div className="popup popup_top">
-                <div className="popup__inner">
-                    <div className="popup__content">
-                        <div className="tag-selector__create-tag">
-                            I am a color picker
-                        </div>
-                    </div>
+            <Popup
+                position="top"
+                ref={(ref) => {this._colorPicker = ref;}}
+                opened={this.state.colorPopupOpened}
+            >
+                <ColorPicker
+                    onColorClick={this.onColorClick.bind(this)}
+                />
+                <div className="border-t padding-t_x0p5 margin-t_x0p5">
+                    <a href="" className="no-decoration">Edit tag</a>
                 </div>
-            </div>
+            </Popup>
         );
     }
 
     renderCreateButton()
     {
         return (
-            <div className="popup">
-                <div className="popup__inner">
-                    <div className="popup__content">
-                        <div className="tag-selector__create-tag">
-                            <a href="">Create new tag</a>
-                        </div>
-                    </div>
+            <Popup>
+                <div className="tag-selector__create-tag">
+                    <a href="">Create new tag</a>
                 </div>
-            </div>
+            </Popup>
         );
     }
 
@@ -137,7 +178,9 @@ class RendererTagSelector extends RendererLinkList
                 {
                     this.isReady()
                     &&
-                    <div className="">
+                    <div
+                        ref={(ref) => {this._scope = ref;}}
+                    >
                         <SelectBox
                             value={this.getValue()}
                             items={this.getEnum()}

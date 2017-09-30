@@ -1,3 +1,5 @@
+
+// transition-default ?
 ._transition(@what: all, @duration: 200ms) {
 	transition: @what @duration ease;
 }
@@ -62,16 +64,6 @@
 
 ._no-appearance() {
 	-webkit-appearance: none;
-}
-
-._scroll-v(@height: 70vh) {
-	max-height: calc(@height);
-	overflow: auto;
-}
-
-._scroll-v_x(@mp: 1) {
-	max-height: calc(@offset * @mp);
-	overflow: auto;
 }
 
 ._hand() {

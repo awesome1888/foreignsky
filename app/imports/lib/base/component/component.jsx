@@ -6,6 +6,7 @@ import App from '../../../ui/application.jsx';
 
 export default class BaseComponent extends Component
 {
+    _scope = null;
     _cache = null;
     _events = [];
 
@@ -14,6 +15,23 @@ export default class BaseComponent extends Component
         super(props);
         this.state = {};
         this.clearCache();
+    }
+
+    componentWillUnmount()
+    {
+        if(this._titleUpdated)
+        {
+            this.getApplication().setTitle();
+            this._titleUpdated = false;
+        }
+
+        // un-bind events
+        if(_.isArrayNotEmpty(this._events))
+        {
+            this._events.forEach((pair) => {
+                $(document).unbind(pair.event, pair.cb);
+            });
+        }
     }
 
     clearCache()
@@ -34,21 +52,15 @@ export default class BaseComponent extends Component
         return App.getInstance();
     }
 
-    componentWillUnmount()
+    /**
+     * Dont forget to add
+     * ref={ref => {this._scope = ref;}}
+     * inside render() function to make this work.
+     * @returns {*}
+     */
+    getRootNode()
     {
-        if(this._titleUpdated)
-        {
-            this.getApplication().setTitle();
-            this._titleUpdated = false;
-        }
-
-        // un-bind events
-        if(_.isArrayNotEmpty(this._events))
-        {
-            this._events.forEach((pair) => {
-                $(document).unbind(pair.event, pair.cb);
-            });
-        }
+        return this._scope;
     }
 
     setTitle(title = '')

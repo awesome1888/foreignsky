@@ -1,0 +1,26 @@
+@import (reference) url('/client/style/index.less');
+
+.color-picker {
+	._size_x(12.5, 11);
+	._scroll-vv();
+}
+
+.color-picker__palette {
+	._group_x(0.45);
+}
+
+.color-picker__sample {
+	._border();
+	._inline-float();
+	._transition();
+	._hand();
+	padding: 1px;
+
+	&:hover {
+		._border(@color_scarlet);
+	}
+}
+
+.color-picker__sample-inner {
+	._size_x(1.5);
+}

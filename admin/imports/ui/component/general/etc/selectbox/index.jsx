@@ -20,6 +20,7 @@ export default class SelectBox extends BaseComponent
         onItemClick: PropTypes.func,
         multiple: PropTypes.bool,
         itemSelectedClassName: PropTypes.string,
+        itemSelectedInnerClassName: PropTypes.string,
         afterInputContainer: PropTypes.object,
     };
 
@@ -31,6 +32,7 @@ export default class SelectBox extends BaseComponent
         onItemClick: null,
         multiple: true,
         itemSelectedClassName: '',
+        itemSelectedInnerClassName: '',
         afterInputContainer: null,
     };
 
@@ -409,11 +411,11 @@ export default class SelectBox extends BaseComponent
 
                                 return (
                                     <div
-                                        className={`selectbox__item-selected selectbox__item-selected_removable ${color} ${this.props.itemSelectedClassName}`}
+                                        className={`selectbox__item-selected selectbox__item-selected_removable selectbox__item-id-${key.toString()} ${color} ${this.props.itemSelectedClassName}`}
                                         key={key}
                                         onClick={_.isFunction(this.props.onItemClick) ? Util.passCtx(this.props.onItemClick, [key]) : null}
                                     >
-                                        <div className="selectbox__item-selected-inner">
+                                        <div className={`selectbox__item-selected-inner ${this.props.itemSelectedInnerClassName}`}>
                                             <div className="selectbox__item-selected-text">
                                                 {this.getEnum().getValue(key)}
                                             </div>

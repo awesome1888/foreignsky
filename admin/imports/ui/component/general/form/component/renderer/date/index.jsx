@@ -11,7 +11,7 @@ import moment from 'moment';
 import RendererGeneric from '../generic/index.jsx';
 import Container from '../container/index.jsx';
 
-import DatePicker from '../../../../../../component/general/aux/date-picker/index.jsx';
+import DatePicker from '../../../../etc/date-picker/index.jsx';
 
 import './style.less';
 

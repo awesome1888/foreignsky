@@ -1,12 +1,15 @@
+@import (reference) url('/client/style/index.less');
+
 @popup_border-radius: 2px;
 @popup_corner-size: 20px;
 
 @popup_margin: (@popup_corner-size / 2) + 2px;
 
 .popup {
-	._absolute();
+	._absolute(auto, auto, auto, 0); // by default its bottom-left
 	._border-rad(@popup_border-radius);
 	._border();
+	cursor: default;
 	margin-top: @popup_margin;
 
 	._elbrus();
@@ -21,7 +24,7 @@
 }
 
 .popup_top {
-	bottom: 0;
+	bottom: 100%; // top-left
 	margin-top: 0;
 	margin-bottom: @popup_margin;
 

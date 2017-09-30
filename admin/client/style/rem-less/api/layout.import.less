@@ -101,6 +101,9 @@
 ._block() {
 	display: block;
 }
+._inline() {
+	display: inline;
+}
 ._inline-block() {
 	display: inline-block;
 }
@@ -108,7 +111,7 @@
 	display: none;
 }
 ._inline-float(@way: left) {
-	display: inline-block;
+	._inline-block();
 	float: @way;
 }
 
@@ -216,6 +219,9 @@
 .padding-t {
 	._padding-t_x() !important;
 }
+.padding-t_x0p5 {
+	._padding-t_x(0.5) !important;
+}
 .padding-l_x2 {
 	._padding-l_x(2) !important;
 }
@@ -254,6 +260,9 @@
 .margin-t {
 	._margin-t_x() !important;
 }
+.margin-t_x0p5 {
+	._margin-t_x(0.5) !important;
+}
 .margin-b {
 	._margin-b_x() !important;
 }
@@ -288,6 +297,29 @@
 
 ._elbrus(){
 	z-index: @z_elbrus;
+}
+
+// overflow & scroll
+._scroll-vv() {
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+._scroll-v(@height: 70vh) {
+	max-height: calc(@height);
+	overflow: auto;
+}
+
+._scroll-v_x(@mp: 1) {
+	max-height: calc(@offset * @mp);
+	overflow: auto;
+}
+
+._no-overflow(@t-overflow: false) {
+	overflow: hidden;
+	& when (@t-overflow = ellipsis) {
+		text-overflow: ellipsis;
+	}
 }
 
 // groups

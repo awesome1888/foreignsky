@@ -8,7 +8,7 @@ import filterDOMProps from 'uniforms/filterDOMProps';
 
 import RendererGeneric from '../generic/index.jsx';
 import Container from '../container/index.jsx';
-import SelectBox from '../../../../../../component/general/aux/selectbox/index.jsx';
+import SelectBox from '../../../../etc/selectbox/index.jsx';
 
 class RendererSelectBox extends RendererGeneric
 {

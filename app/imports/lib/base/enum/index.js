@@ -29,6 +29,11 @@ export default class Enum
         return this._k2v[value];
     }
 
+    getRandomItem()
+    {
+        return _.sample(this._items);
+    }
+
     getValue(key)
     {
         if (!this._v2k)
@@ -118,5 +123,36 @@ export default class Enum
         }
 
         return [];
+    }
+
+    forEach(cb)
+    {
+        if (_.isFunction(cb))
+        {
+            this._items.forEach(cb);
+        }
+    }
+
+    find(cb)
+    {
+        if (_.isFunction(cb))
+        {
+            return this._items.find(cb);
+        }
+
+        return false;
+    }
+
+    add(item)
+    {
+        this._items.push(item);
+        this.clearCaches();
+    }
+
+    clearCaches()
+    {
+        this._k2v = null;
+        this._v2k = null;
+        this._k2o = null;
     }
 }

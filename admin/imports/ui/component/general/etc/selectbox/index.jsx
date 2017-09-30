@@ -18,6 +18,9 @@ export default class SelectBox extends BaseComponent
         name: PropTypes.string,
         onChange: PropTypes.func,
         onItemClick: PropTypes.func,
+        onSearch: PropTypes.func,
+        onSearchCancel: PropTypes.func,
+        onSearchTypeEnter: PropTypes.func,
         multiple: PropTypes.bool,
         itemSelectedClassName: PropTypes.string,
         itemSelectedInnerClassName: PropTypes.string,
@@ -30,6 +33,9 @@ export default class SelectBox extends BaseComponent
         name: '',
         onChange: null,
         onItemClick: null,
+        onSearch: null,
+        onSearchCancel: null,
+        onSearchTypeEnter: null,
         multiple: true,
         itemSelectedClassName: '',
         itemSelectedInnerClassName: '',
@@ -130,9 +136,19 @@ export default class SelectBox extends BaseComponent
 
     onContainerClick()
     {
+        this.startSearch();
+    }
+
+    startSearch(reset = false)
+    {
+        if (reset && this._search)
+        {
+            this._search.value = '';
+        }
+
         this.openDropDown(() => {
             this.focusSearch();
-        });
+        }, '', reset);
     }
 
     getOnChange()
@@ -166,13 +182,31 @@ export default class SelectBox extends BaseComponent
                 this.onChange('');
             }
         }
+
+        if (e.key === 'Enter')
+        {
+            if (_.isFunction(this.props.onSearchTypeEnter))
+            {
+                this.props.onSearchTypeEnter(e);
+            }
+        }
     }
 
     onSearchKeyUp(e)
     {
+        if (!this._search)
+        {
+            return;
+        }
+
         const search = this._search.value;
         this.setState({
             displayedItems: this.getItems(search),
+        }, () => {
+            if (_.isFunction(this.props.onSearch))
+            {
+                this.props.onSearch(search, this.state.displayedItems);
+            }
         });
     }
 
@@ -269,9 +303,9 @@ export default class SelectBox extends BaseComponent
         return this.state.opened;
     }
 
-    openDropDown(cb, search = '')
+    openDropDown(cb, search = '', reset = false)
     {
-        if (!this.state.opened)
+        if (!this.state.opened || reset)
         {
             this.setState({
                 opened: true,
@@ -299,6 +333,11 @@ export default class SelectBox extends BaseComponent
         {
             this.setState({
                 opened: false,
+            }, () => {
+                if (_.isFunction(this.props.onSearchCancel))
+                {
+                    this.props.onSearchCancel();
+                }
             });
             this.unBindDropDownEvents();
         }

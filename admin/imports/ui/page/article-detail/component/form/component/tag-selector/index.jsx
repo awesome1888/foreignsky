@@ -14,6 +14,8 @@ import Enum from '../../../../../../../lib/base/enum/index.js';
 import Popup from '../../../../../../component/general/etc/popup/index.jsx';
 import ColorPicker from '../../../../../../component/general/etc/color-picker/index.jsx';
 
+import colorEnum from '../../../../../../../lib/etc/enum/color.js';
+
 import './style.less';
 
 class RendererTagSelector extends RendererLinkList
@@ -22,6 +24,7 @@ class RendererTagSelector extends RendererLinkList
     _selectbox = null;
     _colorPicker = null;
     _scope = null;
+    _lastSearchText = '';
 
     constructor(props)
     {
@@ -29,12 +32,17 @@ class RendererTagSelector extends RendererLinkList
         this.extendState({
             tagsReady: false,
             colorPopupOpened: false,
+            createTagPopupOpened: false,
             currentItemId: null,
         });
 
         this.onChange = this.onChange.bind(this);
         this.onItemClick = this.onItemClick.bind(this);
         this.closeTagPopup = this.closeTagPopup.bind(this);
+        this.onSearch = this.onSearch.bind(this);
+        this.onSearchCancel = this.onSearchCancel.bind(this);
+        this.onSearchTypeEnter = this.onSearchTypeEnter.bind(this);
+        this.onCreateTagClick = this.onCreateTagClick.bind(this);
     }
 
     componentDidMount()
@@ -64,8 +72,6 @@ class RendererTagSelector extends RendererLinkList
 
     onItemClick(key, p)
     {
-        console.dir('click item');
-        
         if (this._colorPicker && this._scope)
         {
             this.setState({
@@ -81,6 +87,35 @@ class RendererTagSelector extends RendererLinkList
 
         p.stopPropagation();
         this._selectbox.closeDropDown();
+    }
+
+    onSearch(text, items)
+    {
+        if (_.isStringNotEmpty(text) && this.dontHaveTagLike(text))
+        {
+            this._lastSearchText = text;
+            this.openCreateTagPopup();
+        }
+        else
+        {
+            this.closeCreateTagPopup();
+        }
+    }
+
+    onSearchCancel()
+    {
+        this.closeCreateTagPopup();
+    }
+
+    onSearchTypeEnter(e)
+    {
+        this.createTag(true);
+        e.preventDefault();
+    }
+    
+    onCreateTagClick()
+    {
+        this.createTag();
     }
 
     openTagPopup()
@@ -101,6 +136,73 @@ class RendererTagSelector extends RendererLinkList
                 colorPopupOpened: false,
             });
         }
+    }
+
+    openCreateTagPopup()
+    {
+        this.setState({
+            createTagPopupOpened: true,
+        });
+    }
+
+    closeCreateTagPopup()
+    {
+        this._lastSearchText = '';
+        this.setState({
+            createTagPopupOpened: false,
+        });
+    }
+
+    createTag(bringFocus = false)
+    {
+        const text = this._lastSearchText;
+        if (_.isStringNotEmpty(text))
+        {
+            const data = {
+                title: text,
+                color: colorEnum.getRandomItem().keyLess,
+            };
+
+            this.getEntity().save(null, data).then((id) => {
+                if (_.isStringNotEmpty(id))
+                {
+                    // close
+                    if (!bringFocus)
+                    {
+                        this._selectbox.closeDropDown();
+                    }
+                    else
+                    {
+                        this._selectbox.startSearch(true);
+                    }
+
+                    // instead of calling the db, we complete the existing data:
+
+                    // add new item to the cache
+                    data._id = id;
+                    this._cache.items[id] = data;
+
+                    // add new item to the enum
+                    this.getEnum().add({
+                        key: id,
+                        value: `#${text}`,
+                        color: data.color,
+                    });
+
+                    // update value
+                    const newValue = _.union(this.getValue(), [id]);
+                    this.onChange(newValue);
+                }
+            });
+        }
+    }
+
+    dontHaveTagLike(text)
+    {
+        text = `#${text.toLowerCase().trim()}`;
+        return !this.getEnum().find((tag) => {
+            return tag.value.toLowerCase().trim() === text;
+        });
     }
 
     async startTagReload()
@@ -174,13 +276,23 @@ class RendererTagSelector extends RendererLinkList
 
     renderCreateButton()
     {
+        if (!this.state.createTagPopupOpened)
+        {
+            return null;
+        }
+
         return (
             <Popup
                 opened={true}
                 globalClickClose={false}
             >
                 <div className="tag-selector__create-tag">
-                    <a href="">Create new tag</a>
+                    <a
+                        href=""
+                        onClick={this.onCreateTagClick}
+                    >
+                        Create new tag
+                    </a>
                 </div>
             </Popup>
         );
@@ -214,6 +326,9 @@ class RendererTagSelector extends RendererLinkList
                             multiple
                             onChange={this.onChange}
                             onItemClick={this.onItemClick}
+                            onSearch={this.onSearch}
+                            onSearchCancel={this.onSearchCancel}
+                            onSearchTypeEnter={this.onSearchTypeEnter}
                             itemSelectedClassName="round hand"
                             ref={(ref) => {this._selectbox = ref;}}
                             afterInputContainer={

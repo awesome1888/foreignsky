@@ -4,6 +4,7 @@ import BaseComponent from '../../../../../lib/base/component/component.jsx';
 
 import PropTypes from 'prop-types';
 
+// todo: implement show up/down, close by escape
 export default class PopupPane extends BaseComponent
 {
     static propTypes = {
@@ -61,7 +62,6 @@ export default class PopupPane extends BaseComponent
     {
         if (!this.props.opened)
         {
-            console.dir('skip!');
             return;
         }
 
@@ -80,7 +80,6 @@ export default class PopupPane extends BaseComponent
             node = node.parentElement;
         }
 
-        console.dir('fire close!');
         this.onClose();
     }
 

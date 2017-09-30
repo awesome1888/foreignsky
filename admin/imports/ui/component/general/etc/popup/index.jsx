@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './style.less';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import PopupPane from '../popup-pane/index.jsx';
 

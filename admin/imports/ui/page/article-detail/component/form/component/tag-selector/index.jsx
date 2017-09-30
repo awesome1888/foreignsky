@@ -64,12 +64,14 @@ class RendererTagSelector extends RendererLinkList
 
     onItemClick(key, p)
     {
+        console.dir('click item');
+        
         if (this._colorPicker && this._scope)
         {
             this.setState({
                 currentItemId: key,
             });
-            
+
             const itemNode = $(`.selectbox__item-id-${key}`, this._scope).get(0);
             if (itemNode) {
                 itemNode.appendChild(this._colorPicker);
@@ -85,7 +87,6 @@ class RendererTagSelector extends RendererLinkList
     {
         if (!this.state.colorPopupOpened)
         {
-            console.dir('open!');
             this.setState({
                 colorPopupOpened: true,
             });
@@ -96,7 +97,6 @@ class RendererTagSelector extends RendererLinkList
     {
         if (this.state.colorPopupOpened)
         {
-            console.dir('close!');
             this.setState({
                 colorPopupOpened: false,
             });
@@ -153,7 +153,8 @@ class RendererTagSelector extends RendererLinkList
                     <Popup
                         position="top"
                         opened={true}
-                        // onClose={this.closeTagPopup}
+                        onClose={this.closeTagPopup}
+                        closeStopSelector=".selectbox__item-selected"
                     >
                         <ColorPicker
                             onColorClick={this.onColorClick.bind(this)}
@@ -174,7 +175,10 @@ class RendererTagSelector extends RendererLinkList
     renderCreateButton()
     {
         return (
-            <Popup>
+            <Popup
+                opened={true}
+                globalClickClose={false}
+            >
                 <div className="tag-selector__create-tag">
                     <a href="">Create new tag</a>
                 </div>

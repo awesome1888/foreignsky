@@ -7,19 +7,13 @@ import PopupPane from '../popup-pane/index.jsx';
 
 export default class Popup extends PopupPane
 {
-    static propTypes = {
-        position: PropTypes.oneOf(['top', 'bottom']),
-        opened: PropTypes.bool,
-        onClose: PropTypes.func,
-        //showCloseButton: PropTypes.bool,
-    };
-
-    static defaultProps = {
-        position: 'bottom',
-        opened: false,
-        onClose: null,
-        //showCloseButton: false,
-    };
+    // static propTypes = {
+    //     position: PropTypes.oneOf(['top', 'bottom']),
+    // };
+    //
+    // static defaultProps = {
+    //     position: 'bottom',
+    // };
 
     getClassName()
     {

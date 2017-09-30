@@ -10,12 +10,16 @@ export default class PopupPane extends BaseComponent
         // the opened\closed state is controlled outside, through properties
         opened: PropTypes.bool,
         onClose: PropTypes.func,
+        globalClickClose: PropTypes.bool,
+        closeStopSelector: PropTypes.string, // if you are unable to stop the click event propagation, this will help
 
-        className: PropTypes.bool,
+        className: PropTypes.string,
     };
 
     static defaultProps = {
         opened: false,
+        globalClickClose: true,
+        closeStopSelector: '',
         onClose: null,
         className: '',
     };
@@ -31,7 +35,13 @@ export default class PopupPane extends BaseComponent
 
     componentDidMount()
     {
-        $(window.document).on('click', this.onDocumentClick);
+        if (this.props.globalClickClose)
+        {
+            // dirty hack, to prevent popup from opening and immediately closing :(
+            Meteor.setTimeout(() => {
+                $(window.document).on('click', this.onDocumentClick);
+            }, 1);
+        }
     }
 
     componentWillUnmount()
@@ -59,6 +69,10 @@ export default class PopupPane extends BaseComponent
         while(node)
         {
             if (node === this._scope)
+            {
+                return;
+            }
+            if (this.props.closeStopSelector && $(node).is(this.props.closeStopSelector))
             {
                 return;
             }

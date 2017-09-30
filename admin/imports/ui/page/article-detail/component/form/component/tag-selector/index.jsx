@@ -212,10 +212,10 @@ class RendererTagSelector extends RendererLinkList
         });
 
         this.getEntity().find({select: ['title', 'color']}).then((tags) => {
+            this.createEnum(tags);
             this.setState({
                 tagsReady: true,
             });
-            this.createEnum(tags);
         });
     }
 
@@ -264,9 +264,11 @@ class RendererTagSelector extends RendererLinkList
                         <div className="border-t padding-t_x0p5 margin-t_x0p5">
                             <a
                                 href={`/entity/article.tag/${this.state.currentItemId}/`}
-                                className="no-decoration"
+                                className="icon-label_mode-edit no-decoration"
                                 target="_blank"
-                            >Edit tag</a>
+                            >
+                                Edit tag
+                            </a>
                         </div>
                     </Popup>
                 }
@@ -288,12 +290,12 @@ class RendererTagSelector extends RendererLinkList
                 className="stratosphere"
             >
                 <div className="tag-selector__create-tag">
-                    <a
-                        href=""
+                    <div
+                        className="icon-label_add hand"
                         onClick={this.onCreateTagClick}
                     >
                         Create new tag
-                    </a>
+                    </div>
                 </div>
             </Popup>
         );
@@ -309,7 +311,7 @@ class RendererTagSelector extends RendererLinkList
                 </div>
             );
         }
-
+        
         return (
             <Container
                 errorProps={this.props}

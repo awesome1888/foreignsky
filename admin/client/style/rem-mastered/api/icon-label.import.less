@@ -1,0 +1,25 @@
+._icon-label(@code) {
+	._relative();
+	._padding-l_x(1.5);
+
+	line-height: 150%;
+
+	&:before {
+		._absolute(4px, auto, auto, 0);
+		content: @code;
+
+		line-height: 100%;
+		font-family: 'Material Icons', sans-serif;
+		font-size: 16px;
+		font-style: normal;
+	}
+}
+
+
+.icon-label_add {
+	._icon-label('add') !important;
+}
+
+.icon-label_mode-edit {
+	._icon-label('mode_edit') !important;
+}

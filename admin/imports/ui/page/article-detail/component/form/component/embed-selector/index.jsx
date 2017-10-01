@@ -94,7 +94,19 @@ class EmbedSelector extends RendererLinkList
     {
         console.dir(this.getFileRegistry());
 
-        return null;
+        return (
+            <div className="embed__grid">
+                {
+                    this.getValueActual().map((item) => {
+                        return (
+                            <div className="embed__grid-item">
+                                        111
+                            </div>
+                        );
+                    })
+                }
+            </div>
+        );
     }
 }
 

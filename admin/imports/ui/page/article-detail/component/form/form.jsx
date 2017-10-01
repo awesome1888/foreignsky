@@ -32,6 +32,7 @@ export default class ArticleForm extends EntityForm
 
         map.insertAttributeAfter('tag', 'title-date'); // tags go after title-date group
         map.insertAttributeAfter('headerImage'); // header image on top
+        map.insertAttributeAfter('public'); // public on top of header image
         map.insertAttributeAfter('location', 'embed'); // embed to the end
 
         map.getAttribute('public').setParameter('show-label', false);

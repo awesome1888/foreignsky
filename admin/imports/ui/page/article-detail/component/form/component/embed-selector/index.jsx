@@ -1,6 +1,5 @@
 import React from 'react';
 import connectField from 'uniforms/connectField';
-// import filterDOMProps from 'uniforms/filterDOMProps';
 
 // https://github.com/vazco/uniforms/blob/master/INTRODUCTION.md#autofield-algorithm
 // https://github.com/vazco/uniforms/blob/master/API.md#connectfield
@@ -9,7 +8,6 @@ import connectField from 'uniforms/connectField';
 import {ControllerClass as RendererLinkList} from '../../../../../../component/general/form/component/renderer/link-list/index.jsx';
 import FileEntity from '../../../../../../../api/file/entity/entity.client.js';
 import CachedRegistry from '../../../../../../../lib/base/cached-registry/index.jsx';
-// import Container from '../../../../../../component/general/form/component/renderer/container/index.jsx';
 
 import './style.less';
 
@@ -59,15 +57,16 @@ class EmbedSelector extends RendererLinkList
         this.setState({
             imagesReady: false,
         });
-
+        
         const ids = this.getItemPageRange(page).reduce((result, item) => {
-            _.pluck(item.item, 'imageId').forEach((fId) => {
+            const data = item.getData();
+            _.pluck(data.item, 'imageId').forEach((fId) => {
                 result.push(fId);
             });
 
             return result;
         }, []);
-
+        
         await this.getFileRegistry().pull(ids, ['_id', 'path']);
 
         this.setState({
@@ -96,17 +95,28 @@ class EmbedSelector extends RendererLinkList
 
         return (
             <div className="embed__grid">
-                {
-                    this.getValueActual().map((item) => {
-                        return (
-                            <div className="embed__grid-item">
-                                        111
-                            </div>
-                        );
-                    })
-                }
+                <div className="embed__grid-item">
+                    <div
+                        className="embed__grid-item-image"
+                        style={{backgroundImage: 'url(img/mauer/2kx2k/DSC_0668.jpg)'}}
+                    />
+                </div>
             </div>
         );
+
+        // return (
+        //     <div className="embed__grid">
+        //         {
+        //             this.getValueActual().map((item) => {
+        //                 return (
+        //                     <div className="embed__grid-item">
+        //                         <div className="embed__grid-item-image" />
+        //                     </div>
+        //                 );
+        //             })
+        //         }
+        //     </div>
+        // );
     }
 }
 

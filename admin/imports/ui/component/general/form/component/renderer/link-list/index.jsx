@@ -43,6 +43,11 @@ class RendererLinkList extends Link
         });
     }
 
+    invalidateCaches()
+    {
+        this.getRegistry().invalidate();
+    }
+
     getRegistry()
     {
         if (!this._items)
@@ -292,16 +297,16 @@ class RendererLinkList extends Link
     renderInvisibleItems()
     {
         const range = this.getRange();
-        return this.getValueActual().map((data, index) => {
+        return this.getValueActual().map((item, index) => {
             if (index < range[0] || index > range[1])
             {
                 return (
                     <input
-                        key={data._id}
+                        key={item.getId()}
                         type="hidden"
                         name={this.makeChildName()}
                         onChange={this.getOnChange(null, index)}
-                        value={data._id}
+                        value={item.getId()}
                     />
                 );
             }

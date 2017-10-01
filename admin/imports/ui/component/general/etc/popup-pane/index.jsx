@@ -88,11 +88,6 @@ export default class PopupPane extends BaseComponent
         return this.props.children;
     }
 
-    getClassName()
-    {
-        return this.props.className;
-    }
-
     render()
     {
         return (

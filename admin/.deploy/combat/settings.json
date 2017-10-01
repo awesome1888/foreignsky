@@ -1,0 +1,12 @@
+{
+  "public": {
+    "google-maps_key": "AIzaSyDV90oJprjrtNbo3ASxmvFObr05jiC-0WI"
+  },
+  "private": {
+  },
+  "PrerenderIO": {
+    "token": "E6owwnZQmQEkWMOT0ujP",
+    "host": "localhost:3000",
+    "protocol": "http"
+  }
+}

@@ -161,7 +161,10 @@
 	height: @h;
 }
 ._size_x(@mp-w: auto, @mp-h: @mp-w) {
-	width: @mp-w * @offset;
+
+	& when not(@mp-w = auto) {
+		width: @mp-w * @offset;
+	}
 
 	& when (@mp-h = auto) {
 		height: auto;

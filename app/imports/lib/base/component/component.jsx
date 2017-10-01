@@ -63,6 +63,11 @@ export default class BaseComponent extends Component
         return this._scope;
     }
 
+    getClassName()
+    {
+        return this.props.className;
+    }
+
     setTitle(title = '')
     {
         this.getApplication().setTitle(title);

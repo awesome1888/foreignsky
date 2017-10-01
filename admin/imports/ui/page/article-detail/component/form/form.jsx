@@ -5,6 +5,7 @@ import Article from '../../../../../api/article/entity/entity.client.js';
 
 import RichRenderer from '../../../../component/general/form/component/renderer/rich/index.jsx';
 import TagSelectorRenderer from './component/tag-selector/index.jsx';
+import EmbedSelectorRenderer from './component/embed-selector/index.jsx';
 
 export default class ArticleForm extends EntityForm
 {
@@ -36,10 +37,10 @@ export default class ArticleForm extends EntityForm
         map.getAttribute('public').setParameter('show-label', false);
         map.getAttribute('headerImage').setParameter('show-label', false);
 
-        // render text as rich editor
+        // assign specific renderers
         map.getAttribute('text').setParameter('renderer', RichRenderer);
-        // render tag list as tag selector
         map.getAttribute('tag').setParameter('renderer', TagSelectorRenderer);
+        map.getAttribute('embed').setParameter('renderer', EmbedSelectorRenderer);
 
         return map;
     }

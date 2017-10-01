@@ -5,7 +5,7 @@ import './style.less';
 
 import PopupPane from '../popup-pane/index.jsx';
 
-export default class Popup extends PopupPane
+export default class Balloon extends PopupPane
 {
     // static propTypes = {
     //     position: PropTypes.oneOf(['top', 'bottom']),
@@ -17,14 +17,14 @@ export default class Popup extends PopupPane
 
     getClassName()
     {
-        return `popup popup_${this.props.position}`;
+        return `balloon balloon_${this.props.position}`;
     }
 
     renderChildren()
     {
         return (
-            <div className="popup__inner">
-                <div className="popup__content">
+            <div className="balloon__inner">
+                <div className="balloon__content">
                     {this.props.children}
                 </div>
             </div>

@@ -108,9 +108,14 @@ class RendererLinkList extends Link
         return this.isDisabled() || a.getMaxCount() <= this.getValue().length;
     }
 
-    getRange()
+    getRange(page = -1)
     {
-        const start = this.getPageSize() * (this.getPage() - 1);
+        if (page < 0)
+        {
+            page = this.getPage();
+        }
+
+        const start = this.getPageSize() * (page - 1);
         const end = start + this.getPageSize();
 
         return [
@@ -181,6 +186,19 @@ class RendererLinkList extends Link
         });
     }
 
+    getItemPageRange(page)
+    {
+        const range = this.getRange(page);
+        return this.getValueActual().map((data, index) => {
+            if (index < range[0] || index > range[1])
+            {
+                return null;
+            }
+
+            return data;
+        }).filter(x => !!x);
+    }
+
     renderAddButton()
     {
         return (
@@ -227,17 +245,20 @@ class RendererLinkList extends Link
         );
     }
 
+    renderList()
+    {
+        return (
+            <List divided verticalAlign='middle' className="margin-t no-margin-b">
+                {this.renderVisibleItems()}
+            </List>
+        );
+    }
+
     renderVisibleItems()
     {
         const entity = this.getEntity();
 
-        const range = this.getRange();
-        return this.getValueActual().map((data, index) => {
-            if (index < range[0] || index > range[1])
-            {
-                return null;
-            }
-
+        return this.getItemPageRange().map((data, index) => {
             return (
                 <List.Item key={data._id}>
                     <List.Content floated='right'>
@@ -309,10 +330,7 @@ class RendererLinkList extends Link
                 errorProps={this.props}
                 {...filterDOMProps(this.props)}
             >
-                <List divided verticalAlign='middle' className="margin-t no-margin-b">
-                    {this.renderVisibleItems()}
-                </List>
-
+                {this.renderList()}
                 {this.renderInvisibleItems()}
 
                 <div className="margin-t">

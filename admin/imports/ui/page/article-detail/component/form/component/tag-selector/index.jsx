@@ -11,7 +11,7 @@ import Container from '../../../../../../component/general/form/component/render
 import SelectBox from '../../../../../../component/general/etc/selectbox/index.jsx';
 import Enum from '../../../../../../../lib/base/enum/index.js';
 
-import Popup from '../../../../../../component/general/etc/popup/index.jsx';
+import Popup from '../../../../../../component/general/etc/balloon/index.jsx';
 import ColorPicker from '../../../../../../component/general/etc/color-picker/index.jsx';
 
 import colorEnum from '../../../../../../../lib/etc/enum/color.js';

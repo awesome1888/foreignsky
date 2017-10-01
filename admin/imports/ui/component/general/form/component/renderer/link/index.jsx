@@ -54,19 +54,29 @@ class RendererLink extends RendererGeneric
     {
         if (clearCache)
         {
-            this._cache.items = {};
+            this.invalidateCaches();
         }
 
         this.setState({
             itemReady: false,
         });
         this.loadData().then(() => {
-            this.setState({
-                error: null,
-                itemReady: true,
-            });
+            this.setItemsReady();
         }, (err) => {
             this.setError(err);
+        });
+    }
+
+    invalidateCaches()
+    {
+        this._cache.items = {};
+    }
+
+    setItemsReady()
+    {
+        this.setState({
+            error: null,
+            itemReady: true,
         });
     }
 

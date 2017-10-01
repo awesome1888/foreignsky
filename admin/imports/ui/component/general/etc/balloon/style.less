@@ -1,45 +1,45 @@
 @import (reference) url('/client/style/index.less');
 
-@popup_border-radius: 2px;
-@popup_corner-size: 20px;
+@balloon_border-radius: 2px;
+@balloon_corner-size: 20px;
 
-@popup_margin: (@popup_corner-size / 2) + 2px;
+@balloon_margin: (@balloon_corner-size / 2) + 2px;
 
 .popup {
 	._absolute(auto, auto, auto, 0); // by default its bottom-left
-	._border-rad(@popup_border-radius);
+	._border-rad(@balloon_border-radius);
 	._border();
 	cursor: default;
-	margin-top: @popup_margin;
+	margin-top: @balloon_margin;
 
 	._elbrus();
 	&:after {
 		content: '';
 		._absolute(-8px, auto, auto, 20px);
-		._size(@popup_corner-size);
+		._size(@balloon_corner-size);
 		._b-color(@color_white);
 		._border();
 		._rotate(45deg);
 	}
 }
 
-.popup_top {
+.balloon_top {
 	bottom: 100%; // top-left
 	margin-top: 0;
-	margin-bottom: @popup_margin;
+	margin-bottom: @balloon_margin;
 
 	&:after {
 		._absolute(auto, auto, -8px, 20px);
 	}
 }
 
-.popup__inner {
+.balloon__inner {
 	z-index: @z_elbrus + 10;
 	._relative();
-	._border-rad(@popup_border-radius);
+	._border-rad(@balloon_border-radius);
 	._b-color(@color_white);
 }
 
-.popup__content {
+.balloon__content {
 	._padding_x();
 }

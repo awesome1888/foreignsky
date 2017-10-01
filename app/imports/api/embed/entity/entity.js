@@ -32,6 +32,23 @@ const M = (superclass) =>  class Embed extends superclass
         return this._data.item || [];
     }
 
+    getCount()
+    {
+        return this.getItem().length;
+    }
+
+    getImageIds()
+    {
+        const result = [];
+
+        const data = this.getData();
+        _.pluck(data.item, 'imageId').forEach((fId) => {
+            result.push(fId);
+        });
+
+        return result;
+    }
+
     /**
      * Converts flat options structure into tree-based
      * @param options

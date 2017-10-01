@@ -42,8 +42,8 @@
 	._icon('keyboard_arrow_right', @size);
 }
 
-._icon_clear(@size: 16px) {
-	._icon('clear', @size);
+._icon_clear(@size: 16px, @padding: false) {
+	._icon('clear', @size, @padding);
 }
 
 ._icon_help(@size: 16px) {
@@ -64,4 +64,12 @@
 
 ._icon_remove(@size: 16px, @padding: false) {
 	._icon('remove', @size, @padding);
+}
+
+._icon_code(@size: 16px, @padding: false) {
+	._icon('code', @size, @padding);
+}
+
+._icon_mode-edit(@size: 16px, @padding: false) {
+	._icon('mode_edit', @size, @padding);
 }

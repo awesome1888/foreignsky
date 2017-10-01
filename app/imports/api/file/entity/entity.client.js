@@ -14,4 +14,9 @@ export default class File extends mix(BaseEntity).with(Entity)
     {
         return 'File';
     }
+
+    getPathTo()
+    {
+        return `/${this.getPath()}`;
+    }
 }

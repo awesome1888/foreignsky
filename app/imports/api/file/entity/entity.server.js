@@ -28,4 +28,9 @@ export default class File extends mix(BaseEntity).with(Entity)
             name,
         });
     }
+
+    getPathTo()
+    {
+        return `${Util.getAssetFolder()}${this.getPath()}`;
+    }
 }

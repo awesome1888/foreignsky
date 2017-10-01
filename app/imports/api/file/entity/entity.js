@@ -19,6 +19,11 @@ const M = (superclass) =>  class File extends superclass
         }
         return path.replace(/^public/i, '');
     }
+
+    getPath()
+    {
+        return this.getData().path || '';
+    }
 };
 
 export default M;

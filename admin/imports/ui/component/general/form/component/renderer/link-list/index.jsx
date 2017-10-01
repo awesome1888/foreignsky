@@ -337,11 +337,14 @@ class RendererLinkList extends Link
                 {...filterDOMProps(this.props)}
             >
                 {this.renderList()}
-                {this.renderInvisibleItems()}
 
                 <div className="margin-t">
                     {this.renderAddButton()}
                     {this.renderPageNav()}
+                </div>
+
+                <div>
+                    {this.renderInvisibleItems()}
                 </div>
 
                 <Modal

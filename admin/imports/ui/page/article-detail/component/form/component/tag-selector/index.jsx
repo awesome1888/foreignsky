@@ -332,7 +332,7 @@ class RendererTagSelector extends RendererLinkList
                             onSearch={this.onSearch}
                             onSearchCancel={this.onSearchCancel}
                             onSearchTypeEnter={this.onSearchTypeEnter}
-                            itemSelectedClassName="round hand"
+                            itemSelectedClassName="hand"
                             ref={(ref) => {this._selectbox = ref;}}
                             afterInputContainer={
                                 this.renderCreateButton()

@@ -25,26 +25,6 @@ class EmbedSelector extends RendererLinkList
         });
     }
 
-    // componentDidMount()
-    // {
-    //     this.startTagReload();
-    //     super.componentDidMount();
-    // }
-    //
-    // async startTagReload()
-    // {
-    //     this.setState({
-    //         tagsReady: false,
-    //     });
-    //
-    //     this.getEntity().find({select: ['title', 'color']}).then((tags) => {
-    //         this.createEnum(tags);
-    //         this.setState({
-    //             tagsReady: true,
-    //         });
-    //     });
-    // }
-
     invalidateCaches()
     {
         this.getFileRegistry().invalidate();
@@ -113,7 +93,7 @@ class EmbedSelector extends RendererLinkList
     renderList()
     {
         console.dir(this.getFileRegistry());
-        
+
         return null;
     }
 }

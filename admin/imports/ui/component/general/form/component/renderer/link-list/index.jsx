@@ -13,6 +13,7 @@ import Form from '../../../../form/form.jsx';
 import Util from '../../../../../../../lib/util.js';
 import ModalConfirm from '../../../../modal-confirm/index.jsx';
 import PageNavigation from '../../../../page-navigation/page-navigation.jsx';
+import CachedRegistry from '../../../../../../../lib/base/cached-registry/index.jsx';
 
 import { Button, List, Modal } from 'semantic-ui-react';
 
@@ -22,6 +23,8 @@ import {ControllerClass as Link} from '../link/index.jsx';
 
 class RendererLinkList extends Link
 {
+    _items = null;
+
     constructor(props)
     {
         super(props);
@@ -33,32 +36,28 @@ class RendererLinkList extends Link
 
     async loadData()
     {
-        const ids2Get = _.difference(this.getValue(), this.getCachedIds());
+        await this.getRegistry().pull(this.getValue(), this.getItemSelectFields());
+        
+        this.setState({
+            count: this.getValueActual().length,
+        });
+    }
 
-        if (_.isArrayNotEmpty(ids2Get))
+    getRegistry()
+    {
+        if (!this._items)
         {
-            const entity = this.getEntity();
-            const data = await entity.find({
-                select: this.getItemSelectFields(),
-                filter: {
-                    _id: {$in: this.getValue()}
-                },
-            });
-            data.forEach((item) => {
-                this.saveToCache(item);
-            });
-            this.setState({
-                count: this.getValueActual().length,
-            });
+            this._items = new CachedRegistry(this.getEntity());
         }
 
-        return true;
+        return this._items;
     }
 
     getValueActual()
     {
+        const registry = this.getRegistry();
         return this.getValue().map((id) => {
-            return this.getCached(id);
+            return registry.get(id);
         }).filter(x => !!x);
     }
 
@@ -75,11 +74,6 @@ class RendererLinkList extends Link
     getPageSize()
     {
         return 5;
-    }
-
-    getCachedIds()
-    {
-        return Object.keys(this._cache.items);
     }
 
     getChildName()
@@ -254,33 +248,40 @@ class RendererLinkList extends Link
         );
     }
 
+    extractLabel(item)
+    {
+        return item.getData()[this.getEntity().getCutawayAttributeCode()];
+    }
+
     renderVisibleItems()
     {
         const entity = this.getEntity();
 
-        return this.getItemPageRange().map((data, index) => {
+        return this.getItemPageRange().map((item, index) => {
+            const id = item.getId();
+            const label = this.extractLabel(item);
             return (
-                <List.Item key={data._id}>
+                <List.Item key={id}>
                     <List.Content floated='right'>
-                        {this.renderDeleteButton(data._id)}
+                        {this.renderDeleteButton(id)}
                     </List.Content>
                     <List.Content>
                         <a
-                            href={entityMap.makeDetailPath(entity, data._id)}
+                            href={entityMap.makeDetailPath(entity, id)}
                             target="_blank"
                             className=""
-                            onClick={Util.passCtx(this.onItemClick, [data._id])}
+                            onClick={Util.passCtx(this.onItemClick, [id])}
                         >
-                            {data.label ? data.label.toString() : data._id}
+                            {label ? label.toString() : id}
                         </a>
                         <div className="link-list__id">
-                            {data._id}
+                            {id}
                         </div>
                         <input
                             type="hidden"
                             name={this.makeChildName()}
                             onChange={this.getOnChange(null, index)}
-                            value={data._id}
+                            value={id}
                         />
                     </List.Content>
                 </List.Item>

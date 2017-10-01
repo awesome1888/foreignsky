@@ -66,8 +66,8 @@ export default class GoogleMap extends BaseComponent
                 params.center = this.props.center;
             }
 
-            console.dir(params);
-            console.dir(this.props);
+            // console.dir(params);
+            // console.dir(this.props);
 
             this._map = new google.maps.Map(this._mapContainer, params);
 

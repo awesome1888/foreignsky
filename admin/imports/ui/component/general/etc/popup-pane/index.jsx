@@ -12,6 +12,7 @@ export default class PopupPane extends BaseComponent
         opened: PropTypes.bool,
         onClose: PropTypes.func,
         globalClickClose: PropTypes.bool,
+        closeByEsc: PropTypes.bool,
         closeStopSelector: PropTypes.string, // if you are unable to stop the click event propagation, this will help
 
         className: PropTypes.string,
@@ -20,6 +21,7 @@ export default class PopupPane extends BaseComponent
     static defaultProps = {
         opened: false,
         globalClickClose: true,
+        closeByEsc: false,
         closeStopSelector: '',
         onClose: null,
         className: '',
@@ -32,6 +34,7 @@ export default class PopupPane extends BaseComponent
         // });
 
         this.onDocumentClick = this.onDocumentClick.bind(this);
+        this.onDocumentKeyDown = this.onDocumentKeyDown.bind(this);
     }
 
     componentDidMount()
@@ -43,11 +46,23 @@ export default class PopupPane extends BaseComponent
                 $(window.document).on('click', this.onDocumentClick);
             }, 1);
         }
+
+        if (this.props.closeByEsc)
+        {
+            $(window.document).on('keydown', this.onDocumentKeyDown);
+        }
     }
 
     componentWillUnmount()
     {
         $(window.document).off('click', this.onDocumentClick);
+        $(window.document).off('keydown', this.onDocumentKeyDown);
+    }
+
+    onDocumentKeyDown(e) {
+        if (e.key === 'Escape') {
+            this.onClose();
+        }
     }
 
     onClose()

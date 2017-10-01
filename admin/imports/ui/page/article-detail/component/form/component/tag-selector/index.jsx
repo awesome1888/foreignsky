@@ -257,6 +257,7 @@ class RendererTagSelector extends RendererLinkList
                         opened={true}
                         onClose={this.closeTagPopup}
                         closeStopSelector=".selectbox__item-selected"
+                        closeByEsc
                     >
                         <ColorPicker
                             onColorClick={this.onColorClick.bind(this)}

@@ -280,23 +280,33 @@ export default class Attribute
         return this._data.allowedValues || null;
     }
 
-    getSchemaFields()
+    getSchemaFieldList()
     {
-        return _.intersectKeys(this._data, {
+        return {
             type: 1, optional: 1, allowedValues: 1,
             defaultValue: 1, custom: 1, label: 1,
-            maxCount: 1, minCount: 1, regEx: 1,
-        });
+            maxCount: 1, minCount: 1, regEx: 1, decimal: 1,
+        };
     }
 
+    getClonableFielList()
+    {
+        return [
+            'code', 'optional', 'label', 'order',
+            'allowedValues', 'defaultValue', 'custom',
+            'isReference', 'regEx', 'decimal'
+        ];
+    }
+    
+    getSchemaFields()
+    {
+        return _.intersectKeys(this._data, this.getSchemaFieldList());
+    }
+    
     clone()
     {
         // copy base data by value
-        const copyData = _.pick(this._data, [
-            'code', 'optional', 'label', 'order',
-            'allowedValues', 'defaultValue', 'custom',
-            'isReference', 'regEx',
-        ]);
+        const copyData = _.pick(this._data, this.getClonableFielList());
 
         // copy type
         let type = null;

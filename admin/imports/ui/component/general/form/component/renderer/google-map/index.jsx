@@ -30,16 +30,19 @@ class RendererGoogleMap extends RendererGeneric
                             :
                             {lat: 52.522422, lng: 13.413324}
                         }
-                        makers={
+                        markers={
                             _.isObjectNotEmpty(value)
                             ?
-                            [{location: {lat: value.latitude, lng: value.longitude}}]
+                            [{
+                                code: 'main',
+                                location: {lat: value.latitude, lng: value.longitude}
+                            }]
                             :
                             []
                         }
                     />
                 </div>
-                
+
                 <input
                     type="hidden"
                     name={`${this.getName()}.latitude`}

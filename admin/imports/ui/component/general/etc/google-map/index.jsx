@@ -21,15 +21,20 @@ export default class GoogleMap extends BaseComponent
         className: PropTypes.string,
         center: PropTypes.object,
         zoom: PropTypes.number,
+        markers: PropTypes.array,
+        onMapLocationClick: PropTypes.func,
     };
 
     static defaultProps = {
         className: '',
         center: {lat: 54.714187, lng: 20.581439},
         zoom: 14,
+        markers: [],
+        onMapLocationClick: null,
     };
 
     _mapContainer = null;
+    _markers = {};
 
     constructor(props)
     {
@@ -40,7 +45,11 @@ export default class GoogleMap extends BaseComponent
 
     componentDidMount()
     {
-        this.initializeMap();
+        this.loadJs().then(() => {
+            return this.createMapObject();
+        }).then(() => {
+            this.createMarkers();
+        });
     }
 
     getMapUrl()
@@ -54,6 +63,27 @@ export default class GoogleMap extends BaseComponent
         return this._map;
     }
 
+    createMarkers()
+    {
+        if (_.isArrayNotEmpty(this.props.markers))
+        {
+            this.props.markers.forEach((marker) => {
+                this._markers[marker.code] = {
+                    location: _.clone(marker.location),
+                    ref: new google.maps.Marker({
+                        position: marker.location,
+                        map: this._map,
+                    })
+                };
+            });
+        }
+    }
+
+    updateMarkers()
+    {
+        
+    }
+    
     createMapObject()
     {
         return new Promise((resolve) => {
@@ -70,37 +100,14 @@ export default class GoogleMap extends BaseComponent
             // console.dir(this.props);
 
             this._map = new google.maps.Map(this._mapContainer, params);
-
             this.getMap().addListener('tilesloaded', () => {
                 resolve();
             });
-
-            if (_.isArrayNotEmpty(this.props.markers))
-            {
-                this.props.markers.forEach((marker) => {
-                    const loc = marker.location;
-                    let markerRef = new google.maps.Marker({
-                    	position: loc,
-                    	map: this._map
-                    });
-                });
-            }
         });
     }
 
-    initializeMap()
-    {
-        return new Promise((resolve, reject) => {
-            Util.loadJs(this.getMapUrl()).then(() => {
-                return this.createMapObject();
-            }).then(() => {
-                resolve();
-            }, () => {
-                reject();
-            }).catch(() => {
-                reject();
-            });
-        });
+    loadJs() {
+        return Util.loadJs(this.getMapUrl());
     }
 
     render()

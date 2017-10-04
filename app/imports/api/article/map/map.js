@@ -33,10 +33,12 @@ const M = (superclass) => class extends superclass
                     {
                         code: 'latitude',
                         type: Number,
+                        decimal: true,
                     },
                     {
                         code: 'longitude',
                         type: Number,
+                        decimal: true,
                     }
                 ]),
                 optional: true,

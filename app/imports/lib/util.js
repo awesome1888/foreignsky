@@ -1,5 +1,7 @@
 export default class Util
 {
+    static _loadedJs = {};
+
 	static loadJs(src)
 	{
 		let d = document;
@@ -11,10 +13,17 @@ export default class Util
 
 		src = src.toString().trim();
 
-		let node = d.createElement('script');
-		let p = new Promise(function(resolve){
-			node.addEventListener ("load", function(){
+		if (this._loadedJs[src]) {
+            return new Promise((resolve) => {
+                resolve();
+            });
+        }
 
+		let node = d.createElement('script');
+		let p = new Promise((resolve) => {
+			node.addEventListener ("load", () => {
+
+                this._loadedJs[src] = true;
 				resolve();
 
 			}, false);

@@ -40,6 +40,9 @@ class RendererGoogleMap extends RendererGeneric
                             :
                             []
                         }
+                        onMarkerDrag={(code, location) => {
+                            this.onChange(location);
+                        }}
                     />
                 </div>
 

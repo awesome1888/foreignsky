@@ -23,6 +23,7 @@ export default class GoogleMap extends BaseComponent
         zoom: PropTypes.number,
         markers: PropTypes.array,
         onMapLocationClick: PropTypes.func,
+        onMarkerDrag: PropTypes.func,
     };
 
     static defaultProps = {
@@ -31,6 +32,7 @@ export default class GoogleMap extends BaseComponent
         zoom: 14,
         markers: [],
         onMapLocationClick: null,
+        onMarkerDrag: null,
     };
 
     _mapContainer = null;
@@ -48,14 +50,19 @@ export default class GoogleMap extends BaseComponent
         this.loadJs().then(() => {
             return this.createMapObject();
         }).then(() => {
-            this.createMarkers();
+            this.updateMarkers(this.props.markers);
         });
+    }
+
+    componentWillReceiveProps(props)
+    {
+        this.updateMarkers(props.markers);
     }
 
     getMapUrl()
     {
         const key = Meteor.settings.public['google-maps_key'];
-        return `https://maps.googleapis.com/maps/api/js?v=3&key=${key}&libraries=geometry,drawing,places`;
+        return `https://maps.googleapis.com/maps/api/js?v=3&key=${key}&libraries=geometry,drawing,places&language=de`;
     }
 
     getMap()
@@ -63,25 +70,61 @@ export default class GoogleMap extends BaseComponent
         return this._map;
     }
 
-    createMarkers()
+    onMarkerDragEnd(code)
     {
-        if (_.isArrayNotEmpty(this.props.markers))
+        const pos = this._markers[code].ref.getPosition();
+        const nPos = {lat: pos.lat(), lng: pos.lng()};
+        this._markers[code].location = nPos;
+        
+        if (_.isFunction(this.props.onMarkerDrag))
         {
-            this.props.markers.forEach((marker) => {
-                this._markers[marker.code] = {
-                    location: _.clone(marker.location),
-                    ref: new google.maps.Marker({
-                        position: marker.location,
-                        map: this._map,
-                    })
-                };
+            this.props.onMarkerDrag(code, {
+                latitude: nPos.lat,
+                longitude: nPos.lng,
             });
         }
     }
 
-    updateMarkers()
+    updateMarkers(markers)
     {
-        
+        if (_.isArrayNotEmpty(markers))
+        {
+            // var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+            // icon: image
+
+            markers.forEach((marker) => {
+                if (marker.code in this._markers)
+                {
+                    const prev = this._markers[marker.code];
+                    if (prev.location.lat !== marker.location.lat || prev.location.lng !== marker.location.lng)
+                    {
+                        // update
+                        prev.ref.setPosition(marker.location);
+                        prev.location = marker.location;
+
+                        // this._map.panTo( marker.location );
+                        // this._map.setCenter(m.getPosition());
+                    }
+                }
+                else
+                {
+                    const ref = new google.maps.Marker({
+                        position: marker.location,
+                        map: this._map,
+                        draggable: true,
+                    });
+                    ref.addListener('dragend', this.onMarkerDragEnd.bind(this, marker.code));
+
+                    this._markers[marker.code] = {
+                        location: _.clone(marker.location),
+                        ref,
+                    };
+                }
+
+                // todo: remove absent
+                // marker.setMap(null);
+            });
+        }
     }
     
     createMapObject()

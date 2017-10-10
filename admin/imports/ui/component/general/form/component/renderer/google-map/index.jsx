@@ -38,7 +38,10 @@ class RendererGoogleMap extends RendererGeneric
                                 location: {lat: value.latitude, lng: value.longitude}
                             }]
                             :
-                            []
+                            [{
+                                code: 'main',
+                                location: {lat: 52.522422, lng: 13.413324}
+                            }]
                         }
                         onMarkerDrag={(code, location) => {
                             this.onChange(location);

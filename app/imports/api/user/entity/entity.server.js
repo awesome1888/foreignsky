@@ -12,6 +12,23 @@ export default class User extends mix(BaseEntity).with(Entity)
         return map;
     }
 
+    static onBeforeSave(id, data)
+    {
+        const profile = data.profile;
+        if (_.isObjectNotEmpty(profile))
+        {
+            if (!id)
+            {
+                // new user
+                profile.fullName = `${profile.firstName} ${profile.lastName}`;
+            }
+            else
+            {
+                // todo: update fullName also when user is pre-existed and one of *Name parameters was not specified
+            }
+        }
+    }
+
     static save(id, data)
     {
         if (!_.isObject(data))

@@ -28,7 +28,7 @@ export default class BaseEntity extends Entity
 
         if (_.isArrayNotEmpty(data))
         {
-            return new this(data[0]);
+            return data[0];
         }
 
         return null;
@@ -82,11 +82,14 @@ export default class BaseEntity extends Entity
         {
             return false;
         }
-        if (!_.isStringNotEmpty(id)) {
+        if (!_.isStringNotEmpty(id))
+        {
             id = collection.insert(data);
             this.onAfterSave(id, data);
             return id;
-        } else {
+        }
+        else
+        {
             if(collection.update({
                 _id: id,
             }, {

@@ -41,7 +41,7 @@ export default class Header extends React.Component
                         >
                             <div
                                 className="header__buttons"
-                            >
+                            >isInitialized
                                 <Button
                                     size={'mini'}
                                     href="/logout"

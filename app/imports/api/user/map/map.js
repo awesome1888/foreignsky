@@ -4,7 +4,11 @@ const M = (superclass) => class extends superclass
 {
     constructor(definition)
     {
-        super(definition || [
+        super();
+
+        const Group = this.$('group');
+
+        this.setDefinition(definition || [
             {
                 code: 'emails',
                 type: [
@@ -26,8 +30,8 @@ const M = (superclass) => class extends superclass
                 type: Date,
             },
             {
-                code: 'groupId',
-                type: [String],
+                code: 'group',
+                type: [Group],
             },
             {
                 code: 'profile',

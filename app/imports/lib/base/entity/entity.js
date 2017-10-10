@@ -1,5 +1,5 @@
 import {flatten} from 'mongo-dot-notation';
-import clone from 'clone';
+import Collection from '../collection/collection.js';
 
 import Map from '../map/index.js';
 
@@ -60,14 +60,15 @@ export default class BaseEntity
     static getCollection()
     {
         const inst = this.getCollectionInstance();
-        if (!inst.isInitialized())
+        // sometimes inst is not a child class of Base Collection, so we need to improvise...
+        if (!inst.initialized)
         {
             const map = this.getMap();
             if (!(map instanceof Map))
             {
                 throw new TypeError('Entity map is not an instance of Map');
             }
-            inst.initializeFromSource(map);
+            Collection.initializeFromSource(inst, map);
         }
 
         return inst;

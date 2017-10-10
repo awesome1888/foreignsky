@@ -5,7 +5,8 @@ export default class BaseCollection extends Mongo.Collection
 {
     _schema = null;
     _links = null;
-    _initialized = false;
+
+    initialized = false;
 
     constructor(collectionName)
     {
@@ -16,12 +17,12 @@ export default class BaseCollection extends Mongo.Collection
         this.applyHooks();
     }
 
-    initializeFromSource(map)
+    static initializeFromSource(collection, map)
     {
-        this.setSchema(map.getSchema());
-        this.setLinks(map.getLinks());
+        collection.attachSchema(map.getSchema());
+        collection.addLinks(map.getLinks());
 
-        this.setInitialized();
+        collection.initialized = true;
     }
 
     /**
@@ -40,30 +41,30 @@ export default class BaseCollection extends Mongo.Collection
         return this._schema;
     }
 
-    setSchema(schema)
-    {
-        this.attachSchema(schema);
-    }
+    // setSchema(schema)
+    // {
+    //     this.attachSchema(schema);
+    // }
 
     getLinks()
     {
         return this._links;
     }
 
-    setLinks(links)
-    {
-        this.addLinks(links);
-    }
+    // setLinks(links)
+    // {
+    //     this.addLinks(links);
+    // }
 
-    setInitialized()
-    {
-        this._initialized = true;
-    }
-
-    isInitialized()
-    {
-        return this._initialized;
-    }
+    // setInitialized()
+    // {
+    //     this.initialized = true;
+    // }
+    //
+    // isInitialized()
+    // {
+    //     return this.initialized;
+    // }
 
     // getIndexes()
     // {
@@ -88,27 +89,6 @@ export default class BaseCollection extends Mongo.Collection
     {
         return this.getName().replace('.', '_').toLowerCase();
     }
-
-    // applyHooks()
-    // {
-    // }
-
-    // createIndexes()
-    // {
-    //     if(Meteor.isServer)
-    //     {
-    //         const rawCollection = this.rawCollection();
-    //         this.getIndexes().forEach((index) => {
-    //             if (_.isObjectNotEmpty(index.fields))
-    //             {
-    //                 rawCollection.createIndex(
-    //                     index.fields,
-    //                     index.options
-    //                 );
-    //             }
-    //         });
-    //     }
-    // }
 
     updateMany(filter, changes)
     {

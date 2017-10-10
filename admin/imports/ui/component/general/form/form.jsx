@@ -1,7 +1,6 @@
 import React from 'react';
 //import ValidatedForm from 'uniforms-unstyled/ValidatedForm';
 import AutoForm from 'uniforms-unstyled/AutoForm';
-import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 
 import { Button } from 'semantic-ui-react';
 // import { Button, Checkbox, Form } from 'semantic-ui-react';

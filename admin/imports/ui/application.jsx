@@ -3,6 +3,7 @@ import Application from '../lib/base/application/application.jsx';
 
 import HomePage from './page/home/index.jsx';
 import NotFoundPage from './page/404/index.jsx';
+import LoginPage from './page/404/index.jsx';
 import TaskRunnerPage from './page/task-runner/index.jsx';
 
 import EntityMap from '../startup/client/entity-map.js';
@@ -11,10 +12,15 @@ import Header from './component/header/index.jsx';
 import LoadOverlay from './component/load-overlay/index.jsx';
 import LoadIndicator from './component/load-indicator/index.jsx';
 
-import Naviation from './component/navigation/navigation.jsx';
+import Navigation from './component/navigation/navigation.jsx';
 
 export default class AdminApplication extends Application
 {
+    static enableUserAccounts()
+    {
+        return true;
+    }
+
     static getHomePageController()
     {
         return HomePage;
@@ -25,11 +31,15 @@ export default class AdminApplication extends Application
         return NotFoundPage;
     }
 
+    static getLoginPageController()
+    {
+        return LoginPage;
+    }
+
     static getRouteMap()
     {
         const routes = super.getRouteMap();
         this.attachEntityRoutes(routes);
-        this.attachUserAccountRoutes(routes);
 
         routes['task-runner'] = {
             path: '/task-runner',
@@ -149,7 +159,7 @@ export default class AdminApplication extends Application
                                 tablet only
                                 column
                             ">
-                                <Naviation
+                                <Navigation
                                     className="margin-bottom"
                                 />
                             </div>

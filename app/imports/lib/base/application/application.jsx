@@ -19,6 +19,11 @@ export default class Application extends BaseComponent
         // do whatever else needed
     }
 
+    static enableUserAccounts()
+    {
+        return false;
+    }
+
     static getRouter()
     {
         if (this._router === null)
@@ -29,14 +34,21 @@ export default class Application extends BaseComponent
         return this._router;
     }
 
-    static addRoute(path, controller, params = {})
+    static addRoute(path, controller = null, params = {})
     {
-        this.getRouter()(path, controller, params);
+        if (controller)
+        {
+            this.getRouter()(path, controller, params);
+        }
+        else
+        {
+            this.getRouter()(path, params);
+        }
     }
 
     static getRouteMap()
     {
-        return {
+        const routes = {
             home: {
                 path: '/',
                 controller: this.getHomePageController(),
@@ -48,6 +60,13 @@ export default class Application extends BaseComponent
                 params: {},
             },
         };
+
+        if (this.enableUserAccounts())
+        {
+            this.attachUserAccountRoutes(routes);
+        }
+
+        return routes;
     }
 
     static getHomePageController()
@@ -60,11 +79,24 @@ export default class Application extends BaseComponent
         throw new Error('Not implemented: static get404PageController()');
     }
 
+    static getLoginPageController()
+    {
+        throw new Error('Not implemented: static getLoginPageController()');
+    }
+
     static attachUserAccountRoutes(routes)
     {
         routes['login'] = {
             path: '/login',
-            controller: null,
+            controller: this.getLoginPageController(),
+        };
+        routes['logout'] = {
+            path: '/logout',
+            action: () => {
+                Meteor.logout(() => {
+                    FlowRouter.go('/login');
+                });
+            },
         };
     }
 

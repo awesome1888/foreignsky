@@ -155,4 +155,11 @@ export default class Enum
         this._v2k = null;
         this._k2o = null;
     }
+
+    resort(key, comparator)
+    {
+        this._items.sort((a, b) => {
+            return comparator(a[key], b[key]);
+        });
+    }
 }

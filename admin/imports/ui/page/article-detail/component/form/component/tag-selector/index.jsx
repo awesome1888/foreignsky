@@ -15,6 +15,7 @@ import Popup from '../../../../../../component/general/etc/balloon/index.jsx';
 import ColorPicker from '../../../../../../component/general/etc/color-picker/index.jsx';
 
 import colorEnum from '../../../../../../../lib/etc/enum/color.js';
+import Util from '../../../../../../../lib/util.js';
 
 import './style.less';
 
@@ -188,6 +189,7 @@ class RendererTagSelector extends RendererLinkList
                         value: `#${text}`,
                         color: data.color,
                     });
+                    this.resortEnum();
 
                     // update value
                     const newValue = _.union(this.getValue(), [id]);
@@ -231,11 +233,17 @@ class RendererTagSelector extends RendererLinkList
         });
 
         this._enum = new Enum(items);
+        this.resortEnum();
     }
 
     getEnum()
     {
         return this._enum;
+    }
+
+    resortEnum()
+    {
+        this.getEnum().resort('value', Util.getAlphabeticalComparator());
     }
 
     isReady()

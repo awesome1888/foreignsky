@@ -79,7 +79,8 @@ export default class BaseCollection extends Mongo.Collection
     //     ];
     // }
 
-    getName() {
+    getName()
+    {
         return this._name;
     }
 

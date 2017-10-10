@@ -32,3 +32,5 @@ check
 mikowals:batch-insert
 semantic:ui
 jquery
+accounts-base
+accounts-password

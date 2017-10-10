@@ -40,7 +40,6 @@ class AdminEntityMap extends EntityMap
                     },
                 },
                 entity: Article,
-                title: Article.getTitle(),
             },
             {
                 route: {
@@ -54,7 +53,6 @@ class AdminEntityMap extends EntityMap
                     },
                 },
                 entity: ArticleTag,
-                title: ArticleTag.getTitle(),
             },
             {
                 route: {
@@ -68,7 +66,6 @@ class AdminEntityMap extends EntityMap
                     },
                 },
                 entity: Embed,
-                title: Embed.getTitle(),
             },
             {
                 route: {
@@ -82,7 +79,6 @@ class AdminEntityMap extends EntityMap
                     },
                 },
                 entity: File,
-                title: File.getTitle(),
             },
             // route-declaration-end
         ]);

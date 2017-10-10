@@ -36,18 +36,18 @@ export default class Application extends BaseComponent
 
     static getRouteMap()
     {
-        return [
-            {
+        return {
+            home: {
                 path: '/',
                 controller: this.getHomePageController(),
                 params: {},
             },
-            {
+            404: {
                 path: '/404',
                 controller: this.get404PageController(),
                 params: {},
             },
-        ];
+        };
     }
 
     static getHomePageController()
@@ -60,6 +60,14 @@ export default class Application extends BaseComponent
         throw new Error('Not implemented: static get404PageController()');
     }
 
+    static attachUserAccountRoutes(routes)
+    {
+        routes['login'] = {
+            path: '/login',
+            controller: null,
+        };
+    }
+
     static registerRoutes()
     {
         FlowRouter.notFound = {
@@ -68,7 +76,7 @@ export default class Application extends BaseComponent
             }
         };
 
-        this.getRouteMap().forEach((route) => {
+        Object.values(this.getRouteMap()).forEach((route) => {
             this.addRoute(route.path, route.controller, route.params || {});
         });
     }

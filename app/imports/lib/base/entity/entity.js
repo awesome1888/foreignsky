@@ -29,6 +29,16 @@ export default class BaseEntity
     }
 
     /**
+     * Returns a unique code of the entity. In most cases this code can be equal to
+     * the collection name (as it is a singleton), but if you want to have several
+     * entities that store data in one collection, codes should be different.
+     */
+    static getUniqueCode()
+    {
+        return this.getCollectionInstance().getName();
+    }
+
+    /**
      * This function returns the same as getCollection().getSchema(), but extended, with
      * a few new attributes and including links
      * // todo: move all to getMap()

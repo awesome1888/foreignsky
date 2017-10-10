@@ -28,24 +28,18 @@ export default class AdminApplication extends Application
     static getRouteMap()
     {
         const routes = super.getRouteMap();
+        this.attachEntityRoutes(routes);
+        this.attachUserAccountRoutes(routes);
 
-        // todo: probably move this function to event-based pattern
-
-        // static
-        routes.push({
+        routes['task-runner'] = {
             path: '/task-runner',
             controller: TaskRunnerPage,
-        });
-
-        // entity
-        this.loadEntityRouteMap(routes);
-
-        // todo: add more routes here...
+        };
 
         return routes;
     }
 
-    static loadEntityRouteMap(routes)
+    static attachEntityRoutes(routes)
     {
         return EntityMap.forEach((item) => {
             if (_.isObjectNotEmpty(item.route))
@@ -60,14 +54,12 @@ export default class AdminApplication extends Application
                     params.detailPath = item.route.detail.path;
                 }
 
-                Object.values(item.route).forEach((path) => {
-
-                    routes.push({
+                _.forEach(item.route, (path, key) => {
+                    routes[item.entity.getUniqueCode()+'_'+key] = {
                         path: this.transformPath(path.path),
                         controller: path.controller,
                         params,
-                    });
-
+                    };
                 });
             }
         });

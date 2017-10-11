@@ -319,7 +319,8 @@ export default class ListGeneric extends BaseComponent {
         {
             throw new Meteor.Error('Calling loadData() while query params are not ready');
         }
-        const p = this.getEntity().find(this.mixPageParameters(qParams));
+        const params = this.mixPageParameters(qParams);
+        const p = this.getEntity().find(params);
 
         App.getInstance().wait(p);
 

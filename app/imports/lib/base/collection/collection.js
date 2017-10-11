@@ -140,42 +140,43 @@ export default class BaseCollection
 
     /** Forwarded method calls below */
 
-    batchInsert()
+    batchInsert(...args)
     {
-        return this.getCollection().batchInsert(...arguments);
+        return this.getCollection().batchInsert(...args);
     }
 
     /**
      * for grapher, temporal
      * @returns {*}
      */
-    createQuery()
+    createQuery(...args)
     {
-        return this.getCollection().createQuery(...arguments);
+        console.dir(this.getName());
+        return this.getCollection().createQuery(...args);
     }
 
-    insert()
+    insert(...args)
     {
-        return this.getCollection().insert(...arguments);
+        return this.getCollection().insert(...args);
     }
 
-    update()
+    update(...args)
     {
-        return this.getCollection().update(...arguments);
+        return this.getCollection().update(...args);
     }
 
-    remove()
+    remove(...args)
     {
-        return this.getCollection().remove(...arguments);
+        return this.getCollection().remove(...args);
     }
 
-    find()
+    find(...args)
     {
-        return this.getCollection().find(...arguments);
+        return this.getCollection().find(...args);
     }
 
-    findOne()
+    findOne(...args)
     {
-        return this.getCollection().findOne(...arguments);
+        return this.getCollection().findOne(...args);
     }
 }

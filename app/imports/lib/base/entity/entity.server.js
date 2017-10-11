@@ -36,10 +36,17 @@ export default class BaseEntity extends Entity
 
     /**
      * @param condition
+     * @param parameters
      */
-    static find(condition = {})
+    static find(condition = {}, parameters = {})
     {
-        return this.createQuery(condition).fetch().reduce((result, data) => {
+        const qResult = this.createQuery(condition).fetch();
+        if (parameters.returnArray === true)
+        {
+            return qResult;
+        }
+
+        return qResult.reduce((result, data) => {
             // make instance
             result.push(new this(data));
             return result;

@@ -1,6 +1,6 @@
-import Method from '../../method/method.js';
+import BaseMethod from '../../method/method.js';
 
-export default class extends Method
+export default class Method extends BaseMethod
 {
     static getEntity()
     {
@@ -67,18 +67,23 @@ export default class extends Method
 
     find(parameters)
     {
-        return this.getEntity().createQuery(parameters).fetch();
+        return this.getEntity().find(parameters, {returnArray: true});
     }
 
     getCount(filter)
     {
-        const q = this.getEntity().createQuery(filter);
+        // in the normal way it should be called like the following:
+        // return this.getEntity().getCount(filter);
+
+        // but...
+        const entity = this.getEntity();
+        const q = entity.createQuery(filter);
 
         // due to some fucking reason we dont have getCount() in Query
-        // on server-side anymore 0_o
+        // on server-side when calling withing the method 0_o
         // so, have to emulate (taken directly from grapher`s code on github)
 
-        return this.getEntity().getCollection().find(q.body.$filters || {}, {}).count();
+        return entity.getCollection().find(q.body.$filters || {}, {}).count();
     }
 
     save(id, data)

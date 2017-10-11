@@ -111,7 +111,7 @@ export default class Map
                 // links for grapher
                 links[a.getCode()] = {
                     type: isMultiple ? 'many' : 'one',
-                    collection: a.getLinkCollection(),
+                    collection: a.getLinkCollection().getCollection(),
                     field: refFieldCode,
                 };
 

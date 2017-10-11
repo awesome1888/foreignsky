@@ -32,8 +32,10 @@ export default class BaseCollection
             throw new Error('The collection was already initialized');
         }
 
-        this.getCollection().attachSchema(map.getSchema());
-        this.getCollection().addLinks(map.getLinks());
+        const collection = this.getCollection();
+
+        collection.attachSchema(map.getSchema());
+        collection.addLinks(map.getLinks());
 
         this.setInitialized();
     }
@@ -151,7 +153,6 @@ export default class BaseCollection
      */
     createQuery(...args)
     {
-        console.dir(this.getName());
         return this.getCollection().createQuery(...args);
     }
 

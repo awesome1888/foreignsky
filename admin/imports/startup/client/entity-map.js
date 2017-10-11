@@ -9,6 +9,7 @@ import Article from '../../api/article/entity/entity.client.js';
 import ArticleTag from '../../api/article.tag/entity/entity.client.js';
 import Embed from '../../api/embed/entity/entity.client.js';
 import File from '../../api/file/entity/entity.client.js';
+import User from '../../api/user/entity/entity.client.js';
 // entity-import-end
 
 // page-controller-import-begin
@@ -20,6 +21,7 @@ import EmbedListPage from '../../ui/page/embed-list/index.jsx';
 import EmbedDetailPage from '../../ui/page/embed-detail/index.jsx';
 import FileListPage from '../../ui/page/file-list/index.jsx';
 import FileDetailPage from '../../ui/page/file-detail/index.jsx';
+import UserListPage from '../../ui/page/user-list/index.jsx';
 // page-controller-import-end
 
 class AdminEntityMap extends EntityMap
@@ -79,6 +81,19 @@ class AdminEntityMap extends EntityMap
                     },
                 },
                 entity: File,
+            },
+            {
+                route: {
+                    list: {
+                        path: '/entity/user/',
+                        controller: UserListPage,
+                    },
+                    detail: {
+                        path: '/entity/user/#ID#/',
+                        // controller: FileDetailPage,
+                    },
+                },
+                entity: User,
             },
             // route-declaration-end
         ]);

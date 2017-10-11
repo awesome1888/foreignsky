@@ -1,28 +1,41 @@
 import {Mongo} from 'meteor/mongo';
 import BulkContext from './bulk-context/bulk-context.js';
 
-export default class BaseCollection extends Mongo.Collection
+/**
+ * Here we use composition, not inheritance, to be able to work with already exited collections
+ * like Mongo.users or other third-party collections
+ */
+export default class BaseCollection
 {
-    _schema = null;
-    _links = null;
+    _collection = null;
+    _initialized = false;
 
-    initialized = false;
-
-    constructor(collectionName)
+    constructor(collection)
     {
-        super(collectionName);
-        // this.attachSchema(this.getSchema());
-        // this.addLinks(this.getLinks());
+        if (_.isStringNotEmpty(collection))
+        {
+            this._collection = new Mongo.Collection(collection);
+        }
+        else
+        {
+            this._collection = collection;
+        }
+
         // this.createIndexes();
         this.applyHooks();
     }
 
-    static initializeFromSource(collection, map)
+    initialize(map)
     {
-        collection.attachSchema(map.getSchema());
-        collection.addLinks(map.getLinks());
+        if (this.isInitialized())
+        {
+            throw new Error('The collection was already initialized');
+        }
 
-        collection.initialized = true;
+        this.getCollection().attachSchema(map.getSchema());
+        this.getCollection().addLinks(map.getLinks());
+
+        this.setInitialized();
     }
 
     /**
@@ -36,35 +49,35 @@ export default class BaseCollection extends Mongo.Collection
         // });
     }
 
-    getSchema()
-    {
-        return this._schema;
-    }
+    // getSchema()
+    // {
+    //     return this._schema;
+    // }
 
     // setSchema(schema)
     // {
     //     this.attachSchema(schema);
     // }
 
-    getLinks()
-    {
-        return this._links;
-    }
+    // getLinks()
+    // {
+    //     return this._links;
+    // }
 
     // setLinks(links)
     // {
     //     this.addLinks(links);
     // }
 
-    // setInitialized()
-    // {
-    //     this.initialized = true;
-    // }
-    //
-    // isInitialized()
-    // {
-    //     return this.initialized;
-    // }
+    setInitialized()
+    {
+        this._initialized = true;
+    }
+
+    isInitialized()
+    {
+        return this._initialized;
+    }
 
     // getIndexes()
     // {
@@ -82,7 +95,7 @@ export default class BaseCollection extends Mongo.Collection
 
     getName()
     {
-        return this._name;
+        return this.getCollection()._name;
     }
 
     getNameNormalized()
@@ -104,7 +117,7 @@ export default class BaseCollection extends Mongo.Collection
             changes = {$set: changes};
         }
 
-        return this.rawCollection().updateMany(
+        return this.getRawCollection().updateMany(
             filter,
             changes,
         );
@@ -113,5 +126,56 @@ export default class BaseCollection extends Mongo.Collection
     createBulkContext()
     {
         return new BulkContext(this);
+    }
+
+    getRawCollection()
+    {
+        return this.getCollection().rawCollection();
+    }
+
+    getCollection()
+    {
+        return this._collection;
+    }
+
+    /** Forwarded method calls below */
+
+    batchInsert()
+    {
+        return this.getCollection().batchInsert(...arguments);
+    }
+
+    /**
+     * for grapher, temporal
+     * @returns {*}
+     */
+    createQuery()
+    {
+        return this.getCollection().createQuery(...arguments);
+    }
+
+    insert()
+    {
+        return this.getCollection().insert(...arguments);
+    }
+
+    update()
+    {
+        return this.getCollection().update(...arguments);
+    }
+
+    remove()
+    {
+        return this.getCollection().remove(...arguments);
+    }
+
+    find()
+    {
+        return this.getCollection().find(...arguments);
+    }
+
+    findOne()
+    {
+        return this.getCollection().findOne(...arguments);
     }
 }

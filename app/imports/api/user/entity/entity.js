@@ -1,3 +1,5 @@
+import Collection from '../config/collection.js';
+
 /**
  * @abstract
  * @mixin
@@ -6,7 +8,12 @@ const M = (superclass) =>  class User extends superclass
 {
     static getCollectionInstance()
     {
-        return Meteor.users;
+        return Collection;
+    }
+
+    static getUniqueCode()
+    {
+        return 'user';
     }
 };
 

@@ -37,7 +37,7 @@ if (aGroupId)
     {
         if(!User.save(null, {
             email: 'admin@nachberlin.ru',
-            password: '123', // chage later!!!
+            password: '123', // change later!!!
             groupId: [aGroupId],
             profile: {
                 firstName: 'Fat',

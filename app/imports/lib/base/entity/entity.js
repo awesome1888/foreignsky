@@ -59,19 +59,18 @@ export default class BaseEntity
 
     static getCollection()
     {
-        const inst = this.getCollectionInstance();
-        // sometimes inst is not a child class of Base Collection, so we need to improvise...
-        if (!inst.initialized)
+        const instance = this.getCollectionInstance();
+        if (!instance.isInitialized())
         {
             const map = this.getMap();
             if (!(map instanceof Map))
             {
                 throw new TypeError('Entity map is not an instance of Map');
             }
-            Collection.initializeFromSource(inst, map);
+            instance.initialize(map);
         }
 
-        return inst;
+        return instance;
     }
 
     static prepareQuery(condition)

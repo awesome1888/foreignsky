@@ -1,4 +1,4 @@
-import { Mongo } from 'meteor/mongo';
+import Collection from '../../collection/collection.js';
 
 export default class BulkContext
 {
@@ -11,7 +11,7 @@ export default class BulkContext
 
     constructor(collection)
     {
-        if (!(collection instanceof Mongo.Collection))
+        if (!(collection instanceof Collection))
         {
             throw new Error('Illegal collection passed');
         }
@@ -50,7 +50,7 @@ export default class BulkContext
     {
         if (this._bufferUpdate.length)
         {
-            this._collection.rawCollection().bulkWrite(
+            this._collection.getRawCollection().bulkWrite(
                 this._bufferUpdate
             );
 

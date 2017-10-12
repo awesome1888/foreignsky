@@ -6,7 +6,7 @@ import BasePage from '../../../lib/base/page/page.jsx';
 import Layout from '../../component/layout/layout.jsx';
 import Form from './component/form/form.jsx';
 
-export default class FileEntityDetailPage extends BasePage
+export default class UserEntityDetailPage extends BasePage
 {
     render()
     {

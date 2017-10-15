@@ -68,7 +68,8 @@ export default class Application extends BaseComponent
         }
         else
         {
-            this.getRouter()(path, params);
+            console.dir(params);
+            FlowRouter.route(path, params);
         }
     }
 
@@ -95,10 +96,12 @@ export default class Application extends BaseComponent
         };
         routes['logout'] = {
             path: '/logout',
-            action: () => {
-                Meteor.logout(() => {
-                    FlowRouter.go('/login');
-                });
+            params: {
+                action: () => {
+                    Meteor.logout(() => {
+                        FlowRouter.go('/login');
+                    });
+                },
             },
         };
     }

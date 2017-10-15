@@ -73,7 +73,7 @@ export default class Container extends React.Component
                 {
                     hasError
                     &&
-                    <div className="form__error">{this.getErrorMessage()}</div>
+                    <div className="form__error margin-t_x0p5">{this.getErrorMessage()}</div>
                 }
             </Form.Field>
         );

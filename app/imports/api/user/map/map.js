@@ -26,6 +26,12 @@ const M = (superclass) => class extends superclass
                 ],
             },
             {
+                // this is for storing password and other stuff
+                code: 'services',
+                type: Object,
+                blackbox: true,
+            },
+            {
                 code: 'createdAt',
                 type: Date,
             },

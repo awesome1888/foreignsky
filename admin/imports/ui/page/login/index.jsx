@@ -12,39 +12,48 @@ export default class LoginPage extends BasePage {
     constructor() {
         super();
         this.state = {
-            // error: false,
-            // errorMessage: null
+            errorMessage: null
         };
     }
 
     onSubmitForm(data) {
         return new Promise((resolve, reject) => {
             this.data = data;
-            const email = this.data.email;
+            const login = this.data.login;
             const password = this.data.password;
             // const hashedPassword = Utils.SHA256(password);
 
-            Meteor.loginWithPassword(email, password, (error) => {
-                if (!error) {
+            Meteor.loginWithPassword(login, password, (error) => {
+                if (!error)
+                {
                     FlowRouter.go('/');
                     resolve();
-                } else {
+                }
+                else
+                {
+                    if (error.error === 403)
+                    {
+                        this.setServerError('Login incorrect');
+                    }
+                    else
+                    {
+                        this.setServerError('Server error');
+                    }
                     reject('');
                 }
             });
         });
     }
 
-    onSubmitFailure() {
-        this.setState({
-            // error: true,
-            // errorMessage: ''
-        });
+    onValidateForm()
+    {
+        this.setServerError();
     }
 
-    clearServerError() {
+    setServerError(message)
+    {
         this.setState({
-            // errorMessage: null
+            errorMessage: _.isStringNotEmpty(message) ? message : null,
         });
     }
 
@@ -75,8 +84,8 @@ export default class LoginPage extends BasePage {
                         ]}
                         submitButtonLabel="Login"
                         onSubmit={this.onSubmitForm.bind(this)}
-                        // onSubmitFailure={this.onSubmitFailure.bind(this)}
-                        // // showInlineError
+                        onValidate={this.onValidateForm.bind(this)}
+                        error={this.state.errorMessage}
                     >
                     </Form>
                 </div>

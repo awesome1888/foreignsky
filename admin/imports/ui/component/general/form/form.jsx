@@ -35,8 +35,10 @@ export default class Form extends BaseComponent
         isFragment: PropTypes.bool,
         submitButtonLabel: PropTypes.string,
         onSubmit: PropTypes.func,
+        onValidate: PropTypes.func,
         borderColor: PropTypes.string,
         showFooter: PropTypes.bool,
+        error: PropTypes.string,
     };
 
     static defaultProps = {
@@ -45,8 +47,10 @@ export default class Form extends BaseComponent
         isFragment: false,
         submitButtonLabel: 'Save',
         onSubmit: null,
+        onValidate: null,
         borderColor: '',
         showFooter: true,
+        error: null,
     };
 
     constructor(props)
@@ -145,11 +149,15 @@ export default class Form extends BaseComponent
         return sourceModel;
     }
 
-    // onValidate(model, errors, callback) {
-    //     // sniff form errors here
-    //
-    //     return callback();
-    // }
+    onValidate(model, errors, callback) {
+        // sniff form errors here
+        if (_.isFunction(this.props.onValidate))
+        {
+            this.props.onValidate(errors);
+        }
+
+        return callback();
+    }
 
     isFragment()
     {
@@ -191,6 +199,16 @@ export default class Form extends BaseComponent
         }
 
         return this._cache.color;
+    }
+
+    hasError()
+    {
+        return _.isStringNotEmpty(this.props.error) || _.isStringNotEmpty(this.state.error);
+    }
+
+    getError()
+    {
+        return this.props.error || this.state.error;
     }
 
     renderRows()
@@ -261,10 +279,10 @@ export default class Form extends BaseComponent
                 className={className.join(' ')}
             >
                 {
-                    this.state.error
+                    this.hasError()
                     &&
-                    <div className="form__error-message form__error-message_top">
-                        Error occured: {this.state.error}
+                    <div className="form__error-message margin-b_x">
+                        {this.getError()}
                     </div>
                 }
                 {
@@ -285,7 +303,7 @@ export default class Form extends BaseComponent
                 onSubmit={this.onSubmit.bind(this)}
                 className="ui big form"
                 ref={(reference) => {this._form = reference;}}
-                // onValidate={this.onValidate.bind(this)}
+                onValidate={this.onValidate.bind(this)}
             >
                 {body}
                 {

@@ -43,6 +43,7 @@ export default class User extends mix(BaseEntity).with(Entity)
         }
         if (!_.isStringNotEmpty(id))
         {
+            // create new
             if (!_.isStringNotEmpty(data.email) || !_.isStringNotEmpty(data.password))
             {
                 // todo: improve this, make it transparent

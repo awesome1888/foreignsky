@@ -15,6 +15,7 @@ var url = 'http://bootflat.github.io/color-picker.html';
 var output = './output.txt';
 var outputLess = './output-palette.txt';
 var outputPrimitives = './output-primitives.txt';
+var outputPrimitivesF = './output-primitives-f.txt';
 
 ////////////////////////////////
 ////////////////////////////////
@@ -54,6 +55,7 @@ page.open(url, function(status) {
         var strResult = '';
         var strResultLess = '';
         var strResultLessPrimitives = '';
+        var strResultLessPrimitivesF = '';
         for(var k = 0; k < result.length; k++) {
             var code = result[k].name.replace(/[\-\s+]/g, '_');
             var lessCode = code.replace(/_/g, '-').toLowerCase();
@@ -70,11 +72,13 @@ page.open(url, function(status) {
             strResult += "{value: '"+newName+"', key: '"+code+"', keyLess: '"+lessCode+"', hex: '"+hex+"'},\n";
             strResultLess += "@color_"+lessCode+": #"+hex+";\n";
             strResultLessPrimitives += ".b-color_"+lessCode+" {\n\t._b-color(@color_"+lessCode+") !important;\n}\n\n";
+            strResultLessPrimitivesF += ".f-color_"+lessCode+" {\n\t._f-color(@color_"+lessCode+") !important;\n}\n\n";
         }
 
         fs.write(output, strResult, 'w');
         fs.write(outputLess, strResultLess, 'w');
         fs.write(outputPrimitives, strResultLessPrimitives, 'w');
+        fs.write(outputPrimitivesF, strResultLessPrimitivesF, 'w');
         // system.stdout.writeLine('\nHello, system.stdout.writeLine!');
 
         phantom.exit();

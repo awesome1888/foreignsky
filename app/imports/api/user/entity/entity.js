@@ -15,6 +15,16 @@ const M = (superclass) =>  class User extends superclass
     {
         return 'user';
     }
+
+    static getId()
+    {
+        return Meteor.userId();
+    }
+
+    static isAuthorized()
+    {
+        return !!this.getId();
+    }
 };
 
 export default M;

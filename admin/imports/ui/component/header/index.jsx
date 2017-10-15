@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Button } from 'semantic-ui-react';
+import User from '../../../api/user/entity/entity.client.js';
 
 import './style.less';
 
@@ -17,6 +18,8 @@ export default class Header extends React.Component
 
 	render()
 	{
+	    const authorzed = User.isAuthorized();
+
 		return (
             <div className="ui container">
                 <div className="ui grid">
@@ -41,13 +44,29 @@ export default class Header extends React.Component
                         >
                             <div
                                 className="header__buttons"
-                            >isInitialized
-                                <Button
-                                    size={'mini'}
-                                    href="/logout"
-                                >
-                                    Logout
-                                </Button>
+                            >
+                                <div className="header__whoami">
+                                    {
+                                        authorzed
+                                        &&
+                                        <a href={`/entity/user/${User.getId()}/`}>Fat Admin</a>
+                                    }
+                                    {
+                                        !authorzed
+                                        &&
+                                        <span className="f-color_red-orange">Guest User</span>
+                                    }
+                                </div>
+                                {
+                                    authorzed
+                                    &&
+                                    <Button
+                                        size={'mini'}
+                                        href="/logout"
+                                    >
+                                        Logout
+                                    </Button>
+                                }
                             </div>
                         </div>
                     </div>

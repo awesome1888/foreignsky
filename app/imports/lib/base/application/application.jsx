@@ -4,6 +4,7 @@ import LoadOverlay from '../../../ui/component/load-overlay/index.jsx';
 import LoadIndicator from '../../../ui/component/load-indicator/index.jsx';
 import Util from '../../util.js';
 import BaseComponent from '../component/component.jsx';
+import PreRender from '../../../lib/prerender.js';
 import {DocHead} from 'meteor/kadira:dochead';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import {createRouter} from 'meteor/cultofcoders:meteor-react-routing';
@@ -22,28 +23,6 @@ export default class Application extends BaseComponent
     static enableUserAccounts()
     {
         return false;
-    }
-
-    static getRouter()
-    {
-        if (this._router === null)
-        {
-            this._router = createRouter(this);
-        }
-
-        return this._router;
-    }
-
-    static addRoute(path, controller = null, params = {})
-    {
-        if (controller)
-        {
-            this.getRouter()(path, controller, params);
-        }
-        else
-        {
-            this.getRouter()(path, params);
-        }
     }
 
     static getRouteMap()
@@ -67,6 +46,30 @@ export default class Application extends BaseComponent
         }
 
         return routes;
+    }
+
+    ///////////////////////////////////////////////////
+
+    static getRouter()
+    {
+        if (this._router === null)
+        {
+            this._router = createRouter(this);
+        }
+
+        return this._router;
+    }
+
+    static addRoute(path, controller = null, params = {})
+    {
+        if (controller)
+        {
+            this.getRouter()(path, controller, params);
+        }
+        else
+        {
+            this.getRouter()(path, params);
+        }
     }
 
     static getHomePageController()
@@ -149,7 +152,14 @@ export default class Application extends BaseComponent
 
     getGlobalSelectorMap()
     {
-        return [];
+        return [
+//         {
+//             selector: '[data-save-scroll="true"]',
+//             callback: () => {
+//                 console.dir('hello there!');
+//             },
+//         },
+        ];
     }
 
     componentWillMount()
@@ -159,17 +169,10 @@ export default class Application extends BaseComponent
 
     componentDidMount()
     {
-        if(this.getOverlay())
-        {
-            this.getOverlay().waitAll();
-        }
+        this.fire('wait-all');
 
         // shit-fix
-        if (this.getIndicator())
-        {
-            const p = new Promise((resolve) => {resolve()});
-            this.getIndicator().waitOne(p);
-        }
+        this.wait(new Promise((resolve) => {resolve()}));
 
         /**
          * Have to use native JS to avoid problems with FlowRouter when clicking on href-s.
@@ -207,49 +210,32 @@ export default class Application extends BaseComponent
         }
     }
 
-    getOverlay()
-    {
-        return this._overlay;
-    }
-
-    setOverlay(ref)
-    {
-        if(!this._overlay)
-        {
-            this._overlay = ref;
-        }
-    }
-
-    getIndicator()
-    {
-        return this._indicator;
-    }
-
-    setIndicator(ref)
-    {
-        if(!this._indicator)
-        {
-            this._indicator = ref;
-        }
-    }
-
     getQuery() {
         return FlowRouter.current().queryParams;
     }
 
     wait(p)
     {
-        if(this.getOverlay())
-        {
-            this.getOverlay().waitOne(p);
-        }
-        if(this.getIndicator())
-        {
-            this.getIndicator().waitOne(p);
-        }
+        this.fire('wait-one', [p]);
+        // if(this.getOverlay())
+        // {
+        //     this.getOverlay().waitOne(p);
+        // }
+        // if(this.getIndicator())
+        // {
+        //     this.getIndicator().waitOne(p);
+        // }
 
         return p;
     }
+
+    // waitOne(promise)
+    // {
+    //     if(this.state.shown && promise)
+    //     {
+    //         this.waitPool.push(promise);
+    //     }
+    // }
 
     getRouter()
     {
@@ -311,16 +297,6 @@ export default class Application extends BaseComponent
         return 'Project name';
     }
 
-    showOverlay()
-    {
-        return true;
-    }
-
-    showIndicator()
-    {
-        return true;
-    }
-
     transformPageParameters(params)
     {
         return params;
@@ -331,7 +307,8 @@ export default class Application extends BaseComponent
         return null;
     }
 
-    render() {
+    render()
+    {
         const {main, routeProps} = this.props;
 
         return (

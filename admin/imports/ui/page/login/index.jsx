@@ -7,6 +7,8 @@ import schema from './schema/login.schema.js';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import AutoForm from 'uniforms-unstyled/AutoForm';
 
+import './style.less';
+
 export default class LoginPage extends BasePage {
     constructor() {
         super();
@@ -49,14 +51,17 @@ export default class LoginPage extends BasePage {
 
     render() {
         return (
-            <div>
-                <AutoForm
-                    schema={schema}
-                    onSubmit={this.onSubmitForm.bind(this)}
-                    onSubmitFailure={this.onSubmitFailure.bind(this)}
-                    // showInlineError
-                >
-                </AutoForm>
+            <div className="layout content_v_center_h_center h_100p">
+                <div className="layout__inner_centered">
+                    LOGIN
+                    <AutoForm
+                        schema={schema}
+                        onSubmit={this.onSubmitForm.bind(this)}
+                        onSubmitFailure={this.onSubmitFailure.bind(this)}
+                        // showInlineError
+                    >
+                    </AutoForm>
+                </div>
             </div>
         );
     }

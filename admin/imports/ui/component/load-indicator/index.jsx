@@ -4,10 +4,11 @@ import React from 'react';
 import { Progress } from 'semantic-ui-react'
 
 import Util from '../../../lib/util.js';
+import BaseComponent from '../../../lib/base/component/component.jsx';
 
 import './style.less';
 
-export default class LoadIndicator extends React.Component {
+export default class LoadIndicator extends BaseComponent {
 
     timer = null;
     pool = [];
@@ -21,6 +22,7 @@ export default class LoadIndicator extends React.Component {
         };
 
         this.lockPool = Util.debounce(this.lockPool.bind(this));
+        this.on('wait-one', this.waitOne.bind(this));
     }
 
     componentDidMount()

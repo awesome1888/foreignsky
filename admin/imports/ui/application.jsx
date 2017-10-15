@@ -3,16 +3,10 @@ import Application from '../lib/base/application/application.jsx';
 
 import HomePage from './page/home/index.jsx';
 import NotFoundPage from './page/404/index.jsx';
-import LoginPage from './page/404/index.jsx';
+import LoginPage from './page/login/index.jsx';
 import TaskRunnerPage from './page/task-runner/index.jsx';
 
 import EntityMap from '../startup/client/entity-map.js';
-
-import Header from './component/header/index.jsx';
-import LoadOverlay from './component/load-overlay/index.jsx';
-import LoadIndicator from './component/load-indicator/index.jsx';
-
-import Navigation from './component/navigation/navigation.jsx';
 
 export default class AdminApplication extends Application
 {
@@ -45,9 +39,11 @@ export default class AdminApplication extends Application
             path: '/task-runner',
             controller: TaskRunnerPage,
         };
-
+        
         return routes;
     }
+
+    ///////////////////////////////////////////////////
 
     static attachEntityRoutes(routes)
     {
@@ -96,27 +92,12 @@ export default class AdminApplication extends Application
     setTitle(title = '')
     {
         super.setTitle(title);
-        // this.setState({
-        //     title,
-        // });
     }
 
     getMainTitle()
     {
         return 'Admin';
     }
-
-    // getGlobalSelectorMap()
-    // {
-    //     return [
-    //         {
-    //             selector: '[data-save-scroll="true"]',
-    //             callback: () => {
-    //                 console.dir('hello there!');
-    //             },
-    //         },
-    //     ];
-    // }
 
     transformPageParameters(params)
     {
@@ -131,54 +112,14 @@ export default class AdminApplication extends Application
 
         return (
             <div
-                className="layout"
+                className="application"
                 ref={(ref) => { this._appContainer = ref; }}
             >
                 {
-                    this.showOverlay()
-                    &&
-                    <LoadOverlay
-                        ref={(instance) => {this.setOverlay(instance)}}
-                    />
+                    React.createElement(main, this.transformPageParameters({
+                        route: routeProps,
+                    }))
                 }
-
-                <Header />
-                {
-                    this.showIndicator()
-                    &&
-                    <LoadIndicator
-                        ref={(instance) => {this.setIndicator(instance)}}
-                    />
-                }
-
-                <div className="ui container">
-                    <div className="ui equal width grid">
-                        <div className="row">
-                            <div className="
-                                computer only
-                                tablet only
-                                column
-                            ">
-                                <Navigation
-                                    className="margin-bottom"
-                                />
-                            </div>
-                            <div className="
-                                twelve wide computer
-                                twelve wide tablet
-                                sixteen wide mobile
-                                siz
-                                column
-                            ">
-                                {
-                                    React.createElement(main, this.transformPageParameters({
-                                        route: routeProps,
-                                    }))
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 {this.renderExtras()}
             </div>
         );

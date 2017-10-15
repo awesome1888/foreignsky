@@ -173,6 +173,13 @@
 		height: @mp-h * @offset;
 	}
 }
+._width_btw(@start: 100px, @end: none) {
+	min-width: @start;
+
+	& when not(@end = none) {
+		max-width: @end;
+	}
+}
 ._width_btw_x(@start: 1, @end: none) {
 	min-width: @start * @offset;
 
@@ -386,28 +393,9 @@
 		clear: both;
 	}
 }
-
-//.height-trick_30p {
-//	#make_height-trick(30%);
-//}
-
-// primitives
-.inline-float_left {
-	._inline-float() !important;
-}
-.inline-float_right {
-	._inline-float(right) !important;
-}
-.w_100p {
-	width: 100% !important;
-}
-.none,
-.no-display {
-	._none() !important;
-}
-.group_x {
-	._group_x() !important;
-}
-.group_x2 {
-	._group_x(2) !important;
+._centered-column(@w: 1200px) {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: @w;
+	width: 100%;
 }

@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import classnames from 'classnames';
 import PreRender from '../../../lib/prerender.js';
+import BaseComponent from '../../../lib/base/component/component.jsx';
 
 import './style.less';
 
-export default class LoadOverlay extends React.Component {
+export default class LoadOverlay extends BaseComponent {
 
 	static propTypes = {
 		transitionDuration: PropTypes.number,
@@ -27,6 +28,9 @@ export default class LoadOverlay extends React.Component {
 		};
 
 		this.waitPool = [];
+
+		this.on('wait-one', this.waitOne.bind(this));
+		this.on('wait-all', this.waitAll.bind(this));
 	}
 
     waitAll()

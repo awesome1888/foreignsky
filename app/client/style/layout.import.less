@@ -16,17 +16,12 @@
 	._height-inherit();
 }
 
-// offsets
-// DEPRECATED
-.layout__offset_bottom {
-	margin-bottom: @offset;
+.layout_centered {
+	._content_v_center_h_center();
 }
-.layout__offset_left {
-	margin-left: @offset;
-}
-.layout__offset_quarter_bottom {
-	margin-bottom: @offset_quarter;
-}
-.layout__offset_3-of-4_bottom {
-	margin-bottom: @offset_3-of-4;
+
+.layout__inner_centered {
+	._width_btw(100px, 600px);
+	.w_100p;
+	._padding-lr_x();
 }

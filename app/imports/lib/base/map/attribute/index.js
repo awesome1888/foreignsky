@@ -32,6 +32,12 @@ export default class Attribute
     constructor(data)
     {
         this._data = this.check(data);
+        if (_.isObjectNotEmpty(data.parameter))
+        {
+            _.forEach(data.parameter, (value, name) => {
+                this.setParameter(name, value);
+            });
+        }
     }
 
     isAttribute()

@@ -1,11 +1,10 @@
 import React from 'react';
 import BasePage from '../../../lib/base/page/page.jsx';
 
-import Layout from '../../component/layout/layout.jsx';
+import Form from '../../component/general/form/form.jsx';
 
-import schema from './schema/login.schema.js';
 import {FlowRouter} from 'meteor/kadira:flow-router';
-import AutoForm from 'uniforms-unstyled/AutoForm';
+import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 
 import './style.less';
 
@@ -53,14 +52,33 @@ export default class LoginPage extends BasePage {
         return (
             <div className="layout content_v_center_h_center h_100p">
                 <div className="layout__inner_centered">
-                    LOGIN
-                    <AutoForm
-                        schema={schema}
+                    <div className="margin-b_x padding-b_x f-size_x2p25">
+                        Welcome back, commander!
+                    </div>
+                    <Form
+                        map={[
+                            {
+                                code: 'login',
+                                type: String,
+                                label: 'E-mail',
+                                regEx: SimpleSchema.RegEx.Email,
+                            },
+                            {
+                                code: 'password',
+                                type: String,
+                                label: 'Password',
+                                optional: true,
+                                parameter: {
+                                    secure: true,
+                                },
+                            },
+                        ]}
+                        submitButtonLabel="Login"
                         onSubmit={this.onSubmitForm.bind(this)}
-                        onSubmitFailure={this.onSubmitFailure.bind(this)}
-                        // showInlineError
+                        // onSubmitFailure={this.onSubmitFailure.bind(this)}
+                        // // showInlineError
                     >
-                    </AutoForm>
+                    </Form>
                 </div>
             </div>
         );

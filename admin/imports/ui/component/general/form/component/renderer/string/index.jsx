@@ -13,13 +13,15 @@ class RendererString extends RendererGeneric
 {
     render()
     {
+        const isSecure = this.props.attribute.getParameter('secure');
+
         return (
             <Container
                 errorProps={this.props}
                 {...filterDOMProps(this.props)}
             >
                 <input
-                    type="text"
+                    type={isSecure ? 'password' : 'text'}
                     name={this.getName()}
                     onChange={this.getOnChange()}
                     value={this.getValue()}

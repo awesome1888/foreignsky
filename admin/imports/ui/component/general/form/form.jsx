@@ -22,13 +22,15 @@ import './style.less';
  */
 export default class Form extends BaseComponent
 {
+    _map = null;
+
     static propTypes = {
         className: PropTypes.oneOfType([
             PropTypes.string,
             PropTypes.array,
             PropTypes.object,
         ]),
-        map: PropTypes.object,
+        map: PropTypes.oneOfType([PropTypes.object]),
         model: PropTypes.object,
         isFragment: PropTypes.bool,
         submitButtonLabel: PropTypes.string,
@@ -74,7 +76,21 @@ export default class Form extends BaseComponent
 
     getMap()
     {
-        return this.props.map;
+        if (!this._map)
+        {
+            this._map = this.props.map;
+            if (_.isArray(this._map))
+            {
+                this._map = new Map(this._map);
+            }
+
+            if (!this._map instanceof Map)
+            {
+                throw new TypeError('Illegal map passed');
+            }
+        }
+
+        return this._map;
     }
 
     async getModel()

@@ -4,11 +4,11 @@ const M = (superclass) => class extends superclass
     {
         super(definition || [
             {
-                code: 'code',
+                code: 'name',
                 type: String,
             },
             {
-                code: 'name',
+                code: 'code',
                 type: String,
             },
         ]);

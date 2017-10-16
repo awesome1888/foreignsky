@@ -1,14 +1,12 @@
 import React from 'react';
-import Header from '../../../ui/component/header/index.jsx';
-import LoadOverlay from '../../../ui/component/general/etc/global-overlay/index.jsx';
-import LoadIndicator from '../../../ui/component/general/etc/global-load-progress/index.jsx';
 import Util from '../../util.js';
 import BaseComponent from '../component/component.jsx';
-// import PreRender from '../../../lib/prerender.js';
 import {DocHead} from 'meteor/kadira:dochead';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import {createRouter} from 'meteor/cultofcoders:meteor-react-routing';
 import {createContainer} from 'meteor/react-meteor-data';
+import User from '../../../api/user/entity/entity.client.js';
+import Security from '../../../lib/util/security.js';
 
 export default class Application extends BaseComponent
 {
@@ -164,7 +162,6 @@ export default class Application extends BaseComponent
     }
 
     /**
-     * @deprecated
      * @returns {*}
      */
     static getInstance()
@@ -199,11 +196,6 @@ export default class Application extends BaseComponent
             loaded: false
         };
 
-        this._overlay = null;
-        this._map = null;
-        this._indicator = null;
-        this._imageView = null;
-
         this.setPageTitle();
         this.setDescription();
         this.setKeywords();
@@ -228,8 +220,6 @@ export default class Application extends BaseComponent
 
     componentDidMount()
     {
-        this.fire('application-mounted');
-
         /**
          * Have to use native JS to avoid problems with FlowRouter when clicking on href-s.
          * We use capturing to prevent being affected with cancelBubble.
@@ -284,14 +274,6 @@ export default class Application extends BaseComponent
                 item.callback(node);
             }
         });
-    }
-
-    extendState(extra)
-    {
-        if(_.isObject(extra))
-        {
-            Object.assign(this.state, extra);
-        }
     }
 
     getQuery()
@@ -370,6 +352,12 @@ export default class Application extends BaseComponent
         return params;
     }
 
+    getRouteProps(props)
+    {
+        const p = props ? props : this.props;
+        return p.routeProps || {};
+    }
+
     useAccounts()
     {
         return this.constructor.useAccounts();
@@ -377,31 +365,25 @@ export default class Application extends BaseComponent
 
     restrictAccess(props)
     {
+        // do some access checking...
         if (this.useAccounts())
         {
-            // do some access checking...
+            if (this.props.waitUserData)
+            {
+                // nothing to check, data still not ready
+                return;
+            }
+
+            const rProps = this.getRouteProps(props);
+            if ('security' in rProps)
+            {
+                const code = Security.produceCode(rProps.security, User.get());
+                if (code.toString() !== '200')
+                {
+                    FlowRouter.go(`/${code}`);
+                }
+            }
         }
-        // FlowRouter.go('/401');
-        // if (roles) {
-        //     if (isLoggingIn) {
-        //         return <Loading />;
-        //     }
-        //
-        //     if (user) {
-        //         let isAuthorized;
-        //         if (_.contains(roles, 'USER')) {
-        //             isAuthorized = true;
-        //         } else {
-        //             isAuthorized = Roles.userIsInRole(user._id, roles) || Roles.userIsInRole(user._id, 'SUPER_ADMIN');
-        //         }
-        //
-        //         if (!isAuthorized) {
-        //             return <NotAuthorized />;
-        //         }
-        //     } else {
-        //         return <NotAuthorized />;
-        //     }
-        // }
     }
 
     renderExtras()
@@ -411,15 +393,13 @@ export default class Application extends BaseComponent
 
     render()
     {
-        const {main, routeProps} = this.props;
-        
         return (
             <div
                 className="layout"
                 ref={(ref) => { this._appContainer = ref; }}
             >
-                {React.createElement(main, this.transformPageParameters({
-                    route: routeProps,
+                {React.createElement(this.props.main, this.transformPageParameters({
+                    route: this.getRouteProps(),
                 }))}
                 {this.renderExtras()}
             </div>

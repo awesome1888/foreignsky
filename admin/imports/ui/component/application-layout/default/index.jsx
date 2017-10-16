@@ -36,6 +36,11 @@ export default class DefaultApplicationLayout extends BaseComponent
         });
     }
 
+    componentDidMount()
+    {
+        this.fire('application-layout-mounted');
+    }
+
     getTitle()
     {
         return _.isStringNotEmpty(this.props.title) ? this.props.title : '';

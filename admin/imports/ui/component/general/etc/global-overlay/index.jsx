@@ -30,7 +30,7 @@ export default class LoadOverlay extends BaseComponent {
 		this.waitPool = [];
 
 		this.on('wait', this.onWait.bind(this));
-		this.on('application-mounted', this.onApplicationMounted.bind(this));
+		this.on('application-layout-mounted', this.onApplicationMounted.bind(this));
 	}
 
     onApplicationMounted()

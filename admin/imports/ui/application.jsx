@@ -40,6 +40,12 @@ export default class AdminApplication extends Application
     static getRouteMap()
     {
         const routes = super.getRouteMap();
+
+        // root can only be visible by the admin. In fact, everything in this app
+        // should be visible only by the admin, except basic things like
+        // /login, /logout, etc...
+        routes.home.params.security = {group: ['A']};
+
         this.attachEntityRoutes(routes);
 
         routes['task-runner'] = {
@@ -115,8 +121,8 @@ export default class AdminApplication extends Application
     }
 
     render() {
-        // main is actually the page controller specified in the route declaration
-        const {main, routeProps} = this.props;
+        const PageController = this.props.main;
+        const rProps = this.getRouteProps();
 
         // if we use accounts and we are waiting for user data from the database,
         // we render as null to avoid unnecessary code to run
@@ -126,9 +132,9 @@ export default class AdminApplication extends Application
         }
 
         let Layout = DefaultLayout;
-        if ('layout' in routeProps)
+        if ('layout' in rProps)
         {
-            Layout = routeProps.layout ? routeProps.layout : 'div';
+            Layout = rProps.layout ? rProps.layout : 'div';
         }
 
         return (
@@ -138,8 +144,8 @@ export default class AdminApplication extends Application
             >
                 <Layout className="application__layout">
                     {
-                        React.createElement(main, this.transformPageParameters({
-                            route: routeProps,
+                        React.createElement(PageController, this.transformPageParameters({
+                            route: rProps,
                         }))
                     }
                 </Layout>

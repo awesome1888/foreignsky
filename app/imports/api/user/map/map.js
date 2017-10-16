@@ -35,10 +35,8 @@ const M = (superclass) => class extends superclass
                 code: 'createdAt',
                 type: Date,
             },
-            {
-                code: 'group',
-                type: [Group],
-            },
+            // caution! the "profile" object will be AUTOMATICALLY brought to the client side
+            // and will be visible to everybody, so DO NOT place here any secret information
             {
                 code: 'profile',
                 type: new Map([
@@ -57,6 +55,10 @@ const M = (superclass) => class extends superclass
                         code: 'lastName',
                         type: String,
                         optional: true,
+                    },
+                    {
+                        code: 'group',
+                        type: [Group],
                     },
                 ]),
             },

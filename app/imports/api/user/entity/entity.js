@@ -4,7 +4,7 @@ import Collection from '../config/collection.js';
  * @abstract
  * @mixin
  */
-const M = (superclass) =>  class User extends superclass
+const M = (superclass) => class User extends superclass
 {
     static _user = null;
 

@@ -30,7 +30,7 @@ else
 if (aGroupId)
 {
     const aUser = User.findOne({
-        filter: {groupId: aGroupId},
+        filter: {'profile.groupId': aGroupId},
     });
 
     if (!aUser)
@@ -38,10 +38,10 @@ if (aGroupId)
         if(!User.save(null, {
             email: 'admin@nachberlin.ru',
             password: '123', // change later!!!
-            groupId: [aGroupId],
             profile: {
                 firstName: 'Fat',
                 lastName: 'Admin',
+                groupId: [aGroupId],
             },
         }))
         {

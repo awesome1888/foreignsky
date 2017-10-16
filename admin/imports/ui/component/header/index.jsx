@@ -19,6 +19,12 @@ export default class Header extends React.Component
 	render()
 	{
 	    const authorzed = User.isAuthorized();
+	    const ready = User.isReady();
+	    let user = {};
+	    if (ready)
+	    {
+	        user = User.get();
+	    }
 
 		return (
             <div className="ui container">
@@ -42,32 +48,36 @@ export default class Header extends React.Component
                                 right floated five wide column
                             "
                         >
-                            <div
-                                className="header__buttons"
-                            >
-                                <div className="header__whoami">
+                            {
+                                ready
+                                &&
+                                <div
+                                    className="header__buttons"
+                                >
+                                    <div className="header__whoami">
+                                        {
+                                            authorzed
+                                            &&
+                                            <a href={`/entity/user/${User.getId()}/`}>{user.getFullName()}</a>
+                                        }
+                                        {
+                                            !authorzed
+                                            &&
+                                            <span className="f-color_red-orange">Guest User</span>
+                                        }
+                                    </div>
                                     {
                                         authorzed
                                         &&
-                                        <a href={`/entity/user/${User.getId()}/`}>Fat Admin</a>
-                                    }
-                                    {
-                                        !authorzed
-                                        &&
-                                        <span className="f-color_red-orange">Guest User</span>
+                                        <Button
+                                            size={'mini'}
+                                            href="/logout"
+                                        >
+                                            Logout
+                                        </Button>
                                     }
                                 </div>
-                                {
-                                    authorzed
-                                    &&
-                                    <Button
-                                        size={'mini'}
-                                        href="/logout"
-                                    >
-                                        Logout
-                                    </Button>
-                                }
-                            </div>
+                            }
                         </div>
                     </div>
                 </div>

@@ -68,7 +68,6 @@ export default class Application extends BaseComponent
         }
         else
         {
-            console.dir(params);
             FlowRouter.route(path, params);
         }
     }

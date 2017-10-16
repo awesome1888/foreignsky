@@ -369,6 +369,14 @@
 	#make_group(@mp, @mp-v);
 }
 
+._group_inline_x(@mp: 1) {
+	& > * {
+		&:not(:last-child) {
+			._margin-r_x(@mp);
+		}
+	}
+}
+
 // create the container which height always will be equal to its width
 #make_height-trick(@width) {
 	position: relative;

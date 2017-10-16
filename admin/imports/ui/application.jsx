@@ -3,6 +3,7 @@ import Application from '../lib/base/application/application.jsx';
 
 import HomePage from './page/home/index.jsx';
 import NotFoundPage from './page/404/index.jsx';
+import NotAuthorizedPage from './page/401/index.jsx';
 import LoginPage from './page/login/index.jsx';
 import TaskRunnerPage from './page/task-runner/index.jsx';
 
@@ -23,6 +24,11 @@ export default class AdminApplication extends Application
     static get404PageController()
     {
         return NotFoundPage;
+    }
+
+    static get401PageController()
+    {
+        return NotAuthorizedPage;
     }
 
     static getLoginPageController()
@@ -71,6 +77,11 @@ export default class AdminApplication extends Application
         });
     }
 
+    /**
+     * todo: get rid of this crap
+     * @param path
+     * @returns {string}
+     */
     static transformPath(path)
     {
         if (_.isStringNotEmpty(path))
@@ -89,11 +100,6 @@ export default class AdminApplication extends Application
         });
 	}
 
-    setTitle(title = '')
-    {
-        super.setTitle(title);
-    }
-
     getMainTitle()
     {
         return 'Admin';
@@ -108,7 +114,15 @@ export default class AdminApplication extends Application
     }
 
     render() {
+        // main is actually the page controller specified in the route declaration
         const {main, routeProps} = this.props;
+
+        // if we use accounts and we are waiting for user data from the database,
+        // we render as null to avoid unnecessary code to run
+        if (this.enableUserAccounts() && this.props.waitUserData)
+        {
+            return null;
+        }
 
         return (
             <div

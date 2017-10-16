@@ -4,27 +4,56 @@ import LoadOverlay from '../../../ui/component/load-overlay/index.jsx';
 import LoadIndicator from '../../../ui/component/load-indicator/index.jsx';
 import Util from '../../util.js';
 import BaseComponent from '../component/component.jsx';
-import PreRender from '../../../lib/prerender.js';
+// import PreRender from '../../../lib/prerender.js';
 import {DocHead} from 'meteor/kadira:dochead';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import {createRouter} from 'meteor/cultofcoders:meteor-react-routing';
+import {createContainer} from 'meteor/react-meteor-data';
 
 export default class Application extends BaseComponent
 {
     static _router = null;
     static _instance = null;
+    static _routerController = null;
 
+    /**
+     * Application initialization entry point
+     */
     static init()
     {
+        if (this.enableUserAccounts())
+        {
+            // create reactive container to track the moment when we got authorized
+            this._routerController = createContainer((props) => {
+                return {
+                    // user: Meteor.subscribe('self') && Meteor.user(),
+                    waitUserData: Meteor.loggingIn(),
+                    ...props,
+                };
+            }, this);
+        }
+        else
+        {
+            // if we dont use accounts, make it simplier
+            this._routerController = this;
+        }
+
         this.registerRoutes();
-        // do whatever else needed
     }
 
+    /**
+     * Switch to true if you plan to use user accounts (authorization)
+     * @returns {boolean}
+     */
     static enableUserAccounts()
     {
         return false;
     }
 
+    /**
+     * Function declares routes for the router. Override with inheritance
+     * @returns {{}}
+     */
     static getRouteMap()
     {
         const routes = {
@@ -36,6 +65,11 @@ export default class Application extends BaseComponent
             404: {
                 path: '/404',
                 controller: this.get404PageController(),
+                params: {},
+            },
+            401: {
+                path: '/401',
+                controller: this.get401PageController(),
                 params: {},
             },
         };
@@ -54,7 +88,8 @@ export default class Application extends BaseComponent
     {
         if (this._router === null)
         {
-            this._router = createRouter(this);
+            // creating new router over the container created over the application
+            this._router = createRouter(this._routerController);
         }
 
         return this._router;
@@ -80,6 +115,11 @@ export default class Application extends BaseComponent
     static get404PageController()
     {
         throw new Error('Not implemented: static get404PageController()');
+    }
+
+    static get401PageController()
+    {
+        throw new Error('Not implemented: static get401PageController()');
     }
 
     static getLoginPageController()
@@ -118,6 +158,10 @@ export default class Application extends BaseComponent
         });
     }
 
+    /**
+     * @deprecated
+     * @returns {*}
+     */
     static getInstance()
     {
         if(this._instance)
@@ -148,8 +192,6 @@ export default class Application extends BaseComponent
         this.setPageTitle();
         this.setDescription();
         this.setKeywords();
-
-        this.onGlobalClick = this.onGlobalClick.bind(this);
     }
 
     getGlobalSelectorMap()
@@ -180,21 +222,35 @@ export default class Application extends BaseComponent
          * Have to use native JS to avoid problems with FlowRouter when clicking on href-s.
          * We use capturing to prevent being affected with cancelBubble.
          */
-        if (this._appContainer && _.isArrayNotEmpty(this.getGlobalSelectorMap())) {
+        if (this._appContainer && _.isArrayNotEmpty(this.getGlobalSelectorMap()))
+        {
+            this.onGlobalClick = this.onGlobalClick.bind(this);
             this._appContainer.addEventListener('click', this.onGlobalClick, true);
         }
+
+        console.dir(this.props.waitUserData);
+        this.restrictAccess(this.props);
+    }
+
+    componentWillReceiveProps(props)
+    {
+        console.dir(props.waitUserData);
+        this.restrictAccess(props);
     }
 
     /**
      * That will never happen, but anyway :)
      */
-    componentWillUnMount() {
-        if (this._appContainer) {
+    componentWillUnMount()
+    {
+        if (this._appContainer)
+        {
             this._appContainer.removeEventListener('click', this.onGlobalClick, true);
         }
     }
 
-    onGlobalClick(e) {
+    onGlobalClick(e)
+    {
         let node;
         this.getGlobalSelectorMap().forEach((item) => {
             node = Util.findClosestParent(e.target, item.selector);
@@ -212,7 +268,8 @@ export default class Application extends BaseComponent
         }
     }
 
-    getQuery() {
+    getQuery()
+    {
         return FlowRouter.current().queryParams;
     }
 
@@ -230,14 +287,6 @@ export default class Application extends BaseComponent
 
         return p;
     }
-
-    // waitOne(promise)
-    // {
-    //     if(this.state.shown && promise)
-    //     {
-    //         this.waitPool.push(promise);
-    //     }
-    // }
 
     getRouter()
     {
@@ -269,6 +318,7 @@ export default class Application extends BaseComponent
         DocHead.setTitle(title);
     }
 
+    // todo: move to the page logic
     setDescription(text = '')
     {
         DocHead.addMeta({
@@ -277,12 +327,10 @@ export default class Application extends BaseComponent
         });
     }
 
+    // todo: move to the page logic
     setKeywords(keywords = [])
     {
-        let kw = [
-            'берлин','блог','город','поездка','достопримечательности',
-            'места','памятники','статьи','экскурсии','германия',
-        ];
+        let kw = [];
         if (_.isArrayNotEmpty(keywords))
         {
             kw = keywords;
@@ -304,6 +352,40 @@ export default class Application extends BaseComponent
         return params;
     }
 
+    enableUserAccounts()
+    {
+        return this.constructor.enableUserAccounts();
+    }
+
+    restrictAccess(props)
+    {
+        if (this.enableUserAccounts())
+        {
+            // do some access checking...
+        }
+        // FlowRouter.go('/401');
+        // if (roles) {
+        //     if (isLoggingIn) {
+        //         return <Loading />;
+        //     }
+        //
+        //     if (user) {
+        //         let isAuthorized;
+        //         if (_.contains(roles, 'USER')) {
+        //             isAuthorized = true;
+        //         } else {
+        //             isAuthorized = Roles.userIsInRole(user._id, roles) || Roles.userIsInRole(user._id, 'SUPER_ADMIN');
+        //         }
+        //
+        //         if (!isAuthorized) {
+        //             return <NotAuthorized />;
+        //         }
+        //     } else {
+        //         return <NotAuthorized />;
+        //     }
+        // }
+    }
+
     renderExtras()
     {
         return null;
@@ -312,7 +394,7 @@ export default class Application extends BaseComponent
     render()
     {
         const {main, routeProps} = this.props;
-
+        
         return (
             <div
                 className="layout"

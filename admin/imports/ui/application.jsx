@@ -1,5 +1,6 @@
 import React from 'react';
 import Application from '../lib/base/application/application.jsx';
+import DefaultLayout from './component/application-layout/default/index.jsx';
 
 import HomePage from './page/home/index.jsx';
 import NotFoundPage from './page/404/index.jsx';
@@ -129,11 +130,13 @@ export default class AdminApplication extends Application
                 className="application"
                 ref={(ref) => { this._appContainer = ref; }}
             >
-                {
-                    React.createElement(main, this.transformPageParameters({
-                        route: routeProps,
-                    }))
-                }
+                <DefaultLayout>
+                    {
+                        React.createElement(main, this.transformPageParameters({
+                            route: routeProps,
+                        }))
+                    }
+                </DefaultLayout>
                 {this.renderExtras()}
             </div>
         );

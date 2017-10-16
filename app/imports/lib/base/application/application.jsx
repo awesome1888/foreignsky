@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../../../ui/component/header/index.jsx';
-import LoadOverlay from '../../../ui/component/load-overlay/index.jsx';
-import LoadIndicator from '../../../ui/component/load-indicator/index.jsx';
+import LoadOverlay from '../../../ui/component/general/etc/global-overlay/index.jsx';
+import LoadIndicator from '../../../ui/component/general/etc/global-load-progress/index.jsx';
 import Util from '../../util.js';
 import BaseComponent from '../component/component.jsx';
 // import PreRender from '../../../lib/prerender.js';
@@ -175,6 +175,16 @@ export default class Application extends BaseComponent
         };
     }
 
+    /**
+     * Inform the application that we are waiting for some promise
+     * @param p
+     * @returns {*}
+     */
+    static wait(p)
+    {
+        return this.getInstance().wait(p);
+    }
+
     _appContainer = null;
 
     constructor(props)
@@ -213,10 +223,7 @@ export default class Application extends BaseComponent
 
     componentDidMount()
     {
-        this.fire('wait-all');
-
-        // shit-fix
-        this.wait(new Promise((resolve) => {resolve()}));
+        // this.fire('wait-all');
 
         /**
          * Have to use native JS to avoid problems with FlowRouter when clicking on href-s.
@@ -228,13 +235,13 @@ export default class Application extends BaseComponent
             this._appContainer.addEventListener('click', this.onGlobalClick, true);
         }
 
-        console.dir(this.props.waitUserData);
+        // console.dir(this.props.waitUserData);
         this.restrictAccess(this.props);
     }
 
     componentWillReceiveProps(props)
     {
-        console.dir(props.waitUserData);
+        // console.dir(props.waitUserData);
         this.restrictAccess(props);
     }
 
@@ -275,16 +282,8 @@ export default class Application extends BaseComponent
 
     wait(p)
     {
-        this.fire('wait-one', [p]);
-        // if(this.getOverlay())
-        // {
-        //     this.getOverlay().waitOne(p);
-        // }
-        // if(this.getIndicator())
-        // {
-        //     this.getIndicator().waitOne(p);
-        // }
-
+        // inform possible overlays and progress bars that we have the promise to wait for
+        this.fire('wait', [p]);
         return p;
     }
 

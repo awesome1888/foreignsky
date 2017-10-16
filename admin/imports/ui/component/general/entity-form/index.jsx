@@ -2,7 +2,7 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import Form from '../form/form.jsx';
-import App from '../../../application.jsx';
+import Application from '../../../application.jsx';
 
 /**
  * The basic component for making forms: schema renderer
@@ -58,11 +58,9 @@ export default class EntityForm extends Form
         if (_.isStringNotEmpty(id) && id !== '0')
         {
             return new Promise((resolve, reject) => {
-                const p = this.getEntity().findById(id, {select: '#'});
-
-                App.getInstance().wait(p);
-
-                p.then((item) => {
+                Application.wait(
+                    this.getEntity().findById(id, {select: '#'})
+                ).then((item) => {
                     if (item)
                     {
                         this.setTitle(item);

@@ -3,8 +3,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import classnames from 'classnames';
-import PreRender from '../../../lib/prerender.js';
-import BaseComponent from '../../../lib/base/component/component.jsx';
+import PreRender from '../../../../../lib/prerender.js';
+import BaseComponent from '../../../../../lib/base/component/component.jsx';
 
 import './style.less';
 

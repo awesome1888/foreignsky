@@ -3,7 +3,7 @@ import BaseComponent from '../../../../lib/base/component/component.jsx';
 import PropTypes from 'prop-types';
 
 import Header from '../../header/index.jsx';
-// import GlobalOverlay from '../../general/etc/global-overlay/index.jsx';
+import GlobalOverlay from '../../general/etc/global-overlay/index.jsx';
 import GlobalLoadProgress from '../../general/etc/global-load-progress/index.jsx';
 import Navigation from '../../navigation/navigation.jsx';
 
@@ -50,7 +50,7 @@ export default class DefaultApplicationLayout extends BaseComponent
             <div
                 className="layout"
             >
-                {/*<GlobalOverlay />*/}
+                <GlobalOverlay />
                 <Header />
                 <GlobalLoadProgress />
 

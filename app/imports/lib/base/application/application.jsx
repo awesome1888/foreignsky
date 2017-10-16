@@ -228,7 +228,7 @@ export default class Application extends BaseComponent
 
     componentDidMount()
     {
-        // this.fire('wait-all');
+        this.fire('application-mounted');
 
         /**
          * Have to use native JS to avoid problems with FlowRouter when clicking on href-s.

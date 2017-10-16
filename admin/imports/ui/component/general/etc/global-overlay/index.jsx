@@ -29,11 +29,11 @@ export default class LoadOverlay extends BaseComponent {
 
 		this.waitPool = [];
 
-		this.on('wait-one', this.waitOne.bind(this));
-		this.on('wait-all', this.waitAll.bind(this));
+		this.on('wait', this.onWait.bind(this));
+		this.on('application-mounted', this.onApplicationMounted.bind(this));
 	}
 
-    waitAll()
+    onApplicationMounted()
 	{
 	    if(PreRender.isCrawler) {
 	        return; // when crawler do nothing
@@ -44,7 +44,7 @@ export default class LoadOverlay extends BaseComponent {
         });
 	}
 
-	waitOne(promise)
+    onWait(promise)
 	{
 		if(this.state.shown && promise)
 		{

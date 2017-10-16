@@ -16,12 +16,14 @@ export default class Application extends BaseComponent
     static _instance = null;
     static _routerController = null;
 
+    static _userDataReady = null;
+
     /**
      * Application initialization entry point
      */
     static init()
     {
-        if (this.enableUserAccounts())
+        if (this.useAccounts())
         {
             // create reactive container to track the moment when we got authorized
             this._routerController = createContainer((props) => {
@@ -45,7 +47,7 @@ export default class Application extends BaseComponent
      * Switch to true if you plan to use user accounts (authorization)
      * @returns {boolean}
      */
-    static enableUserAccounts()
+    static useAccounts()
     {
         return false;
     }
@@ -74,7 +76,7 @@ export default class Application extends BaseComponent
             },
         };
 
-        if (this.enableUserAccounts())
+        if (this.useAccounts())
         {
             this.attachUserAccountRoutes(routes);
         }
@@ -235,12 +237,26 @@ export default class Application extends BaseComponent
             this._appContainer.addEventListener('click', this.onGlobalClick, true);
         }
 
+        if (this.useAccounts() && this.props.waitUserData)
+        {
+            // wait for user data to be loaded, reactively
+            this.wait(new Promise((resolve) => {
+                this._userDataReady = resolve;
+            }));
+        }
+
         // console.dir(this.props.waitUserData);
         this.restrictAccess(this.props);
     }
 
     componentWillReceiveProps(props)
     {
+        if (this.useAccounts() && !this.props.waitUserData && _.isFunction(this._userDataReady))
+        {
+            // tell that user data was loaded
+            this._userDataReady();
+        }
+
         // console.dir(props.waitUserData);
         this.restrictAccess(props);
     }
@@ -351,14 +367,14 @@ export default class Application extends BaseComponent
         return params;
     }
 
-    enableUserAccounts()
+    useAccounts()
     {
-        return this.constructor.enableUserAccounts();
+        return this.constructor.useAccounts();
     }
 
     restrictAccess(props)
     {
-        if (this.enableUserAccounts())
+        if (this.useAccounts())
         {
             // do some access checking...
         }

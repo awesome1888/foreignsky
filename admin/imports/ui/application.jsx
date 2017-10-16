@@ -12,7 +12,7 @@ import EntityMap from '../startup/client/entity-map.js';
 
 export default class AdminApplication extends Application
 {
-    static enableUserAccounts()
+    static useAccounts()
     {
         return true;
     }
@@ -120,7 +120,7 @@ export default class AdminApplication extends Application
 
         // if we use accounts and we are waiting for user data from the database,
         // we render as null to avoid unnecessary code to run
-        if (this.enableUserAccounts() && this.props.waitUserData)
+        if (this.useAccounts() && this.props.waitUserData)
         {
             return null;
         }

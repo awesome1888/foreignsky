@@ -125,18 +125,24 @@ export default class AdminApplication extends Application
             return null;
         }
 
+        let Layout = DefaultLayout;
+        if ('layout' in routeProps)
+        {
+            Layout = routeProps.layout ? routeProps.layout : 'div';
+        }
+
         return (
             <div
                 className="application"
                 ref={(ref) => { this._appContainer = ref; }}
             >
-                <DefaultLayout>
+                <Layout className="application__layout">
                     {
                         React.createElement(main, this.transformPageParameters({
                             route: routeProps,
                         }))
                     }
-                </DefaultLayout>
+                </Layout>
                 {this.renderExtras()}
             </div>
         );

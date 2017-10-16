@@ -134,6 +134,9 @@ export default class Application extends BaseComponent
         routes['login'] = {
             path: '/login',
             controller: this.getLoginPageController(),
+            params: {
+                layout: null,
+            },
         };
         routes['logout'] = {
             path: '/logout',
@@ -415,22 +418,6 @@ export default class Application extends BaseComponent
                 className="layout"
                 ref={(ref) => { this._appContainer = ref; }}
             >
-                {
-                    this.showOverlay()
-                    &&
-                    <LoadOverlay
-                        ref={(instance) => {this.setOverlay(instance)}}
-                    />
-                }
-
-                <Header />
-                {
-                    this.showIndicator()
-                    &&
-                    <LoadIndicator
-                        ref={(instance) => {this.setIndicator(instance)}}
-                    />
-                }
                 {React.createElement(main, this.transformPageParameters({
                     route: routeProps,
                 }))}

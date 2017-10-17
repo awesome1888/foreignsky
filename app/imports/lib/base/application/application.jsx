@@ -15,7 +15,8 @@ export default class Application extends BaseComponent
     static _instance = null;
     static _routerController = null;
 
-    static _accountsReady = null;
+    _accountsReady = null;
+    _accountsToWait = [];
 
     /**
      * Application initialization entry point
@@ -238,22 +239,18 @@ export default class Application extends BaseComponent
 
         if (this.useAccounts())
         {
-            const toWait = [];
-
             if (this.props.waitUserData)
             {
                 // wait for user data to be loaded, reactively
-                toWait.push(this.wait(new Promise((resolve) => {
+                this._accountsToWait.push(this.wait(new Promise((resolve) => {
                     this._accountsReady = resolve;
                 })));
             }
 
             // wait for group data to be loaded
-            toWait.push(this.startGroupDataLoad());
+            this._accountsToWait.push(this.startGroupDataLoad());
 
-            Promise.all(toWait).then(() => {
-                this.checkAccess();
-            });
+            this.launchCheckAccess();
         }
     }
 
@@ -266,6 +263,8 @@ export default class Application extends BaseComponent
                 // resolve user data promise
                 this._accountsReady();
             }
+
+            this.launchCheckAccess();
         }
     }
 
@@ -273,11 +272,10 @@ export default class Application extends BaseComponent
     {
         if (this.useAccounts())
         {
-            console.dir('update!');
+            const ar = this.state.accessCheckResult;
 
-            if (this.state.accessCheckResult !== 200)
+            if (ar && ar !== 200)
             {
-                console.dir(`/${this.state.accessCheckResult}`);
                 FlowRouter.go(`/${this.state.accessCheckResult}`);
             }
         }
@@ -292,6 +290,23 @@ export default class Application extends BaseComponent
         {
             this._appContainer.removeEventListener('click', this.onGlobalClick, true);
         }
+    }
+
+    launchCheckAccess()
+    {
+        if (this._caInProgress)
+        {
+            return;
+        }
+
+        this._caInProgress = true;
+        this.setState({
+            accessCheckResult: null,
+        });
+        Promise.all(this._accountsToWait).then(() => {
+            this.checkAccess();
+            this._caInProgress = false;
+        });
     }
 
     onGlobalClick(e)
@@ -395,7 +410,7 @@ export default class Application extends BaseComponent
     {
         return {
             groupsReady: false,
-            accessCheckResult: 200,
+            accessCheckResult: null,
         };
     }
 

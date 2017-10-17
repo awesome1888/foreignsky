@@ -37,6 +37,11 @@ export default class AdminApplication extends Application
         return LoginPage;
     }
 
+    static getDefaultApplicationLayoutController()
+    {
+        return DefaultLayout;
+    }
+
     static getRouteMap()
     {
         const routes = super.getRouteMap();
@@ -118,39 +123,5 @@ export default class AdminApplication extends Application
         tParams.title = this.state.title;
 
         return tParams;
-    }
-
-    render() {
-        const PageController = this.props.main;
-        const rProps = this.getRouteProps();
-
-        // if we use accounts and we are waiting for user data from the database,
-        // we render as null to avoid unnecessary code to run
-        if (this.useAccounts() && this.props.waitUserData)
-        {
-            return null;
-        }
-
-        let Layout = DefaultLayout;
-        if ('layout' in rProps)
-        {
-            Layout = rProps.layout ? rProps.layout : 'div';
-        }
-
-        return (
-            <div
-                className="application"
-                ref={(ref) => { this._appContainer = ref; }}
-            >
-                <Layout className="application__layout">
-                    {
-                        React.createElement(PageController, this.transformPageParameters({
-                            route: rProps,
-                        }))
-                    }
-                </Layout>
-                {this.renderExtras()}
-            </div>
-        );
     }
 }

@@ -6,6 +6,7 @@ import {FlowRouter} from 'meteor/kadira:flow-router';
 import {createRouter} from 'meteor/cultofcoders:meteor-react-routing';
 import {createContainer} from 'meteor/react-meteor-data';
 import User from '../../../api/user/entity/entity.client.js';
+import UserGroup from '../../../api/user.group/entity/entity.client.js';
 import Security from '../../../lib/util/security.js';
 
 export default class Application extends BaseComponent
@@ -127,6 +128,11 @@ export default class Application extends BaseComponent
         throw new Error('Not implemented: static getLoginPageController()');
     }
 
+    static getDefaultApplicationLayoutController()
+    {
+        throw new Error('Not implemented: static getDefaultApplicationLayoutController()');
+    }
+
     static attachUserAccountRoutes(routes)
     {
         routes['login'] = {
@@ -194,7 +200,7 @@ export default class Application extends BaseComponent
     {
         super(props);
         this.state = {
-            loaded: false
+            groupsReady: false,
         };
 
         this.setPageTitle();
@@ -231,28 +237,43 @@ export default class Application extends BaseComponent
             this._appContainer.addEventListener('click', this.onGlobalClick, true);
         }
 
-        if (this.useAccounts() && this.props.waitUserData)
+        if (this.useAccounts())
         {
-            // wait for user data to be loaded, reactively
-            this.wait(new Promise((resolve) => {
-                this._userDataReady = resolve;
-            }));
-        }
+            if (this.props.waitUserData)
+            {
+                console.dir('LOADING!');
+                // wait for user data to be loaded, reactively
+                this.wait(new Promise((resolve) => {
+                    this._userDataReady = resolve;
+                }));
+            }
 
-        // console.dir(this.props.waitUserData);
-        this.restrictAccess(this.props);
+            // wait for group data to be loaded
+            this.startGroupDataLoad();
+
+            // checking the access on component mount, first time
+            this.restrictAccess(this.props);
+        }
     }
 
     componentWillReceiveProps(props)
     {
-        if (this.useAccounts() && !this.props.waitUserData && _.isFunction(this._userDataReady))
-        {
-            // tell that user data was loaded
-            this._userDataReady();
-        }
+        console.dir('props.waitUserData = '+props.waitUserData);
+        console.dir('this.props.waitUserData = '+this.props.waitUserData);
 
-        // console.dir(props.waitUserData);
-        this.restrictAccess(props);
+        if (this.useAccounts())
+        {
+            if (!props.waitUserData && _.isFunction(this._userDataReady))
+            {
+                console.dir('LOADED!');
+                // resolve user data promise
+                this._userDataReady();
+            }
+
+            console.dir('componentWillReceiveProps');
+            // checking access based on props, not this.props, because this.props are out-of-date at the moment
+            this.restrictAccess(props);
+        }
     }
 
     /**
@@ -369,7 +390,7 @@ export default class Application extends BaseComponent
         // do some access checking...
         if (this.useAccounts())
         {
-            if (this.props.waitUserData)
+            if ('waitUserData' in props && props.waitUserData)
             {
                 // nothing to check, data still not ready
                 return;
@@ -378,7 +399,7 @@ export default class Application extends BaseComponent
             const rProps = this.getRouteProps(props);
             if ('security' in rProps)
             {
-                const code = Security.produceCode(rProps.security, User.get());
+                const code = Security.makeCode(rProps.security, User.get());
                 if (code.toString() !== '200')
                 {
                     FlowRouter.go(`/${code}`);
@@ -387,21 +408,71 @@ export default class Application extends BaseComponent
         }
     }
 
+    startGroupDataLoad()
+    {
+        this.wait(UserGroup.loadData()).then(() => {
+            this.setState({
+                groupsReady: true,
+            });
+        });
+    }
+
+    userDataReady()
+    {
+        if (!this.useAccounts())
+        {
+            return true;
+        }
+
+        if (this.props.waitUserData || !this.state.groupsReady)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    isReady()
+    {
+        return this.userDataReady();
+    }
+
     renderExtras()
     {
         return null;
     }
 
-    render()
-    {
+    render() {
+        const PageController = this.props.main;
+        const rProps = this.getRouteProps();
+
+        // if we use accounts and we are waiting for user data from the database,
+        // we render as null to avoid unnecessary code to run
+        if (!this.userDataReady())
+        {
+            return null;
+        }
+
+        let Layout = this.constructor.getDefaultApplicationLayoutController();
+        if ('layout' in rProps)
+        {
+            Layout = rProps.layout ? rProps.layout : 'div';
+        }
+
         return (
             <div
-                className="layout"
+                className="application"
                 ref={(ref) => { this._appContainer = ref; }}
             >
-                {React.createElement(this.props.main, this.transformPageParameters({
-                    route: this.getRouteProps(),
-                }))}
+                <Layout className="application__layout">
+                    {
+                        this.isReady()
+                        &&
+                        React.createElement(PageController, this.transformPageParameters({
+                            route: rProps,
+                        }))
+                    }
+                </Layout>
                 {this.renderExtras()}
             </div>
         );

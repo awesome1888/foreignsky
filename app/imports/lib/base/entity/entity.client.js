@@ -39,7 +39,7 @@ export default class BaseEntity extends Entity
         return null;
     }
 
-    static async find(condition = {})
+    static async find(condition = {}, parameters = {})
     {
         if (!_.isObject(condition))
         {
@@ -50,6 +50,11 @@ export default class BaseEntity extends Entity
 
         if (_.isArrayNotEmpty(data))
         {
+            if (parameters.returnArray === true)
+            {
+                return data;
+            }
+
             return data.map(item => new this(item));
         }
 

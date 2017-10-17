@@ -6,6 +6,8 @@ import Form from '../../component/general/form/form.jsx';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 
+import User from '../../../api/user/entity/entity.client.js';
+
 import './style.less';
 
 export default class LoginPage extends BasePage {
@@ -58,36 +60,50 @@ export default class LoginPage extends BasePage {
     }
 
     render() {
+        const loggedIn = User.isAuthorized();
+
         return (
             <div className="layout content_v_center_h_center h_100p">
                 <div className="layout__inner_centered">
-                    <div className="margin-b_x padding-b_x f-size_x2p25">
-                        Welcome back, commander!
-                    </div>
-                    <Form
-                        map={[
-                            {
-                                code: 'login',
-                                type: String,
-                                label: 'E-mail',
-                                regEx: SimpleSchema.RegEx.Email,
-                            },
-                            {
-                                code: 'password',
-                                type: String,
-                                label: 'Password',
-                                optional: true,
-                                parameter: {
-                                    secure: true,
-                                },
-                            },
-                        ]}
-                        submitButtonLabel="Login"
-                        onSubmit={this.onSubmitForm.bind(this)}
-                        onValidate={this.onValidateForm.bind(this)}
-                        error={this.state.errorMessage}
-                    >
-                    </Form>
+                    {
+                        loggedIn
+                        &&
+                        <div>Already authorized. <a href="/logout">Logout</a></div>
+                    }
+
+                    {
+                        !loggedIn
+                        &&
+                        <div className="h_100p">
+                            <div className="margin-b_x padding-b_x f-size_x2p25">
+                                Welcome back, commander!
+                            </div>
+                            <Form
+                                map={[
+                                    {
+                                        code: 'login',
+                                        type: String,
+                                        label: 'E-mail',
+                                        regEx: SimpleSchema.RegEx.Email,
+                                    },
+                                    {
+                                        code: 'password',
+                                        type: String,
+                                        label: 'Password',
+                                        optional: true,
+                                        parameter: {
+                                            secure: true,
+                                        },
+                                    },
+                                ]}
+                                submitButtonLabel="Login"
+                                onSubmit={this.onSubmitForm.bind(this)}
+                                onValidate={this.onValidateForm.bind(this)}
+                                error={this.state.errorMessage}
+                            >
+                            </Form>
+                        </div>
+                    }
                 </div>
             </div>
         );

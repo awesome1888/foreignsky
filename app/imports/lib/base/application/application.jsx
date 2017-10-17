@@ -72,7 +72,9 @@ export default class Application extends BaseComponent
             401: {
                 path: '/401',
                 controller: this.get401PageController(),
-                params: {},
+                params: {
+                    layout: null,
+                },
             },
         };
 

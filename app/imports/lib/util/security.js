@@ -1,5 +1,3 @@
-
-
 export default class Security
 {
     static makeCode(rules, user)
@@ -9,6 +7,6 @@ export default class Security
         // console.dir(rules);
         // console.dir(user);
 
-        return 401;
+        return 200;
     }
 }

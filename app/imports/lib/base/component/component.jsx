@@ -7,7 +7,7 @@ import App from '../../../ui/application.jsx';
 export default class BaseComponent extends Component
 {
     _scope = null;
-    _cache = null;
+    _cache = null; // this is used to store temporal cached data, to boost operations
     _events = [];
 
     constructor(props)
@@ -34,11 +34,18 @@ export default class BaseComponent extends Component
         }
     }
 
+    /**
+     * Drops the cache of temporal data
+     */
     clearCache()
     {
         this._cache = {};
     }
 
+    /**
+     * Adds new keys to the state, no reactivity, use it only in constructor
+     * @param extra
+     */
     extendState(extra)
     {
         if(_.isObject(extra))
@@ -47,12 +54,18 @@ export default class BaseComponent extends Component
         }
     }
 
+    /**
+     * Just a shortcut to the app instance
+     * @returns {{wait}|*}
+     */
     getApplication()
     {
         return App.getInstance();
     }
 
     /**
+     * Returns the root node of the component, if any
+     *
      * Dont forget to add
      * ref={ref => {this._scope = ref;}}
      * inside render() function to make this work.
@@ -63,9 +76,12 @@ export default class BaseComponent extends Component
         return this._scope;
     }
 
+    /**
+     * Returns the className property, if any
+     */
     getClassName()
     {
-        return this.props.className;
+        return this.props.className || '';
     }
 
     setTitle(title = '')
@@ -74,6 +90,12 @@ export default class BaseComponent extends Component
         this._titleUpdated = true;
     }
 
+    /**
+     * Executes a method, returns promise
+     * @param name
+     * @param args
+     * @returns {Promise}
+     */
     execute(name, args)
     {
         return new Promise((fulfil, reject) => {
@@ -100,6 +122,12 @@ export default class BaseComponent extends Component
         }
     }
 
+    /**
+     * Hangs on the specified user-space event
+     * todo: probably use event emitter here
+     * @param event
+     * @param cb
+     */
     on(event, cb)
     {
         $(document).on(event, cb);
@@ -109,6 +137,12 @@ export default class BaseComponent extends Component
         });
     }
 
+    /**
+     * Fires the specified user-space event
+     * todo: probably use event emitter here
+     * @param event
+     * @param args
+     */
     fire(event, args = [])
     {
         $(document).trigger(event, args);

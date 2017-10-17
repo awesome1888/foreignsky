@@ -178,7 +178,8 @@ export default class Application extends BaseComponent
     }
 
     /**
-     * Inform the application that we are waiting for some promise
+     * Inform the application that we are waiting for some promise. Application may show some loaders at the moment.
+     * todo: update this..., move logic from the global loader here, fire two events: 'load-start', 'load-end'
      * @param p
      * @returns {*}
      */

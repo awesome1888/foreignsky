@@ -7,7 +7,7 @@ import {createRouter} from 'meteor/cultofcoders:meteor-react-routing';
 import {createContainer} from 'meteor/react-meteor-data';
 import User from '../../../api/user/entity/entity.client.js';
 import UserGroup from '../../../api/user.group/entity/entity.client.js';
-import Security from '../../../lib/util/security.js';
+import Security from '../../util/security/security.client.js';
 
 export default class Application extends BaseComponent
 {
@@ -16,7 +16,7 @@ export default class Application extends BaseComponent
     static _routerController = null;
 
     _accountsReady = null;
-    _accountsToWait = [];
+    _accountsToWait = {};
 
     /**
      * Application initialization entry point
@@ -76,6 +76,13 @@ export default class Application extends BaseComponent
                     layout: null,
                 },
             },
+            403: {
+                path: '/403',
+                controller: this.get403PageController(),
+                params: {
+                    layout: null,
+                },
+            },
         };
 
         if (this.useAccounts())
@@ -124,6 +131,11 @@ export default class Application extends BaseComponent
     static get401PageController()
     {
         throw new Error('Not implemented: static get401PageController()');
+    }
+
+    static get403PageController()
+    {
+        throw new Error('Not implemented: static get403PageController()');
     }
 
     static getLoginPageController()
@@ -244,13 +256,13 @@ export default class Application extends BaseComponent
             if (this.props.waitUserData)
             {
                 // wait for user data to be loaded, reactively
-                this._accountsToWait.push(this.wait(new Promise((resolve) => {
+                this._accountsToWait.userData = this.wait(new Promise((resolve) => {
                     this._accountsReady = resolve;
-                })));
+                }));
             }
 
             // wait for group data to be loaded
-            this._accountsToWait.push(this.startGroupDataLoad());
+            this._accountsToWait.groupData = this.startGroupDataLoad();
 
             this.launchCheckAccess();
         }
@@ -305,7 +317,7 @@ export default class Application extends BaseComponent
         this.setState({
             accessCheckResult: null,
         });
-        Promise.all(this._accountsToWait).then(() => {
+        Promise.all(Object.values(this._accountsToWait)).then(() => {
             this.checkAccess();
             this._caInProgress = false;
         });
@@ -422,7 +434,7 @@ export default class Application extends BaseComponent
         let accessCheckResult = 200;
         if ('security' in rProps)
         {
-            accessCheckResult = Security.makeCode(rProps.security, User.get());
+            accessCheckResult = Security.makeCode(rProps.security);
         }
         this.setState({
             accessCheckResult,

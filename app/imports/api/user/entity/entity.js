@@ -58,6 +58,11 @@ const M = (superclass) => class User extends superclass
         const p = this.getProfile();
         return `${p.firstName} ${p.lastName}`;
     }
+
+    getGroupIds()
+    {
+        return this.getProfile().groupId || [];
+    }
 };
 
 export default M;

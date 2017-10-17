@@ -15,7 +15,7 @@ export default class Application extends BaseComponent
     static _instance = null;
     static _routerController = null;
 
-    static _userDataReady = null;
+    static _accountsReady = null;
 
     /**
      * Application initialization entry point
@@ -199,9 +199,8 @@ export default class Application extends BaseComponent
     constructor(props)
     {
         super(props);
-        this.state = {
-            groupsReady: false,
-        };
+        this.extendState(Object.assign({
+        }, this.getAccountInitialState()));
 
         this.setPageTitle();
         this.setDescription();
@@ -239,40 +238,48 @@ export default class Application extends BaseComponent
 
         if (this.useAccounts())
         {
+            const toWait = [];
+
             if (this.props.waitUserData)
             {
-                console.dir('LOADING!');
                 // wait for user data to be loaded, reactively
-                this.wait(new Promise((resolve) => {
-                    this._userDataReady = resolve;
-                }));
+                toWait.push(this.wait(new Promise((resolve) => {
+                    this._accountsReady = resolve;
+                })));
             }
 
             // wait for group data to be loaded
-            this.startGroupDataLoad();
+            toWait.push(this.startGroupDataLoad());
 
-            // checking the access on component mount, first time
-            this.restrictAccess(this.props);
+            Promise.all(toWait).then(() => {
+                this.checkAccess();
+            });
         }
     }
 
     componentWillReceiveProps(props)
     {
-        console.dir('props.waitUserData = '+props.waitUserData);
-        console.dir('this.props.waitUserData = '+this.props.waitUserData);
-
         if (this.useAccounts())
         {
-            if (!props.waitUserData && _.isFunction(this._userDataReady))
+            if (!props.waitUserData && _.isFunction(this._accountsReady))
             {
-                console.dir('LOADED!');
                 // resolve user data promise
-                this._userDataReady();
+                this._accountsReady();
             }
+        }
+    }
 
-            console.dir('componentWillReceiveProps');
-            // checking access based on props, not this.props, because this.props are out-of-date at the moment
-            this.restrictAccess(props);
+    componentDidUpdate()
+    {
+        if (this.useAccounts())
+        {
+            console.dir('update!');
+
+            if (this.state.accessCheckResult !== 200)
+            {
+                console.dir(`/${this.state.accessCheckResult}`);
+                FlowRouter.go(`/${this.state.accessCheckResult}`);
+            }
         }
     }
 
@@ -374,10 +381,9 @@ export default class Application extends BaseComponent
         return params;
     }
 
-    getRouteProps(props)
+    getRouteProps()
     {
-        const p = props ? props : this.props;
-        return p.routeProps || {};
+        return this.props.routeProps || {};
     }
 
     useAccounts()
@@ -385,27 +391,25 @@ export default class Application extends BaseComponent
         return this.constructor.useAccounts();
     }
 
-    restrictAccess(props)
+    getAccountInitialState()
     {
-        // do some access checking...
-        if (this.useAccounts())
-        {
-            if ('waitUserData' in props && props.waitUserData)
-            {
-                // nothing to check, data still not ready
-                return;
-            }
+        return {
+            groupsReady: false,
+            accessCheckResult: 200,
+        };
+    }
 
-            const rProps = this.getRouteProps(props);
-            if ('security' in rProps)
-            {
-                const code = Security.makeCode(rProps.security, User.get());
-                if (code.toString() !== '200')
-                {
-                    FlowRouter.go(`/${code}`);
-                }
-            }
+    checkAccess()
+    {
+        const rProps = this.getRouteProps();
+        let accessCheckResult = 200;
+        if ('security' in rProps)
+        {
+            accessCheckResult = Security.makeCode(rProps.security, User.get());
         }
+        this.setState({
+            accessCheckResult,
+        });
     }
 
     startGroupDataLoad()
@@ -417,24 +421,24 @@ export default class Application extends BaseComponent
         });
     }
 
-    userDataReady()
+    accountsReady()
     {
         if (!this.useAccounts())
         {
             return true;
         }
 
-        if (this.props.waitUserData || !this.state.groupsReady)
-        {
-            return false;
-        }
+        return this.userDataReady() && this.state.groupsReady && this.state.accessCheckResult;
+    }
 
-        return true;
+    userDataReady()
+    {
+        return !this.props.waitUserData;
     }
 
     isReady()
     {
-        return this.userDataReady();
+        return this.accountsReady();
     }
 
     renderExtras()

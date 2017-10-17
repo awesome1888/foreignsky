@@ -15,7 +15,9 @@ export default class NotAuthorizedPage extends BasePage
 	render()
     {
         return (
-            'Not authorized'
+            <div className="">
+                Not authorized
+            </div>
         );
     }
 }

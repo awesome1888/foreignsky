@@ -443,7 +443,7 @@ export default class Application extends BaseComponent
 
     startGroupDataLoad()
     {
-        this.wait(UserGroup.loadData()).then(() => {
+        return this.wait(UserGroup.loadData()).then(() => {
             this.setState({
                 groupsReady: true,
             });

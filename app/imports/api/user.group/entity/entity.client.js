@@ -3,6 +3,8 @@ import Entity from './entity.js';
 import mix from '../../../lib/mixin.js';
 import map from '../map/map.client.js';
 
+import ConsoleOutput from '../../../lib/util/console-output/index.js';
+
 export default class UserGroup extends mix(BaseEntity).with(Entity)
 {
     static _id2code = {};
@@ -20,7 +22,7 @@ export default class UserGroup extends mix(BaseEntity).with(Entity)
     static loadData()
     {
         return this.find({select: ['code']}, {returnArray: true}).then((res) => {
-            console.dir('Groups data loaded...');
+            ConsoleOutput.dir('Groups data loaded...');
             res.forEach((item) => {
                 this._id2code[item._id] = item.code;
             });

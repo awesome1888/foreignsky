@@ -1,6 +1,8 @@
 import User from '../../../api/user/entity/entity.client.js';
 import UserGroup from '../../../api/user.group/entity/entity.client.js';
 
+import ConsoleOutput from '../console-output/index.js';
+
 export default class Security
 {
     /**
@@ -17,7 +19,7 @@ export default class Security
             return 200;
         }
 
-        console.dir('Checking the access....');
+        ConsoleOutput.dir('Checking the access....');
 
         const user = User.get();
         if (!user)

@@ -5,18 +5,15 @@ import {DocHead} from 'meteor/kadira:dochead';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import {createRouter} from 'meteor/cultofcoders:meteor-react-routing';
 import {createContainer} from 'meteor/react-meteor-data';
-import User from '../../../api/user/entity/entity.client.js';
-import UserGroup from '../../../api/user.group/entity/entity.client.js';
 import Security from '../../util/security/security.client.js';
+
+import Accounts from './accounts/index.js';
 
 export default class Application extends BaseComponent
 {
     static _router = null;
     static _instance = null;
     static _routerController = null;
-
-    _accountsReady = null;
-    _accountsToWait = {};
 
     /**
      * Application initialization entry point
@@ -26,13 +23,7 @@ export default class Application extends BaseComponent
         if (this.useAccounts())
         {
             // create reactive container to track the moment when we got authorized
-            this._routerController = createContainer((props) => {
-                return {
-                    // user: Meteor.subscribe('self') && Meteor.user(),
-                    waitUserData: Meteor.loggingIn(),
-                    ...props,
-                };
-            }, this);
+            this._routerController = this.makeContainer();
         }
         else
         {
@@ -41,6 +32,17 @@ export default class Application extends BaseComponent
         }
 
         this.registerRoutes();
+    }
+
+    static makeContainer()
+    {
+        return createContainer((props) => {
+            return {
+                // user: Meteor.subscribe('self') && Meteor.user(),
+                waitUserData: Meteor.loggingIn(),
+                ...props,
+            };
+        }, this);
     }
 
     /**
@@ -210,6 +212,7 @@ export default class Application extends BaseComponent
     }
 
     _appContainer = null;
+    _accessChecked = false;
 
     constructor(props)
     {
@@ -253,18 +256,13 @@ export default class Application extends BaseComponent
 
         if (this.useAccounts())
         {
-            if (this.props.waitUserData)
-            {
-                // wait for user data to be loaded, reactively
-                this._accountsToWait.userData = this.wait(new Promise((resolve) => {
-                    this._accountsReady = resolve;
-                }));
-            }
+            this.getAccountController().waitData().then(() => {
+                this.setState({
+                    groupsReady: true,
+                });
 
-            // wait for group data to be loaded
-            this._accountsToWait.groupData = this.startGroupDataLoad();
-
-            this.launchCheckAccess();
+                this.maybeCheckAccess();
+            });
         }
     }
 
@@ -272,13 +270,15 @@ export default class Application extends BaseComponent
     {
         if (this.useAccounts())
         {
-            if (!props.waitUserData && _.isFunction(this._accountsReady))
+            this.getAccountController().waitData().then(() => {
+                this.maybeCheckAccess(true);
+            });
+
+            if (!props.waitUserData)
             {
                 // resolve user data promise
-                this._accountsReady();
+                this.getAccountController().markAccountsReady();
             }
-
-            this.launchCheckAccess();
         }
     }
 
@@ -306,21 +306,30 @@ export default class Application extends BaseComponent
         }
     }
 
-    launchCheckAccess()
+    maybeCheckAccess(dropFlag = false)
     {
-        if (this._caInProgress)
+        if (!this._accessChecked)
         {
-            return;
+            this.setState({
+                accessCheckResult: this.getAccessCheckResult(),
+            });
+            this._accessChecked = true;
         }
 
-        this._caInProgress = true;
-        this.setState({
-            accessCheckResult: null,
-        });
-        Promise.all(Object.values(this._accountsToWait)).then(() => {
-            this.checkAccess();
-            this._caInProgress = false;
-        });
+        if (dropFlag)
+        {
+            this._accessChecked = false;
+        }
+    }
+
+    getAccountController()
+    {
+        if (!this._accountController)
+        {
+            this._accountController = new Accounts(this);
+        }
+
+        return this._accountController;
     }
 
     onGlobalClick(e)
@@ -428,7 +437,7 @@ export default class Application extends BaseComponent
         };
     }
 
-    checkAccess()
+    getAccessCheckResult()
     {
         const rProps = this.getRouteProps();
         let accessCheckResult = 200;
@@ -436,18 +445,8 @@ export default class Application extends BaseComponent
         {
             accessCheckResult = Security.makeCode(rProps.security);
         }
-        this.setState({
-            accessCheckResult,
-        });
-    }
 
-    startGroupDataLoad()
-    {
-        return this.wait(UserGroup.loadData()).then(() => {
-            this.setState({
-                groupsReady: true,
-            });
-        });
+        return accessCheckResult;
     }
 
     accountsReady()

@@ -19,7 +19,7 @@ export default class Security
             return 200;
         }
 
-        ConsoleOutput.dir('Checking the access....');
+        ConsoleOutput.dir('Checking page access....');
 
         const user = User.get();
         if (!user)
@@ -28,7 +28,7 @@ export default class Security
             return 401;
         }
 
-        if (!this.check(user, rules))
+        if (!this.test(user, rules))
         {
             // authorized, but forbidden
             return 403;
@@ -43,7 +43,7 @@ export default class Security
      * @param user
      * @param rules
      */
-    static check(user, rules)
+    static test(user, rules)
     {
         let pass = true;
 

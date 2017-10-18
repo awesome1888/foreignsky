@@ -66,4 +66,9 @@ export default class Security
 
         return pass;
     }
+
+    static getAdminCondition()
+    {
+        return {group: ['A']};
+    }
 }

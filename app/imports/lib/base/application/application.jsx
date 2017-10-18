@@ -71,20 +71,6 @@ export default class Application extends BaseComponent
                 controller: this.get404PageController(),
                 params: {},
             },
-            401: {
-                path: '/401',
-                controller: this.get401PageController(),
-                params: {
-                    layout: null,
-                },
-            },
-            403: {
-                path: '/403',
-                controller: this.get403PageController(),
-                params: {
-                    layout: null,
-                },
-            },
         };
 
         if (this.useAccounts())
@@ -152,23 +138,37 @@ export default class Application extends BaseComponent
 
     static attachUserAccountRoutes(routes)
     {
-        routes['login'] = {
-            path: '/login',
-            controller: this.getLoginPageController(),
-            params: {
-                layout: null,
-            },
-        };
-        routes['logout'] = {
-            path: '/logout',
-            params: {
-                action: () => {
-                    Meteor.logout(() => {
-                        FlowRouter.go('/login');
-                    });
+        Object.assign(routes, {
+            401: {
+                path: '/401',
+                controller: this.get401PageController(),
+                params: {
+                    layout: null,
                 },
             },
-        };
+            403: {
+                path: '/403',
+                controller: this.get403PageController(),
+                params: {},
+            },
+            login: {
+                path: '/login',
+                controller: this.getLoginPageController(),
+                params: {
+                    layout: null,
+                },
+            },
+            logout: {
+                path: '/logout',
+                params: {
+                    action: () => {
+                        Meteor.logout(() => {
+                            FlowRouter.go('/login');
+                        });
+                    },
+                },
+            },
+        });
     }
 
     static registerRoutes()

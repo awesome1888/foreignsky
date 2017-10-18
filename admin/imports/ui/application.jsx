@@ -10,6 +10,7 @@ import LoginPage from './page/login/index.jsx';
 import TaskRunnerPage from './page/task-runner/index.jsx';
 
 import EntityMap from '../startup/client/entity-map.js';
+import Security from '../lib/util/security/security.client.js';
 
 export default class AdminApplication extends Application
 {
@@ -54,8 +55,8 @@ export default class AdminApplication extends Application
 
         // root can only be visible by the admin. In fact, everything in this app
         // should be visible only by the admin, except basic things like
-        // /login, /logout, etc...
-        routes.home.params.security = {group: ['A']};
+        // /login, /logout, /404 etc...
+        routes.home.params.security = Security.getAdminCondition();
 
         this.attachEntityRoutes(routes);
 

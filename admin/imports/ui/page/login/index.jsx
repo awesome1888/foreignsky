@@ -68,7 +68,7 @@ export default class LoginPage extends BasePage {
                     {
                         loggedIn
                         &&
-                        <div>Already authorized. <a href="/logout">Logout</a></div>
+                        <div>Already authorized. <a href="/logout">Logout</a> or <a href="/">go home</a></div>
                     }
 
                     {

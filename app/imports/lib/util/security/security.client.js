@@ -1,6 +1,9 @@
 import User from '../../../api/user/entity/entity.client.js';
 import UserGroup from '../../../api/user.group/entity/entity.client.js';
 import SecurityBoth from './security.both.js';
+import Side from './../../util/side.js';
+
+Side.ensureOnClient();
 
 import ConsoleOutput from '../console-output/index.js';
 

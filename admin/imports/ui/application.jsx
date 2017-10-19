@@ -10,7 +10,7 @@ import LoginPage from './page/login/index.jsx';
 import TaskRunnerPage from './page/task-runner/index.jsx';
 
 import EntityMap from '../startup/client/entity-map.js';
-import Security from '../lib/util/security/security.client.js';
+import SecurityProvider from '../lib/util/security/provider.js';
 
 export default class AdminApplication extends Application
 {
@@ -68,7 +68,7 @@ export default class AdminApplication extends Application
 
     static getDefaultPageSecurityPolicy()
     {
-        return Security.getAdminCondition();
+        return SecurityProvider.getAdminOnlyPolicy();
     }
 
     ///////////////////////////////////////////////////
@@ -79,7 +79,7 @@ export default class AdminApplication extends Application
             if (_.isObjectNotEmpty(item.route))
             {
                 const params = {
-                    security: Security.getAdminCondition(),
+                    security: this.getDefaultPageSecurityPolicy(),
                 };
                 if (item.route.list)
                 {

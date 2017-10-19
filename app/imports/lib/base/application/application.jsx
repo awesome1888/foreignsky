@@ -6,6 +6,7 @@ import {FlowRouter} from 'meteor/kadira:flow-router';
 import {createRouter} from 'meteor/cultofcoders:meteor-react-routing';
 import {createContainer} from 'meteor/react-meteor-data';
 import Security from '../../util/security/security.client.js';
+import SecurityProvider from '../../util/security/provider.js';
 
 import Accounts from './accounts/index.js';
 
@@ -336,9 +337,14 @@ export default class Application extends BaseComponent
         return this._accountController;
     }
 
+    /**
+     * Returns the default security rules for a path. It can provide either
+     * specially formatted object or a custom callback
+     * @returns {{}|null}
+     */
     static getDefaultPageSecurityPolicy()
     {
-        return {};
+        return SecurityProvider.getOpenGatePolicy();
     }
 
     onGlobalClick(e)

@@ -5,10 +5,13 @@ import FileMethods from './file/method/method.js';
 import UserMethods from './user/method/method.js';
 import UserGroupMethods from './user.group/method/method.js';
 
-// todo: these exposition should be for admin only!
-ArticleMethods.declare();
-ArticleTagMethods.declare();
-EmbedMethods.declare();
-FileMethods.declare();
-UserMethods.declare();
-UserGroupMethods.declare();
+import SecurityProvider from './security-provider.js';
+
+const provider = new SecurityProvider();
+
+ArticleMethods.declare(provider);
+ArticleTagMethods.declare(provider);
+EmbedMethods.declare(provider);
+FileMethods.declare(provider);
+UserMethods.declare(provider);
+UserGroupMethods.declare(provider);

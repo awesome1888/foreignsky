@@ -22,10 +22,22 @@ export default class Security
         // console.dir('Test '+user.getId());
         // console.dir(rules);
 
-        if (!_.isObjectNotEmpty(rules))
+        if (!_.isObjectNotEmpty(rules) && !_.isFunction(rules))
         {
             // no restrictions, free entrance
             return this.OK;
+        }
+
+        // security declaration object can be a custom callback
+        if (_.isFunction(rules))
+        {
+            const fResult = rules(user);
+            if (_.isBoolean(fResult))
+            {
+                return fResult ? this.OK : this.FORBIDDEN;
+            }
+
+            return fResult;
         }
 
         if (rules.needAuthorized && !user)

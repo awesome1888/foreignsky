@@ -1,6 +1,7 @@
 import {Meteor} from 'meteor/meteor';
 import Side from './../../util/side.js';
 import Security from '../../util/security/security.server.js';
+import SecurityProvider from '../../util/security/provider.js';
 
 Side.ensureOnServer();
 
@@ -60,6 +61,9 @@ export default class Method
 
             if (desc.log)
             {
+                // console.dir('Called: '+name);
+                // console.dir(desc.security);
+
                 // todo: implement this
                 // _method.logger.info(`Method ${name}`, {
                 //     args: _args,
@@ -100,9 +104,7 @@ export default class Method
 
     static getDefaultMethodSecurityPolicy()
     {
-        return {
-            needAuthorized: true,
-        };
+        return SecurityProvider.getStandardPolicy();
     }
 
     setInvocationContext(ctx)

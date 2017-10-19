@@ -1,4 +1,5 @@
 import BaseMethod from '../../method/method.js';
+import SecurityProvider from '../../../util/security/provider.js';
 
 export default class Method extends BaseMethod
 {
@@ -12,26 +13,26 @@ export default class Method extends BaseMethod
         return this.constructor.getEntity();
     }
 
-    static getBaseDeclaration()
+    static getBaseDeclaration(sp = null)
     {
+        const e = this.getEntity();
+        
         return {
             find: {
                 body: 'find',
-                security: {
-                    needAuthorized: false,
-                }
+                security: sp ? sp.getMethodPolicy(e, 'find') : SecurityProvider.getOpenGatePolicy(),
             },
             getCount: {
                 body: 'getCount',
-                security: {
-                    needAuthorized: false,
-                }
+                security: sp ? sp.getMethodPolicy(e, 'getCount') : SecurityProvider.getOpenGatePolicy(),
             },
             save: {
                 body: 'save',
+                security: sp ? sp.getMethodPolicy(e, 'save') : SecurityProvider.getStandardPolicy(),
             },
             remove: {
                 body: 'remove',
+                security: sp ? sp.getMethodPolicy(e, 'remove') : SecurityProvider.getStandardPolicy(),
             },
         };
     }
@@ -40,14 +41,19 @@ export default class Method extends BaseMethod
      * Declare additional, entity-specific methods here
      * @returns {{}}
      */
-    static getExtendedDeclaration()
+    static getExtendedDeclaration(sp = null)
     {
         return {};
     }
 
-    static declare()
+    static declare(securityProvider = null)
     {
-        const declaration = Object.assign({}, this.getBaseDeclaration(), this.getExtendedDeclaration());
+        const declaration = Object.assign(
+            {},
+            this.getBaseDeclaration(securityProvider),
+            this.getExtendedDeclaration(securityProvider)
+        );
+
         if (_.isObjectNotEmpty(declaration))
         {
             const named = {};

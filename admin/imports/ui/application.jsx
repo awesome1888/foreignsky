@@ -63,6 +63,9 @@ export default class AdminApplication extends Application
         routes['task-runner'] = {
             path: '/task-runner',
             controller: TaskRunnerPage,
+            params: {
+                security: Security.getAdminCondition(),
+            },
         };
         
         return routes;
@@ -75,7 +78,9 @@ export default class AdminApplication extends Application
         return EntityMap.forEach((item) => {
             if (_.isObjectNotEmpty(item.route))
             {
-                const params = {};
+                const params = {
+                    security: Security.getAdminCondition(),
+                };
                 if (item.route.list)
                 {
                     params.listPath = item.route.list.path;

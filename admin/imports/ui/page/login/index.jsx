@@ -70,13 +70,12 @@ export default class LoginPage extends BasePage {
                         &&
                         <div>Already authorized. <a href="/logout">Logout</a> or <a href="/">go home</a></div>
                     }
-
                     {
                         !loggedIn
                         &&
                         <div className="h_100p">
                             <div className="margin-b_x padding-b_x f-size_x2p25">
-                                Welcome back, commander!
+                                Welcome back, commander..
                             </div>
                             <Form
                                 map={[

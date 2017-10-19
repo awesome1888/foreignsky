@@ -64,7 +64,9 @@ export default class Application extends BaseComponent
             home: {
                 path: '/',
                 controller: this.getHomePageController(),
-                params: {},
+                params: {
+                    security: this.getDefaultPageSecurityPolicy(),
+                },
             },
             404: {
                 path: '/404',
@@ -212,7 +214,7 @@ export default class Application extends BaseComponent
     }
 
     _appContainer = null;
-    _accessChecked = false;
+    _lastRouteChecked = false;
 
     constructor(props)
     {
@@ -308,17 +310,19 @@ export default class Application extends BaseComponent
 
     maybeCheckAccess(dropFlag = false)
     {
-        if (!this._accessChecked)
+        const cPath = FlowRouter.current().path;
+
+        if (this._lastRouteChecked !== cPath)
         {
             this.setState({
                 accessCheckResult: this.getAccessCheckResult(),
             });
-            this._accessChecked = true;
+            this._lastRouteChecked = cPath;
         }
 
         if (dropFlag)
         {
-            this._accessChecked = false;
+            this._lastRouteChecked = false;
         }
     }
 
@@ -330,6 +334,11 @@ export default class Application extends BaseComponent
         }
 
         return this._accountController;
+    }
+
+    static getDefaultPageSecurityPolicy()
+    {
+        return {};
     }
 
     onGlobalClick(e)

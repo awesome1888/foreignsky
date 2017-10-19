@@ -53,22 +53,22 @@ export default class AdminApplication extends Application
     {
         const routes = super.getRouteMap();
 
-        // root can only be visible by the admin. In fact, everything in this app
-        // should be visible only by the admin, except basic things like
-        // /login, /logout, /404 etc...
-        routes.home.params.security = Security.getAdminCondition();
-
         this.attachEntityRoutes(routes);
 
         routes['task-runner'] = {
             path: '/task-runner',
             controller: TaskRunnerPage,
             params: {
-                security: Security.getAdminCondition(),
+                security: this.getDefaultPageSecurityPolicy(),
             },
         };
         
         return routes;
+    }
+
+    static getDefaultPageSecurityPolicy()
+    {
+        return Security.getAdminCondition();
     }
 
     ///////////////////////////////////////////////////

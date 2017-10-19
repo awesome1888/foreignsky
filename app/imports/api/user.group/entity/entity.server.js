@@ -9,4 +9,19 @@ export default class UserGroup extends mix(BaseEntity).with(Entity)
     {
         return map;
     }
+
+    static getCodeById(id)
+    {
+        if (this._id2code === null)
+        {
+            this._id2code = {};
+
+            // load first
+            this.find({select: ['code']}, {returnArray: true}).forEach((item) => {
+                this._id2code[item._id] = item.code;
+            });
+        }
+
+        return this._id2code[id] || null;
+    }
 }

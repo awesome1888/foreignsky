@@ -1,12 +1,13 @@
 import {Meteor} from 'meteor/meteor';
 import Side from './../../util/side.js';
+import Security from '../../util/security/security.server.js';
 
 Side.ensureOnServer();
 
 /**
  * @abstract
  */
-export default class
+export default class Method
 {
     _invocationCtx = null;
 
@@ -26,7 +27,7 @@ export default class
                     throw new Error(`Body function ${bodyName}(){...} not implemented for method "${name}"`);
                 }
 
-                this.prepareSecurity(desc);
+                desc.security = _.isObject(desc.security) ? desc.security : this.getDefaultMethodSecurityPolicy();
 
                 // turn logging by default
                 if (!('log' in desc))
@@ -34,7 +35,7 @@ export default class
                     desc.log = true;
                 }
 
-                methods[name] = this.makeImplementation(desc, name, bodyName);
+                methods[name] = this.makeBody(desc, name, bodyName);
             });
 
             // passing methods to Meteor
@@ -42,7 +43,7 @@ export default class
         }
     }
 
-    static makeImplementation(desc, name, bodyName)
+    static makeBody(desc, name, bodyName)
     {
         const _method = this;
 
@@ -51,19 +52,10 @@ export default class
             // eslint-disable-next-line prefer-rest-params
             const _args = arguments;
 
-            if (desc.security)
+            const code = Security.testUserCurrent(desc.security);
+            if (code !== Security.OK)
             {
-                const s = desc.security;
-                if (s.needAuthorized)
-                {
-                    // todo: implement this
-                    // _method.security.checkIsLoggedIn();
-                }
-                if (s.needAdmin)
-                {
-                    // todo: implement this
-                    // _method.security.checkAdmin();
-                }
+                throw new Error(code, 'Access denied');
             }
 
             if (desc.log)
@@ -106,15 +98,11 @@ export default class
         };
     }
 
-    static prepareSecurity(desc)
+    static getDefaultMethodSecurityPolicy()
     {
-        desc.security = desc.security || {};
-
-        // turn on needAuthorized by default
-        if (!('needAuthorized' in desc.security))
-        {
-            desc.security.needAuthorized = true;
-        }
+        return {
+            needAuthorized: true,
+        };
     }
 
     setInvocationContext(ctx)

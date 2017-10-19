@@ -452,7 +452,7 @@ export default class Application extends BaseComponent
         let accessCheckResult = 200;
         if ('security' in rProps)
         {
-            accessCheckResult = Security.makeCode(rProps.security);
+            accessCheckResult = Security.testUserCurrent(rProps.security);
         }
 
         return accessCheckResult;

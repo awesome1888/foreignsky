@@ -7,8 +7,6 @@ import ConsoleOutput from '../../../lib/util/console-output/index.js';
 
 export default class UserGroup extends mix(BaseEntity).with(Entity)
 {
-    static _id2code = {};
-    
     static getMapInstance()
     {
         return map;
@@ -23,6 +21,8 @@ export default class UserGroup extends mix(BaseEntity).with(Entity)
     {
         return this.find({select: ['code']}, {returnArray: true}).then((res) => {
             ConsoleOutput.dir('Groups data loaded...');
+
+            this._id2code = {};
             res.forEach((item) => {
                 this._id2code[item._id] = item.code;
             });

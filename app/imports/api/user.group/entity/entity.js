@@ -6,6 +6,8 @@ import Collection from '../config/collection.js';
  */
 const M = (superclass) =>  class UserGroup extends superclass
 {
+    static _id2code = null;
+
     static getCollectionInstance()
     {
         return Collection;

@@ -56,7 +56,7 @@ export default class Method
             const code = Security.testUserCurrent(desc.security);
             if (code !== Security.OK)
             {
-                throw new Error(code, 'Access denied');
+                throw new Meteor.Error(code, 'Access denied');
             }
 
             if (desc.log)

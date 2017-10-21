@@ -9,7 +9,7 @@ export default class NotFoundPage extends BasePage
 {
     getDefaultTitle()
     {
-        return 'Nothing found';
+        return 'Page not found';
     }
 
 	render()
@@ -17,9 +17,7 @@ export default class NotFoundPage extends BasePage
         return (
             <Layout
                 title={this.getDefaultTitle()}
-                central={
-                    ('Ничего не найдено, все сперли. 404')
-                }
+                central={"Page not found (404)"}
             />
         );
     }

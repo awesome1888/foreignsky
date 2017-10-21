@@ -3,7 +3,7 @@
 import React from 'react';
 import BasePage from '../../../lib/base/page/page.jsx';
 
-// import Layout from '../../component/layout/layout.jsx';
+import Layout from '../../component/layout/layout.jsx';
 
 export default class ForbiddenPage extends BasePage
 {
@@ -12,12 +12,13 @@ export default class ForbiddenPage extends BasePage
         return 'Forbidden';
     }
 
-	render()
+    render()
     {
         return (
-            <div className="">
-                Forbidden
-            </div>
+            <Layout
+                title={this.getDefaultTitle()}
+                central={"Forbidden (403)"}
+            />
         );
     }
 }

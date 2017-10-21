@@ -20,12 +20,10 @@ export default class ArticleDetailPage extends BasePage
                 title={Form.getEntity().getTitle()}
                 backUrl={backUrl}
                 central={
-                    <div className="">
-                        <Form
-                            id={this.props.route.id}
-                            backPath={backUrl}
-                        />
-                    </div>
+                    <Form
+                        id={this.props.route.id}
+                        backPath={backUrl}
+                    />
                 }
             />
         );

@@ -19,14 +19,10 @@ export default class FileEntityDetailPage extends BasePage
                 title={Form.getEntity().getTitle()}
                 backUrl={backUrl}
                 central={
-                    <div>
-                        <Form
-                            id={this.props.route.id}
-                            backPath={backUrl}
-                        />
-                        <br />
-                        <br />
-                    </div>
+                    <Form
+                        id={this.props.route.id}
+                        backPath={backUrl}
+                    />
                 }
             />
         );

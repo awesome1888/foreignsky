@@ -59,6 +59,7 @@ const M = (superclass) => class extends superclass
                     {
                         code: 'group',
                         type: [Group],
+                        optional: true,
                     },
                 ]),
             },

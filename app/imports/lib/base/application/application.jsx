@@ -98,11 +98,22 @@ export default class Application extends BaseComponent
 
     static addRoute(path, controller = null, controllerParams = {}, options = {})
     {
+        options.triggersEnter = [];
+
         if (Meteor.isDevelopment)
         {
-            options.triggersEnter = [(context, redirect) => {
+            options.triggersEnter.push(() => {
                 console.log(`Going to ${path}`);
-            }];
+            });
+        }
+        if (this.useAccounts())
+        {
+            options.triggersEnter.push((context, redirect) => {
+                if (!Accounts.isUserAuthorized() && context.path !== '/login')
+                {
+                    redirect('/login');
+                }
+            });
         }
 
         if (controller)
@@ -347,11 +358,18 @@ export default class Application extends BaseComponent
     {
         if (this.useAccounts())
         {
-            const ar = this.state.accessCheckResult;
+            const code = this.state.accessCheckResult;
 
-            if (ar && ar !== 200)
+            if (code && code !== 200)
             {
-                FlowRouter.go(`/${this.state.accessCheckResult}`);
+                if (code === 401)
+                {
+                    FlowRouter.go('/login');
+                }
+                else
+                {
+                    FlowRouter.go(`/${code}`);
+                }
             }
         }
     }

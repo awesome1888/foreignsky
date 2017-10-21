@@ -8,11 +8,16 @@ export default class Accounts
         return User.isSupplementarySubscriptionReady();
     }
 
+    static isUserAuthorized()
+    {
+        return User.isAuthorized();
+    }
+
     _waitAccounts = null;
     _waitGroupData = null;
     _accountsReadyCallback = null;
     _application = null;
-    
+
     constructor(app)
     {
         this._application = app;

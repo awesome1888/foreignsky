@@ -49,3 +49,21 @@ if (aGroupId)
         }
     }
 }
+
+const uUser = User.findOne({
+    filter: {'emails.address': 'simple-mortal@nachberlin.ru'},
+});
+if (!uUser)
+{
+    if(!User.save(null, {
+        email: 'simple-mortal@nachberlin.ru',
+        password: '123', // change later!!!
+        profile: {
+            firstName: 'Simple',
+            lastName: 'Mortal',
+        },
+    }))
+    {
+        console.dir('Unable to create a simple mortal');
+    }
+}

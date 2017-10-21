@@ -241,7 +241,6 @@ export default class Application extends BaseComponent
      */
     static actAfterRouterReady()
     {
-        console.dir('Router ready!');
     }
 
     /**
@@ -305,42 +304,28 @@ export default class Application extends BaseComponent
 
         if (this.useAccounts())
         {
-            this.wait(this.getAccountController().waitData()).then(() => {
-                this.setState({
-                    allAccountDataReady: true,
-                });
-
-                this.maybeCheckAccess();
-                this.maybeRouteToError();
-            });
+            this.processSecurity();
         }
     }
 
-    componentDidMount()
-    {
-        /**
-         * Have to use native JS to avoid problems with FlowRouter when clicking on href-s.
-         * We use capturing to prevent being affected with cancelBubble.
-         */
-        if (this._appContainer && _.isArrayNotEmpty(this.getGlobalSelectorMap()))
-        {
-            this.onGlobalClick = this.onGlobalClick.bind(this);
-            this._appContainer.addEventListener('click', this.onGlobalClick, true);
-        }
-    }
+    // componentDidMount()
+    // {
+    //     /**
+    //      * Have to use native JS to avoid problems with FlowRouter when clicking on href-s.
+    //      * We use capturing to prevent being affected with cancelBubble.
+    //      */
+    //     if (this._appContainer && _.isArrayNotEmpty(this.getGlobalSelectorMap()))
+    //     {
+    //         this.onGlobalClick = this.onGlobalClick.bind(this);
+    //         this._appContainer.addEventListener('click', this.onGlobalClick, true);
+    //     }
+    // }
 
     componentWillReceiveProps(props)
     {
         if (this.useAccounts())
         {
-            this.wait(this.getAccountController().waitData()).then(() => {
-                this.setState({
-                    allAccountDataReady: true,
-                });
-
-                this.maybeCheckAccess();
-                this.maybeRouteToError();
-            });
+            this.processSecurity();
 
             if (!props.waitUserData)
             {
@@ -363,34 +348,40 @@ export default class Application extends BaseComponent
 
     onRouteChange()
     {
-        console.dir('Reset last route');
-        this.setState({
-            lastRoute: null,
-        });
+        // console.dir('Reset last route');
+        // this.setState({
+        //     lastRoute: null,
+        // });
     }
 
-    resetAccessResult()
+    processSecurity()
     {
-        this.setState({
-            accessCheckResult: null,
+        this.wait(this.getAccountController().waitData()).then(() => {
+            this.setState({
+                allAccountDataReady: true,
+            });
+
+            this.maybeCheckAccess(() => {
+                this.maybeRouteToError();
+            });
         });
     }
 
-    maybeCheckAccess()
+    maybeCheckAccess(cb)
     {
         const cPath = FlowRouter.current().path;
 
         if (this._lastRouteChecked !== cPath)
         {
-            const res = this.getAccessCheckResult();
-            console.dir(this.state.accessCheckResult+' !== '+res);
-
+            this._lastRouteChecked = cPath;
             this.setState({
                 accessCheckResult: this.getAccessCheckResult(),
-                lastRoute: cPath,
+            }, () => {
+                if (_.isFunction(cb))
+                {
+                    cb();
+                }
             });
-            this._lastRouteChecked = cPath;
-            console.dir('Checked for '+this._lastRouteChecked);
         }
     }
 
@@ -516,20 +507,12 @@ export default class Application extends BaseComponent
         return {
             allAccountDataReady: false,
             accessCheckResult: null,
-            lastRoute: null,
         };
     }
 
     getAccessCheckResult()
     {
-        const rProps = this.getRouteProps();
-        let accessCheckResult = 200;
-        if ('security' in rProps)
-        {
-            accessCheckResult = Security.testUserCurrent(rProps.security);
-        }
-
-        return accessCheckResult;
+        return Security.testUserCurrent(this.getRouteProps().security);
     }
 
     maybeRouteToError()
@@ -540,7 +523,6 @@ export default class Application extends BaseComponent
 
             if (code && code !== 200)
             {
-                console.dir('route to error!!!');
                 if (code === 401)
                 {
                     FlowRouter.go('/login');
@@ -578,9 +560,14 @@ export default class Application extends BaseComponent
         return this.state.accessCheckResult !== null && this._lastRouteChecked === FlowRouter.current().path;
     }
 
+    redirectExpected()
+    {
+        return this.state.accessCheckResult !== 200;
+    }
+
     isReady()
     {
-        return this.accountsReady() && this.accessChecked();
+        return this.accountsReady() && this.accessChecked() && !this.redirectExpected();
     }
 
     renderExtras()
@@ -589,8 +576,6 @@ export default class Application extends BaseComponent
     }
 
     render() {
-        console.dir('render!');
-
         const PageController = this.props.main;
         const rProps = this.getRouteProps();
 
@@ -600,8 +585,6 @@ export default class Application extends BaseComponent
         {
             return null;
         }
-
-        const ready = this.isReady();
 
         let Layout = this.constructor.getDefaultApplicationLayoutController();
         if ('layout' in rProps)
@@ -616,7 +599,7 @@ export default class Application extends BaseComponent
             >
                 <Layout className="application__layout">
                     {
-                        ready
+                        this.isReady()
                         &&
                         React.createElement(PageController, this.transformPageParameters({
                             route: rProps,

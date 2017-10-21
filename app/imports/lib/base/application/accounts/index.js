@@ -1,6 +1,6 @@
 import UserGroup from '../../../../api/user.group/entity/entity.client.js';
 import User from '../../../../api/user/entity/entity.client.js';
-import ConsoleOutput from '../../../util/console-output/index.js';
+// import ConsoleOutput from '../../../util/console-output/index.js';
 
 export default class Accounts
 {
@@ -69,7 +69,6 @@ export default class Accounts
     {
         if (this._accountsReadyCallback)
         {
-            ConsoleOutput.dir('User ready...')
             this._accountsReadyCallback();
         }
     }

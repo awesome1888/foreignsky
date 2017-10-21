@@ -30,10 +30,11 @@ export default class Form extends BaseComponent
             PropTypes.array,
             PropTypes.object,
         ]),
-        map: PropTypes.oneOfType([PropTypes.object]),
+        map: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
         model: PropTypes.object,
         isFragment: PropTypes.bool,
         submitButtonLabel: PropTypes.string,
+        submitButtonType: PropTypes.string,
         onSubmit: PropTypes.func,
         onValidate: PropTypes.func,
         borderColor: PropTypes.string,
@@ -46,6 +47,7 @@ export default class Form extends BaseComponent
         model: {},
         isFragment: false,
         submitButtonLabel: 'Save',
+        submitButtonType: 'submit',
         onSubmit: null,
         onValidate: null,
         borderColor: '',
@@ -311,7 +313,7 @@ export default class Form extends BaseComponent
                     &&
                     <div className="form__footer">
                         <div className="group_x2">
-                            <Button color="green" size="large">
+                            <Button color="green" size="large" type={this.props.submitButtonType}>
                                 {this.props.submitButtonLabel}
                             </Button>
                             {

@@ -71,12 +71,4 @@ export default class Security
     {
         return this.testUser(this.getUserEntity().get(), rules);
     }
-
-    static getAdminCondition()
-    {
-        return {
-            needAuthorized: true,
-            group: ['A'],
-        };
-    }
 }

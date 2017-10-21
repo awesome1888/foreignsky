@@ -19,37 +19,33 @@ export default class LoginPage extends BasePage {
     }
 
     onSubmitForm(data) {
-        return new Promise((resolve, reject) => {
-            this.data = data;
-            const login = this.data.login;
-            const password = this.data.password;
-            // const hashedPassword = Utils.SHA256(password);
+        this.data = data;
+        const login = this.data.login;
+        const password = this.data.password;
+        // const hashedPassword = Utils.SHA256(password);
 
-            Meteor.loginWithPassword(login, password, (error) => {
-                if (!error)
+        Meteor.loginWithPassword(login, password, (error) => {
+            if (!error)
+            {
+                FlowRouter.go('/');
+            }
+            else
+            {
+                if (error.error === 403)
                 {
-                    FlowRouter.go('/');
-                    resolve();
+                    this.setServerError('Login incorrect');
                 }
                 else
                 {
-                    if (error.error === 403)
-                    {
-                        this.setServerError('Login incorrect');
-                    }
-                    else
-                    {
-                        this.setServerError('Server error');
-                    }
-                    reject('');
+                    this.setServerError('Server error');
                 }
-            });
+            }
         });
     }
 
     onValidateForm()
     {
-        this.setServerError();
+        this.setServerError('');
     }
 
     setServerError(message)
@@ -75,7 +71,7 @@ export default class LoginPage extends BasePage {
                         &&
                         <div className="h_100p">
                             <div className="margin-b_x padding-b_x f-size_x2p25">
-                                Welcome back, commander..
+                                Welcome back, commander.
                             </div>
                             <Form
                                 map={[

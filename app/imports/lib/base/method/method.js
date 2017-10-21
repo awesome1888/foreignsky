@@ -28,7 +28,11 @@ export default class Method
                     throw new Error(`Body function ${bodyName}(){...} not implemented for method "${name}"`);
                 }
 
-                desc.security = _.isObject(desc.security) ? desc.security : this.getDefaultMethodSecurityPolicy();
+                // assign default security policy if was not specified in the declaraion
+                if (!('security' in desc))
+                {
+                    desc.security = this.getDefaultMethodSecurityPolicy();
+                }
 
                 // turn logging by default
                 if (!('log' in desc))
@@ -56,7 +60,7 @@ export default class Method
             const code = Security.testUserCurrent(desc.security);
             if (code !== Security.OK)
             {
-                throw new Meteor.Error(code, 'Access denied');
+                throw new Meteor.Error(code, `Access denied: executing ${name}`);
             }
 
             if (desc.log)

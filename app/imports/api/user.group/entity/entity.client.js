@@ -19,13 +19,10 @@ export default class UserGroup extends mix(BaseEntity).with(Entity)
     
     static loadData()
     {
-        return this.find({select: ['code']}, {returnArray: true}).then((res) => {
+        return this.executeMethod('getCodeMap').then((map) => {
             ConsoleOutput.dir('Groups data loaded...');
 
-            this._id2code = {};
-            res.forEach((item) => {
-                this._id2code[item._id] = item.code;
-            });
+            this._id2code = map;
         });
     }
 

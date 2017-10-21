@@ -16,7 +16,7 @@ export default class Method extends BaseMethod
     static getBaseDeclaration(sp = null)
     {
         const e = this.getEntity();
-        
+
         return {
             find: {
                 body: 'find',
@@ -60,7 +60,7 @@ export default class Method extends BaseMethod
             _.forEach(declaration, (method, name) => {
                 named[this.makeName(name)] = method;
             });
-
+            
             super.declare(named);
         }
     }

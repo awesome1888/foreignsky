@@ -10,6 +10,8 @@ export default class UserEntityDetailPage extends BasePage
 {
     render()
     {
+        console.dir('render user detail');
+
         const backUrl = this.props.route.listPath || '';
 
         // todo: better parse ID from the current path according to detailPath, but

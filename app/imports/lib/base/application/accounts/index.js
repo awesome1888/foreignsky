@@ -64,7 +64,7 @@ export default class Accounts
         return this._waitGroupData;
     }
 
-    markAccountsReady()
+    informAccountsReady()
     {
         if (this._accountsReadyCallback)
         {

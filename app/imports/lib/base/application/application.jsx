@@ -108,7 +108,11 @@ export default class Application extends BaseComponent
         }
         if (this.useAccounts())
         {
+            // move all unauthorized to /login
             options.triggersEnter.push((context, redirect) => {
+
+                // Application.getInstance().setAccessChecked(false);
+
                 if (!Accounts.isUserAuthorized() && context.path !== '/login')
                 {
                     redirect('/login');
@@ -136,11 +140,6 @@ export default class Application extends BaseComponent
         throw new Error('Not implemented: static get404PageController()');
     }
 
-    static get401PageController()
-    {
-        throw new Error('Not implemented: static get401PageController()');
-    }
-
     static get403PageController()
     {
         throw new Error('Not implemented: static get403PageController()');
@@ -159,13 +158,6 @@ export default class Application extends BaseComponent
     static attachUserAccountRoutes(routes)
     {
         Object.assign(routes, {
-            401: {
-                path: '/401',
-                controller: this.get401PageController(),
-                params: {
-                    layout: null,
-                },
-            },
             403: {
                 path: '/403',
                 controller: this.get403PageController(),
@@ -284,7 +276,7 @@ export default class Application extends BaseComponent
     }
 
     _appContainer = null;
-    _lastRouteChecked = false;
+    _lastRouteChecked = null;
 
     constructor(props)
     {
@@ -330,7 +322,7 @@ export default class Application extends BaseComponent
         {
             this.getAccountController().waitData().then(() => {
                 this.setState({
-                    groupsReady: true,
+                    allAccountDataReady: true,
                 });
 
                 this.maybeCheckAccess();
@@ -343,35 +335,24 @@ export default class Application extends BaseComponent
         if (this.useAccounts())
         {
             this.getAccountController().waitData().then(() => {
-                this.maybeCheckAccess(true);
+                this.setState({
+                    allAccountDataReady: true,
+                });
+
+                this.maybeCheckAccess();
             });
 
             if (!props.waitUserData)
             {
                 // resolve user data promise
-                this.getAccountController().markAccountsReady();
+                this.getAccountController().informAccountsReady();
             }
         }
     }
 
     componentDidUpdate()
     {
-        if (this.useAccounts())
-        {
-            const code = this.state.accessCheckResult;
-
-            if (code && code !== 200)
-            {
-                if (code === 401)
-                {
-                    FlowRouter.go('/login');
-                }
-                else
-                {
-                    FlowRouter.go(`/${code}`);
-                }
-            }
-        }
+        this.maybeRouteToError();
     }
 
     /**
@@ -385,7 +366,7 @@ export default class Application extends BaseComponent
         }
     }
 
-    maybeCheckAccess(dropFlag = false)
+    maybeCheckAccess()
     {
         const cPath = FlowRouter.current().path;
 
@@ -395,11 +376,7 @@ export default class Application extends BaseComponent
                 accessCheckResult: this.getAccessCheckResult(),
             });
             this._lastRouteChecked = cPath;
-        }
-
-        if (dropFlag)
-        {
-            this._lastRouteChecked = false;
+            console.dir('Checked for '+this._lastRouteChecked);
         }
     }
 
@@ -523,7 +500,7 @@ export default class Application extends BaseComponent
     getAccountInitialState()
     {
         return {
-            groupsReady: false,
+            allAccountDataReady: false,
             accessCheckResult: null,
         };
     }
@@ -540,14 +517,25 @@ export default class Application extends BaseComponent
         return accessCheckResult;
     }
 
-    accountsReady()
+    maybeRouteToError()
     {
-        if (!this.useAccounts())
+        console.dir('route to error');
+        if (this.useAccounts())
         {
-            return true;
-        }
+            const code = this.state.accessCheckResult;
 
-        return this.userDataReady() && this.state.groupsReady && this.state.accessCheckResult;
+            if (code && code !== 200)
+            {
+                if (code === 401)
+                {
+                    FlowRouter.go('/login');
+                }
+                else
+                {
+                    FlowRouter.go(`/${code}`);
+                }
+            }
+        }
     }
 
     userDataReady()
@@ -555,9 +543,23 @@ export default class Application extends BaseComponent
         return !this.props.waitUserData;
     }
 
+    accountsReady()
+    {
+        if (!this.useAccounts())
+        {
+            return true;
+        }
+
+        return this.userDataReady() && this.state.allAccountDataReady;
+    }
+
     isReady()
     {
-        return this.accountsReady();
+        const result = this.accountsReady() && this.state.accessCheckResult !== null && this._lastRouteChecked === FlowRouter.current().path;
+
+        console.dir('ready '+result);
+
+        return result;
     }
 
     renderExtras()
@@ -576,6 +578,8 @@ export default class Application extends BaseComponent
             return null;
         }
 
+        const ready = this.isReady();
+
         let Layout = this.constructor.getDefaultApplicationLayoutController();
         if ('layout' in rProps)
         {
@@ -589,7 +593,7 @@ export default class Application extends BaseComponent
             >
                 <Layout className="application__layout">
                     {
-                        this.isReady()
+                        ready
                         &&
                         React.createElement(PageController, this.transformPageParameters({
                             route: rProps,

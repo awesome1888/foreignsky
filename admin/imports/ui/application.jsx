@@ -4,7 +4,6 @@ import DefaultLayout from './component/application-layout/default/index.jsx';
 
 import HomePage from './page/home/index.jsx';
 import NotFoundPage from './page/404/index.jsx';
-import NotAuthorizedPage from './page/401/index.jsx';
 import ForbiddenPage from './page/403/index.jsx';
 import LoginPage from './page/login/index.jsx';
 import TaskRunnerPage from './page/task-runner/index.jsx';
@@ -27,11 +26,6 @@ export default class AdminApplication extends Application
     static get404PageController()
     {
         return NotFoundPage;
-    }
-
-    static get401PageController()
-    {
-        return NotAuthorizedPage;
     }
 
     static get403PageController()

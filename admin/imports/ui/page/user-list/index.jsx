@@ -10,6 +10,8 @@ export default class UserListPage extends BasePage
 {
 	render()
     {
+        console.dir('render user list');
+
         return (
             <Layout
                 title={List.getEntity().getTitle()}

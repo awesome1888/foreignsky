@@ -35,12 +35,7 @@ const M = (superclass) => class User extends superclass
             return null;
         }
 
-        if (!this._user)
-        {
-            this._user = new this(Meteor.user() || {});
-        }
-
-        return this._user;
+        return new this(Meteor.user() || {});
     }
 
     static isReady()

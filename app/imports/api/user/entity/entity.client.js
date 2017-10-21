@@ -14,4 +14,9 @@ export default class User extends mix(BaseEntity).with(Entity)
     {
         return 'User';
     }
+
+    static isSupplementarySubscriptionReady()
+    {
+        return Meteor.subscribe('user-supplementary').ready();
+    }
 }

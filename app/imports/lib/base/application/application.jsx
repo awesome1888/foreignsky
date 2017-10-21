@@ -28,7 +28,7 @@ export default class Application extends BaseComponent
         }
         else
         {
-            // if we dont use accounts, make it simplier
+            // if we dont use accounts, make it simpler
             this._routerController = this;
         }
 
@@ -39,7 +39,6 @@ export default class Application extends BaseComponent
     {
         return createContainer((props) => {
             return {
-                // user: Meteor.subscribe('self') && Meteor.user(),
                 waitUserData: Meteor.loggingIn(),
                 ...props,
             };
@@ -86,7 +85,7 @@ export default class Application extends BaseComponent
 
     ///////////////////////////////////////////////////
 
-    static getRouter()
+    static getRouterFunction()
     {
         if (this._router === null)
         {
@@ -97,15 +96,22 @@ export default class Application extends BaseComponent
         return this._router;
     }
 
-    static addRoute(path, controller = null, params = {})
+    static addRoute(path, controller = null, controllerParams = {}, options = {})
     {
+        if (Meteor.isDevelopment)
+        {
+            options.triggersEnter = [(context, redirect) => {
+                console.log(`Going to ${path}`);
+            }];
+        }
+
         if (controller)
         {
-            this.getRouter()(path, controller, params);
+            this.getRouterFunction()(path, controller, controllerParams, options);
         }
         else
         {
-            FlowRouter.route(path, params);
+            FlowRouter.route(path, options);
         }
     }
 
@@ -163,7 +169,7 @@ export default class Application extends BaseComponent
             },
             logout: {
                 path: '/logout',
-                params: {
+                options: {
                     action: () => {
                         Meteor.logout(() => {
                             FlowRouter.go('/login');
@@ -176,15 +182,67 @@ export default class Application extends BaseComponent
 
     static registerRoutes()
     {
+        this.prepareRouter();
+
+        Object.values(this.getRouteMap()).forEach((route) => {
+            this.addRoute(route.path, route.controller, route.params || {}, route.options || {});
+        });
+    }
+
+    static prepareRouter()
+    {
+        // attach default 404 action
         FlowRouter.notFound = {
             action: function() {
                 FlowRouter.go('/404');
             }
         };
 
-        Object.values(this.getRouteMap()).forEach((route) => {
-            this.addRoute(route.path, route.controller, route.params || {});
-        });
+        if (this.needPostponeRouterInit())
+        {
+            // we need to wait for accounts to get ready...
+            FlowRouter.wait();
+            Tracker.autorun((c) => {
+                if (FlowRouter._initialized)
+                {
+                    return;
+                }
+
+                if (this.areRouterConditionsReady())
+                {
+                    c.stop();
+                    FlowRouter.initialize();
+                    this.actAfterRouterReady();
+                }
+            });
+        }
+        else
+        {
+            this.actAfterRouterReady();
+        }
+    }
+
+    static needPostponeRouterInit()
+    {
+        return this.useAccounts();
+    }
+
+    static areRouterConditionsReady()
+    {
+        if (this.useAccounts())
+        {
+            return Accounts.isSubscriptionReady();
+        }
+
+        return true;
+    }
+
+    /**
+     * Executes additional actions after the router is ready
+     */
+    static actAfterRouterReady()
+    {
+        console.dir('Router ready!');
     }
 
     /**

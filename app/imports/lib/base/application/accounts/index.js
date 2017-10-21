@@ -1,7 +1,13 @@
 import UserGroup from '../../../../api/user.group/entity/entity.client.js';
+import User from '../../../../api/user/entity/entity.client.js';
 
 export default class Accounts
 {
+    static isSubscriptionReady()
+    {
+        return User.isSupplementarySubscriptionReady();
+    }
+
     _waitAccounts = null;
     _waitGroupData = null;
     _accountsReadyCallback = null;

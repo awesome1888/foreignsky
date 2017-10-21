@@ -56,11 +56,21 @@ export default class User extends mix(BaseEntity).with(Entity)
                 profile: data.profile || {},
             });
         }
+        else
+        {
+            // update
+            if (_.isStringNotEmpty(data.password))
+            {
+                // for the client-side code use Accounts.changePassword()
+                Accounts.setPassword(id, data.password);
+            }
+        }
 
         // just to be 100% sure...
         const updateData = _.clone(data);
         delete updateData.email;
         delete updateData.password;
+        delete updateData.passwordPrevious;
 
         if(collection.update({
             _id: id,

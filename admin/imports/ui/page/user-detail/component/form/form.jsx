@@ -37,9 +37,10 @@ export default class UserForm extends EntityForm
                     type: String,
                     custom()
                     {
-                        const pass = this.field('newPassword').value;
-                        const passRepeat = this.field('newPasswordRepeat').value;
-                        if (pass !== passRepeat) {
+                        const pass = this.field('updatePassword.newPassword').value;
+                        const passRepeat = this.field('updatePassword.newPasswordRepeat').value;
+                        
+                        if (_.isStringNotEmpty(pass) && pass !== passRepeat) {
                             return 'passwordsDoNotMatch';
                         }
                         return null;
@@ -50,5 +51,16 @@ export default class UserForm extends EntityForm
         }), 'profile');
 
         return map;
+    }
+
+    transformModelBack(model)
+    {
+        if (_.isObjectNotEmpty(model.updatePassword) && _.isStringNotEmpty(model.updatePassword.newPassword))
+        {
+            model.password = model.updatePassword.newPassword;
+        }
+        delete(model.updatePassword);
+
+        return model;
     }
 }

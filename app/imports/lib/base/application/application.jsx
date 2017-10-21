@@ -7,6 +7,7 @@ import {createRouter} from 'meteor/cultofcoders:meteor-react-routing';
 import {createContainer} from 'meteor/react-meteor-data';
 import Security from '../../util/security/security.client.js';
 import SecurityProvider from '../../util/security/provider.js';
+import ConsoleOutput from '../../util/console-output/index.js';
 
 import Accounts from './accounts/index.js';
 
@@ -100,25 +101,20 @@ export default class Application extends BaseComponent
     {
         options.triggersEnter = [];
 
-        if (Meteor.isDevelopment)
-        {
-            options.triggersEnter.push(() => {
-                console.log(`Going to ${path}`);
-            });
-        }
-        if (this.useAccounts())
-        {
-            // move all unauthorized to /login
-            options.triggersEnter.push((context, redirect) => {
+        options.triggersEnter.push((context, redirect) => {
 
-                // Application.getInstance().setAccessChecked(false);
+            ConsoleOutput.dir(`Going to ${path}`);
+            BaseComponent.fire('router-go', [context.path]);
 
+            if (this.useAccounts())
+            {
+                // move all unauthorized to /login
                 if (!Accounts.isUserAuthorized() && context.path !== '/login')
                 {
                     redirect('/login');
                 }
-            });
-        }
+            }
+        });
 
         if (controller)
         {
@@ -258,10 +254,7 @@ export default class Application extends BaseComponent
             return this._instance;
         }
 
-        // return mock
-        return {
-            wait: function(){},
-        };
+        return null;
     }
 
     /**
@@ -287,6 +280,11 @@ export default class Application extends BaseComponent
         this.setPageTitle();
         this.setDescription();
         this.setKeywords();
+
+        if (this.useAccounts())
+        {
+            this.on('router-go', this.onRouteChange.bind(this));
+        }
     }
 
     getGlobalSelectorMap()
@@ -304,6 +302,18 @@ export default class Application extends BaseComponent
     componentWillMount()
     {
         this.constructor._instance = this;
+
+        if (this.useAccounts())
+        {
+            this.wait(this.getAccountController().waitData()).then(() => {
+                this.setState({
+                    allAccountDataReady: true,
+                });
+
+                this.maybeCheckAccess();
+                this.maybeRouteToError();
+            });
+        }
     }
 
     componentDidMount()
@@ -317,29 +327,19 @@ export default class Application extends BaseComponent
             this.onGlobalClick = this.onGlobalClick.bind(this);
             this._appContainer.addEventListener('click', this.onGlobalClick, true);
         }
-
-        if (this.useAccounts())
-        {
-            this.getAccountController().waitData().then(() => {
-                this.setState({
-                    allAccountDataReady: true,
-                });
-
-                this.maybeCheckAccess();
-            });
-        }
     }
 
     componentWillReceiveProps(props)
     {
         if (this.useAccounts())
         {
-            this.getAccountController().waitData().then(() => {
+            this.wait(this.getAccountController().waitData()).then(() => {
                 this.setState({
                     allAccountDataReady: true,
                 });
 
                 this.maybeCheckAccess();
+                this.maybeRouteToError();
             });
 
             if (!props.waitUserData)
@@ -348,11 +348,6 @@ export default class Application extends BaseComponent
                 this.getAccountController().informAccountsReady();
             }
         }
-    }
-
-    componentDidUpdate()
-    {
-        this.maybeRouteToError();
     }
 
     /**
@@ -366,14 +361,33 @@ export default class Application extends BaseComponent
         }
     }
 
+    onRouteChange()
+    {
+        console.dir('Reset last route');
+        this.setState({
+            lastRoute: null,
+        });
+    }
+
+    resetAccessResult()
+    {
+        this.setState({
+            accessCheckResult: null,
+        });
+    }
+
     maybeCheckAccess()
     {
         const cPath = FlowRouter.current().path;
 
         if (this._lastRouteChecked !== cPath)
         {
+            const res = this.getAccessCheckResult();
+            console.dir(this.state.accessCheckResult+' !== '+res);
+
             this.setState({
                 accessCheckResult: this.getAccessCheckResult(),
+                lastRoute: cPath,
             });
             this._lastRouteChecked = cPath;
             console.dir('Checked for '+this._lastRouteChecked);
@@ -448,7 +462,7 @@ export default class Application extends BaseComponent
         title = this.makeTitle(title);
         if (title.length > 0)
         {
-            title = `${title} – ${titlePostfix}`
+            title = `${title} – ${titlePostfix}`;
         }
         DocHead.setTitle(title);
     }
@@ -502,6 +516,7 @@ export default class Application extends BaseComponent
         return {
             allAccountDataReady: false,
             accessCheckResult: null,
+            lastRoute: null,
         };
     }
 
@@ -519,13 +534,13 @@ export default class Application extends BaseComponent
 
     maybeRouteToError()
     {
-        console.dir('route to error');
         if (this.useAccounts())
         {
             const code = this.state.accessCheckResult;
 
             if (code && code !== 200)
             {
+                console.dir('route to error!!!');
                 if (code === 401)
                 {
                     FlowRouter.go('/login');
@@ -553,13 +568,19 @@ export default class Application extends BaseComponent
         return this.userDataReady() && this.state.allAccountDataReady;
     }
 
+    accessChecked()
+    {
+        if (!this.useAccounts())
+        {
+            return true;
+        }
+
+        return this.state.accessCheckResult !== null && this._lastRouteChecked === FlowRouter.current().path;
+    }
+
     isReady()
     {
-        const result = this.accountsReady() && this.state.accessCheckResult !== null && this._lastRouteChecked === FlowRouter.current().path;
-
-        console.dir('ready '+result);
-
-        return result;
+        return this.accountsReady() && this.accessChecked();
     }
 
     renderExtras()
@@ -568,6 +589,8 @@ export default class Application extends BaseComponent
     }
 
     render() {
+        console.dir('render!');
+
         const PageController = this.props.main;
         const rProps = this.getRouteProps();
 

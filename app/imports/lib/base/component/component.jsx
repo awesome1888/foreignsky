@@ -147,4 +147,9 @@ export default class BaseComponent extends Component
     {
         $(document).trigger(event, args);
     }
+
+    static fire(event, args = [])
+    {
+        $(document).trigger(event, args);
+    }
 }

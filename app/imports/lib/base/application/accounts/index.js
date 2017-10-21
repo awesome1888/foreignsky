@@ -1,5 +1,6 @@
 import UserGroup from '../../../../api/user.group/entity/entity.client.js';
 import User from '../../../../api/user/entity/entity.client.js';
+import ConsoleOutput from '../../../util/console-output/index.js';
 
 export default class Accounts
 {
@@ -46,9 +47,9 @@ export default class Accounts
     {
         if (this._waitAccounts === null)
         {
-            this._waitAccounts = this.getApp().wait(new Promise((resolve) => {
+            this._waitAccounts = new Promise((resolve) => {
                 this._accountsReadyCallback = resolve;
-            }));
+            });
         }
 
         return this._waitAccounts;
@@ -58,9 +59,9 @@ export default class Accounts
     {
         if (this._waitGroupData === null)
         {
-            this._waitGroupData = this.getApp().wait(UserGroup.loadData());
+            this._waitGroupData = UserGroup.loadData();
         }
-        
+
         return this._waitGroupData;
     }
 
@@ -68,6 +69,7 @@ export default class Accounts
     {
         if (this._accountsReadyCallback)
         {
+            ConsoleOutput.dir('User ready...')
             this._accountsReadyCallback();
         }
     }

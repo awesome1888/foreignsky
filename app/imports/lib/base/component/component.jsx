@@ -9,6 +9,7 @@ export default class BaseComponent extends Component
     _scope = null;
     _cache = null; // this is used to store temporal cached data, to boost operations
     _events = [];
+    _id = null;
 
     constructor(props)
     {
@@ -146,6 +147,16 @@ export default class BaseComponent extends Component
     fire(event, args = [])
     {
         $(document).trigger(event, args);
+    }
+
+    getId()
+    {
+        if (this._id === null)
+        {
+            this._id = _.random(100000, 999999);
+        }
+
+        return this._id;
     }
 
     static fire(event, args = [])

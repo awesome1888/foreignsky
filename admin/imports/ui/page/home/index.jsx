@@ -15,14 +15,13 @@ export default class HomePage extends BasePage
 
     onSubmit(data)
     {
-        // formData = new FormData(data);
         $.ajax({
-            url: '/hello',
+            url: '/upload',
             type: 'post',
             contentType: false,
             processData: false,
-            data: data,
-            dataType: 'html',
+            data: this._form.getFormDataInstance(),
+            dataType: 'json',
             xhr: function(){
                 var xhr = $.ajaxSettings.xhr(); // получаем объект XMLHttpRequest
                 xhr.upload.addEventListener('progress', function(evt){ // добавляем обработчик события progress (onprogress)
@@ -39,7 +38,7 @@ export default class HomePage extends BasePage
                 return xhr;
             },
             success: function(json){
-                console.dir(json);
+                console.dir(json.all);
             },
             error: function(x, text){
                 console.dir(text);
@@ -57,6 +56,7 @@ export default class HomePage extends BasePage
                         Here there be dragons
 
                         <Form
+                            ref={ref => {this._form = ref}}
                             map={[
                                 {
                                     code: 'one',

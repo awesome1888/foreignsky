@@ -4,11 +4,32 @@ import '../../api/index.server.js';
 import './fixtures/index.js';
 import './routine/index.js';
 
-// import FileUploader from '../../lib/util/file-uploader/server.js';
+import formidable from 'formidable';
+
+import FileUploader from '../../lib/util/file-uploader/server.js';
 // FileUploader.initialize();
 
-WebApp.connectHandlers.use('/hello', (req, res, next) => {
-    console.dir('!!!');
+WebApp.connectHandlers.use('/upload', (req, res, next) => {
+
+    const form = new formidable.IncomingForm();
+    console.dir(form);
+
+    form.parse(req, (err, fields, files) => {
+
+        if (!err)
+        {
+            console.dir(fields);
+        }
+        else
+        {
+            console.dir(err);
+        }
+
+        // next();
+    });
+
     res.writeHead(200);
-    res.end(`Hello world from: ${Meteor.release}`);
+    res.end(JSON.stringify({
+        all: 'ok!',
+    }));
 });

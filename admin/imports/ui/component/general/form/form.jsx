@@ -135,6 +135,16 @@ export default class Form extends BaseComponent
         return this._form || null;
     }
 
+    getFormNative()
+    {
+        return $(`.form_${this.getId()} form`).get(0);
+    }
+
+    getFormDataInstance()
+    {
+        return new FormData(this.getFormNative());
+    }
+
     submit()
     {
         return this.getForm().submit();
@@ -299,37 +309,39 @@ export default class Form extends BaseComponent
         }
 
         return (
-            <AutoForm
-                schema={tMap.getSchema()}
-                model={tModel}
-                onSubmit={this.onSubmit.bind(this)}
-                className="ui big form"
-                ref={(reference) => {this._form = reference;}}
-                onValidate={this.onValidate.bind(this)}
-            >
-                {body}
-                {
-                    this.props.showFooter
-                    &&
-                    <div className="form__footer">
-                        <div className="group_x2">
-                            <Button color="green" size="large" type={this.props.submitButtonType}>
-                                {this.props.submitButtonLabel}
-                            </Button>
-                            {
-                                _.isStringNotEmpty(this.props.backPath)
-                                &&
-                                <a
-                                    href={this.props.backPath}
-                                    className="form__footer-back"
-                                >
-                                    Back
-                                </a>
-                            }
+            <div className={`form_${this.getId()}`}>
+                <AutoForm
+                    schema={tMap.getSchema()}
+                    model={tModel}
+                    onSubmit={this.onSubmit.bind(this)}
+                    className="ui big form"
+                    ref={(reference) => {this._form = reference;}}
+                    onValidate={this.onValidate.bind(this)}
+                >
+                    {body}
+                    {
+                        this.props.showFooter
+                        &&
+                        <div className="form__footer">
+                            <div className="group_x2">
+                                <Button color="green" size="large" type={this.props.submitButtonType}>
+                                    {this.props.submitButtonLabel}
+                                </Button>
+                                {
+                                    _.isStringNotEmpty(this.props.backPath)
+                                    &&
+                                    <a
+                                        href={this.props.backPath}
+                                        className="form__footer-back"
+                                    >
+                                        Back
+                                    </a>
+                                }
+                            </div>
                         </div>
-                    </div>
-                }
-            </AutoForm>
+                    }
+                </AutoForm>
+            </div>
         );
     }
 }

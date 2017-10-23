@@ -12,24 +12,22 @@ import FileUploader from '../../lib/util/file-uploader/server.js';
 WebApp.connectHandlers.use('/upload', (req, res, next) => {
 
     const form = new formidable.IncomingForm();
-    console.dir(form);
-
     form.parse(req, (err, fields, files) => {
 
+        console.dir('!!!');
         if (!err)
         {
             console.dir(fields);
+            console.dir(files);
         }
         else
         {
             console.dir(err);
         }
 
-        // next();
+        res.writeHead(200);
+        res.end(JSON.stringify({
+            all: 'ok!',
+        }));
     });
-
-    res.writeHead(200);
-    res.end(JSON.stringify({
-        all: 'ok!',
-    }));
 });

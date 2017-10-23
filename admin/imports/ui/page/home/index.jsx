@@ -72,7 +72,9 @@ export default class HomePage extends BasePage
                                 two: 'lolo',
                             }}
                             onSubmit={this.onSubmit.bind(this)}
-                        />
+                        >
+                            <input type="file" name="just-file" />
+                        </Form>
                     </div>
                 }
             />

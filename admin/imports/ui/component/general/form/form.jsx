@@ -319,6 +319,7 @@ export default class Form extends BaseComponent
                     onValidate={this.onValidate.bind(this)}
                 >
                     {body}
+                    {this.props.children || null}
                     {
                         this.props.showFooter
                         &&

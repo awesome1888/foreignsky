@@ -24,29 +24,31 @@ export default class FileUploader
 
     registerUrl()
     {
-        const url = '/server/uploaddd';
+        WebApp.connectHandlers.use('/upload', (req, res, next) => {
 
-        console.dir('Connected '+url);
-        
-        WebApp.connectHandlers.use(url, (req, res, next, lala) => {
             const form = new formidable.IncomingForm();
-
-            console.dir('#######################!!');
-            
             form.parse(req, (err, fields, files) => {
 
-                console.dir(err);
-                console.dir(fields);
-                console.dir(files);
+                console.dir('!!!');
+                if (!err)
+                {
+                    console.dir(fields);
+                    console.dir(files);
+                }
+                else
+                {
+                    console.dir(err);
+                }
 
-                // next();
+                res.writeHead(200);
+                res.end(JSON.stringify({
+                    all: 'ok!',
+                }));
             });
-
-            res.writeHead(200);
-            res.end("Your param is " + parts[1]);
         });
 
-            // const matchPath = matchPathFactory(req);
+
+        // const matchPath = matchPathFactory(req);
             //
             // if (matchPath('/server/upload')) {
             //     const form = new formidable.IncomingForm();

@@ -1,5 +1,7 @@
 @import (reference) url('/client/style/index.less');
 
+@file-picker__item-existing-border-radius: 3px;
+
 .file-picker__header {
 	._f-size_x(0.9);
 }
@@ -13,4 +15,29 @@
 	._absolute-cover();
 	._transparent();
 	._hand();
+}
+
+.file-picker__item-existing {
+	._image();
+	._b-color(@color_porcelain);
+	._size_x(8);
+	._border-rad(@file-picker__item-existing-border-radius);
+	._no-overflow();
+	._relative();
+	._block();
+	._inline-block();
+}
+
+._file-picker__item-existing-button() {
+	._b-color(@color_white);
+	._border-rad(@file-picker__item-existing-border-radius);
+	._hand();
+	._hover-fade();
+}
+
+.file-picker__item-existing-delete {
+	._file-picker__item-existing-button();
+	._icon_clear(15px, 3px);
+	._absolute(auto, 3px, 3px);
+	._f-color();
 }

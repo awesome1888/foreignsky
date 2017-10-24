@@ -50,7 +50,7 @@ export default class FilePicker extends BaseComponent
 
     hasExistingFiles()
     {
-        return false;
+        return true;
     }
 
     hasNewFiles()
@@ -93,21 +93,55 @@ export default class FilePicker extends BaseComponent
                     this.hasAnyFiles()
                     &&
                     <div className="margin-b_x2">
-                        <div className="file-picker__existing">
-                            <div className="file-picker__items">
-
-                            </div>
-                        </div>
-                        {
-                            this.hasNewFiles()
-                            &&
-                            <div className="file-picker__new margin-b_x">
-                                <div className="file-picker__header margin-b_x">
-                                    Files to be added:
+                        <div className="group_x">
+                            {
+                                this.hasExistingFiles()
+                                &&
+                                <div className="file-picker__existing">
+                                    <div className="file-picker__items group_x">
+                                        <a
+                                            href="/img/mauer/2kx2k/DSC_0668.jpg"
+                                            className="file-picker__item-existing"
+                                            rel="noreferrer noopener"
+                                            target="_blank"
+                                            style={{
+                                                backgroundImage: 'url(/img/mauer/2kx2k/DSC_0668.jpg)',
+                                            }}
+                                        >
+                                            <div className="file-picker__item-existing-delete" />
+                                        </a>
+                                        <a
+                                            className="file-picker__item-existing"
+                                            rel="noreferrer noopener"
+                                            target="_blank"
+                                        >
+                                            <div className="file-picker__item-existing-delete" />
+                                        </a>
+                                        <a
+                                            href="/img/mauer/2kx2k/DSC_0668.jpg"
+                                            className="file-picker__item-existing"
+                                            rel="noreferrer noopener"
+                                            target="_blank"
+                                            style={{
+                                                backgroundImage: 'url(/img/mauer/2kx2k/DSC_0668.jpg)',
+                                            }}
+                                        >
+                                            <div className="file-picker__item-existing-delete" />
+                                        </a>
+                                    </div>
                                 </div>
-                                {this.renderNewFiles()}
-                            </div>
-                        }
+                            }
+                            {
+                                this.hasNewFiles()
+                                &&
+                                <div className="file-picker__new margin-b_x">
+                                    <div className="file-picker__header margin-b_x">
+                                        Files to be added:
+                                    </div>
+                                    {this.renderNewFiles()}
+                                </div>
+                            }
+                        </div>
                     </div>
                 }
 

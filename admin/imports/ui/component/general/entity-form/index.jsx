@@ -50,9 +50,19 @@ export default class EntityForm extends Form
         super.setTitle(`${this.getEntity().getTitle()}: ${title}`);
     }
 
+    getItemId()
+    {
+        return this.props.id;
+    }
+
+    isNewItem()
+    {
+        return !this.getItemId() || this.getItemId().toString() === '0';
+    }
+
     async getModel()
     {
-        const id = this.props.id;
+        const id = this.getItemId();
 
         if (_.isStringNotEmpty(id) && id !== '0')
         {
@@ -90,7 +100,7 @@ export default class EntityForm extends Form
 
     async save(model)
     {
-        let id = this.props.id;
+        let id = this.getItemId();
         if (id === '0')
         {
             id = null;

@@ -13,4 +13,16 @@ export default class FileEntityForm extends EntityForm
     {
         return item.getData().name || '';
     }
+
+    // transformMap(map)
+    // {
+    //     if (this.isNewItem())
+    //     {
+    //         // will be a new file
+    //         map.getAttribute('name').setOptional(true);
+    //         map.insertAttributeAfter('path');
+    //     }
+    //
+    //     return map;
+    // }
 }

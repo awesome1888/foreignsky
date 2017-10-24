@@ -21,6 +21,9 @@ import './style.less';
 
 import {ControllerClass as Link} from '../link/index.jsx';
 
+/**
+ * This renderer is used to render MULTIPLE links. To render a single link, use RendererLink
+ */
 class RendererLinkList extends Link
 {
     _items = null;

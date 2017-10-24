@@ -281,6 +281,11 @@ export default class Attribute
         return false;
     }
 
+    setOptional(way)
+    {
+        this.getData().optional = !!way;
+    }
+
     getAllowedValues()
     {
         return this._data.allowedValues || null;

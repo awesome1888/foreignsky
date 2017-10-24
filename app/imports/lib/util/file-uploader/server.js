@@ -41,6 +41,7 @@ export default class FileUploader
                 }
 
                 res.writeHead(200);
+                res.setHeader('Content-Type', 'application/json');
                 res.end(JSON.stringify({
                     all: 'ok!',
                 }));

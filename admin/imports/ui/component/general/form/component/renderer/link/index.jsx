@@ -17,6 +17,9 @@ import Form from '../../../../form/form.jsx';
 import Util from '../../../../../../../lib/util.js';
 import ModalConfirm from '../../../../modal-confirm/index.jsx';
 
+/**
+ * This renderer is used to render a SINGLE link. To render multiple links, use RendererLinkList
+ */
 class RendererLink extends RendererGeneric
 {
     _cache = {

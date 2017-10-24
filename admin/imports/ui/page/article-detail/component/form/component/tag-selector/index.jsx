@@ -24,7 +24,6 @@ class RendererTagSelector extends RendererLinkList
     _enum = null;
     _selectbox = null;
     _colorPicker = null;
-    _scope = null;
     _lastSearchText = '';
 
     constructor(props)

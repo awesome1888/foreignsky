@@ -1,6 +1,7 @@
 import React from 'react';
 
 import BaseComponent from '../../../../../lib/base/component/component.jsx';
+import File from '../../../../../api/file/entity/entity.client.js';
 
 import './style.less';
 import PropTypes from 'prop-types';
@@ -15,32 +16,46 @@ export default class FilePicker extends BaseComponent
     static defaultProps = {
     };
 
-    _fileButton = null;
-
     constructor(props)
     {
         super(props);
         this.extendState({
-            newFiles: [],
+            uploadingFiles: [],
         });
+    }
+
+    onFileAddClick()
+    {
+        $(this.getFileButton()).click();
     }
 
     onFileButtonChange()
     {
-        const files = this.getFileButton().files;
-        const data = [];
+        // as soon as files picked, we start uploading them
+        const button = this.getFileButton();
+
+        const files = button.files;
+        const data = _.clone(this.state.uploadingFiles);
         for (let k = 0; k < files.length; k++)
         {
             data.push({
                 name: files[k].name,
                 isImage: files[k].type.toString().startsWith('image/'),
                 size: files[k].size,
+                percent: 0,
             });
         }
 
         this.setState({
-            newFiles: data,
+            uploadingFiles: data,
         });
+
+        this.startUpload(button);
+    }
+
+    startUpload(button)
+    {
+        
     }
 
     getFileButton()
@@ -55,7 +70,7 @@ export default class FilePicker extends BaseComponent
 
     hasNewFiles()
     {
-        return this.state.newFiles.length > 0;
+        return this.state.uploadingFiles.length > 0;
     }
 
     hasAnyFiles()
@@ -63,12 +78,17 @@ export default class FilePicker extends BaseComponent
         return this.hasNewFiles() || this.hasExistingFiles();
     }
 
+    isButtonSelected()
+    {
+        
+    }
+    
     renderNewFiles()
     {
         return (
             <div className="file-picker__items group_x">
                 {
-                    this.state.newFiles.map((item) => {
+                    this.state.uploadingFiles.map((item) => {
                         return (
                             <div
                                 className="file-picker__item"
@@ -85,6 +105,48 @@ export default class FilePicker extends BaseComponent
         );
     }
 
+    // renderInputs()
+    // {
+    //     return (
+    //         <div className="">
+    //
+    //         </div>
+    //     );
+    // }
+
+    renderAddNewButton()
+    {
+        return (
+            <div className="">
+                <Button
+                    as="div"
+                    color="blue"
+                    className="file-picker__add-files-button"
+                    size="mini"
+                    onClick={this.onFileAddClick.bind(this)}
+                >
+                    {
+                        this.hasAnyFiles()
+                        &&
+                        <span>Add more files</span>
+                    }
+                    {
+                        !this.hasAnyFiles()
+                        &&
+                        <span>Add files</span>
+                    }
+                </Button>
+                <input
+                    className="file-picker__add-files-button-real"
+                    type="file"
+                    multiple
+                    onChange={this.onFileButtonChange.bind(this)}
+                    ref={(ref) => { this._fileButton = ref; }}
+                />
+            </div>
+        );
+    }
+
     render()
     {
         return (
@@ -92,74 +154,82 @@ export default class FilePicker extends BaseComponent
                 {
                     this.hasAnyFiles()
                     &&
-                    <div className="margin-b_x2">
-                        <div className="group_x">
-                            {
-                                this.hasExistingFiles()
-                                &&
-                                <div className="file-picker__existing">
-                                    <div className="file-picker__items group_x">
-                                        <a
-                                            href="/img/mauer/2kx2k/DSC_0668.jpg"
-                                            className="file-picker__item-existing"
-                                            rel="noreferrer noopener"
-                                            target="_blank"
-                                            style={{
-                                                backgroundImage: 'url(/img/mauer/2kx2k/DSC_0668.jpg)',
-                                            }}
-                                        >
-                                            <div className="file-picker__item-existing-delete" />
-                                        </a>
-                                        <a
-                                            className="file-picker__item-existing"
-                                            rel="noreferrer noopener"
-                                            target="_blank"
-                                        >
-                                            <div className="file-picker__item-existing-delete" />
-                                        </a>
-                                        <a
-                                            href="/img/mauer/2kx2k/DSC_0668.jpg"
-                                            className="file-picker__item-existing"
-                                            rel="noreferrer noopener"
-                                            target="_blank"
-                                            style={{
-                                                backgroundImage: 'url(/img/mauer/2kx2k/DSC_0668.jpg)',
-                                            }}
-                                        >
-                                            <div className="file-picker__item-existing-delete" />
-                                        </a>
-                                    </div>
+                    <div className="margin-b_x">
+                        {
+                            this.hasExistingFiles()
+                            &&
+                            <div className="file-picker__existing">
+                                <div className="file-picker__items group_x">
+                                    <a
+                                        href="/img/mauer/2kx2k/DSC_0668.jpg"
+                                        className="file-picker__item-existing"
+                                        rel="noreferrer noopener"
+                                        target="_blank"
+                                        style={{
+                                            backgroundImage: 'url(/img/mauer/2kx2k/DSC_0668.jpg)',
+                                        }}
+                                    >
+                                        <div className="file-picker__item-existing-delete" />
+                                    </a>
+                                    <a
+                                        className="file-picker__item-existing"
+                                        rel="noreferrer noopener"
+                                        target="_blank"
+                                    >
+                                        <div className="file-picker__item-existing-delete" />
+                                    </a>
+                                    <a
+                                        href="/img/mauer/2kx2k/DSC_0668.jpg"
+                                        className="file-picker__item-existing"
+                                        rel="noreferrer noopener"
+                                        target="_blank"
+                                        style={{
+                                            backgroundImage: 'url(/img/mauer/2kx2k/DSC_0668.jpg)',
+                                        }}
+                                    >
+                                        <div className="file-picker__item-existing-delete" />
+                                    </a>
+                                    <a
+                                        className="file-picker__item-new"
+                                    >
+                                        <div className="file-picker__item-new-inner">
+                                            <div className="file-picker__item-new-progress">
+                                                <div
+                                                    className="file-picker__item-new-progress-bar_h"
+                                                    style={{width: '30%'}}
+                                                />
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a
+                                        className="file-picker__item-new"
+                                    >
+                                        <div className="file-picker__item-new-inner">
+                                            <div className="file-picker__item-new-progress">
+                                                <div
+                                                    className="file-picker__item-new-progress-bar_v"
+                                                    style={{height: '30%'}}
+                                                />
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a
+                                        href="/img/mauer/2kx2k/DSC_0668.jpg"
+                                        className="file-picker__item-existing"
+                                        rel="noreferrer noopener"
+                                        target="_blank"
+                                        style={{
+                                            backgroundImage: 'url(/img/mauer/2kx2k/DSC_0668.jpg)',
+                                        }}
+                                    >
+                                        <div className="file-picker__item-existing-delete" />
+                                    </a>
                                 </div>
-                            }
-                            {
-                                this.hasNewFiles()
-                                &&
-                                <div className="file-picker__new margin-b_x">
-                                    <div className="file-picker__header margin-b_x">
-                                        Files to be added:
-                                    </div>
-                                    {this.renderNewFiles()}
-                                </div>
-                            }
-                        </div>
+                            </div>
+                        }
                     </div>
                 }
-
-                <Button
-                    as="div"
-                    color="blue"
-                    className="file-picker__add-files-button"
-                    size="mini"
-                >
-                    Add files
-                    <input
-                        className="file-picker__add-files-button-real"
-                        type="file"
-                        multiple
-                        onChange={this.onFileButtonChange.bind(this)}
-                        ref={(ref) => { this._fileButton = ref; }}
-                    />
-                </Button>
+                {this.renderAddNewButton()}
             </div>
         );
     }

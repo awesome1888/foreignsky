@@ -141,12 +141,26 @@
 	right: @right;
 }
 ._absolute-stick-top() {
+	position: absolute;
 	top: auto;
 	bottom: 100%;
 }
 ._absolute-stick-bottom() {
+	position: absolute;
 	top: 100%;
 	bottom: auto;
+}
+._absolute-place-left() {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+}
+._absolute-place-top() {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
 }
 ._absolute-cover() {
 	position: absolute;
@@ -201,8 +215,14 @@
 ._tall() {
 	height: 100%;
 }
+._short() {
+	height: 0;
+}
 ._wide() {
 	width: 100%;
+}
+._narrow() {
+	width: 0;
 }
 
 // padding

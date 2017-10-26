@@ -100,6 +100,8 @@ export default class BulkContext
                     callback();
                 }
             });
+            // todo:
+            // stream.on('finish', () => {this.flush()})
         }
 
         return this._stream;

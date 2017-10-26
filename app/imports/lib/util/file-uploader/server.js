@@ -28,8 +28,6 @@ export default class FileUploader
 
             const form = new formidable.IncomingForm();
             form.parse(req, (err, fields, files) => {
-
-                console.dir('!!!');
                 if (!err)
                 {
                     console.dir(fields);
@@ -40,10 +38,10 @@ export default class FileUploader
                     console.dir(err);
                 }
 
-                res.writeHead(200);
                 res.setHeader('Content-Type', 'application/json');
+                res.writeHead(200);
                 res.end(JSON.stringify({
-                    all: 'ok!',
+                    result: true,
                 }));
             });
         });

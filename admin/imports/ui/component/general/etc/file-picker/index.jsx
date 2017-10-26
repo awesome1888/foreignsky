@@ -16,23 +16,32 @@ export default class FilePicker extends BaseComponent
     static defaultProps = {
     };
 
+    _invisible = null;
+    _selector = null;
+
     constructor(props)
     {
         super(props);
         this.extendState({
             uploadingFiles: [],
+            locked: false,
         });
     }
 
     onFileAddClick()
     {
-        $(this.getFileButton()).click();
+        this._invisible.innerHTML = '';
+        const selector = this.makeSelector();
+        console.dir(selector);
+        selector.appendTo(this._invisible);
+
+        selector.click();
     }
 
     onFileButtonChange()
     {
         // as soon as files picked, we start uploading them
-        const button = this.getFileButton();
+        const button = this.getSelector().get(0);
 
         const files = button.files;
         const data = _.clone(this.state.uploadingFiles);
@@ -43,6 +52,7 @@ export default class FilePicker extends BaseComponent
                 isImage: files[k].type.toString().startsWith('image/'),
                 size: files[k].size,
                 percent: 0,
+                loaderType: _.random(0, 99) > 50 ? 'v' : 'h',
             });
         }
 
@@ -50,17 +60,94 @@ export default class FilePicker extends BaseComponent
             uploadingFiles: data,
         });
 
-        this.startUpload(button);
+        this.lockButton();
+        this.upload(button).then(() => {
+            console.dir('Uploaded!');
+            this.unlockButton();
+        });
     }
 
-    startUpload(button)
+    makeSelector()
     {
+        this._selector = $('<input type="file" name="files" multiple>');
+        this._selector.on('change', this.onFileButtonChange.bind(this));
+        return this.getSelector();
+    }
+
+    getSelector()
+    {
+        return this._selector;
+    }
+
+    lockButton()
+    {
+        this.setState({
+            locked: true,
+        });
+    }
+
+    unlockButton()
+    {
+        this.setState({
+            locked: false,
+        });
+    }
+
+    setPercent(i, percent)
+    {
+        console.dir(i+' '+percent);
         
+        const data = _.clone(this.state.uploadingFiles);
+        data[i].percent = percent;
+
+        this.setState({
+            uploadingFiles: data,
+        });
     }
 
-    getFileButton()
+    async upload(button)
     {
-        return this._fileButton;
+        return Promise.all(_.map(button.files, (file, i) => {
+            return this.uploadFile(file, this.setPercent.bind(this, i));
+        }));
+    }
+
+    async uploadFile(file, cb)
+    {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        return this.submit(formData, cb);
+    }
+
+    async submit(data, prcCallback)
+    {
+        return new Promise((resolve) => {
+            $.ajax({
+                url: '/upload',
+                type: 'post',
+                contentType: false,
+                processData: false,
+                data,
+                dataType: 'json',
+                xhr: () => {
+                    const xhr = $.ajaxSettings.xhr();
+                    xhr.upload.addEventListener('progress', (evt) => {
+                        if (evt.lengthComputable)
+                        {
+                            prcCallback(Math.ceil(evt.loaded / evt.total * 100));
+                        }
+                    }, false);
+                    return xhr;
+                },
+                success: function(json){
+                    resolve({error: null, result: json});
+                },
+                error: function(x, text){
+                    resolve({error: text, result: null});
+                },
+            });
+        });
     }
 
     hasExistingFiles()
@@ -82,37 +169,6 @@ export default class FilePicker extends BaseComponent
     {
         
     }
-    
-    renderNewFiles()
-    {
-        return (
-            <div className="file-picker__items group_x">
-                {
-                    this.state.uploadingFiles.map((item) => {
-                        return (
-                            <div
-                                className="file-picker__item"
-                                key={item.name}
-                            >
-                                <div className="file-picker__item-name">
-                                    <input type="text" value={item.name} />
-                                </div>
-                            </div>
-                        );
-                    })
-                }
-            </div>
-        );
-    }
-
-    // renderInputs()
-    // {
-    //     return (
-    //         <div className="">
-    //
-    //         </div>
-    //     );
-    // }
 
     renderAddNewButton()
     {
@@ -124,6 +180,7 @@ export default class FilePicker extends BaseComponent
                     className="file-picker__add-files-button"
                     size="mini"
                     onClick={this.onFileAddClick.bind(this)}
+                    disabled={this.state.locked}
                 >
                     {
                         this.hasAnyFiles()
@@ -136,13 +193,117 @@ export default class FilePicker extends BaseComponent
                         <span>Add files</span>
                     }
                 </Button>
-                <input
-                    className="file-picker__add-files-button-real"
-                    type="file"
-                    multiple
-                    onChange={this.onFileButtonChange.bind(this)}
-                    ref={(ref) => { this._fileButton = ref; }}
+                <div
+                    ref={(ref) => { this._invisible = ref; }}
+                    className="no-display"
                 />
+            </div>
+        );
+    }
+
+    renderFiles()
+    {
+        const files = [];
+
+        files.push(
+            <a
+                href="/img/mauer/2kx2k/DSC_0668.jpg"
+                className="file-picker__item-existing"
+                rel="noreferrer noopener"
+                target="_blank"
+                style={{
+                    backgroundImage: 'url(/img/mauer/2kx2k/DSC_0668.jpg)',
+                }}
+                key="e_1"
+            >
+                <div className="file-picker__item-existing-delete" />
+            </a>
+        );
+
+        files.push(
+            <a
+                href="/img/mauer/2kx2k/DSC_0668.jpg"
+                className="file-picker__item-existing"
+                rel="noreferrer noopener"
+                target="_blank"
+                style={{
+                    backgroundImage: 'url(/img/mauer/2kx2k/DSC_0668.jpg)',
+                }}
+                key="e_2"
+            >
+                <div className="file-picker__item-existing-delete" />
+            </a>
+        );
+
+        files.push(
+            <a
+                className="file-picker__item-existing"
+                rel="noreferrer noopener"
+                target="_blank"
+                key="e_3"
+            >
+                <div className="file-picker__item-existing-delete" />
+            </a>
+        );
+
+        this.state.uploadingFiles.forEach((file, i) => {
+            files.push(
+                <a
+                    className="file-picker__item-new"
+                    key={`n_${i}`}
+                >
+                    <div className="file-picker__item-new-inner">
+                        <div className="file-picker__item-new-progress">
+                            <div
+                                className={`file-picker__item-new-progress-bar_${file.loaderType}`}
+                                style={{height: `${file.percent}%`}}
+                            />
+                        </div>
+                    </div>
+                </a>
+            );
+        });
+
+        files.push(
+            <a
+                className="file-picker__item-new"
+                key={`n_222`}
+            >
+                <div className="file-picker__item-new-inner">
+                    <div className="file-picker__item-new-progress">
+                        <div
+                            className={`file-picker__item-new-progress-bar_h`}
+                            style={{width: `50%`}}
+                        >
+
+                        </div>
+                        <span className="relative">50%</span>
+                    </div>
+                </div>
+            </a>
+        );
+
+        files.push(
+            <a
+                className="file-picker__item-new"
+                key={`n_222333`}
+            >
+                <div className="file-picker__item-new-inner">
+                    <div className="file-picker__item-new-progress">
+                        <div
+                            className={`file-picker__item-new-progress-bar_v`}
+                            style={{height: `50%`}}
+                        />
+                    </div>
+                </div>
+            </a>
+        );
+
+        return (
+            <div className="margin-b_x">
+                <div className="file-picker__items group_x">
+                    {files}
+                </div>
             </div>
         );
     }
@@ -154,80 +315,7 @@ export default class FilePicker extends BaseComponent
                 {
                     this.hasAnyFiles()
                     &&
-                    <div className="margin-b_x">
-                        {
-                            this.hasExistingFiles()
-                            &&
-                            <div className="file-picker__existing">
-                                <div className="file-picker__items group_x">
-                                    <a
-                                        href="/img/mauer/2kx2k/DSC_0668.jpg"
-                                        className="file-picker__item-existing"
-                                        rel="noreferrer noopener"
-                                        target="_blank"
-                                        style={{
-                                            backgroundImage: 'url(/img/mauer/2kx2k/DSC_0668.jpg)',
-                                        }}
-                                    >
-                                        <div className="file-picker__item-existing-delete" />
-                                    </a>
-                                    <a
-                                        className="file-picker__item-existing"
-                                        rel="noreferrer noopener"
-                                        target="_blank"
-                                    >
-                                        <div className="file-picker__item-existing-delete" />
-                                    </a>
-                                    <a
-                                        href="/img/mauer/2kx2k/DSC_0668.jpg"
-                                        className="file-picker__item-existing"
-                                        rel="noreferrer noopener"
-                                        target="_blank"
-                                        style={{
-                                            backgroundImage: 'url(/img/mauer/2kx2k/DSC_0668.jpg)',
-                                        }}
-                                    >
-                                        <div className="file-picker__item-existing-delete" />
-                                    </a>
-                                    <a
-                                        className="file-picker__item-new"
-                                    >
-                                        <div className="file-picker__item-new-inner">
-                                            <div className="file-picker__item-new-progress">
-                                                <div
-                                                    className="file-picker__item-new-progress-bar_h"
-                                                    style={{width: '30%'}}
-                                                />
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a
-                                        className="file-picker__item-new"
-                                    >
-                                        <div className="file-picker__item-new-inner">
-                                            <div className="file-picker__item-new-progress">
-                                                <div
-                                                    className="file-picker__item-new-progress-bar_v"
-                                                    style={{height: '30%'}}
-                                                />
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a
-                                        href="/img/mauer/2kx2k/DSC_0668.jpg"
-                                        className="file-picker__item-existing"
-                                        rel="noreferrer noopener"
-                                        target="_blank"
-                                        style={{
-                                            backgroundImage: 'url(/img/mauer/2kx2k/DSC_0668.jpg)',
-                                        }}
-                                    >
-                                        <div className="file-picker__item-existing-delete" />
-                                    </a>
-                                </div>
-                            </div>
-                        }
-                    </div>
+                    this.renderFiles()
                 }
                 {this.renderAddNewButton()}
             </div>

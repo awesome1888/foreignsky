@@ -1,4 +1,5 @@
 import Collection from '../../collection/collection.js';
+import { Writable } from 'stream';
 
 export default class BulkContext
 {
@@ -65,6 +66,8 @@ export default class BulkContext
 
             this._bufferInsert = [];
         }
+
+        this._count = 0;
     }
 
     clear()
@@ -72,5 +75,33 @@ export default class BulkContext
         this._bufferUpdate = [];
         this._bufferInsert = [];
         this._count = 0;
+    }
+
+    getStream()
+    {
+        if (!this._stream)
+        {
+            this._stream = new Writable({
+                objectMode: true,
+                write: (op, encoding, callback) => {
+                    if (_.isObjectNotEmpty(op))
+                    {
+                        op.operation = op.operation || {};
+                        if (op.type === 'update')
+                        {
+                            this.update(op.operation.filter, op.operation.data);
+                        }
+                        else
+                        {
+                            // todo
+                        }
+                    }
+
+                    callback();
+                }
+            });
+        }
+
+        return this._stream;
     }
 }

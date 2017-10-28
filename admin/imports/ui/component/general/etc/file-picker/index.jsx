@@ -247,6 +247,7 @@ export default class FilePicker extends BaseComponent
         );
 
         this.state.uploadingFiles.forEach((file, i) => {
+            const style = file.loaderType === 'h' ? {width: `${file.percent}%`} : {height: `${file.percent}%`};
             files.push(
                 <a
                     className="file-picker__item-new"
@@ -254,53 +255,18 @@ export default class FilePicker extends BaseComponent
                 >
                     <div className="file-picker__item-new-inner">
                         <div className="file-picker__item-new-progress">
+                            <span className="file-picker__item-new-progress-bar-text">{`${file.percent}%`}</span>
                             <div
                                 className={`file-picker__item-new-progress-bar_${file.loaderType}`}
-                                style={{height: `${file.percent}%`}}
-                            />
+                                style={style}
+                            >
+                                <span className="file-picker__item-new-progress-bar-text file-picker__item-new-progress-bar-text_inner">{`${file.percent}%`}</span>
+                            </div>
                         </div>
                     </div>
                 </a>
             );
         });
-
-        files.push(
-            <a
-                className="file-picker__item-new"
-                key={`n_222`}
-            >
-                <div className="file-picker__item-new-inner">
-                    <div className="file-picker__item-new-progress">
-                        <span className="file-picker__item-new-progress-bar-text">50%</span>
-                        <div
-                            className={`file-picker__item-new-progress-bar_h`}
-                            style={{width: `50%`}}
-                        >
-                            <span className="file-picker__item-new-progress-bar-text file-picker__item-new-progress-bar-text_inner">50%</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        );
-
-        files.push(
-            <a
-                className="file-picker__item-new"
-                key={`n_222333`}
-            >
-                <div className="file-picker__item-new-inner">
-                    <div className="file-picker__item-new-progress">
-                        <span className="file-picker__item-new-progress-bar-text">50%</span>
-                        <div
-                            className={`file-picker__item-new-progress-bar_v`}
-                            style={{height: `50%`}}
-                        >
-                            <span className="file-picker__item-new-progress-bar-text file-picker__item-new-progress-bar-text_inner">50%</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        );
 
         return (
             <div className="margin-b_x">

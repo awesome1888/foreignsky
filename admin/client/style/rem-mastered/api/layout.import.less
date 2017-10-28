@@ -166,6 +166,10 @@
 	position: absolute;
 	._cover();
 }
+._absolute-center(@h, @w, @pH, @pW: @pH) {
+	top: calc(~"@{pH} / 2 - (@{h} / 2)");
+	left: calc(~"@{pW} / 2 - (@{w} / 2)");
+}
 
 // size
 ._cover(@t: 0, @b: 0, @l: 0, @r: 0) {

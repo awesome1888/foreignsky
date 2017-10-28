@@ -271,13 +271,13 @@ export default class FilePicker extends BaseComponent
             >
                 <div className="file-picker__item-new-inner">
                     <div className="file-picker__item-new-progress">
+                        <span className="file-picker__item-new-progress-bar-text">50%</span>
                         <div
                             className={`file-picker__item-new-progress-bar_h`}
                             style={{width: `50%`}}
                         >
-
+                            <span className="file-picker__item-new-progress-bar-text file-picker__item-new-progress-bar-text_inner">50%</span>
                         </div>
-                        <span className="relative">50%</span>
                     </div>
                 </div>
             </a>
@@ -290,10 +290,13 @@ export default class FilePicker extends BaseComponent
             >
                 <div className="file-picker__item-new-inner">
                     <div className="file-picker__item-new-progress">
+                        <span className="file-picker__item-new-progress-bar-text">50%</span>
                         <div
                             className={`file-picker__item-new-progress-bar_v`}
                             style={{height: `50%`}}
-                        />
+                        >
+                            <span className="file-picker__item-new-progress-bar-text file-picker__item-new-progress-bar-text_inner">50%</span>
+                        </div>
                     </div>
                 </div>
             </a>

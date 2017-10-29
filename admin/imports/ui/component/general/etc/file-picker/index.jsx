@@ -2,6 +2,7 @@ import React from 'react';
 
 import BaseComponent from '../../../../../lib/base/component/component.jsx';
 import File from '../../../../../api/file/entity/entity.client.js';
+import ModalConfirm from '../../modal-confirm/index.jsx';
 
 import './style.less';
 import PropTypes from 'prop-types';
@@ -32,15 +33,12 @@ export default class FilePicker extends BaseComponent
             uploadingFiles: [],
             locked: false,
         });
-
-        console.dir('props');
-        console.dir(props);
     }
 
     componentWillReceiveProps(props)
     {
-        console.dir('New props!');
-        console.dir(props);
+        // console.dir('New props!');
+        // console.dir(props);
     }
 
     onFileAddClick()
@@ -103,6 +101,24 @@ export default class FilePicker extends BaseComponent
         }
     }
 
+    onItemDeleteClick(id, e)
+    {
+        this._deleteConfirm.ask(
+            'Do you want to detach the selected file? You will be able to re-attach this item in any time later.',
+            'An important question'
+        ).then((answer) => {
+            if (answer)
+            {
+                if (_.isFunction(this.props.onChange))
+                {
+                    this.props.onChange(_.difference(this.getValue(), [id]));
+                }
+            }
+        });
+
+        e.preventDefault();
+    }
+
     makeSelector()
     {
         this._selector = $('<input type="file" name="files" multiple>');
@@ -163,7 +179,7 @@ export default class FilePicker extends BaseComponent
 
     hasExistingFiles()
     {
-        return true;
+        return this.getValue().length > 0;
     }
 
     hasNewFiles()
@@ -178,23 +194,25 @@ export default class FilePicker extends BaseComponent
 
     renderAddNewButton()
     {
+        const hasAny = this.hasAnyFiles();
+
         return (
-            <div className="">
+            <div className={`${!hasAny ? 'margin-t_x' : ''}`}>
                 <Button
                     as="div"
                     color="blue"
-                    className="file-picker__add-files-button"
+                    className={`file-picker__add-files-button`}
                     size="mini"
                     onClick={this.onFileAddClick.bind(this)}
                     disabled={this.state.locked}
                 >
                     {
-                        this.hasAnyFiles()
+                        hasAny
                         &&
                         <span>Add more files</span>
                     }
                     {
-                        !this.hasAnyFiles()
+                        !hasAny
                         &&
                         <span>Add files</span>
                     }
@@ -223,7 +241,10 @@ export default class FilePicker extends BaseComponent
                     }}
                     key={`e_${item.getId()}`}
                 >
-                    <div className="file-picker__item-existing-delete" />
+                    <div
+                        className="file-picker__item-existing-delete"
+                        onClick={this.onItemDeleteClick.bind(this, item.getId())}
+                    />
                 </a>
             );
         });
@@ -261,14 +282,17 @@ export default class FilePicker extends BaseComponent
 
     render()
     {
+        const hasAnyFile = this.hasAnyFiles();
+
         return (
             <div className="file-picker">
                 {
-                    this.hasAnyFiles()
+                    hasAnyFile
                     &&
                     this.renderFiles()
                 }
                 {this.renderAddNewButton()}
+                <ModalConfirm ref={ref => { this._deleteConfirm = ref; }} />
             </div>
         );
     }

@@ -15,16 +15,16 @@ export default class File extends mix(BaseEntity).with(Entity)
         return 'File';
     }
 
-    getAbsoluteUrl()
+    getAbsoluteUrl(resizeTo = null)
     {
-        return this.constructor.makePublicUrl(this.getUrl());
+        return this.constructor.makePublicUrl(this.getUrl(), resizeTo);
     }
 
-    static makePublicUrl(url)
+    static makePublicUrl(url, resizeTo = null)
     {
         if (Meteor.isDevelopment)
         {
-            return `http://localhost:3012${url}`;
+            return `http://localhost:3012/${url}`;
         }
 
         // todo: use the domain name from settings here!

@@ -61,8 +61,9 @@ export default class FilePicker extends BaseComponent
         });
 
         this.lockButton();
-        this.upload(button).then(() => {
-            console.dir('Uploaded!');
+        this.upload(button).then((ids) => {
+            console.dir('All uploaded!');
+            console.dir(ids);
             this.unlockButton();
         });
     }
@@ -95,8 +96,6 @@ export default class FilePicker extends BaseComponent
 
     setPercent(i, percent)
     {
-        console.dir(i+' '+percent);
-        
         const data = _.clone(this.state.uploadingFiles);
         data[i].percent = percent;
 
@@ -107,9 +106,14 @@ export default class FilePicker extends BaseComponent
 
     async upload(button)
     {
+        const ids = [];
         return Promise.all(_.map(button.files, (file, i) => {
-            return this.uploadFile(file, this.setPercent.bind(this, i));
-        }));
+            return this.uploadFile(file, this.setPercent.bind(this, i)).then((_id) => {
+                ids.push(_id);
+            });
+        })).then(() => {
+            return ids;
+        });
     }
 
     async uploadFile(file, progressCallback)

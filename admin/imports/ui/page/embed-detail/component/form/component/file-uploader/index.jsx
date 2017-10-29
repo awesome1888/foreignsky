@@ -32,7 +32,9 @@ class RendererFileUploader extends RendererLink
                 </div>
             );
         }
-        
+
+        console.dir(this.props);
+
         return (
             <Container
                 errorProps={this.props}

@@ -4,7 +4,7 @@ import BaseComponent from '../../../../../lib/base/component/component.jsx';
 import File from '../../../../../api/file/entity/entity.client.js';
 
 import './style.less';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import { Button } from 'semantic-ui-react';
 
@@ -112,41 +112,13 @@ export default class FilePicker extends BaseComponent
         }));
     }
 
-    async uploadFile(file, cb)
+    async uploadFile(file, progressCallback)
     {
-        const formData = new FormData();
-        formData.append('file', file);
+        const data = new FormData();
+        data.append('file', file);
 
-        return this.submit(formData, cb);
-    }
-
-    async submit(data, prcCallback)
-    {
-        return new Promise((resolve) => {
-            $.ajax({
-                url: '/upload',
-                type: 'post',
-                contentType: false,
-                processData: false,
-                data,
-                dataType: 'json',
-                xhr: () => {
-                    const xhr = $.ajaxSettings.xhr();
-                    xhr.upload.addEventListener('progress', (evt) => {
-                        if (evt.lengthComputable)
-                        {
-                            prcCallback(Math.ceil(evt.loaded / evt.total * 100));
-                        }
-                    }, false);
-                    return xhr;
-                },
-                success: function(json){
-                    resolve({error: null, result: json});
-                },
-                error: function(x, text){
-                    resolve({error: text, result: null});
-                },
-            });
+        return await File.save(null, data, {
+            progressCallback
         });
     }
 

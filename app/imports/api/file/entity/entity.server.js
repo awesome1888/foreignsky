@@ -21,6 +21,29 @@ export default class File extends mix(BaseEntity).with(Entity)
         return 'img/';
     }
 
+    static remove(filter = {})
+    {
+        if (this.onBeforeRemove(filter) === false)
+        {
+            return false;
+        }
+
+        // todo: remove also all the files by the filter
+
+        if (this.getCollection().remove(filter))
+        {
+            this.onAfterRemove(filter);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @deprecated
+     * @param path
+     * @param name
+     */
     static create(path, name = 'File')
     {
         return this.getCollection().insert({

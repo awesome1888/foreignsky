@@ -40,7 +40,7 @@ class RendererLinkList extends Link
     async loadData()
     {
         await this.getRegistry().pull(this.getValue(), this.getItemSelectFields());
-        
+
         this.setState({
             count: this.getValueActual().length,
         });

@@ -4,16 +4,22 @@ import BaseComponent from '../../../../../lib/base/component/component.jsx';
 import File from '../../../../../api/file/entity/entity.client.js';
 
 import './style.less';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import { Button } from 'semantic-ui-react';
 
 export default class FilePicker extends BaseComponent
 {
     static propTypes = {
+        onChange: PropTypes.func,
+        value: PropTypes.array,
+        files: PropTypes.array,
     };
 
     static defaultProps = {
+        onChange: null,
+        value: [],
+        files: [],
     };
 
     _invisible = null;
@@ -26,13 +32,21 @@ export default class FilePicker extends BaseComponent
             uploadingFiles: [],
             locked: false,
         });
+
+        console.dir('props');
+        console.dir(props);
+    }
+
+    componentWillReceiveProps(props)
+    {
+        console.dir('New props!');
+        console.dir(props);
     }
 
     onFileAddClick()
     {
         this._invisible.innerHTML = '';
         const selector = this.makeSelector();
-        console.dir(selector);
         selector.appendTo(this._invisible);
 
         selector.click();
@@ -62,10 +76,31 @@ export default class FilePicker extends BaseComponent
 
         this.lockButton();
         this.upload(button).then((ids) => {
-            console.dir('All uploaded!');
-            console.dir(ids);
+            this.onChange(ids);
             this.unlockButton();
         });
+    }
+
+    getFiles()
+    {
+        return this.props.files;
+    }
+
+    getValue()
+    {
+        return this.props.value;
+    }
+
+    onChange(newIds)
+    {
+        const currentId = this.getValue();
+        const ids = _.union(currentId, newIds);
+
+        // mere with existing ids
+        if (_.isFunction(this.props.onChange))
+        {
+            this.props.onChange(ids);
+        }
     }
 
     makeSelector()
@@ -141,11 +176,6 @@ export default class FilePicker extends BaseComponent
         return this.hasNewFiles() || this.hasExistingFiles();
     }
 
-    isButtonSelected()
-    {
-        
-    }
-
     renderAddNewButton()
     {
         return (
@@ -181,46 +211,22 @@ export default class FilePicker extends BaseComponent
     {
         const files = [];
 
-        files.push(
-            <a
-                href="/img/mauer/2kx2k/DSC_0668.jpg"
-                className="file-picker__item-existing"
-                rel="noreferrer noopener"
-                target="_blank"
-                style={{
-                    backgroundImage: 'url(/img/mauer/2kx2k/DSC_0668.jpg)',
-                }}
-                key="e_1"
-            >
-                <div className="file-picker__item-existing-delete" />
-            </a>
-        );
-
-        files.push(
-            <a
-                href="/img/mauer/2kx2k/DSC_0668.jpg"
-                className="file-picker__item-existing"
-                rel="noreferrer noopener"
-                target="_blank"
-                style={{
-                    backgroundImage: 'url(/img/mauer/2kx2k/DSC_0668.jpg)',
-                }}
-                key="e_2"
-            >
-                <div className="file-picker__item-existing-delete" />
-            </a>
-        );
-
-        files.push(
-            <a
-                className="file-picker__item-existing"
-                rel="noreferrer noopener"
-                target="_blank"
-                key="e_3"
-            >
-                <div className="file-picker__item-existing-delete" />
-            </a>
-        );
+        this.getFiles().forEach((item) => {
+            files.push(
+                <a
+                    href={item.getAbsoluteUrl()}
+                    className="file-picker__item-existing"
+                    rel="noreferrer noopener"
+                    target="_blank"
+                    style={{
+                        backgroundImage: `url(${item.getAbsoluteUrl()})`,
+                    }}
+                    key={`e_${item.getId()}`}
+                >
+                    <div className="file-picker__item-existing-delete" />
+                </a>
+            );
+        });
 
         this.state.uploadingFiles.forEach((file, i) => {
             const style = file.loaderType === 'h' ? {width: `${file.percent}%`} : {height: `${file.percent}%`};

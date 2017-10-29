@@ -6,20 +6,30 @@ import filterDOMProps from 'uniforms/filterDOMProps';
 // https://github.com/vazco/uniforms/blob/master/API.md#connectfield
 // https://github.com/vazco/uniforms/blob/master/packages/uniforms-unstyled/src/TextField.js
 
-import {ControllerClass as RendererLink} from '../../../../../../component/general/form/component/renderer/link/index.jsx';
+import {ControllerClass as RendererLinkList} from '../../../../../../component/general/form/component/renderer/link-list/index.jsx';
 import Container from '../../../../../../component/general/form/component/renderer/container/index.jsx';
-// import Util from '../../../../../../../lib/util.js';
 import FilePicker from '../../../../../../component/general/etc/file-picker/index.jsx';
 
 import './style.less';
 
-class RendererFileUploader extends RendererLink
+class RendererFileUploader extends RendererLinkList
 {
     constructor(props)
     {
         super(props);
         this.extendState({
         });
+    }
+
+    onChange(ids)
+    {
+        this.getOnChange()(ids);
+        this.startDataReload(true);
+    }
+
+    getItemSelectFields()
+    {
+        return ['name', 'url', 'size', 'type'];
     }
 
     render()
@@ -44,7 +54,11 @@ class RendererFileUploader extends RendererLink
                     <div
                         ref={(ref) => {this._scope = ref;}}
                     >
-                        <FilePicker />
+                        <FilePicker
+                            files={this.getValueActual()}
+                            value={this.getValue()}
+                            onChange={this.onChange.bind(this)}
+                        />
                     </div>
                 }
             </Container>

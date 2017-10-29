@@ -40,6 +40,12 @@ export default class Util
 		return p;
 	}
 
+    /**
+     * @deprecated use _.debounce() instead
+     * @param fn
+     * @param timeout
+     * @returns {function(...[*]=)}
+     */
     static debounce(fn, timeout = 100)
     {
         let timer = 0;
@@ -84,6 +90,15 @@ export default class Util
         }
 
         return project+'../web.browser/app/';
+    }
+
+    /**
+     * Returns an absolute path to the upload folder
+     * @returns {string}
+     */
+    static getUploadFolder()
+    {
+        return `/home/sergey/upload/`;
     }
 
     static getAlphabeticalComparator()

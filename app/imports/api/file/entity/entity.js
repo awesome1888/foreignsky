@@ -11,6 +11,11 @@ const M = (superclass) =>  class File extends superclass
         return Collection;
     }
 
+    /**
+     * @deprecated
+     * @param path
+     * @returns {string}
+     */
     static convertToUrl(path)
     {
         if (!_.isStringNotEmpty(path))
@@ -20,9 +25,27 @@ const M = (superclass) =>  class File extends superclass
         return path.replace(/^public/i, '');
     }
 
+    getUrl()
+    {
+        return this.getData().url || this.getData().path || '';
+    }
+
+    /**
+     * @deprecated
+     * @returns {*}
+     */
     getPath()
     {
-        return this.getData().path || '';
+        return this.getUrl();
+    }
+
+    /**
+     * @deprecated
+     * @returns {*}
+     */
+    getPathTo()
+    {
+        return this.getAbsoluteUrl();
     }
 };
 

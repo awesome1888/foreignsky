@@ -9,9 +9,19 @@ const M = (superclass) => class extends superclass
                 optional: false,
             },
             {
-                code: 'path',
+                code: 'url',
                 type: String,
                 optional: false,
+            },
+            {
+                code: 'type',
+                type: String,
+                optional: true,
+            },
+            {
+                code: 'size',
+                type: Number,
+                optional: true,
             },
         ]);
     }

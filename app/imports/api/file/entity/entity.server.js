@@ -11,11 +11,28 @@ export default class File extends mix(BaseEntity).with(Entity)
         return map;
     }
 
-    static getLocalFolderAbsolute()
+    /**
+     * @deprecated
+     * @returns {string}
+     */
+    static getUploadFolder()
     {
-        return Util.getAssetFolder()+this.getLocalFolder();
+        return Util.getUploadFolder();
     }
 
+    /**
+     * @deprecated
+     * @returns {string}
+     */
+    static getLocalFolderAbsolute()
+    {
+        return Util.getUploadFolder()+this.getLocalFolder();
+    }
+
+    /**
+     * @deprecated
+     * @returns {string}
+     */
     static getLocalFolder()
     {
         return 'img/';
@@ -52,8 +69,8 @@ export default class File extends mix(BaseEntity).with(Entity)
         });
     }
 
-    getPathTo()
+    getAbsoluteUrl()
     {
-        return `${Util.getAssetFolder()}${this.getPath()}`;
+        return `${Util.getUploadFolder()}${this.getPath()}`;
     }
 }

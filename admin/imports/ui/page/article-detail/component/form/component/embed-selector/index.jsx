@@ -99,7 +99,7 @@ class EmbedSelector extends RendererLinkList
     {
         const file = this.getFileRegistry().get(id);
         if (file) {
-            return file.getPathTo();
+            return file.getAbsoluteUrlImage([100, 100]);
         }
 
         return '';

@@ -15,20 +15,32 @@ export default class File extends mix(BaseEntity).with(Entity)
         return 'File';
     }
 
-    getAbsoluteUrl(resizeTo = null)
+    getAbsoluteUrl()
     {
+        return this.constructor.makePublicUrl(this.getUrl());
+    }
+
+    getAbsoluteUrlImage(resizeTo = null)
+    {
+        if (_.isArrayNotEmpty(resizeTo))
+        {
+            resizeTo = `${parseInt(resizeTo[0])}/${parseInt(resizeTo[1])}`;
+        }
+
         return this.constructor.makePublicUrl(this.getUrl(), resizeTo);
     }
 
-    static makePublicUrl(url, resizeTo = null)
+    static makePublicUrl(url, tail = '')
     {
+        url = `${url}${_.isStringNotEmpty(tail) ? `/${tail}` : ''}`;
+
         if (Meteor.isDevelopment)
         {
             return `http://localhost:3012/${url}`;
         }
 
         // todo: use the domain name from settings here!
-        return `https://images.nachberlin.ru${url}`;
+        return `https://images.nachberlin.ru/${url}`;
     }
 
     static async save(id, data, parameters = {})

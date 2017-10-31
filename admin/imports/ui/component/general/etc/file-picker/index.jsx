@@ -230,6 +230,7 @@ export default class FilePicker extends BaseComponent
         const files = [];
 
         this.getFiles().forEach((item) => {
+            const url = item.getAbsoluteUrlImage([100, 100]);
             files.push(
                 <a
                     href={item.getAbsoluteUrl()}
@@ -237,7 +238,7 @@ export default class FilePicker extends BaseComponent
                     rel="noreferrer noopener"
                     target="_blank"
                     style={{
-                        backgroundImage: `url(${item.getAbsoluteUrl()})`,
+                        backgroundImage: `url(${url})`,
                     }}
                     key={`e_${item.getId()}`}
                 >

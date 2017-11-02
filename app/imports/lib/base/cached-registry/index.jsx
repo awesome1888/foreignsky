@@ -17,9 +17,6 @@ export default class CachedRegistry
                 filter: {_id: {$in: unCachedIds}},
                 select,
             });
-
-            console.dir('unCached');
-            console.dir(unCached);
             
             if (_.isArrayNotEmpty(unCached))
             {

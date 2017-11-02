@@ -21,7 +21,7 @@ export default class EmbedEntityForm extends EntityForm
     {
         // attach file uploader to the image sub-attribute
         map.getAttribute('item').getType()[0].getAttribute('image').setParameter('renderer', RendererFileUploader);
-        // map.getAttribute('files').setParameter('renderer', RendererFileUploaderMP);
+        map.getAttribute('files').setParameter('renderer', RendererFileUploaderMP);
 
         return map;
     }

@@ -24,9 +24,13 @@ class RendererFileUploader extends RendererLink
 
     onChange(ids)
     {
-        console.dir(ids);
-        // this.getOnChange()(ids);
-        // this.startDataReload(true);
+        const id = _.isArrayNotEmpty(ids) ? ids[0] : '';
+        console.dir('> '+id);
+        this.getOnChange()(id);
+        if (id)
+        {
+            this.startDataReload(true);
+        }
     }
 
     getItemSelectFields()
@@ -45,8 +49,6 @@ class RendererFileUploader extends RendererLink
             );
         }
 
-        console.dir([this.getValueActual()]);
-
         return (
             <Container
                 errorProps={this.props}
@@ -59,8 +61,8 @@ class RendererFileUploader extends RendererLink
                         ref={(ref) => {this._scope = ref;}}
                     >
                         <FilePicker
-                            // files={[this.getCached(this.getValue())]}
-                            value={[this.getValue()]}
+                            files={this.getValueActual() ? [this.getValueActual()] : []}
+                            value={_.isStringNotEmpty(this.getValue()) ? [this.getValue()] : []}
                             onChange={this.onChange.bind(this)}
                             max={1}
                         />

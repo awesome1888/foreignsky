@@ -15,12 +15,14 @@ export default class FilePicker extends BaseComponent
         onChange: PropTypes.func,
         value: PropTypes.array,
         files: PropTypes.array,
+        max: PropTypes.number,
     };
 
     static defaultProps = {
         onChange: null,
         value: [],
         files: [],
+        max: -1,
     };
 
     _invisible = null;
@@ -74,14 +76,28 @@ export default class FilePicker extends BaseComponent
 
         this.lockButton();
         this.upload(button).then((ids) => {
+            console.dir('loaded');
             this.onChange(ids);
+            this.unlockButton();
+        }).catch((err) => {
+            console.dir(err);
+            // todo: show notification here?
             this.unlockButton();
         });
     }
 
     getFiles()
     {
-        return this.props.files;
+        const value = this.getValue();
+        return this.props.files.filter((file) => {
+            if (!file)
+            {
+                return false;
+            }
+
+            // todo: indexOf is bad
+            return value.indexOf(file.getId()) >= 0;
+        });
     }
 
     getValue()
@@ -121,7 +137,15 @@ export default class FilePicker extends BaseComponent
 
     makeSelector()
     {
-        this._selector = $('<input type="file" name="files" multiple>');
+        if (this.isSingle())
+        {
+            this._selector = $('<input type="file" name="files">');
+        }
+        else
+        {
+            this._selector = $('<input type="file" name="files" multiple="">');
+        }
+
         this._selector.on('change', this.onFileButtonChange.bind(this));
         return this.getSelector();
     }
@@ -192,9 +216,30 @@ export default class FilePicker extends BaseComponent
         return this.hasNewFiles() || this.hasExistingFiles();
     }
 
+    getMax()
+    {
+        return this.props.max;
+    }
+
+    getCount()
+    {
+        return this.getValue().length;
+    }
+
+    isSingle()
+    {
+        return this.getMax().toString() === '1';
+    }
+
     renderAddNewButton()
     {
         const hasAny = this.hasAnyFiles();
+
+        const max = this.getMax();
+        if (max >= 0 && max <= this.getCount())
+        {
+            return null;
+        }
 
         return (
             <div className={`${!hasAny ? 'margin-t_x' : ''}`}>
@@ -214,13 +259,9 @@ export default class FilePicker extends BaseComponent
                     {
                         !hasAny
                         &&
-                        <span>Add files</span>
+                        <span>{this.isSingle() ? 'Add file' : 'Add files'}</span>
                     }
                 </Button>
-                <div
-                    ref={(ref) => { this._invisible = ref; }}
-                    className="no-display"
-                />
             </div>
         );
     }
@@ -294,6 +335,10 @@ export default class FilePicker extends BaseComponent
                 }
                 {this.renderAddNewButton()}
                 <ModalConfirm ref={ref => { this._deleteConfirm = ref; }} />
+                <div
+                    ref={(ref) => { this._invisible = ref; }}
+                    className="no-display"
+                />
             </div>
         );
     }

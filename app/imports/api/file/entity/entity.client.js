@@ -48,7 +48,7 @@ export default class File extends mix(BaseEntity).with(Entity)
         if (!_.isStringNotEmpty(id) && data instanceof FormData)
         {
             // create file in a special way
-            return new Promise((resolve) => {
+            return new Promise((resolve, reject) => {
                 // todo: dont use jquery here...
 
                 const ajaxParams = {
@@ -62,9 +62,9 @@ export default class File extends mix(BaseEntity).with(Entity)
                         // todo: bad move
                         resolve(json._id);
                     },
-                    error: function(x, text){
+                    error: function(x, text, expl){
                         // todo: bad move
-                        resolve();
+                        reject(expl);
                     },
                 };
 

@@ -10,18 +10,18 @@ export default class BaseEntity extends Entity
         return 'Spherical entity in vacuum';
     }
 
-    static async findById(id, params = {})
+    static async findById(id, extra = {}, parameters = {})
     {
-        const qParams = {filter: {_id: id}};
-        if ('select' in params)
+        const condition = {filter: {_id: id}};
+        if ('select' in extra)
         {
-            qParams.select = params.select;
+            condition.select = extra.select;
         }
 
-        return await this.findOne(qParams);
+        return await this.findOne(condition, parameters);
     }
 
-    static async findOne(condition = {})
+    static async findOne(condition = {}, parameters = {})
     {
         if (!_.isObject(condition))
         {
@@ -33,6 +33,11 @@ export default class BaseEntity extends Entity
 
         if (_.isArrayNotEmpty(data))
         {
+            if (parameters.returnArray === true)
+            {
+                return data[0];
+            }
+
             return new this(data[0]);
         }
 

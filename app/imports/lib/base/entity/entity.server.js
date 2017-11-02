@@ -5,18 +5,18 @@ Side.ensureOnServer();
 
 export default class BaseEntity extends Entity
 {
-    static findById(id, params = {})
+    static findById(id, extra = {}, parameters = {})
     {
-        const qParams = {filter: {_id: id}};
-        if ('select' in params)
+        const condition = {filter: {_id: id}};
+        if ('select' in extra)
         {
-            qParams.select = params.select;
+            condition.select = extra.select;
         }
 
-        return this.findOne(qParams);
+        return this.findOne(condition, parameters);
     }
 
-    static findOne(condition = {})
+    static findOne(condition = {}, parameters = {})
     {
         if (!_.isObject(condition))
         {
@@ -24,7 +24,7 @@ export default class BaseEntity extends Entity
         }
 
         condition.limit = 1;
-        const data = this.find(condition);
+        const data = this.find(condition, parameters);
 
         if (_.isArrayNotEmpty(data))
         {

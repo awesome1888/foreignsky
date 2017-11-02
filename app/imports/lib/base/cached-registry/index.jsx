@@ -18,6 +18,9 @@ export default class CachedRegistry
                 select,
             });
 
+            console.dir('unCached');
+            console.dir(unCached);
+            
             if (_.isArrayNotEmpty(unCached))
             {
                 unCached.forEach((item) => {

@@ -16,6 +16,7 @@ import entityMap from '../../../../../../../startup/client/entity-map.js';
 import Form from '../../../../form/form.jsx';
 import Util from '../../../../../../../lib/util.js';
 import ModalConfirm from '../../../../modal-confirm/index.jsx';
+import CachedRegistry from '../../../../../../../lib/base/cached-registry/index.jsx';
 
 /**
  * This renderer is used to render a SINGLE link. To render multiple links, use RendererLinkList
@@ -30,6 +31,8 @@ class RendererLink extends RendererGeneric
         model: null,
         itemId: null,
     };
+
+    _items = null;
 
     constructor(props)
     {
@@ -65,14 +68,24 @@ class RendererLink extends RendererGeneric
         });
         this.loadData().then(() => {
             this.setItemsReady();
-        }, (err) => {
+        }).catch((err) => {
             this.setError(err);
         });
     }
 
+    getRegistry()
+    {
+        if (!this._items)
+        {
+            this._items = new CachedRegistry(this.getEntity());
+        }
+
+        return this._items;
+    }
+
     invalidateCaches()
     {
-        this._cache.items = {};
+        this.getRegistry().invalidate();
     }
 
     setItemsReady()
@@ -90,47 +103,23 @@ class RendererLink extends RendererGeneric
 
     async loadData()
     {
-        const id = this.getValue();
-        const itemSaved = this.getCached(id);
-        if (itemSaved)
-        {
-            return itemSaved;
-        }
-
-        const entity = this.getEntity();
-        const fields = this.getItemSelectFields();
-        const item = await entity.findById(id, {
-            select: fields,
-        });
-
-        if (item)
-        {
-            this.saveToCache(item);
-            return true;
-        }
-
-        return false;
+        await this.getRegistry().pull([this.getValue()], this.getItemSelectFields());
     }
 
-    getCached(id)
+    getValueActual()
     {
-        if (!id)
-        {
-            return null;
-        }
-
-        return this._cache.items[id] || null;
+        return this.getRegistry().get(this.getValue());
     }
 
-    saveToCache(item)
-    {
-        const entity = this.getEntity();
-
-        const data = item.exportData();
-        data.label = item.getData()[entity.getCutawayAttributeCode()];
-
-        this._cache.items[item.getId()] = data;
-    }
+    // saveToCache(item)
+    // {
+    //     const entity = this.getEntity();
+    //
+    //     const data = item.exportData();
+    //     data.label = item.getData()[entity.getCutawayAttributeCode()];
+    //
+    //     this._cache.items[item.getId()] = data;
+    // }
 
     getEntity()
     {
@@ -200,14 +189,12 @@ class RendererLink extends RendererGeneric
 
         this.getEntity().findById(id, {
             select: '#',
-        }).then((
-            item
-        ) => {
+        }).then((item) => {
             this.setState({
                 modelReady: true,
                 model: item.getData(),
             });
-        }, (err) => {
+        }).catch((err) => {
             this.setState({
                 formError: error,
             });
@@ -263,7 +250,7 @@ class RendererLink extends RendererGeneric
 
             this.startDataReload(true);
             this.toggleFormModal();
-        }, (error) => {
+        }).catch((error) => {
             this.setState({
                 formError: error,
             });
@@ -364,7 +351,7 @@ class RendererLink extends RendererGeneric
 
         const entity = this.getEntity();
         const value = this.getValue();
-        const data = this.getCached(value);
+        const data = this.getValueActual();
         
         return (
             <Container

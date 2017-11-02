@@ -22,6 +22,18 @@ class RendererFileUploader extends RendererLink
         });
     }
 
+    onChange(ids)
+    {
+        console.dir(ids);
+        // this.getOnChange()(ids);
+        // this.startDataReload(true);
+    }
+
+    getItemSelectFields()
+    {
+        return ['name', 'url', 'size', 'type'];
+    }
+
     render()
     {
         if (this.hasError())
@@ -32,6 +44,8 @@ class RendererFileUploader extends RendererLink
                 </div>
             );
         }
+
+        console.dir([this.getValueActual()]);
 
         return (
             <Container
@@ -44,7 +58,12 @@ class RendererFileUploader extends RendererLink
                     <div
                         ref={(ref) => {this._scope = ref;}}
                     >
-                        <FilePicker />
+                        <FilePicker
+                            // files={[this.getCached(this.getValue())]}
+                            value={[this.getValue()]}
+                            onChange={this.onChange.bind(this)}
+                            max={1}
+                        />
                     </div>
                 }
             </Container>

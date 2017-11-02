@@ -26,8 +26,6 @@ import {ControllerClass as Link} from '../link/index.jsx';
  */
 class RendererLinkList extends Link
 {
-    _items = null;
-
     constructor(props)
     {
         super(props);
@@ -44,21 +42,6 @@ class RendererLinkList extends Link
         this.setState({
             count: this.getValueActual().length,
         });
-    }
-
-    invalidateCaches()
-    {
-        this.getRegistry().invalidate();
-    }
-
-    getRegistry()
-    {
-        if (!this._items)
-        {
-            this._items = new CachedRegistry(this.getEntity());
-        }
-
-        return this._items;
     }
 
     getValueActual()

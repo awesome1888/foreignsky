@@ -76,11 +76,9 @@ export default class FilePicker extends BaseComponent
 
         this.lockButton();
         this.upload(button).then((ids) => {
-            console.dir('loaded');
             this.onChange(ids);
             this.unlockButton();
-        }).catch((err) => {
-            console.dir(err);
+        }).catch(() => {
             // todo: show notification here?
             this.unlockButton();
         });
@@ -185,8 +183,12 @@ export default class FilePicker extends BaseComponent
         return Promise.all(_.map(button.files, (file, i) => {
             return this.uploadFile(file, this.setPercent.bind(this, i)).then((_id) => {
                 ids.push(_id);
+            }).catch((err) => {
+                // todo: notify here
             });
         })).then(() => {
+            return ids;
+        }).catch((err) => {
             return ids;
         });
     }

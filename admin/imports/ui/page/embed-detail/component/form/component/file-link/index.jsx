@@ -25,7 +25,6 @@ class RendererFileUploader extends RendererLink
     onChange(ids)
     {
         const id = _.isArrayNotEmpty(ids) ? ids[0] : '';
-        console.dir('> '+id);
         this.getOnChange()(id);
         if (id)
         {

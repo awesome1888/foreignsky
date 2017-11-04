@@ -108,7 +108,7 @@ export default class BaseEntity extends Entity
 
     static makeMethodName(name)
     {
-        return `${this.getCollection().getNameNormalized()}.${name}`;
+        return `${this.getUniqueCode()}.${name}`;
     }
 
     async save(id, data)

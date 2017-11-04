@@ -67,7 +67,7 @@ export default class Method extends BaseMethod
 
     static makeName(name)
     {
-        const cId = this.getEntity().getCollection().getNameNormalized();
+        const cId = this.getEntity().getUniqueCode();
         return `${cId}.${name}`;
     }
 

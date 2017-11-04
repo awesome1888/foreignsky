@@ -16,4 +16,14 @@ export default class Security extends SecurityBoth
     {
         return UserGroup;
     }
+
+    static getToken()
+    {
+        return '4bHdvdLDg3CAiLvBmnemwVMz2gEY5b3fRcBiX689cf6yBt6avW';
+    }
+
+    static isTokenValid(token)
+    {
+        return token === this.getToken();
+    }
 }

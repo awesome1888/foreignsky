@@ -2,6 +2,7 @@ import BaseEntity from '../../../lib/base/entity/entity.client.js';
 import Entity from './entity.js';
 import mix from '../../../lib/mixin.js';
 import map from '../map/map.client.js';
+import Util from '../../../lib/util.js';
 
 export default class File extends mix(BaseEntity).with(Entity)
 {
@@ -47,6 +48,8 @@ export default class File extends mix(BaseEntity).with(Entity)
     {
         if (!_.isStringNotEmpty(id) && data instanceof FormData)
         {
+            data.append('token', await Util.execute('user.token.get'));
+
             // create file in a special way
             return new Promise((resolve, reject) => {
                 // todo: dont use jquery here...

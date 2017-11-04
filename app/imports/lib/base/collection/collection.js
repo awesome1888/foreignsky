@@ -102,7 +102,8 @@ export default class BaseCollection
 
     getNameNormalized()
     {
-        return this.getName().replace('.', '_').toLowerCase();
+        // todo: probably stick to the camel-case here
+        return this.getName().replace(/[\.-]+/g, '');
     }
 
     updateMany(filter, changes)

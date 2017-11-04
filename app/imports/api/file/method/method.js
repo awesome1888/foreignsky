@@ -3,6 +3,7 @@ import Entity from '../entity/entity.server.js';
 import {WebApp} from 'meteor/webapp';
 import formidable from 'formidable';
 import FileStorage from '../../../lib/util/file-storage/local.js';
+import Security from '../../../lib/util/security/security.server.js';
 
 export default class extends Method
 {
@@ -26,6 +27,16 @@ export default class extends Method
 
             const form = new formidable.IncomingForm();
             form.parse(req, (err, fields, files) => {
+
+                if (!_.isObjectNotEmpty(fields) || !Security.isTokenValid(fields.token))
+                {
+                    res.writeHead(403);
+                    res.end(JSON.stringify({
+                        _id: '',
+                    }));
+                    return;
+                }
+
                 if (!err && _.isObjectNotEmpty(files) && _.isObject(files.file))
                 {
                     const file = files.file;

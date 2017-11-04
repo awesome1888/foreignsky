@@ -35,7 +35,7 @@ export default class BaseEntity
      */
     static getUniqueCode()
     {
-        return this.getCollectionInstance().getName();
+        return this.getCollectionInstance().getNameNormalized();
     }
 
     /**

@@ -3,6 +3,7 @@ import {Component} from 'react';
 import {Meteor} from 'meteor/meteor';
 
 import App from '../../../ui/application.jsx';
+import Util from '../../../lib/util.js';
 
 export default class BaseComponent extends Component
 {
@@ -97,20 +98,13 @@ export default class BaseComponent extends Component
      * @param args
      * @returns {Promise}
      */
-    execute(name, args)
+    async execute(name, args)
     {
-        return new Promise((fulfil, reject) => {
-            Meteor.apply(name, args, (err, res) => {
-                if (err) {
-                    this.showConsoleError(
-                        `Error invoking Method '${name}': `,
-                        err
-                    );
-                    reject(err);
-                } else {
-                    fulfil(res);
-                }
-            });
+        return Util.execute(name, args).catch((error) => {
+            this.showConsoleError(
+                `Error invoking Method '${name}': `,
+                err
+            );
         });
     }
 
@@ -121,6 +115,8 @@ export default class BaseComponent extends Component
             // eslint-disable-next-line no-console
             console.error.apply(this, args);
         }
+
+        // todo: show error notification
     }
 
     /**

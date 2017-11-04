@@ -2,6 +2,19 @@ export default class Util
 {
     static _loadedJs = {};
 
+    static async execute(name, args)
+    {
+        return new Promise((resolve, reject) => {
+            Meteor.apply(name, args, (err, res) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(res);
+                }
+            });
+        });
+    }
+
 	static loadJs(src)
 	{
 		let d = document;

@@ -25,8 +25,6 @@ export default class Local
             const dstFolder = `${this.getUploadFolder()}${hashedName.substr(0, 3)}`;
             const newPath = `${dstFolder}/${newName}`;
 
-            // console.dir(`${path} => ${newPath}`);
-
             try
             {
                 await this.maybeMakeFolder(this.getUploadFolder());
@@ -56,7 +54,7 @@ export default class Local
     getExtension(name)
     {
         const match = name.match(/\.([^\.]+)$/);
-        if (_.isStringNotEmpty(match[1]))
+        if (_.isArrayNotEmpty(match) && _.isStringNotEmpty(match[1]))
         {
             return match[1];
         }

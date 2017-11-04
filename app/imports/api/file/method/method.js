@@ -18,7 +18,7 @@ export default class extends Method
         this.registerUploadPoint(securityProvider);
     }
 
-    static registerUploadPoint(securityProvider)
+    static registerUploadPoint(securityProvider = null)
     {
         WebApp.connectHandlers.use('/upload', (req, res, next) => {
 
@@ -46,6 +46,9 @@ export default class extends Method
                     (new FileStorage()).upload(file).then((fileStruct) => {
                         const id = this.getEntity().save(null, fileStruct);
                         this.finishResponse(res, id);
+                    }).catch((err) => {
+                        console.dir(err.stack);
+                        this.finishResponse(res, '', err);
                     });
                 }
                 else
@@ -58,6 +61,15 @@ export default class extends Method
 
     static finishResponse(res, id, err = null)
     {
+        // todo: on production, better not to show the original message or stack, put them into
+        // todo: the error log instead
+        if (err)
+        {
+            res.writeHead(500);
+            res.end('');
+            return;
+        }
+
         res.setHeader('Content-Type', 'application/json');
         res.writeHead(200);
         res.end(JSON.stringify({

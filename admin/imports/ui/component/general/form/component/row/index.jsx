@@ -9,6 +9,10 @@ import RendererList from './../../component/renderer/list/index.jsx';
 import RendererLinkList from './../../component/renderer/link-list/index.jsx';
 import RenderMap from './../../component/renderer/map/index.jsx';
 import RenderSelectBox from './../../component/renderer/selectbox/index.jsx';
+import RenderFileLink from './../../component/renderer/file-link/index.jsx';
+import RenderFileLinks from './../../component/renderer/file-links/index.jsx';
+
+import FileEntity from '../../../../../../api/file/entity/entity.client.js';
 
 import Attribute from '../../../../../../lib/base/map/attribute/index.js';
 
@@ -16,15 +20,16 @@ export default class Row extends React.Component
 {
     static propTypes = {
         form: PropTypes.object.isRequired,
+        map: PropTypes.object.isRequired,
     };
 
     static defaultProps = {
         form: null,
+        map: null,
     };
 
     resolveRenderer(attribute)
     {
-        // console.dir('resolving for '+attribute.getCode());
         const renderer = attribute.getParameter('renderer');
         if (renderer)
         {
@@ -36,15 +41,34 @@ export default class Row extends React.Component
             return null;
         }
 
+        // todo: terrible idea, need to render the link attribute here, not its substitution!
+        // todo: make amend
         // special type of String or [String] fields which represent link fields in SimpleSchema
         if (attribute.isReference())
         {
+            const map = this.getMap();
+            
             if (attribute.isArray())
             {
+                // special type - file list
+                const toAttribute = map.getAttribute(attribute.getData().referenceToCode);
+                if (toAttribute && toAttribute.getArrayType() === FileEntity)
+                {
+                    return RenderFileLinks;
+                }
+
                 return RendererLinkList;
             }
             else
             {
+                // special type - single file
+                const toAttribute = map.getAttribute(attribute.getData().referenceToCode);
+                if (toAttribute && toAttribute.getType() === FileEntity)
+                {
+                    return RenderFileLink;
+                }
+
+                // 
                 return RendererLink;
             }
         }
@@ -76,8 +100,6 @@ export default class Row extends React.Component
         {
             return RenderMap;
         }
-
-        // todo: can be a single link
 
         return null;
     }
@@ -114,6 +136,7 @@ export default class Row extends React.Component
     {
         const params = {
             attribute,
+            map: this.getMap(),
             form: this.props.form,
             row: this,
             key: attribute.getCode(),
@@ -189,6 +212,11 @@ export default class Row extends React.Component
     getForm()
     {
         return this.props.form || null;
+    }
+
+    getMap()
+    {
+        return this.props.map || null;
     }
 
     renderAttribute(attribute, parameters = {})

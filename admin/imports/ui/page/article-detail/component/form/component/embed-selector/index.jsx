@@ -73,7 +73,7 @@ class EmbedSelector extends RendererLinkList
             return result;
         }, []);
         
-        await this.getFileRegistry().pull(ids, ['_id', 'path']);
+        await this.getFileRegistry().pull(ids, ['_id', 'url']);
 
         this.setState({
             imagesReady: true,

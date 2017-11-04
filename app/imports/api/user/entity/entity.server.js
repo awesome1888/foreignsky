@@ -90,12 +90,14 @@ export default class User extends mix(BaseEntity).with(Entity)
      */
     static makeSupplementaryPublication(userId)
     {
+        // todo: currently not working
         Meteor.publish('user-supplementary', function () {
-            const cursor = Meteor.users.find(userId, {
+            const cursor = Meteor.users.find({_id: userId}, {
                 fields: {
                     profile: 1,
                     createdAt: 1,
                     groupId: 1,
+                    tmpField: 1,
                 },
                 limit: 1
             });
@@ -103,4 +105,14 @@ export default class User extends mix(BaseEntity).with(Entity)
             return cursor;
         });
     }
+
+    static denyAll()
+    {
+        Meteor.users.deny({
+            update() { return true; }
+        });
+    }
 }
+
+// unconditional deny
+User.denyAll();

@@ -305,7 +305,7 @@ export default class Attribute
         return [
             'code', 'optional', 'label', 'order',
             'allowedValues', 'defaultValue', 'custom',
-            'isReference', 'regEx', 'decimal', 'blackbox',
+            'isReference', 'referenceToCode' /*todo: bad*/, 'regEx', 'decimal', 'blackbox',
         ];
     }
 

@@ -246,6 +246,9 @@ export default class Form extends BaseComponent
             }
             toRender[code] = true;
 
+            // todo: terrible idea. we should not substitute one attribute with another HERE,
+            // todo: we need to solve this particular case inside the specific renderer itself
+            // todo: make amends!
             if (this.isAttribute(attribute) && attribute.isLinkAny())
             {
                 attribute = map.makeRefAttribute(attribute);
@@ -256,6 +259,7 @@ export default class Form extends BaseComponent
                     key={code}
                     attribute={attribute}
                     form={this}
+                    map={map}
                 />
             );
         })

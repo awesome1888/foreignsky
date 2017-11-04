@@ -6,10 +6,10 @@ import filterDOMProps from 'uniforms/filterDOMProps';
 // https://github.com/vazco/uniforms/blob/master/API.md#connectfield
 // https://github.com/vazco/uniforms/blob/master/packages/uniforms-unstyled/src/TextField.js
 
-import {ControllerClass as RendererLink} from '../../../../../../component/general/form/component/renderer/link/index.jsx';
-import Container from '../../../../../../component/general/form/component/renderer/container/index.jsx';
+import {ControllerClass as RendererLink} from '../link/index.jsx';
+import Container from '../container/index.jsx';
 // import Util from '../../../../../../../lib/util.js';
-import FilePicker from '../../../../../../component/general/etc/file-picker/index.jsx';
+import FilePicker from '../../../../etc/file-picker/index.jsx';
 
 import './style.less';
 

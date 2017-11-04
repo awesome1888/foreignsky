@@ -14,11 +14,13 @@ export default class RendererGeneric extends BaseComponent
     static propTypes = {
         form: PropTypes.object.isRequired,
         row: PropTypes.object.isRequired,
+        map: PropTypes.object.isRequired,
     };
 
     static defaultProps = {
         form: null,
         row: null,
+        map: null,
     };
 
     getForm()

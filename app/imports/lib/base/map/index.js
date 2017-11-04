@@ -256,6 +256,7 @@ export default class Map
     {
         const f = this.makeRefField(attribute);
         f.isReference = true;
+        f.referenceToCode = attribute.getCode();
         f.code = this.makeRefCode(attribute.getCode());
         f.label = attribute.getTitle();
         

@@ -34,12 +34,12 @@ const M = (superclass) => class extends superclass
             //     ]),
             //     optional: false,
             // },
-            {
-                code: 'files',
-                type: [fileLinked],
-                optional: false,
-                label: 'Temporal files',
-            },
+            // {
+            //     code: 'files',
+            //     type: [fileLinked],
+            //     optional: false,
+            //     label: 'Temporal files',
+            // },
             {
                 code: 'item',
                 type: [

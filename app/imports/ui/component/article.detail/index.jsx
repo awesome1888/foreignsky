@@ -5,7 +5,7 @@ import {createQueryContainer} from 'meteor/cultofcoders:grapher-react';
 import {TAPi18n} from 'meteor/tap:i18n';
 import classnames from 'classnames';
 
-import App from '/imports/ui/app.jsx';
+import App from '/imports/ui/application.jsx';
 import BaseComponent from '../../../lib/base/component/component.jsx';
 import Article from '../../../api/article/entity/entity.client.js';
 

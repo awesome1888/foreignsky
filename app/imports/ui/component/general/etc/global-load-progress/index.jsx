@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 
 import React from 'react';
-import { Progress } from 'semantic-ui-react'
+// import { Progress } from 'semantic-ui-react';
 
 import BaseComponent from '../../../../../lib/base/component/component.jsx';
 
@@ -159,12 +159,12 @@ export default class GlobalLoadProgress extends BaseComponent {
     render()
     {
         return (
-            <Progress
-                percent={this.getPercent()}
-                size='tiny'
-                className="load-indicator"
-                active={!this.isComplete()}
-            />
+            <div className="load-indicator">
+                <div
+                    className="load-indicator__progress"
+                    style={{width: this.getPercent()+'%'}}
+                />
+            </div>
         );
     }
 }

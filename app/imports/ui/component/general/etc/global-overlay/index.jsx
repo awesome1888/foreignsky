@@ -12,10 +12,12 @@ export default class LoadOverlay extends BaseComponent {
 
 	static propTypes = {
 		transitionDuration: PropTypes.number,
+        text: PropTypes.string,
 	};
 
 	static defaultProps = {
-		transitionDuration: 700
+		transitionDuration: 700,
+        text: 'Typical text you usually read while waiting the page to load :)',
 	};
 
 	constructor(props)
@@ -85,7 +87,7 @@ export default class LoadOverlay extends BaseComponent {
 				)}
 			>
 				<div className="load-overlay__greeting">
-					 Typical text you usually read while waiting the page to load :)
+                    {this.props.text}
 				</div>
 			</div>
 		);

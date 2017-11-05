@@ -4,7 +4,7 @@ import React from 'react';
 import {createQueryContainer} from 'meteor/cultofcoders:grapher-react';
 import BaseComponent from '../../../lib/base/component/component.jsx';
 
-import App from '/imports/ui/app.jsx';
+import App from '/imports/ui/application.jsx';
 import ArticleListFilterComponent from '/imports/ui/component/article.list.filter/index.jsx';
 import Query from './query/list.query.js';
 

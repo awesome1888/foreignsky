@@ -1,17 +1,19 @@
+@import (reference) url('/client/style/index.less');
+
 @header__loading-bar-height: 5px;
 
-.header__loading-bar {
+.load-indicator {
 	background-color: lightgray;
 	height: @header__loading-bar-height;
 	position: relative;
 }
 
-.header__loading-bar-progress {
+.load-indicator__progress {
 	background-color: #62aaff;
 	height: @header__loading-bar-height;
 	position: absolute;
 	top: 0;
 	left: 0;
 	width: 0;
-	transition: all 250ms;
+	// transition: all 250ms;
 }

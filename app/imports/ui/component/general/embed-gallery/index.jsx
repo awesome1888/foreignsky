@@ -7,7 +7,7 @@ import Util from '/imports/lib/util.js';
 import File from '../../../../../imports/api/file/entity/entity.client.js';
 import Embed from '../../../../../imports/api/embed/entity/entity.client.js';
 
-import App from '/imports/ui/app.jsx';
+import App from '/imports/ui/application.jsx';
 
 import './style.less';
 

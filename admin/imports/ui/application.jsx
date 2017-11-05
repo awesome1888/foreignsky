@@ -28,6 +28,11 @@ export default class AdminApplication extends Application
         return NotFoundPage;
     }
 
+    static getDefaultApplicationLayoutController()
+    {
+        return DefaultLayout;
+    }
+
     static get403PageController()
     {
         return ForbiddenPage;
@@ -36,11 +41,6 @@ export default class AdminApplication extends Application
     static getLoginPageController()
     {
         return LoginPage;
-    }
-
-    static getDefaultApplicationLayoutController()
-    {
-        return DefaultLayout;
     }
 
     static getRouteMap()
@@ -110,24 +110,8 @@ export default class AdminApplication extends Application
         return '';
     }
 
-	constructor(props)
-	{
-		super(props);
-		this.extendState({
-            title: this.makeTitle(),
-        });
-	}
-
     getMainTitle()
     {
         return 'Admin';
-    }
-
-    transformPageParameters(params)
-    {
-        const tParams = super.transformPageParameters(params);
-        tParams.title = this.state.title;
-
-        return tParams;
     }
 }

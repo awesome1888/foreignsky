@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Util from '/imports/lib/util.js';
 import BaseComponent from '/imports/lib/base/component/component.jsx';
 
-import App from '/imports/ui/app.jsx';
+import App from '/imports/ui/application.jsx';
 
 import './style.less';
 

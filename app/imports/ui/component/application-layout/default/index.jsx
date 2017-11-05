@@ -4,8 +4,12 @@ import PropTypes from 'prop-types';
 
 import Header from '../../header/index.jsx';
 import GlobalOverlay from '../../general/etc/global-overlay/index.jsx';
-import GlobalLoadProgress from '../component/global-load-progress/index.jsx';
-import Navigation from '../../navigation/navigation.jsx';
+import GlobalLoadProgress from '../../general/etc/global-load-progress/index.jsx';
+
+// import Map from '/imports/ui/component/map/index.jsx';
+// import ImageViewComponent from '/imports/ui/component/general/image-view/index.jsx';
+// import PreRender from '../lib/prerender.js';
+// import {DocHead} from 'meteor/kadira:dochead';
 
 // import './style.less';
 
@@ -55,7 +59,9 @@ export default class DefaultApplicationLayout extends BaseComponent
             <div
                 className="layout"
             >
-                <GlobalOverlay />
+                <GlobalOverlay
+                    text="Типичный текст, который вы читаете, пока ждете загрузку Ж)"
+                />
                 <Header />
                 <GlobalLoadProgress />
 
@@ -67,9 +73,7 @@ export default class DefaultApplicationLayout extends BaseComponent
                                 tablet only
                                 column
                             ">
-                                <Navigation
-                                    className="margin-bottom"
-                                />
+
                             </div>
                             <div className="
                                 twelve wide computer
@@ -104,4 +108,67 @@ export default class DefaultApplicationLayout extends BaseComponent
             </div>
         );
     }
+
+    // renderExtras()
+    // {
+    //     return [
+    //         <Map
+    //             ref={(instance) => {this.setMap(instance)}}
+    //             center={{lat: 52.520764, lng: 13.409161}}
+    //             zoom={15}
+    //             useFakeMap={PreRender.isCrawler}
+    //             key="1"
+    //         />,
+    //         <ImageViewComponent
+    //             ref={(instance) => {this.setImageView(instance)}}
+    //             key="2"
+    //         />,
+    //     ];
+    // }
+
+    // setMap(ref)
+    // {
+    // if(!this._map)
+    // {
+    // 	this._map = ref;
+    // }
+    // }
+    //
+    // getImageView()
+    // {
+    // if(!this._imageView)
+    // {
+    // 	return {
+    // 		open: Util.noop,
+    // 	};
+    // }
+    //
+    // return this._imageView;
+    // }
+    //
+    // setImageView(ref)
+    // {
+    // if(!this._imageView)
+    // {
+    // 	this._imageView = ref;
+    // }
+    // }
+    //
+    // toggleMap(way)
+    // {
+    //    if(this.map)
+    //    {
+    //        this.map.toggleBlock(way);
+    //     }
+    // }
+    //
+    // showOverlay()
+    // {
+    //     return !PreRender.isCrawler;
+    // }
+    //
+    // showIndicator()
+    // {
+    //     return !PreRender.isCrawler;
+    // }
 }

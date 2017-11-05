@@ -10,7 +10,7 @@ import Util from '/imports/lib/util.js';
 
 import './style.less';
 
-import App from '/imports/ui/app.jsx';
+import App from '/imports/ui/application.jsx';
 
 export default class ArticleListFilterComponent extends React.Component {
 

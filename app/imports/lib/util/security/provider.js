@@ -41,4 +41,15 @@ export default class SecurityProvider
     {
         return null;
     }
+
+    /**
+     * The "complete shutdown" policy, tells not to execute the method at all
+     * @returns {null}
+     */
+    static getConcreteWallPolicy()
+    {
+        return {
+            denyAll: true,
+        };
+    }
 }

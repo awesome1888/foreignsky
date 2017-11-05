@@ -40,6 +40,11 @@ export default class Security
             return fResult;
         }
 
+        if (rules.denyAll && !user)
+        {
+            return this.FORBIDDEN;
+        }
+
         if (rules.needAuthorized && !user)
         {
             return this.NOT_AUTHORIZED;

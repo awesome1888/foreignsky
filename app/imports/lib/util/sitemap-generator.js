@@ -4,20 +4,19 @@ export default class SiteMapGenerator
 {
     static generate()
     {
-        const pages = Article.collection.find({
+        const pages = Article.find({
             filter: {
                 public: true,
             },
-            fields: {
-                _id: 1,
+            select: {
                 title: 1,
                 date: 1,
             },
-        }).fetch().reduce((pageList, article) => {
+        }).reduce((pageList, article) => {
 
             pageList.push({
-                page: '/'+article._id,
-                lastmod: article.date,
+                page: '/'+article.getId(),
+                lastmod: article.getDate(),
             });
             return pageList;
 

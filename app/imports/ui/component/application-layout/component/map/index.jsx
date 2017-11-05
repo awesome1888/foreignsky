@@ -2,10 +2,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Util from '/imports/lib/util.js';
-import BaseComponent from '/imports/lib/base/component/component.jsx';
-
-import App from '/imports/ui/application.jsx';
+import Util from '../../../../../lib/util.js';
+import BaseComponent from '../../../../../lib/base/component/component.jsx';
 
 import './style.less';
 
@@ -100,13 +98,11 @@ export default class Map extends BaseComponent {
          //    // or google/yandex is visiting us
 		// 	return;
 		// }
-		return App.getInstance().wait(new Promise((resolve, reject) => {
+		return this.getApplication().wait(new Promise((resolve, reject) => {
 			Util.loadJs(this.getMapUrl()).then(() => {
 				return this.createMapObject();
 			}).then(() => {
 				resolve();
-			}, () => {
-				reject();
 			}).catch(() => {
 				reject();
 			});

@@ -5,19 +5,8 @@ import React from 'react';
 import './style.less';
 
 export default class Header extends React.Component {
-
-	static propTypes = {
-		//appLoaded: PropTypes.boolean,
-	};
-
-	static defaultProps = {
-		//appLoaded: false
-	};
-
 	render()
 	{
-		//const loading = this.props.appLoaded;
-
 		return (
 			<div className="container">
 				<div className="layout__central-row row">

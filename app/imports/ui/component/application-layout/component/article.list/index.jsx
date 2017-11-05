@@ -2,9 +2,8 @@
 
 import React from 'react';
 import {createQueryContainer} from 'meteor/cultofcoders:grapher-react';
-import BaseComponent from '../../../lib/base/component/component.jsx';
+import BaseComponent from '../../../../../lib/base/component/component.jsx';
 
-import App from '/imports/ui/application.jsx';
 import ArticleListFilterComponent from '/imports/ui/component/article.list.filter/index.jsx';
 import Query from './query/list.query.js';
 
@@ -52,7 +51,7 @@ export default class ArticleListComponent extends BaseComponent {
 			}
 		}
 
-		return App.getInstance().wait(new Promise((resolve, reject) => {
+		return this.getApplication().wait(new Promise((resolve, reject) => {
             Query.setParams({
                 filter,
             }).fetch((err, data) => {

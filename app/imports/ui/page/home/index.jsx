@@ -2,9 +2,7 @@
 
 import React from 'react';
 import BasePage from '../../../lib/base/page/page.jsx';
-import MapFullLayout from '../../component/layout/map-full/map-full.jsx';
 
-import ArticleListComponent from '/imports/ui/component/article.list/index.jsx';
 import ArticleDetailComponent from  '/imports/ui/component/article.detail/index.jsx';
 
 export default class HomePage extends BasePage

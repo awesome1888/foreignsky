@@ -1,4 +1,4 @@
-import Article from '../../../../api/article/entity/entity.client.js';
+import Article from '../../../../../../api/article/entity/entity.client.js';
 
 export default Article.createQuery({
     select: [

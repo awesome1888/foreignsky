@@ -61,8 +61,6 @@ export default class ArticleDetailComponent extends BaseComponent
 
 	async show(id)
 	{
-	    console.dir('loading');
-	    
         return Article.findOne({
             select: {
                 title: 1,
@@ -130,8 +128,6 @@ export default class ArticleDetailComponent extends BaseComponent
 		{
 			return null;
 		}
-
-		console.dir(article);
 		
 		return (
 			<div

@@ -61,7 +61,7 @@ export default class DefaultApplicationLayout extends BaseComponent
 
         return (
             <div
-                className="layout"
+                className="layout tall"
             >
                 <GlobalOverlay
                     text="Типичный текст, который вы читаете, пока ждете загрузку Ж)"
@@ -72,15 +72,15 @@ export default class DefaultApplicationLayout extends BaseComponent
                     <GlobalLoadProgress />
                 </div>
 
-                <div className="layout-map-full__central layout-map-full__central-body container">
-                    <div className="layout-map-full__central-row row">
+                <div className="layout-map-full__central layout-map-full__central-body container tall">
+                    <div className="layout-map-full__central-row row tall">
                         <div className="layout-map-full__central-body-left col-xs-3">
                             <div className="layout-map-full__side">
                                 <ArticleListComponent />
                             </div>
                         </div>
-                        <div className="layout-map-full__central-body-right col-xs-9">
-                            <div className="layout-map-full__central">
+                        <div className="layout-map-full__central-body-right col-xs-9 tall">
+                            <div className="layout-map-full__central tall">
                                 {this.props.children}
                             </div>
                         </div>

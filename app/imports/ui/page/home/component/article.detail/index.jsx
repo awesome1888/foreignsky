@@ -8,8 +8,8 @@ import classnames from 'classnames';
 import BaseComponent from '../../../../../lib/base/component/component.jsx';
 import Article from '../../../../../api/article/entity/entity.client.js';
 
-import EmbedImageComponent from '../../../../component/general/embed-image/index.jsx';
-import EmbedGalleryComponent from '../../../../component/general/embed-gallery/index.jsx';
+import EmbedImageComponent from './component/embed-image/index.jsx';
+import EmbedGalleryComponent from './component/embed-gallery/index.jsx';
 
 import './style.less';
 
@@ -32,8 +32,6 @@ export default class ArticleDetailComponent extends BaseComponent
 
 	componentWillReceiveProps(next)
 	{
-	    console.dir(next);
-
 		this.handleIdUpdate(next.id);
 	}
 

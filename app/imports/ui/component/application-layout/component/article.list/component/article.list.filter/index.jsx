@@ -107,7 +107,7 @@ export default class ArticleListFilterComponent extends BaseComponent {
         }));
 	}
 
-	render(props = {})
+	render()
 	{
 		return (
 			<div className="article-list__filter">

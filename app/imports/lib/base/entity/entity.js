@@ -379,7 +379,6 @@ export default class BaseEntity
                 return point;
             }
 
-            console.dir(point);
             return new constructor(point);
         }
 

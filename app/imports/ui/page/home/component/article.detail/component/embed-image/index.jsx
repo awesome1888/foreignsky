@@ -3,9 +3,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import File from '../../../../../imports/api/file/entity/entity.client.js';
-import Embed from '../../../../../imports/api/embed/entity/entity.client.js';
-import Util from '/imports/lib/util.js';
+import File from '../../../../../../../api/file/entity/entity.client.js';
+import Embed from '../../../../../../../api/embed/entity/entity.client.js';
+import Util from '../../../../../../../lib/util.js';
 import App from '/imports/ui/application.jsx';
 
 //import './style.less';
@@ -131,8 +131,10 @@ export default class EmbedImageComponent extends React.Component {
         }
     }
 
-	render(props = {})
+	render()
 	{
+	    // console.dir(this.getItem());
+
         const options = this.getOptions();
         const url = this.imageUrl;
 

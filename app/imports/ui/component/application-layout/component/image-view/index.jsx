@@ -52,7 +52,7 @@ export default class ImageViewComponent extends React.Component {
 		});
 	}
 
-	render(props = {})
+	render()
 	{
 		return (
 			<div

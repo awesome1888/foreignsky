@@ -109,7 +109,7 @@ export default class Map extends BaseComponent {
 		}));
 	}
 
-	render(props = {})
+	render()
 	{
 		// props.containerElementProps = props.containerElementProps || {};
 		// props.markers = props.markers || [];

@@ -27,7 +27,10 @@ export default class Embed extends mix(BaseEntity).with(Entity)
                 return '';
             }
 
-            const map = _.makeMap(data, 'id');
+            const ix = {};
+            data.forEach((item) => {
+                ix[item.getId()] = item;
+            });
 
             const expr = new RegExp('\\[EMBED\\s+ID=([a-zA-Z0-9]+)\\]', 'ig');
             let found;
@@ -44,7 +47,7 @@ export default class Embed extends mix(BaseEntity).with(Entity)
                     parts.push(React.createElement('div', {key: prevIndex}, chunk));
                 }
 
-                parts.push(this.makeEmbed(found[1], map[found[1]], params));
+                parts.push(this.makeEmbed(found[1], ix[found[1]], params));
 
                 prevIndex = expr.lastIndex;
             }
@@ -82,7 +85,7 @@ export default class Embed extends mix(BaseEntity).with(Entity)
             return null;
         }
 
-        const renderer = params.renderer[embed.renderer];
+        const renderer = params.renderer[embed.getRenderer()];
         if(!renderer)
         {
             return null;
@@ -90,8 +93,8 @@ export default class Embed extends mix(BaseEntity).with(Entity)
 
         return React.createElement(renderer, {
             key: id,
-            item: embed.item,
-            // options: embed.options,
+            item: embed.getItem(),
+            options: embed.getOptions(),
         });
     }
 

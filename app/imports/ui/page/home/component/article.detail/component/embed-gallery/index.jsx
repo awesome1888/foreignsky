@@ -3,9 +3,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 //import classnames from 'classnames';
-import Util from '/imports/lib/util.js';
-import File from '../../../../../imports/api/file/entity/entity.client.js';
-import Embed from '../../../../../imports/api/embed/entity/entity.client.js';
+import Util from '../../../../../../../lib/util.js';
+import File from '../../../../../../../api/file/entity/entity.client.js';
+import Embed from '../../../../../../../api/embed/entity/entity.client.js';
 
 import App from '/imports/ui/application.jsx';
 
@@ -116,7 +116,7 @@ export default class EmbedGalleryComponent extends React.Component {
         });
     }
 
-	render(props = {})
+	render()
 	{
 	    // this shit definitely needs refactoring
 	    let imgClass = '';

@@ -562,6 +562,11 @@ export default class Application extends BaseComponent
 
     redirectExpected()
     {
+        if (!this.useAccounts())
+        {
+            return false;
+        }
+
         return this.state.accessCheckResult !== 200;
     }
 

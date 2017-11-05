@@ -33,7 +33,8 @@ const M = (superclass) =>  class Article extends superclass
 
     getHeaderImage()
     {
-        return this.getData().headerImage || {};
+        this.getData().headerImage = this.makeInstances(this.getData().headerImage, 'headerImage');
+        return this.getData().headerImage;
     }
 
     getTag()
@@ -55,7 +56,7 @@ const M = (superclass) =>  class Article extends superclass
 
     hasHeaderImage()
     {
-        return _.isObjectNotEmpty(this.headerImage);
+        return _.isObjectNotEmpty(this.getHeaderImage());
     }
 };
 

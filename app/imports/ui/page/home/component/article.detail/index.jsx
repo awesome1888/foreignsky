@@ -5,12 +5,11 @@ import {createQueryContainer} from 'meteor/cultofcoders:grapher-react';
 import {TAPi18n} from 'meteor/tap:i18n';
 import classnames from 'classnames';
 
-import App from '/imports/ui/application.jsx';
-import BaseComponent from '../../../lib/base/component/component.jsx';
-import Article from '../../../api/article/entity/entity.client.js';
+import BaseComponent from '../../../../../lib/base/component/component.jsx';
+import Article from '../../../../../api/article/entity/entity.client.js';
 
-import EmbedImageComponent from '../../../ui/component/general/embed-image/index.jsx';
-import EmbedGalleryComponent from '../../../ui/component/general/embed-gallery/index.jsx';
+import EmbedImageComponent from '../../../../component/general/embed-image/index.jsx';
+import EmbedGalleryComponent from '../../../../component/general/embed-gallery/index.jsx';
 
 import './style.less';
 
@@ -33,6 +32,8 @@ export default class ArticleDetailComponent extends BaseComponent
 
 	componentWillReceiveProps(next)
 	{
+	    console.dir(next);
+
 		this.handleIdUpdate(next.id);
 	}
 
@@ -44,7 +45,7 @@ export default class ArticleDetailComponent extends BaseComponent
 
 			if(id)
 			{
-				App.getInstance().wait(this.show(id));
+				this.getApplication().wait(this.show(id));
 			}
 			else
 			{
@@ -53,9 +54,16 @@ export default class ArticleDetailComponent extends BaseComponent
 		}
 	}
 
+	getId()
+    {
+        return this.props.id;
+    }
+
 	async show(id)
 	{
-        const p = Article.findOne({
+	    console.dir('loading');
+	    
+        return Article.findOne({
             select: {
                 title: 1,
                 text: 1,
@@ -63,7 +71,7 @@ export default class ArticleDetailComponent extends BaseComponent
                 headerColor: 1,
                 headerImage: {
                     title: 1,
-                    path: 1,
+                    url: 1,
                 },
                 tag: {
                     title: 1,
@@ -82,10 +90,9 @@ export default class ArticleDetailComponent extends BaseComponent
             },
             filter: {
                 _id: id,
+                public: true,
             },
-        });
-
-        p.then((article) => {
+        }).then((article) => {
             if(!article)
             {
                 FlowRouter.go('/404');
@@ -97,11 +104,9 @@ export default class ArticleDetailComponent extends BaseComponent
                 data: article.data,
                 article,
             });
-            App.getInstance().toggleMap(true);
+            // App.getInstance().toggleMap(true);
             this.setTitle(article.title);
         });
-
-        return p;
 	}
 
 	close()
@@ -114,24 +119,26 @@ export default class ArticleDetailComponent extends BaseComponent
 		this.setState({
 			opened: false
 		});
-		App.getInstance().toggleMap(false);
+		// App.getInstance().toggleMap(false);
 		FlowRouter.go('/');
 	}
 
-	render(props = {})
+	render()
 	{
 		const article = this.state.article;
-		if(!article || !article.id)
+		if(!this.getId() || !article || !article.getId())
 		{
 			return null;
 		}
 
+		console.dir(article);
+		
 		return (
 			<div
 				className={classnames(
 					'article-detail',
 					{'no-display': !this.state.opened},
-					`article-detail_${article.headerColor}`
+					`article-detail_${article.getHeaderColor()}`
 				)}
 			>
 				<div className="article-detail__inner-scroll">
@@ -144,7 +151,7 @@ export default class ArticleDetailComponent extends BaseComponent
                             <div
                                 className="embed-image__image embed-image__image_static article-detail__header-image-embed"
                                 style={{
-                                    backgroundImage: `url(${article.getHeaderImagePath()})`,
+                                    backgroundImage: `url(${article.getHeaderImageUrl()})`,
                                 }}
                             >
                                 <div className="embed-image__label embed-image__label-br">
@@ -162,7 +169,7 @@ export default class ArticleDetailComponent extends BaseComponent
 								_.map(article.getTag() || {}, (tag) => {
 									return (
 										<div
-											className={`tag tag_${tag.getColor()}`}
+											className={`tag b-color_${tag.getColor()}`}
 										    key={tag.getId()}
 										>
 											#{tag.getTitle()}

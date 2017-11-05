@@ -3,8 +3,6 @@ import Entity from './entity.js';
 import mix from '../../../lib/mixin.js';
 import moment from 'moment';
 import map from '../map/map.client.js';
-import File from '../../../api/file/entity/entity.client.js';
-// import Tag from '../../../api/article.tag/entity/entity.client.js';
 import Embed from '../../../api/embed/entity/entity.client.js';
 
 export default class Article extends mix(BaseEntity).with(Entity)
@@ -37,11 +35,11 @@ export default class Article extends mix(BaseEntity).with(Entity)
         return '';
     }
 
-    getHeaderImagePath()
+    getHeaderImageUrl()
     {
         if (this.hasHeaderImage())
         {
-            return File.convertToUrl(this.getHeaderImage().path || '');
+            return this.getHeaderImage().getAbsoluteUrl();
         }
 
         return '';

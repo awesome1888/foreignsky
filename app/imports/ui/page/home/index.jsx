@@ -3,7 +3,7 @@
 import React from 'react';
 import BasePage from '../../../lib/base/page/page.jsx';
 
-import ArticleDetailComponent from  '/imports/ui/component/article.detail/index.jsx';
+import ArticleDetailComponent from  './component/article.detail/index.jsx';
 
 export default class HomePage extends BasePage
 {
@@ -36,16 +36,8 @@ export default class HomePage extends BasePage
 	render()
     {
         return (
-            <MapFullLayout
-                className="margin-top_5"
-                side={
-                    <ArticleListComponent />
-                }
-                central={
-                    <ArticleDetailComponent
-                        id={this.state.id}
-                    />
-                }
+            <ArticleDetailComponent
+                id={this.state.id}
             />
         );
     }

@@ -348,26 +348,42 @@ export default class BaseEntity
 
     makeInstances(point, type)
     {
+        const constructor = this.getMap().$(type);
+        if (!_.isFunction(constructor))
+        {
+            return null;
+        }
+
         if (_.isArray(point))
         {
             // todo: optimize this
             return point.map((item, k) => {
-                if (this.isEntity(item)) {
+                if (item instanceof constructor)
+                {
                     return item;
                 }
                 if (_.isObjectNotEmpty(item)) {
                     // make entity
-                    const constr = this.getMap().$(type);
-                    point[k] = new constr(item);
 
+                    point[k] = new constructor(item);
                     return point[k];
                 }
 
                 return null;
             }).filter(item => item !== null);
         }
+        else if(_.isObject(point))
+        {
+            if (point instanceof constructor)
+            {
+                return point;
+            }
 
-        return [];
+            console.dir(point);
+            return new constructor(point);
+        }
+
+        return null;
     }
 
     forEach(cb)

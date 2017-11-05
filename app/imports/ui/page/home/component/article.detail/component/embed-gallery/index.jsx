@@ -116,11 +116,34 @@ export default class EmbedGalleryComponent extends React.Component {
         });
     }
 
+    getImage(item)
+    {
+        const data = item.image;
+        if (_.isObjectNotEmpty(data))
+        {
+            return new File(data);
+        }
+
+        return null;
+    }
+
 	render()
 	{
+	    const count = this.getItem().length;
+        const size = null;
+        // const size = [800, 200];
+        // if (count === 2)
+        // {
+        //     size[0] = 400;
+        // }
+        // if (count > 2)
+        // {
+        //     size[2] = 200;
+        // }
+
 	    // this shit definitely needs refactoring
 	    let imgClass = '';
-	    if (this.getItem().length === 2) {
+	    if (count === 2) {
 	        imgClass = 'embed-gallery__image-2x1';
         }
 
@@ -131,15 +154,15 @@ export default class EmbedGalleryComponent extends React.Component {
 			>
 				{
 					this.sortItems(this.getItem()).map((item) => {
-					    if (!_.isObjectNotEmpty(item.image) || !_.isStringNotEmpty(item.image.path)) {
+					    const image = this.getImage(item);
+					    if (!image) {
 					        return;
                         }
 
-                        const url = File.convertToUrl(item.image.path);
                         const options = Embed.unpackOptions(item.options);
 
                         const style = {
-                            backgroundImage: `url(${url})`
+                            backgroundImage: `url(${image.getAbsoluteUrlImage(size)})`
                         };
 
                         if (_.isStringNotEmpty(options.previewVerticalAlign))
@@ -147,15 +170,15 @@ export default class EmbedGalleryComponent extends React.Component {
                             style.backgroundPositionY = options.previewVerticalAlign;
                         }
 
-                        // todo: make key better
 						return (
 							<a
-								href={url}
+								// href={image.getAbsoluteUrl()}
 								className={`embed-gallery__image ${imgClass}`}
 								style={style}
-							    key={url}
-								target="_blank"
-								onClick={Util.passCtx(this.onImageClick, [item])}
+							    key={image.getId()}
+								// target="_blank"
+								// onClick={Util.passCtx(this.onImageClick, [item])}
+                                data-open-image
 							>
 								{
 									_.isStringNotEmpty(item.label)

@@ -39,4 +39,17 @@ export default class FrontApplication extends Application
     {
         return 'Nachberlin';
     }
+
+    getGlobalSelectorMap()
+    {
+        return [
+        {
+            selector: '[data-open-image="true"]',
+                callback: () => {
+                    console.dir('hello there!');
+                    console.dir(arguments);
+                },
+            },
+        ];
+    }
 }

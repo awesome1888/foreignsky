@@ -126,7 +126,7 @@ export default class ArticleDetailComponent extends BaseComponent
 		{
 			return null;
 		}
-		
+
 		return (
 			<div
 				className={classnames(
@@ -145,7 +145,7 @@ export default class ArticleDetailComponent extends BaseComponent
                             <div
                                 className="embed-image__image embed-image__image_static article-detail__header-image-embed"
                                 style={{
-                                    backgroundImage: `url(${article.getHeaderImageUrl()})`,
+                                    backgroundImage: `url(${article.getHeaderImageUrl([900, 200])})`,
                                 }}
                             >
                                 <div className="embed-image__label embed-image__label-br">

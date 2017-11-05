@@ -35,11 +35,11 @@ export default class Article extends mix(BaseEntity).with(Entity)
         return '';
     }
 
-    getHeaderImageUrl()
+    getHeaderImageUrl(resizeTo = null)
     {
         if (this.hasHeaderImage())
         {
-            return this.getHeaderImage().getAbsoluteUrl();
+            return this.getHeaderImage().getAbsoluteUrlImage(resizeTo);
         }
 
         return '';

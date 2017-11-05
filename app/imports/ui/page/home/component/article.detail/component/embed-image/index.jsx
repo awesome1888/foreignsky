@@ -53,17 +53,16 @@ export default class EmbedImageComponent extends React.Component {
 		return {};
 	}
 
-	getImageUrl()
-	{
-		const image = this.getItem().image;
+	getImage()
+    {
+        const data = this.getItem().image;
+        if (_.isObjectNotEmpty(data))
+        {
+            return new File(data);
+        }
 
-		if(_.isObject(image) && image.path)
-		{
-			return File.convertToUrl(image.path);
-		}
-
-		return '';
-	}
+        return null;
+    }
 
 	getHeight()
 	{
@@ -125,7 +124,7 @@ export default class EmbedImageComponent extends React.Component {
     {
         e.preventDefault();
 
-        if(item && item.image.path)
+        if(item && item.image.url)
         {
             App.getInstance().getImageView().open(File.convertToUrl(item.image.path));
         }
@@ -133,13 +132,15 @@ export default class EmbedImageComponent extends React.Component {
 
 	render()
 	{
-	    // console.dir(this.getItem());
-
         const options = this.getOptions();
-        const url = this.imageUrl;
+        const image = this.getImage();
+        if (!image)
+        {
+            return null;
+        }
 
         const style = {
-            backgroundImage: `url(${url})`,
+            backgroundImage: `url(${image.getAbsoluteUrlImage([900, 300])})`,
             height: `${this.getHeight()}px`,
         };
 
@@ -153,7 +154,7 @@ export default class EmbedImageComponent extends React.Component {
 				className="embed-image"
 			>
 				<a
-                    href={url}
+                    href={image.getAbsoluteUrl()}
 					className="embed-image__image embed-image__image_static"
 					style={style}
                     target="_blank"

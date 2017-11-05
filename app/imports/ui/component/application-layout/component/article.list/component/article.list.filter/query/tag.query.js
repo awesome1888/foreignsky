@@ -1,4 +1,4 @@
-import ArticleTag from '../../../../api/article.tag/entity/entity.client.js';
+import ArticleTag from '../../../../../../../../api/article.tag/entity/entity.client.js';
 
 export default ArticleTag.createQuery({
     filter: {

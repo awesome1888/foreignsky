@@ -5,21 +5,20 @@ import {createContainer} from 'meteor/react-meteor-data';
 import {TAPi18n} from 'meteor/tap:i18n';
 import PropTypes from 'prop-types';
 
-import Query from './query/tag.query.js';
+import ArticleTag from '../../../../../../../api/article.tag/entity/entity.client.js';
 import Util from '/imports/lib/util.js';
+import BaseComponent from '../../../../../../../lib/base/component/component.jsx';
 
 import './style.less';
 
-import App from '/imports/ui/application.jsx';
-
-export default class ArticleListFilterComponent extends React.Component {
+export default class ArticleListFilterComponent extends BaseComponent {
 
 	static propTypes = {
 		onChange: PropTypes.func,
 	};
 
 	static defaultProps = {
-		onChange: Util.noop,
+		onChange: null,
 	};
 
 	constructor(params)
@@ -33,7 +32,7 @@ export default class ArticleListFilterComponent extends React.Component {
 
 		this.input = null;
 
-		this.onInput = Util.debounce(this.onInput.bind(this), 700);
+		this.onInput = _.debounce(this.onInput.bind(this), 700);
 	}
 
 	onTagClick(e)
@@ -55,7 +54,10 @@ export default class ArticleListFilterComponent extends React.Component {
 	mergeFilter(filter)
 	{
 		this.setState({filter: Object.assign(this.state.filter, filter)});
-		this.props.onChange(this.state.filter);
+		if (_.isFunction(this.props.onChange))
+        {
+            this.props.onChange(this.state.filter);
+        }
 	}
 
 	resetFilter()
@@ -64,7 +66,10 @@ export default class ArticleListFilterComponent extends React.Component {
 
 		this.state.filter = {};
 		this.setState(this.state);
-		this.props.onChange(this.state.filter);
+        if (_.isFunction(this.props.onChange))
+        {
+            this.props.onChange(this.state.filter);
+        }
 	}
 
 	onInput(h, e)
@@ -81,23 +86,25 @@ export default class ArticleListFilterComponent extends React.Component {
 
 	updateTagData(params = {})
 	{
-		return App.getInstance().wait(new Promise((resolve, reject) => {
-			Query.fetch((err, data) => {
-				this.setState({
-					tags: data || []
-				});
-
-				if(err)
-				{
-					reject();
-				}
-				else
-				{
-					resolve();
-				}
-			});
-
-		}));
+		return this.getApplication().wait(ArticleTag.find({
+            filter: {
+                primary: true,
+            },
+            select: [
+                'title',
+                'color'
+            ],
+            sort: [
+                ['sort', 'asc']
+            ],
+            limit: 3,
+        }).then((data) => {
+            this.setState({
+                tags: data || [],
+            });
+        }).catch((err) => {
+		    // todo: show notification here
+        }));
 	}
 
 	render(props = {})
@@ -128,17 +135,17 @@ export default class ArticleListFilterComponent extends React.Component {
 				<div className="article-list__filter-button-set">
 					{this.state.tags.map(item => {
 						return <div
-							key={item._id}
-							data-id={item._id}
-							className={`tag tag__button article-list__filter-button tag_${item.color ? item.color : 'blue'}`}
+							key={item.getId()}
+							data-id={item.getId()}
+							className={`tag tag__button article-list__filter-button b-color_${item.getColor() ? item.getColor() : 'blue'}`}
 							onClick={this.onTagClick.bind(this)}
 						>
 							{
-								item._id === this.state.filter.tag
+								item.getId() === this.state.filter.tag
 								&&
 								<div className="tag__corner" />
 							}
-							#{item.title.toLowerCase()}
+							#{item.getTitle().toLowerCase()}
 						</div>;
 					})}
 				</div>

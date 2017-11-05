@@ -4,13 +4,13 @@ import React from 'react';
 import {createQueryContainer} from 'meteor/cultofcoders:grapher-react';
 import BaseComponent from '../../../../../lib/base/component/component.jsx';
 
-import ArticleListFilterComponent from '/imports/ui/component/article.list.filter/index.jsx';
-import Query from './query/list.query.js';
+import ArticleListFilterComponent from './component/article.list.filter/index.jsx';
+import Article from '../../../../../api/article/entity/entity.client.js';
 
 import './style.less';
 
-export default class ArticleListComponent extends BaseComponent {
-
+export default class ArticleListComponent extends BaseComponent
+{
 	constructor(params)
 	{
 		super(params);
@@ -33,6 +33,7 @@ export default class ArticleListComponent extends BaseComponent {
 	updateItemListData(params = {})
 	{
 		const filter = {
+		    public: true,
 		};
 		if('tag' in params)
 		{
@@ -51,31 +52,20 @@ export default class ArticleListComponent extends BaseComponent {
 			}
 		}
 
-		return this.getApplication().wait(new Promise((resolve, reject) => {
-            Query.setParams({
-                filter,
-            }).fetch((err, data) => {
-				this.setState({
-					data: data || []
-				});
-
-				if(err)
-				{
-					reject();
-				}
-				else
-				{
-					resolve();
-				}
-			});
-		}));
+		return this.getApplication().wait(Article.find({filter, select: ['title']}).then((data) => {
+            this.setState({
+                data: data || [],
+            });
+        }).catch((err) => {
+		    // todo: show the notification here
+        }));
 	}
 
 	hasData() {
 	    return _.isArrayNotEmpty(this.state.data);
     }
 
-	render(props = {})
+	render()
 	{
 	    const data = this.state.data;
 	    
@@ -98,8 +88,8 @@ export default class ArticleListComponent extends BaseComponent {
                             &&
                             data.map(item => {
 								return (
-									<a key={item._id} href={`/${item._id}`} className="article-list__list-item">
-										{item.title}
+									<a key={item.getId()} href={`/${item.getId()}`} className="article-list__list-item">
+										{item.getTitle()}
 									</a>
 								);
 							})

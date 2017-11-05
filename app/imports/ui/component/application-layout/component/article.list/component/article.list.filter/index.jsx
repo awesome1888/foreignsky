@@ -6,7 +6,6 @@ import {TAPi18n} from 'meteor/tap:i18n';
 import PropTypes from 'prop-types';
 
 import ArticleTag from '../../../../../../../api/article.tag/entity/entity.client.js';
-import Util from '/imports/lib/util.js';
 import BaseComponent from '../../../../../../../lib/base/component/component.jsx';
 
 import './style.less';

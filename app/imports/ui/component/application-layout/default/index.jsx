@@ -10,8 +10,6 @@ import ArticleListComponent from '../component/article.list/index.jsx';
 import ImageViewComponent from '../component/image-view/index.jsx';
 import Map from '../component/map/index.jsx';
 
-// import Map from '/imports/ui/component/map/index.jsx';
-// import ImageViewComponent from '/imports/ui/component/general/image-view/index.jsx';
 // import PreRender from '../lib/prerender.js';
 // import {DocHead} from 'meteor/kadira:dochead';
 

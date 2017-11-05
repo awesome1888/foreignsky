@@ -3,11 +3,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 //import classnames from 'classnames';
-import Util from '../../../../../../../lib/util.js';
 import File from '../../../../../../../api/file/entity/entity.client.js';
 import Embed from '../../../../../../../api/embed/entity/entity.client.js';
-
-import App from '/imports/ui/application.jsx';
 
 import './style.less';
 

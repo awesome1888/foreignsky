@@ -64,11 +64,17 @@
 	padding: @detail-v-padding @detail-h-padding;
 	position: relative;
 
-  ._margin_bottom(2);
+    ._margin_bottom(2);
 
 	p {
-		margin-top: 0;
-		margin-bottom: @offset;
+		._no-margin();
+	}
+}
+
+.article-detail__body-chunk {
+	._ws_normal();
+	p:last-child {
+		._no-margin();
 	}
 }
 

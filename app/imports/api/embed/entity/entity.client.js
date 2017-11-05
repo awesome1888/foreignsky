@@ -44,7 +44,11 @@ export default class Embed extends mix(BaseEntity).with(Entity)
 
                 if(chunk.length)
                 {
-                    parts.push(React.createElement('div', {key: prevIndex}, chunk));
+                    parts.push(React.createElement('div', {
+                        key: prevIndex,
+                        dangerouslySetInnerHTML: {__html: chunk},
+                        className: 'article-detail__body-chunk',
+                    }));
                 }
 
                 parts.push(this.makeEmbed(found[1], ix[found[1]], params));
@@ -56,7 +60,11 @@ export default class Embed extends mix(BaseEntity).with(Entity)
             chunk = text.substr(prevIndex, text.length - prevIndex);
             if(chunk.length)
             {
-                parts.push(React.createElement('div', {key: chunk}, chunk));
+                parts.push(React.createElement('div', {
+                    key: chunk,
+                    dangerouslySetInnerHTML: {__html: chunk},
+                    className: 'article-detail__body-chunk',
+                }));
             }
 
             return parts;

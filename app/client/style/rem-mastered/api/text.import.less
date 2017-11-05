@@ -31,12 +31,22 @@
 	}
 }
 
-._no-wrap() {
+._ws_no-wrap() {
 	white-space: nowrap;
 }
+._no-wrap() {
+	._ws_no-wrap();
+}
 
-._pre() {
+._ws_normal() {
+	white-space: normal;
+}
+
+._ws_pre() {
 	white-space: pre-wrap;
+}
+._pre()  {
+	._ws_pre();
 }
 
 ._f-size_x(@mp: 1) {

@@ -40,6 +40,7 @@ export default class Form extends BaseComponent
         borderColor: PropTypes.string,
         showFooter: PropTypes.bool,
         error: PropTypes.string,
+        extraButtons: PropTypes.object,
     };
 
     static defaultProps = {
@@ -53,6 +54,7 @@ export default class Form extends BaseComponent
         borderColor: '',
         showFooter: true,
         error: null,
+        extraButtons: null,
     };
 
     constructor(props)
@@ -312,6 +314,8 @@ export default class Form extends BaseComponent
             return body;
         }
 
+        console.dir(this.props.extraButtons);
+
         return (
             <div className={`form_${this.getId()}`}>
                 <AutoForm
@@ -341,6 +345,9 @@ export default class Form extends BaseComponent
                                     >
                                         Back
                                     </a>
+                                }
+                                {
+                                    this.props.extraButtons
                                 }
                             </div>
                         </div>

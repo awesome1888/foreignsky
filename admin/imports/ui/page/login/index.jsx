@@ -2,6 +2,7 @@ import React from 'react';
 import BasePage from '../../../lib/base/page/page.jsx';
 
 import Form from '../../component/general/form/form.jsx';
+import { Button } from 'semantic-ui-react';
 
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
@@ -31,6 +32,29 @@ export default class LoginPage extends BasePage {
             }
             else
             {
+                // todo: show in notifications
+                if (error.error === 403)
+                {
+                    this.setServerError('Login incorrect');
+                }
+                else
+                {
+                    this.setServerError('Server error');
+                }
+            }
+        });
+    }
+
+    onClickLoginWithGoogle()
+    {
+        Meteor.loginWithGoogle({}, (error) => {
+            if (!error)
+            {
+                FlowRouter.go('/');
+            }
+            else
+            {
+                // todo: show in notifications
                 if (error.error === 403)
                 {
                     this.setServerError('Login incorrect');
@@ -95,6 +119,19 @@ export default class LoginPage extends BasePage {
                                 onSubmit={this.onSubmitForm.bind(this)}
                                 onValidate={this.onValidateForm.bind(this)}
                                 error={this.state.errorMessage}
+                                extraButtons={
+                                    <div className="inline-block">
+                                        ...or{'   '}
+                                        <Button
+                                            color="red"
+                                            size="large"
+                                            type="button"
+                                            onClick={this.onClickLoginWithGoogle.bind(this)}
+                                        >
+                                            Sign in with Google
+                                        </Button>
+                                    </div>
+                                }
                             >
                             </Form>
                         </div>

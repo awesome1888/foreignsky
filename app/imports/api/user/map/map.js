@@ -24,6 +24,12 @@ const M = (superclass) => class extends superclass
                         }
                     ])
                 ],
+                // had to set it optional in order to make google oauth work. unfortunately, simple schema
+                // validator is executed before hook:before.insert :(
+                // which is obviously wrong, but nothing to do with this
+                // todo: when we remove simple schema attachment, this problem will go away and we will be
+                // todo: able to switch back to false here
+                optional: true,
             },
             {
                 // this is for storing password and other stuff

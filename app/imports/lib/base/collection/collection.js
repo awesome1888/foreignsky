@@ -45,9 +45,9 @@ export default class BaseCollection
      */
     applyHooks()
     {
-        // this.before.insert((id, data) => {
+        // this.getCollection().before.insert((id, data) => {
         // });
-        // this.before.update((id, data, fieldNames, modifier) => {
+        // this.getCollection().before.update((id, data, fieldNames, modifier) => {
         // });
     }
 

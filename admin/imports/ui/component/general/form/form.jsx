@@ -74,12 +74,16 @@ export default class Form extends BaseComponent
             this.setState({
                 model
             });
-        }, (error) => {
+        }).catch((error) => {
             this.setState({
                 model: {},
                 error
             });
         });
+    }
+
+    onSubmitClick()
+    {
     }
 
     getMap()
@@ -111,6 +115,7 @@ export default class Form extends BaseComponent
         return map;
     }
 
+    // todo: this is wrong. model transformation should be in form of model => newModel
     transformModel()
     {
         return this.state.model;
@@ -130,6 +135,11 @@ export default class Form extends BaseComponent
         }
 
         return this._cache.map;
+    }
+
+    getModelTransformed()
+    {
+        return this.state.model;
     }
 
     getForm()
@@ -267,6 +277,11 @@ export default class Form extends BaseComponent
         })
     }
 
+    renderExtraButtons()
+    {
+        return this.props.extraButtons;
+    }
+
     render()
     {
         const isFragment = this.isFragment();
@@ -314,8 +329,6 @@ export default class Form extends BaseComponent
             return body;
         }
 
-        console.dir(this.props.extraButtons);
-
         return (
             <div className={`form_${this.getId()}`}>
                 <AutoForm
@@ -332,10 +345,18 @@ export default class Form extends BaseComponent
                         this.props.showFooter
                         &&
                         <div className="form__footer">
-                            <div className="group_x2">
-                                <Button color="green" size="large" type={this.props.submitButtonType}>
+                            <div className="group_x">
+                                <Button
+                                    color="green"
+                                    size="large"
+                                    type={this.props.submitButtonType}
+                                    onClick={this.onSubmitClick.bind(this)}
+                                >
                                     {this.props.submitButtonLabel}
                                 </Button>
+                                {
+                                    this.renderExtraButtons()
+                                }
                                 {
                                     _.isStringNotEmpty(this.props.backPath)
                                     &&
@@ -345,9 +366,6 @@ export default class Form extends BaseComponent
                                     >
                                         Back
                                     </a>
-                                }
-                                {
-                                    this.props.extraButtons
                                 }
                             </div>
                         </div>

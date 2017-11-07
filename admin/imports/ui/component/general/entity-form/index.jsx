@@ -2,6 +2,7 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import Form from '../form/form.jsx';
+import { Button } from 'semantic-ui-react';
 
 /**
  * The basic component for making forms: schema renderer
@@ -9,6 +10,8 @@ import Form from '../form/form.jsx';
  */
 export default class EntityForm extends Form
 {
+    _whichButton = null;
+
     static getEntity()
     {
         throw new Error('Not implemented');
@@ -109,18 +112,79 @@ export default class EntityForm extends Form
         return this.getEntity().save(id, model);
     }
 
+    getDetailPathTemplate()
+    {
+        return this.props.detailPathTemplate || '';
+    }
+
+    goBackPath()
+    {
+        if (_.isStringNotEmpty(this.props.backPath))
+        {
+            // todo: transfer modified item _id somehow, to highlight in the list
+            FlowRouter.go(this.props.backPath);
+        }
+    }
+
     onSubmit(model)
     {
-        this.save(super.onSubmit(model)).then((res) => {
-            if (_.isStringNotEmpty(this.props.backPath))
+        this.save(super.onSubmit(model)).then((id) => {
+
+            const path = this.getDetailPathTemplate();
+
+            if (this._whichButton === 'A' && _.isStringNotEmpty(path))
             {
-                // todo: transfer modified item _id somehow, to highlight in the list
-                FlowRouter.go(this.props.backPath);
+                if (this.isNewItem())
+                {
+                    if (_.isStringNotEmpty(path))
+                    {
+                        // todo: replace #ID# with :id
+                        // todo: make special helper for filling url templates
+                        FlowRouter.go(path.replace('#ID#', id));
+                    }
+                    else
+                    {
+                        this.goBackPath();
+                    }
+                }
             }
-        }, (error) => {
+            else
+            {
+                this.goBackPath();
+            }
+        }).catch((error) => {
+            // todo: better use notifications here
             this.setState({
                 error: `save failed: ${error}`,
             });
         });
+    }
+
+    onSubmitClick()
+    {
+        this._whichButton = 'S';
+    }
+
+    onApplyClick()
+    {
+        this._whichButton = 'A';
+    }
+
+    renderExtraButtons()
+    {
+        return (
+            <div className="inline-block">
+                <div className="group_x">
+                    <Button
+                        color="blue"
+                        size="large"
+                        type="submit"
+                        onClick={this.onApplyClick.bind(this)}
+                    >
+                        Apply
+                    </Button>
+                </div>
+            </div>
+        );
     }
 }

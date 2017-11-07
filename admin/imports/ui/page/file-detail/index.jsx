@@ -22,6 +22,7 @@ export default class FileEntityDetailPage extends BasePage
                     <Form
                         id={this.props.route.id}
                         backPath={backUrl}
+                        detailPathTemplate={this.props.route.detailPath}
                     />
                 }
             />

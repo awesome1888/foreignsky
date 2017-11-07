@@ -157,7 +157,7 @@ class RendererLinkList extends Link
 
             this.startDataReload(true);
             this.toggleFormModal();
-        }, (error) => {
+        }).catch((error) => {
             this.setState({
                 formError: error,
             });

@@ -42,6 +42,7 @@ export default class Form extends BaseComponent
         showFooter: PropTypes.bool,
         error: PropTypes.string,
         extraButtons: PropTypes.object,
+        stickFooter: PropTypes.bool,
     };
 
     static defaultProps = {
@@ -56,6 +57,7 @@ export default class Form extends BaseComponent
         showFooter: true,
         error: null,
         extraButtons: null,
+        stickFooter: true,
     };
 
     constructor(props)
@@ -236,6 +238,11 @@ export default class Form extends BaseComponent
         return this.props.error || this.state.error;
     }
 
+    isFooterSticky()
+    {
+        return this.props.stickFooter;
+    }
+
     renderRows()
     {
         const map = this.getMapTransformed();
@@ -281,6 +288,35 @@ export default class Form extends BaseComponent
     renderExtraButtons()
     {
         return this.props.extraButtons;
+    }
+
+    renderFooterButtons()
+    {
+        return (
+            <div className="group_x">
+                <Button
+                    color="green"
+                    size="large"
+                    type={this.props.submitButtonType}
+                    onClick={this.onSubmitClick.bind(this)}
+                >
+                    {this.props.submitButtonLabel}
+                </Button>
+                {
+                    this.renderExtraButtons()
+                }
+                {
+                    _.isStringNotEmpty(this.props.backPath)
+                    &&
+                    <a
+                        href={this.props.backPath}
+                        className="form__footer-back"
+                    >
+                        Back
+                    </a>
+                }
+            </div>
+        );
     }
 
     render()
@@ -346,33 +382,22 @@ export default class Form extends BaseComponent
                         this.props.showFooter
                         &&
                         <div className="form__footer">
-                            <FixedPane
-                                paneClassName="form__footer-bar"
-                            >
-                                <div className="group_x">
-                                    <Button
-                                        color="green"
-                                        size="large"
-                                        type={this.props.submitButtonType}
-                                        onClick={this.onSubmitClick.bind(this)}
-                                    >
-                                        {this.props.submitButtonLabel}
-                                    </Button>
-                                    {
-                                        this.renderExtraButtons()
-                                    }
-                                    {
-                                        _.isStringNotEmpty(this.props.backPath)
-                                        &&
-                                        <a
-                                            href={this.props.backPath}
-                                            className="form__footer-back"
-                                        >
-                                            Back
-                                        </a>
-                                    }
+                            {
+                                this.isFooterSticky()
+                                &&
+                                <FixedPane
+                                    paneClassName="form__footer-bar"
+                                >
+                                    {this.renderFooterButtons()}
+                                </FixedPane>
+                            }
+                            {
+                                !this.isFooterSticky()
+                                &&
+                                <div className="form__footer-bar">
+                                    {this.renderFooterButtons()}
                                 </div>
-                            </FixedPane>
+                            }
                         </div>
                     }
                 </AutoForm>

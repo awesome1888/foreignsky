@@ -20,7 +20,7 @@ export default class HomePage extends BasePage
                 title={this.getDefaultTitle()}
                 central={
                     <div className="">
-                        What to you want to do?
+                        What do you want to do?
                     </div>
                 }
             />

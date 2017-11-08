@@ -119,6 +119,7 @@ export default class LoginPage extends BasePage {
                                 onSubmit={this.onSubmitForm.bind(this)}
                                 onValidate={this.onValidateForm.bind(this)}
                                 error={this.state.errorMessage}
+                                stickFooter={false}
                                 extraButtons={
                                     <div className="inline-block">
                                         ...or{'   '}

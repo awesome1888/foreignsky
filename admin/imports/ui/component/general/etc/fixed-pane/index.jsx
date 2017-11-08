@@ -3,7 +3,7 @@ import BaseComponent from '../../../../../lib/base/component/component.jsx';
 
 import PropTypes from 'prop-types';
 
-// import './style.less';
+import './style.less';
 
 export default class FixedPane extends BaseComponent
 {

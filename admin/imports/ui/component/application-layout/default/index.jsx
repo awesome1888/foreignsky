@@ -6,6 +6,7 @@ import Header from '../../header/index.jsx';
 import GlobalOverlay from '../../general/etc/global-overlay/index.jsx';
 import GlobalLoadProgress from '../component/global-load-progress/index.jsx';
 import Navigation from '../../navigation/navigation.jsx';
+import GoUp from '../../../component/general/etc/go-up/index.jsx';
 
 // import './style.less';
 
@@ -66,6 +67,7 @@ export default class DefaultApplicationLayout extends BaseComponent
                                 computer only
                                 tablet only
                                 column
+                                layout__side
                             ">
                                 <Navigation
                                     className="margin-bottom"
@@ -101,6 +103,10 @@ export default class DefaultApplicationLayout extends BaseComponent
                         </div>
                     </div>
                 </div>
+
+                <GoUp
+                    hAlignRelativeTo=".layout__side"
+                />
             </div>
         );
     }

@@ -1,4 +1,6 @@
 // flex
+// https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+
 ._flex() {
 	display: -webkit-box;
 	display: -moz-box;
@@ -104,6 +106,12 @@
 ._content_v_center_h_center() {
 	._flex();
 	._flex-justify-content_center();
+	._flex-align-items_center();
+}
+
+._content_h_center_column() {
+	._flex();
+	._flex-direction_column();
 	._flex-align-items_center();
 }
 
@@ -416,7 +424,6 @@
 	max-width: @w;
 	width: 100%;
 }
-
 
 // deprecated
 .padding-t {

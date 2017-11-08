@@ -1,0 +1,30 @@
+@import (reference) url('/client/style/index.less');
+
+@go-up_bottom: -(@offset * 8);
+@go-up_top: 30px;
+
+.go-up {
+	._padding_x(2);
+	._fixed(auto, auto, @go-up_bottom);
+	._border-box();
+	._b-color(transparent);
+
+	._transition(all, 500ms);
+	._content_h_center_column();
+	._flex-wrap_wrap();
+	._hand();
+	._f-color(@color_edward);
+
+	&:hover {
+		._f-color(@color_lynch);
+		._b-color(lighten(@color_porcelain, 3%));
+	}
+}
+
+.go-up_shown {
+	bottom: @go-up_top;
+}
+
+.go-up__icon {
+	._icon_arrow-upward(30px);
+}

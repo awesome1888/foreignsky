@@ -664,10 +664,25 @@ export default class Application extends BaseComponent
         }
     }
 
+    getWindowJQ()
+    {
+        if (!this._window)
+        {
+            this._window = $(window);
+        }
+
+        return this._window;
+    }
+
     onWindowMetricChange()
     {
+        const data = {};
+        const w = this.getWindowJQ();
+
+        data.scrollTop = w.scrollTop();
+
         this._windowMetricsEvents.forEach((cb) => {
-            cb();
+            cb(data);
         });
     }
 }

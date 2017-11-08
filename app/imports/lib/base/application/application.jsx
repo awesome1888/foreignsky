@@ -624,6 +624,7 @@ export default class Application extends BaseComponent
 
     on(event, cb)
     {
+        // todo: also could be 'document-keydown', 'document-click' etc...
         if (event === 'window-metrics')
         {
             this._windowMetricsEvents.push(cb);
@@ -643,6 +644,7 @@ export default class Application extends BaseComponent
 
     off(event, cb)
     {
+        // todo: also could be 'document-keydown', 'document-click' etc...
         if (event === 'window-metrics')
         {
             this._windowMetricsEvents = this._windowMetricsEvents.filter((boundCb) => {

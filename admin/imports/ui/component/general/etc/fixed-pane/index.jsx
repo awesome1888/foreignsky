@@ -8,34 +8,56 @@ import PropTypes from 'prop-types';
 export default class FixedPane extends BaseComponent
 {
     static propTypes = {
+        paneClassName: PropTypes.string,
     };
 
     static defaultProps = {
+        paneClassName: '',
     };
 
-    constructor(props)
-    {
-        super(props);
-        this.extendState({
-        });
+    _pane = null;
 
+    componentDidMount()
+    {
+        this.solvePosition();
         this.onApplication('window-metrics', this.onWindowMetricChange.bind(this));
     }
 
-    onWindowMetricChange() {
-        console.dir('window changed!');
+    onWindowMetricChange()
+    {
+        this.solvePosition();
     }
 
+    getPane()
+    {
+        return this._pane;
+    }
 
+    solvePosition()
+    {
+        const root = $(this.getRootNode());
+        const pane = $(this.getPane());
+
+        // set pane width equal to its parent width
+        pane.width(`${root.width()}px`);
+
+        // set parent height equal to the pane height
+        root.height(`${pane.height()}px`);
+
+        // todo: probably will need to adjust left fixed position also
+    }
 
     render()
     {
         return (
             <div
-                className={`fixed-pane ${this.props.className}`}
+                className={`fixed-pane ${this.props.className || ''}`}
                 ref={ ref => {this._scope = ref; }}
             >
-                <div className={`fixed-pane__bar ${this.props.paneClassName}`}>
+                <div
+                    className={`fixed-pane__bar ${this.props.paneClassName}`}
+                    ref={ ref => {this._pane = ref; }}
+                >
                     {this.props.children}
                 </div>
             </div>

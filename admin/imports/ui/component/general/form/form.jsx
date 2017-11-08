@@ -345,34 +345,35 @@ export default class Form extends BaseComponent
                     {
                         this.props.showFooter
                         &&
-                        <FixedPane
-                            className="form__footer"
-                            paneClassName="form__footer-bar"
-                        >
-                            <div className="group_x">
-                                <Button
-                                    color="green"
-                                    size="large"
-                                    type={this.props.submitButtonType}
-                                    onClick={this.onSubmitClick.bind(this)}
-                                >
-                                    {this.props.submitButtonLabel}
-                                </Button>
-                                {
-                                    this.renderExtraButtons()
-                                }
-                                {
-                                    _.isStringNotEmpty(this.props.backPath)
-                                    &&
-                                    <a
-                                        href={this.props.backPath}
-                                        className="form__footer-back"
+                        <div className="form__footer">
+                            <FixedPane
+                                paneClassName="form__footer-bar"
+                            >
+                                <div className="group_x">
+                                    <Button
+                                        color="green"
+                                        size="large"
+                                        type={this.props.submitButtonType}
+                                        onClick={this.onSubmitClick.bind(this)}
                                     >
-                                        Back
-                                    </a>
-                                }
-                            </div>
-                        </FixedPane>
+                                        {this.props.submitButtonLabel}
+                                    </Button>
+                                    {
+                                        this.renderExtraButtons()
+                                    }
+                                    {
+                                        _.isStringNotEmpty(this.props.backPath)
+                                        &&
+                                        <a
+                                            href={this.props.backPath}
+                                            className="form__footer-back"
+                                        >
+                                            Back
+                                        </a>
+                                    }
+                                </div>
+                            </FixedPane>
+                        </div>
                     }
                 </AutoForm>
             </div>

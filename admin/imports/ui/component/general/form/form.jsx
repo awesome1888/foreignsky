@@ -1,6 +1,7 @@
 import React from 'react';
 //import ValidatedForm from 'uniforms-unstyled/ValidatedForm';
 import AutoForm from 'uniforms-unstyled/AutoForm';
+import FixedPane from '../etc/fixed-pane/index.jsx';
 
 import { Button } from 'semantic-ui-react';
 // import { Button, Checkbox, Form } from 'semantic-ui-react';
@@ -344,7 +345,10 @@ export default class Form extends BaseComponent
                     {
                         this.props.showFooter
                         &&
-                        <div className="form__footer">
+                        <FixedPane
+                            className="form__footer"
+                            paneClassName="form__footer-bar"
+                        >
                             <div className="group_x">
                                 <Button
                                     color="green"
@@ -368,7 +372,7 @@ export default class Form extends BaseComponent
                                     </a>
                                 }
                             </div>
-                        </div>
+                        </FixedPane>
                     }
                 </AutoForm>
             </div>

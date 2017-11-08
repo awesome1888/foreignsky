@@ -10,6 +10,7 @@ export default class BaseComponent extends Component
     _scope = null;
     _cache = null; // this is used to store temporal cached data, to boost operations
     _events = [];
+    _appEvents = [];
     _id = null;
 
     constructor(props)
@@ -27,12 +28,22 @@ export default class BaseComponent extends Component
             this._titleUpdated = false;
         }
 
-        // un-bind events
+        // un-bind custom events
         if(_.isArrayNotEmpty(this._events))
         {
             this._events.forEach((pair) => {
-                $(document).unbind(pair.event, pair.cb);
+                this.off(pair.event, pair.cb, false);
             });
+            this._events = null;
+        }
+
+        // un-bind application custom events
+        if (_.isArrayNotEmpty(this._appEvents))
+        {
+            this._appEvents.forEach((pair) => {
+                this.offApplication(pair.event, pair.cb, false);
+            });
+            this._appEvents = null;
         }
     }
 
@@ -120,7 +131,7 @@ export default class BaseComponent extends Component
     }
 
     /**
-     * Hangs on the specified user-space event
+     * Hangs on the specified custom event
      * todo: probably use event emitter here
      * @param event
      * @param cb
@@ -134,8 +145,38 @@ export default class BaseComponent extends Component
         });
     }
 
+    onApplication(event, cb) {
+        this._appEvents.push({
+            event,
+            cb,
+        });
+        this.getApplication().on(event, cb);
+    }
+
+    off(event, cb, clean = true)
+    {
+        $(document).unbind(event, cb);
+        if (clean)
+        {
+            this._events = this._events.filter((item) => {
+                return item.cb !== cb || item.event !== event;
+            });
+        }
+    }
+
+    offApplication(event, cb, clean = true)
+    {
+        this.getApplication().off(event, cb);
+        if (clean)
+        {
+            this._appEvents = this._appEvents.filter((item) => {
+                return item.cb !== cb || item.event !== event;
+            });
+        }
+    }
+
     /**
-     * Fires the specified user-space event
+     * Fires the specified custom event
      * todo: probably use event emitter here
      * @param event
      * @param args

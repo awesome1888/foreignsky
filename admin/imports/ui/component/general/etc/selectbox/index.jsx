@@ -63,7 +63,7 @@ export default class SelectBox extends BaseComponent
         this.onDocumentClick = this.onDocumentClick.bind(this);
         this.onSearchKeyDown = this.onSearchKeyDown.bind(this);
         this.onSearchKeyUp = _.debounce(this.onSearchKeyUp.bind(this), 300);
-        this.onWindowMetricChange = _.throttle(this.onWindowMetricChange.bind(this), 300);
+        this.onWindowMetricChange = this.onWindowMetricChange.bind(this);
         this.onDocumentKeyDown = this.onDocumentKeyDown.bind(this);
     }
 
@@ -79,14 +79,12 @@ export default class SelectBox extends BaseComponent
     }
 
     bindDropDownEvents() {
-        $(window).on('scroll', this.onWindowMetricChange);
-        $(window).on('resize', this.onWindowMetricChange);
+        this.onApplication('window-metrics', this.onWindowMetricChange);
         $(window.document).on('keydown', this.onDocumentKeyDown);
     }
 
     unBindDropDownEvents() {
-        $(window).off('scroll', this.onWindowMetricChange);
-        $(window).off('resize', this.onWindowMetricChange);
+        this.offApplication('window-metrics', this.onWindowMetricChange);
         $(window.document).off('keydown', this.onDocumentKeyDown);
     }
 

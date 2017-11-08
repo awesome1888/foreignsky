@@ -66,13 +66,21 @@
 }
 
 .form__footer {
-	._border-t();
 	._margin-t_x();
+}
+
+.form__footer-bar {
 	._padding-t_x();
+	._padding-b_x();
+	._b-color(@color_white);
+	._border-t();
+	._fixed(auto, auto, 0);
 }
 
 .form__footer-back {
 	._no-decoration();
 	._hcolor_darken();
+	._padding-lr_x(2);
+	._padding-tb_x(0.75);
 	font-size: 14px;
 }

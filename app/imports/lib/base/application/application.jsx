@@ -269,6 +269,8 @@ export default class Application extends BaseComponent
 
     _appContainer = null;
     _lastRouteChecked = null;
+    _windowMetricsEvents = [];
+    _windowMetricsBound = false;
 
     constructor(props)
     {
@@ -284,6 +286,10 @@ export default class Application extends BaseComponent
         {
             this.on('router-go', this.onRouteChange.bind(this));
         }
+
+        this.onWindowMetricChange = _.throttle(this.onWindowMetricChange.bind(this), 300);
+
+        window.__application = this;
     }
 
     getGlobalSelectorMap()
@@ -614,5 +620,52 @@ export default class Application extends BaseComponent
                 {this.renderExtras()}
             </div>
         );
+    }
+
+    on(event, cb)
+    {
+        if (event === 'window-metrics')
+        {
+            this._windowMetricsEvents.push(cb);
+
+            if (!this._windowMetricsBound)
+            {
+                $(window).on('scroll', this.onWindowMetricChange);
+                $(window).on('resize', this.onWindowMetricChange);
+                this._windowMetricsBound = true;
+            }
+        }
+        else
+        {
+            super.on(event, cb);
+        }
+    }
+
+    off(event, cb)
+    {
+        if (event === 'window-metrics')
+        {
+            this._windowMetricsEvents = this._windowMetricsEvents.filter((boundCb) => {
+                return boundCb !== cb;
+            });
+
+            if (!(this._windowMetricsEvents.length) && this._windowMetricsBound)
+            {
+                $(window).off('scroll', this.onWindowMetricChange);
+                $(window).off('resize', this.onWindowMetricChange);
+                this._windowMetricsBound = false;
+            }
+        }
+        else
+        {
+            super.off(event, cb);
+        }
+    }
+
+    onWindowMetricChange()
+    {
+        this._windowMetricsEvents.forEach((cb) => {
+            cb();
+        });
     }
 }

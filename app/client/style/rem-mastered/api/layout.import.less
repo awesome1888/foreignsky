@@ -127,8 +127,12 @@
 }
 
 // position
-._fixed() {
+._fixed(@top: auto, @right: auto, @bottom: auto, @left: auto) {
 	position: fixed;
+	top: @top;
+	bottom: @bottom;
+	left: @left;
+	right: @right;
 }
 ._relative() {
 	position: relative;

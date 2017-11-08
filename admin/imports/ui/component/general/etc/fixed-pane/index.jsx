@@ -44,7 +44,10 @@ export default class FixedPane extends BaseComponent
         // set parent height equal to the pane height
         root.height(`${pane.height()}px`);
 
-        // todo: probably will need to adjust left fixed position also
+        // todo: 1) probably will need to adjust left fixed position also
+        // todo: 2) will also need to switch off "fixed" position when fixed-pane is visible
+        // todo: 3) when fixed-pane is hidden under the bottom edge of the screen, it should be attached
+        // todo:    to the bottom edge. And the same is about the top edge of the screen.
     }
 
     render()

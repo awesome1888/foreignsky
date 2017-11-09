@@ -2,15 +2,15 @@ import React from 'react';
 import {Component} from 'react';
 import {Meteor} from 'meteor/meteor';
 
-import App from '../../../ui/application.jsx';
+import Application from '../../../ui/application.jsx';
 import Util from '../../../lib/util.js';
+
+import EventEmitter from '../../util/event-emitter/index.js';
 
 export default class BaseComponent extends Component
 {
     _scope = null;
     _cache = null; // this is used to store temporal cached data, to boost operations
-    _events = [];
-    _appEvents = [];
     _id = null;
 
     constructor(props)
@@ -28,23 +28,7 @@ export default class BaseComponent extends Component
             this._titleUpdated = false;
         }
 
-        // un-bind custom events
-        if(_.isArrayNotEmpty(this._events))
-        {
-            this._events.forEach((pair) => {
-                this.off(pair.event, pair.cb, false);
-            });
-            this._events = null;
-        }
-
-        // un-bind application custom events
-        if (_.isArrayNotEmpty(this._appEvents))
-        {
-            this._appEvents.forEach((pair) => {
-                this.offApplication(pair.event, pair.cb, false);
-            });
-            this._appEvents = null;
-        }
+        EventEmitter.getInstance().offByOwner(this);
     }
 
     /**
@@ -73,7 +57,7 @@ export default class BaseComponent extends Component
      */
     getApplication()
     {
-        return App.getInstance();
+        return Application.getInstance();
     }
 
     /**
@@ -130,60 +114,19 @@ export default class BaseComponent extends Component
         // todo: show error notification
     }
 
-    /**
-     * Hangs on the specified custom event
-     * todo: probably use event emitter here
-     * @param event
-     * @param cb
-     */
     on(event, cb)
     {
-        $(document).on(event, cb);
-        this._events.push({
-            event,
-            cb,
-        });
+        EventEmitter.getInstance().on(event, cb, this);
     }
 
-    onApplication(event, cb) {
-        this._appEvents.push({
-            event,
-            cb,
-        });
-        this.getApplication().on(event, cb);
-    }
-
-    off(event, cb, clean = true)
+    off(event, cb)
     {
-        $(document).unbind(event, cb);
-        if (clean)
-        {
-            this._events = this._events.filter((item) => {
-                return item.cb !== cb || item.event !== event;
-            });
-        }
+        EventEmitter.getInstance().off(event, cb);
     }
 
-    offApplication(event, cb, clean = true)
-    {
-        this.getApplication().off(event, cb);
-        if (clean)
-        {
-            this._appEvents = this._appEvents.filter((item) => {
-                return item.cb !== cb || item.event !== event;
-            });
-        }
-    }
-
-    /**
-     * Fires the specified custom event
-     * todo: probably use event emitter here
-     * @param event
-     * @param args
-     */
     fire(event, args = [])
     {
-        $(document).trigger(event, args);
+        EventEmitter.getInstance().fire(event, args);
     }
 
     getId()
@@ -198,6 +141,6 @@ export default class BaseComponent extends Component
 
     static fire(event, args = [])
     {
-        $(document).trigger(event, args);
+        EventEmitter.getInstance().fire(event, args);
     }
 }

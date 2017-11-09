@@ -101,17 +101,17 @@ export default class Application extends BaseComponent
     {
         options.triggersEnter = [];
 
-        options.triggersEnter.push((context, redirect) => {
+        options.triggersEnter.push((context, doRedirect, doStop) => {
 
             ConsoleOutput.dir(`Going to ${path}`);
-            BaseComponent.fire('router-go', [context.path]);
+            this.fire('router-go', [context.path]);
 
             if (this.useAccounts())
             {
                 // move all unauthorized to /login
                 if (!Accounts.isUserAuthorized() && context.path !== '/login')
                 {
-                    redirect('/login');
+                    doRedirect('/login');
                 }
             }
         });
@@ -269,8 +269,6 @@ export default class Application extends BaseComponent
 
     _appContainer = null;
     _lastRouteChecked = null;
-    _windowMetricsEvents = [];
-    _windowMetricsBound = false;
 
     constructor(props)
     {
@@ -286,8 +284,6 @@ export default class Application extends BaseComponent
         {
             this.on('router-go', this.onRouteChange.bind(this));
         }
-
-        this.onWindowMetricChange = _.throttle(this.onWindowMetricChange.bind(this), 300);
 
         window.__application = this;
     }
@@ -620,69 +616,5 @@ export default class Application extends BaseComponent
                 {this.renderExtras()}
             </div>
         );
-    }
-
-    on(event, cb)
-    {
-        // todo: also could be 'document-keydown', 'document-click' etc...
-        if (event === 'window-metrics')
-        {
-            this._windowMetricsEvents.push(cb);
-
-            if (!this._windowMetricsBound)
-            {
-                $(window).on('scroll', this.onWindowMetricChange);
-                $(window).on('resize', this.onWindowMetricChange);
-                this._windowMetricsBound = true;
-            }
-        }
-        else
-        {
-            super.on(event, cb);
-        }
-    }
-
-    off(event, cb)
-    {
-        // todo: also could be 'document-keydown', 'document-click' etc...
-        if (event === 'window-metrics')
-        {
-            this._windowMetricsEvents = this._windowMetricsEvents.filter((boundCb) => {
-                return boundCb !== cb;
-            });
-
-            if (!(this._windowMetricsEvents.length) && this._windowMetricsBound)
-            {
-                $(window).off('scroll', this.onWindowMetricChange);
-                $(window).off('resize', this.onWindowMetricChange);
-                this._windowMetricsBound = false;
-            }
-        }
-        else
-        {
-            super.off(event, cb);
-        }
-    }
-
-    getWindowJQ()
-    {
-        if (!this._window)
-        {
-            this._window = $(window);
-        }
-
-        return this._window;
-    }
-
-    onWindowMetricChange()
-    {
-        const data = {};
-        const w = this.getWindowJQ();
-
-        data.scrollTop = w.scrollTop();
-
-        this._windowMetricsEvents.forEach((cb) => {
-            cb(data);
-        });
     }
 }

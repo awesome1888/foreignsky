@@ -69,22 +69,22 @@ export default class SelectBox extends BaseComponent
 
     componentDidMount()
     {
-        $(window.document).on('click', this.onDocumentClick);
+        this.on('document-click', this.onDocumentClick);
     }
 
     componentWillUnmount()
     {
-        $(window.document).off('click', this.onDocumentClick);
+        this.off('document-click', this.onDocumentClick);
         this.unBindDropDownEvents();
     }
 
     bindDropDownEvents() {
-        this.on('window-metrics', this.onWindowMetricChange);
+        this.on('window-metric-change', this.onWindowMetricChange);
         $(window.document).on('keydown', this.onDocumentKeyDown);
     }
 
     unBindDropDownEvents() {
-        this.off('window-metrics', this.onWindowMetricChange);
+        this.off('window-metric-change', this.onWindowMetricChange);
         $(window.document).off('keydown', this.onDocumentKeyDown);
     }
 

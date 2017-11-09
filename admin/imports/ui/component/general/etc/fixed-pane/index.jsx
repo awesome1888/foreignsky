@@ -20,7 +20,7 @@ export default class FixedPane extends BaseComponent
     componentDidMount()
     {
         this.solvePosition();
-        this.on('window-metrics', this.onWindowMetricChange.bind(this));
+        this.on('window-metric-change', this.onWindowMetricChange.bind(this));
     }
 
     onWindowMetricChange()

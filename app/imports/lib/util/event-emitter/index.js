@@ -12,7 +12,7 @@ export default class EventEmitter
         if (!this._instance)
         {
             this._instance = new this();
-            window.__emitter = this._instance;
+            window.__emitter = this._instance; // tmp
         }
 
         return this._instance;
@@ -21,10 +21,13 @@ export default class EventEmitter
     _events = [];
     _windowMetricsEvents = [];
     _windowMetricsBound = false;
+    _documentClickEvents = [];
+    _documentClickBound = false;
 
     constructor()
     {
         this.onWindowMetricChange = _.throttle(this.onWindowMetricChange.bind(this), 300);
+        this.onDocumentClick = this.onDocumentClick.bind(this);
     }
 
     /**
@@ -32,11 +35,11 @@ export default class EventEmitter
      * todo: probably use event emitter here
      * @param event
      * @param cb
+     * @param owner
      */
     on(event, cb, owner = nll)
     {
-        // todo: also could be 'document-keydown', 'document-click' etc...
-        if (event === 'window-metrics')
+        if (event === 'window-metric-change')
         {
             this._windowMetricsEvents.push({
                 cb,
@@ -44,6 +47,15 @@ export default class EventEmitter
             });
 
             this.maybeBindMetricEvent();
+        }
+        else if (event === 'document-click')
+        {
+            this._documentClickEvents.push({
+                cb,
+                owner,
+            });
+
+            this.maybeBindDocumentClick();
         }
         else
         {
@@ -59,7 +71,7 @@ export default class EventEmitter
     off(event, cb, clean = true)
     {
         // todo: also could be 'document-keydown', 'document-click' etc...
-        if (event === 'window-metrics')
+        if (event === 'window-metric-change')
         {
             if (clean)
             {
@@ -69,6 +81,14 @@ export default class EventEmitter
 
                 this.maybeUnbindMetricEvent();
             }
+        }
+        else if (event === 'document-click')
+        {
+            this._documentClickEvents = this._documentClickEvents.filter((item) => {
+                return item.cb !== cb;
+            });
+
+            this.maybeUnbindDocumentClick();
         }
         else
         {
@@ -106,6 +126,15 @@ export default class EventEmitter
 
             this.maybeUnbindMetricEvent();
         }
+
+        if (_.isArrayNotEmpty(this._documentClickEvents))
+        {
+            this._documentClickEvents = this._documentClickEvents.filter((item) => {
+                return item.owner !== owner;
+            });
+
+            this.maybeUnbindDocumentClick();
+        }
     }
 
     /**
@@ -117,16 +146,6 @@ export default class EventEmitter
     fire(event, args = [])
     {
         $(document).trigger(event, args);
-    }
-
-    getWindowJQ()
-    {
-        if (!this._window)
-        {
-            this._window = $(window);
-        }
-
-        return this._window;
     }
 
     onWindowMetricChange()
@@ -141,6 +160,26 @@ export default class EventEmitter
         });
     }
 
+    getWindowJQ()
+    {
+        if (!this._window)
+        {
+            this._window = $(window);
+        }
+
+        return this._window;
+    }
+
+    maybeBindMetricEvent()
+    {
+        if (!this._windowMetricsBound)
+        {
+            $(window).on('scroll', this.onWindowMetricChange);
+            $(window).on('resize', this.onWindowMetricChange);
+            this._windowMetricsBound = true;
+        }
+    }
+
     maybeUnbindMetricEvent()
     {
         if (!(this._windowMetricsEvents.length) && this._windowMetricsBound)
@@ -151,13 +190,28 @@ export default class EventEmitter
         }
     }
 
-    maybeBindMetricEvent()
+    onDocumentClick(e)
     {
-        if (!this._windowMetricsBound)
+        this._documentClickEvents.forEach((item) => {
+            item.cb(e);
+        });
+    }
+
+    maybeBindDocumentClick()
+    {
+        if (!this._documentClickBound)
         {
-            $(window).on('scroll', this.onWindowMetricChange);
-            $(window).on('resize', this.onWindowMetricChange);
-            this._windowMetricsBound = true;
+            $(window.document).on('click', this.onDocumentClick);
+            this._documentClickBound = true;
+        }
+    }
+
+    maybeUnbindDocumentClick()
+    {
+        if (!(this._documentClickEvents.length) && this._documentClickBound)
+        {
+            $(window.document).off('click', this.onDocumentClick);
+            this._documentClickBound = false;
         }
     }
 }

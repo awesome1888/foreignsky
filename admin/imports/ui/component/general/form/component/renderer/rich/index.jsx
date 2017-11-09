@@ -12,6 +12,7 @@ import link from 'tinymce/plugins/link';
 import textcolor from 'tinymce/plugins/textcolor';
 import colorpicker from 'tinymce/plugins/colorpicker';
 import image from 'tinymce/plugins/image';
+import code from 'tinymce/plugins/code';
 
 // https://github.com/vazco/uniforms/blob/master/INTRODUCTION.md#autofield-algorithm
 // https://github.com/vazco/uniforms/blob/master/API.md#connectfield
@@ -39,7 +40,7 @@ class RichRenderer extends RendererGeneric
                         content={this.getValue()}
                         className="tinymce-deface"
                         config={{
-                            plugins: 'link colorpicker textcolor image',
+                            plugins: 'link colorpicker textcolor image code',
                             // plugins: 'print preview fullpage powerpaste searchreplace autolink directionality advcode visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount tinymcespellchecker a11ychecker imagetools mediaembed  linkchecker contextmenu colorpicker textpattern help',
                             toolbar: 'undo redo | bold italic forecolor backcolor | alignleft aligncenter alignright | removeformat',
                             // toolbar: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',

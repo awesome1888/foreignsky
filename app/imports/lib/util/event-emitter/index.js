@@ -23,11 +23,14 @@ export default class EventEmitter
     _windowMetricsBound = false;
     _documentClickEvents = [];
     _documentClickBound = false;
+    _documentKeyDownEvents = [];
+    _documentKeyDownBound = false;
 
     constructor()
     {
         this.onWindowMetricChange = _.throttle(this.onWindowMetricChange.bind(this), 300);
         this.onDocumentClick = this.onDocumentClick.bind(this);
+        this.onDocumentKeyDown = this.onDocumentKeyDown.bind(this);
     }
 
     /**
@@ -56,6 +59,15 @@ export default class EventEmitter
             });
 
             this.maybeBindDocumentClick();
+        }
+        else if (event === 'document-keydown')
+        {
+            this._documentKeyDownEvents.push({
+                cb,
+                owner,
+            });
+
+            this.maybeBindDocumentKeyDown();
         }
         else
         {
@@ -89,6 +101,14 @@ export default class EventEmitter
             });
 
             this.maybeUnbindDocumentClick();
+        }
+        else if (event === 'document-keydown')
+        {
+            this._documentKeyDownEvents = this._documentKeyDownEvents.filter((item) => {
+                return item.cb !== cb;
+            });
+
+            this.maybeUnbindDocumentKeyDown();
         }
         else
         {
@@ -134,6 +154,15 @@ export default class EventEmitter
             });
 
             this.maybeUnbindDocumentClick();
+        }
+
+        if (_.isArrayNotEmpty(this._documentKeyDownEvents))
+        {
+            this._documentKeyDownEvents = this._documentKeyDownEvents.filter((item) => {
+                return item.owner !== owner;
+            });
+
+            this.maybeUnbindDocumentKeyDown();
         }
     }
 
@@ -212,6 +241,31 @@ export default class EventEmitter
         {
             $(window.document).off('click', this.onDocumentClick);
             this._documentClickBound = false;
+        }
+    }
+
+    onDocumentKeyDown(e)
+    {
+        this._documentKeyDownEvents.forEach((item) => {
+            item.cb(e);
+        });
+    }
+
+    maybeBindDocumentKeyDown()
+    {
+        if (!this._documentKeyDownBound)
+        {
+            $(window.document).on('keydown', this.onDocumentKeyDown);
+            this._documentKeyDownBound = true;
+        }
+    }
+
+    maybeUnbindDocumentKeyDown()
+    {
+        if (!(this._documentKeyDownEvents.length) && this._documentKeyDownBound)
+        {
+            $(window.document).off('keydown', this.onDocumentKeyDown);
+            this._documentKeyDownBound = false;
         }
     }
 }

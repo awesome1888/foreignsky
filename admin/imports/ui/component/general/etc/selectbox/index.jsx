@@ -80,12 +80,12 @@ export default class SelectBox extends BaseComponent
 
     bindDropDownEvents() {
         this.on('window-metric-change', this.onWindowMetricChange);
-        $(window.document).on('keydown', this.onDocumentKeyDown);
+        this.on('document-keydown', this.onDocumentKeyDown);
     }
 
     unBindDropDownEvents() {
         this.off('window-metric-change', this.onWindowMetricChange);
-        $(window.document).off('keydown', this.onDocumentKeyDown);
+        this.off('document-keydown', this.onDocumentKeyDown);
     }
 
     onDropDownScroll(e)
@@ -106,12 +106,15 @@ export default class SelectBox extends BaseComponent
         }
     }
 
-    onWindowMetricChange() {
+    onWindowMetricChange()
+    {
         this.updateDirection();
     }
 
-    onDocumentKeyDown(e) {
-        if (e.key === 'Escape') {
+    onDocumentKeyDown(e)
+    {
+        if (e.key === 'Escape')
+        {
             this.closeDropDown();
         }
     }

@@ -11,7 +11,6 @@ export default class Header extends React.Component {
 			<div className="container">
 				<div className="layout__central-row row">
 					<div className="header col-xs-12">
-
 						<div className="header__inner">
 							<div className="header__logo">
 								<a
@@ -22,9 +21,9 @@ export default class Header extends React.Component {
 									B_
 								</a>
 								<div className="header__logo-text">
-									Rocket Trabant!
+									Here be dragons
 									<div className="header__logo-funny-desc">
-										Ну или просто еще один блог одной IT-семьи, решившей переехать в Берлин
+										Блог гражданина Мира
 									</div>
 								</div>
 							</div>

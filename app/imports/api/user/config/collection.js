@@ -18,11 +18,20 @@ export default new class extends Collection
         const google = _.getValue(data, 'services.google');
         if (_.isObjectNotEmpty(google))
         {
+            const email = google.email;
+
+            // check the email against the whitelist
+            // todo: hardcoded for now...
+            if (email !== 'awesome1888@gmail.com')
+            {
+                throw new Meteor.Error(401, 'Not authorized');
+            }
+
             if (!_.isArrayNotEmpty(data.emails))
             {
                 data.emails = [
                     {
-                        address: google.email,
+                        address: email,
                         verified: google.verified_email,
                     }
                 ];

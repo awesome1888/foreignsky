@@ -1,7 +1,6 @@
 import React from 'react';
 import Util from '../../util.js';
 import BaseComponent from '../component/component.jsx';
-import {DocHead} from 'meteor/kadira:dochead';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import {createRouter} from 'meteor/cultofcoders:meteor-react-routing';
 import {createContainer} from 'meteor/react-meteor-data';
@@ -276,10 +275,6 @@ export default class Application extends BaseComponent
         this.extendState(Object.assign({
         }, this.getAccountInitialState()));
 
-        this.setPageTitle();
-        this.setDescription();
-        this.setKeywords();
-
         if (this.useAccounts())
         {
             this.on('router-go', this.onRouteChange.bind(this));
@@ -432,61 +427,6 @@ export default class Application extends BaseComponent
 
     getRouter()
     {
-    }
-
-    makeTitle(title = '')
-    {
-        if (_.isStringNotEmpty(title)) {
-            return title.replace(/#DASH#/g, '–');
-        }
-
-        return '';
-    }
-
-    setTitle(title = '')
-    {
-        this.fire('set-title', title);
-        this.setPageTitle(title);
-    }
-
-    setPageTitle(title)
-    {
-        let titlePostfix = this.getMainTitle();
-        title = this.makeTitle(title);
-        if (title.length > 0)
-        {
-            title = `${title} – ${titlePostfix}`;
-        }
-        DocHead.setTitle(title);
-    }
-
-    // todo: move to the page logic
-    setDescription(text = '')
-    {
-        DocHead.addMeta({
-            name: "description",
-            content: _.isStringNotEmpty(text) ? text : this.getMainTitle(),
-        });
-    }
-
-    // todo: move to the page logic
-    setKeywords(keywords = [])
-    {
-        let kw = [];
-        if (_.isArrayNotEmpty(keywords))
-        {
-            kw = keywords;
-        }
-
-        DocHead.addMeta({
-            name: "keywords",
-            content: kw.join(', '),
-        });
-    }
-
-    getMainTitle()
-    {
-        return 'Project name';
     }
 
     transformPageParameters(params)

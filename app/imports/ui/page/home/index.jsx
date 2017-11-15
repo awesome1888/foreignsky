@@ -17,6 +17,8 @@ export default class HomePage extends BasePage
 
 	componentWillMount()
 	{
+        super.componentWillMount();
+
 		this.handleIdUpdate(this.props.route.id);
 	}
 
@@ -25,11 +27,21 @@ export default class HomePage extends BasePage
 		this.handleIdUpdate(next.route.id);
 	}
 
+    getPageTitle()
+    {
+        return 'Home';
+    }
+
 	handleIdUpdate(id)
 	{
 		if(this.state.id !== id)
 		{
-			this.setState({id: id});
+            this.setState({id: id});
+
+		    if (!_.isStringNotEmpty(id))
+            {
+		        this.setTitle(this.getPageTitle());
+            }
 		}
 	}
 

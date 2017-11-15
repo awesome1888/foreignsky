@@ -100,8 +100,10 @@ export default class ArticleDetailComponent extends BaseComponent
                 data: article.data,
                 article,
             });
+
+            console.dir(article);
             // App.getInstance().toggleMap(true);
-            this.setTitle(article.title);
+            this.setTitle(article.getTitle());
         });
 	}
 

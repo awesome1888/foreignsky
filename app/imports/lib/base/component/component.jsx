@@ -20,14 +20,12 @@ export default class BaseComponent extends Component
         this.clearCache();
     }
 
+    componentWillMount()
+    {
+    }
+
     componentWillUnmount()
     {
-        if(this._titleUpdated)
-        {
-            this.getApplication().setTitle();
-            this._titleUpdated = false;
-        }
-
         EventEmitter.getInstance().offByOwner(this);
     }
 
@@ -83,8 +81,7 @@ export default class BaseComponent extends Component
 
     setTitle(title = '')
     {
-        this.getApplication().setTitle(title);
-        this._titleUpdated = true;
+        this.fire('set-title', [title]);
     }
 
     /**

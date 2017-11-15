@@ -1,6 +1,7 @@
 import React from 'react';
 import BaseComponent from '../component/component.jsx';
 import PropTypes from 'prop-types';
+import {DocHead} from 'meteor/kadira:dochead';
 
 export default class BasePage extends BaseComponent
 {
@@ -12,18 +13,91 @@ export default class BasePage extends BaseComponent
         title: '',
     };
 
-    constructor(props)
+    componentWillMount()
     {
-        super(props);
-        const title = this.getDefaultTitle();
-        if (_.isStringNotEmpty(title))
-        {
-            this.setTitle(title);
-        }
+        super.componentWillMount();
+
+        this.on('set-title', this.onSetTitle.bind(this));
+
+        this.setDocumentTitle(this.makeTitle(this.getPageTitle()));
+        this.setDescription(this.getPageDescription());
+        this.setKeywords(this.getPageKeywords());
     }
 
-    getDefaultTitle()
+    getDocumentTitlePostfix()
     {
+        // todo: get page postfix from options
+        return 'New application';
+    }
+
+    /**
+     * The page title can be also updated at the runtime by calling this.fire('set-title', 'New title'); on any
+     * component derived from BaseComponent
+     * @returns {string}
+     */
+    getPageTitle()
+    {
+        return 'New page';
+    }
+
+    getPageDescription()
+    {
+        // todo: get default page description from options
+        return 'My brand new application';
+    }
+
+    getPageKeywords()
+    {
+        // todo: get default page keywords from options
+        return ['application', 'new'];
+    }
+
+    onSetTitle(e, title)
+    {
+        this.setDocumentTitle(this.makeTitle(title));
+    }
+
+    setDocumentTitle(title = '')
+    {
+        let titlePostfix = this.getDocumentTitlePostfix();
+        if (title.length > 0)
+        {
+            title = `${title} – ${titlePostfix}`;
+        }
+
+        DocHead.setTitle(title);
+    }
+
+    setDescription(text = '')
+    {
+        DocHead.addMeta({
+            name: "description",
+            content: _.isStringNotEmpty(text) ? text : this.getPageTitle(),
+        });
+    }
+
+    // todo: move to the page logic
+    setKeywords(keywords = [])
+    {
+        let kw = [];
+        if (_.isArrayNotEmpty(keywords))
+        {
+            kw = keywords;
+        }
+
+        DocHead.addMeta({
+            name: "keywords",
+            content: kw.join(', '),
+        });
+    }
+
+    makeTitle(title = '')
+    {
+        if (_.isStringNotEmpty(title))
+        {
+            return title.replace(/#DASH#/g, '–');
+        }
+
         return '';
     }
 

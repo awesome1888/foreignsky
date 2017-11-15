@@ -113,17 +113,30 @@ export default class Form extends BaseComponent
         return this.props.model;
     }
 
+    /**
+     * Transforms the map from the database structure into the UI structure, before displaying
+     * @param map
+     * @returns {*}
+     */
+    // todo: probably rename to transformMapDB2UI (or smth)
     transformMap(map)
     {
         return map;
     }
 
     // todo: this is wrong. model transformation should be in form of model => newModel
+    // todo: DONT get confused with this.onTransform()
+    // todo: probably rename to transformModelDB2UI (or smth)
     transformModel()
     {
         return this.state.model;
     }
 
+    /**
+     * Transforms the map from the UI structure back into the database structure, before saving
+     * @param model
+     * @returns {*}
+     */
     transformModelBack(model)
     {
         return model;
@@ -142,6 +155,7 @@ export default class Form extends BaseComponent
 
     getModelTransformed()
     {
+        // todo: cache here!
         return this.state.model;
     }
 
@@ -176,6 +190,13 @@ export default class Form extends BaseComponent
         return sourceModel;
     }
 
+    /**
+     * Override this if you need to show form errors in a custom way, or perform additional validation
+     * @param model
+     * @param errors
+     * @param callback
+     * @returns {*}
+     */
     onValidate(model, errors, callback) {
         // sniff form errors here
         if (_.isFunction(this.props.onValidate))
@@ -184,6 +205,17 @@ export default class Form extends BaseComponent
         }
 
         return callback();
+    }
+
+    /**
+     * Override this if you need to make dependencies between model fields
+     * @param mode
+     * @param model
+     * @returns {*}
+     */
+    onTransform(mode, model)
+    {
+        return model;
     }
 
     isFragment()
@@ -375,6 +407,7 @@ export default class Form extends BaseComponent
                     className="ui big form"
                     ref={(reference) => {this._form = reference;}}
                     onValidate={this.onValidate.bind(this)}
+                    modelTransform={this.onTransform.bind(this)}
                 >
                     {body}
                     {this.props.children || null}

@@ -8,7 +8,7 @@ import ShellUI from '../../../lib/util/shell/ui/ui.jsx';
 
 export default class TaskRunnerPage extends BasePage
 {
-    getDefaultTitle()
+    getPageTitle()
     {
         return 'Task runner';
     }
@@ -17,7 +17,7 @@ export default class TaskRunnerPage extends BasePage
     {
         return (
             <Layout
-                title={this.getDefaultTitle()}
+                title={this.getPageTitle()}
                 central={
                     <ShellUI />
                 }

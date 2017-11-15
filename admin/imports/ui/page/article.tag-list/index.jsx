@@ -8,11 +8,16 @@ import List from './component/list/list.jsx';
 
 export default class ArticleTagListPage extends BasePage
 {
+    getPageTitle()
+    {
+        return List.getEntity().getTitle();
+    }
+
 	render()
     {
         return (
             <Layout
-                title={List.getEntity().getTitle()}
+                title={this.getPageTitle()}
                 central={
                     <List
                         detailPageUrl={this.props.route.detailPath || ''}

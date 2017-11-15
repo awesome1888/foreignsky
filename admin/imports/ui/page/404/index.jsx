@@ -7,7 +7,7 @@ import Layout from '../../component/layout/layout.jsx';
 
 export default class NotFoundPage extends BasePage
 {
-    getDefaultTitle()
+    getPageTitle()
     {
         return 'Page not found';
     }
@@ -16,7 +16,7 @@ export default class NotFoundPage extends BasePage
     {
         return (
             <Layout
-                title={this.getDefaultTitle()}
+                title={this.getPageTitle()}
                 central={"Page not found (404)"}
             />
         );

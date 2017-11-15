@@ -8,6 +8,11 @@ import Form from './component/form/form.jsx';
 
 export default class EmbedEntityDetailPage extends BasePage
 {
+    getPageTitle()
+    {
+        return Form.getEntity().getTitle();
+    }
+
     render()
     {
         const backUrl = this.props.route.listPath || '';
@@ -16,7 +21,7 @@ export default class EmbedEntityDetailPage extends BasePage
         // todo: not rely on FlowRouter behaviour
         return (
             <Layout
-                title={Form.getEntity().getTitle()}
+                title={this.getPageTitle()}
                 backUrl={backUrl}
                 central={
                     <Form

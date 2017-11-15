@@ -7,7 +7,7 @@ import Layout from '../../component/layout/layout.jsx';
 
 export default class ForbiddenPage extends BasePage
 {
-    getDefaultTitle()
+    getPageTitle()
     {
         return 'Forbidden';
     }
@@ -16,7 +16,7 @@ export default class ForbiddenPage extends BasePage
     {
         return (
             <Layout
-                title={this.getDefaultTitle()}
+                title={this.getPageTitle()}
                 central={"Forbidden (403)"}
             />
         );

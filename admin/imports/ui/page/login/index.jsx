@@ -19,6 +19,10 @@ export default class LoginPage extends BasePage {
         };
     }
 
+    getPageTitle() {
+        return 'Login';
+    }
+
     onSubmitForm(data) {
         this.data = data;
         const login = this.data.login;

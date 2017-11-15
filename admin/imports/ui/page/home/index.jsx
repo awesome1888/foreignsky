@@ -8,7 +8,7 @@ import Form from '../../component/general/form/form.jsx';
 
 export default class HomePage extends BasePage
 {
-    getDefaultTitle()
+    getPageTitle()
     {
         return 'Home';
     }
@@ -17,7 +17,7 @@ export default class HomePage extends BasePage
     {
         return (
             <Layout
-                title={this.getDefaultTitle()}
+                title={this.getPageTitle()}
                 central={
                     <div className="">
                         What do you want to do?

@@ -7,6 +7,11 @@ import './style.less';
 
 export default class NotFoundPage extends BasePage
 {
+    getPageTitle()
+    {
+        return '404';
+    }
+
 	render()
 	{
 		return (<div>No such page. 404. I mean it.</div>);

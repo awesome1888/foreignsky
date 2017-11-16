@@ -3,12 +3,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 //import classnames from 'classnames';
+import BaseComponent from '../../../../../../../lib/base/component/component.jsx';
+
 import File from '../../../../../../../api/file/entity/entity.client.js';
 import Embed from '../../../../../../../api/embed/entity/entity.client.js';
 
 import './style.less';
 
-export default class EmbedGalleryComponent extends React.Component {
+export default class EmbedGalleryComponent extends BaseComponent {
 
 	static propTypes = {
 		item: PropTypes.arrayOf(PropTypes.shape({
@@ -41,6 +43,20 @@ export default class EmbedGalleryComponent extends React.Component {
 
 		this.onWindowResize = this.onWindowResize.bind(this);
 	}
+
+    componentWillMount()
+    {
+        super.componentWillMount();
+
+        this.onDocumentClick('a[data-open-image="true"]', this.onImageClick.bind(this));
+        // this.on('window-metric-change', this.onWindowResize.bind(this));
+    }
+
+    onImageClick(e, node)
+    {
+        this.fire('open-image', [node.getAttribute('href')]);
+        e.preventDefault();
+    }
 
 	getOptions()
 	{
@@ -75,31 +91,6 @@ export default class EmbedGalleryComponent extends React.Component {
 				width: width,
 				height: height,
 			});
-		}
-	}
-
-	componentWillMount()
-	{
-		this.onWindowResize();
-	}
-
-	componentDidMount()
-	{
-		window.addEventListener("resize", this.onWindowResize);
-	}
-
-	componentWillUnmount()
-	{
-		window.removeEventListener("resize", this.onWindowResize);
-	}
-
-	onImageClick(item, e)
-	{
-		e.preventDefault();
-
-		if(item && item.image.path)
-		{
-			App.getInstance().imageView.open(File.convertToUrl(item.image.path));
 		}
 	}
 
@@ -169,12 +160,11 @@ export default class EmbedGalleryComponent extends React.Component {
 
 						return (
 							<a
-								// href={image.getAbsoluteUrl()}
+								href={image.getAbsoluteUrl()}
 								className={`embed-gallery__image ${imgClass}`}
 								style={style}
 							    key={image.getId()}
-								// target="_blank"
-								// onClick={Util.passCtx(this.onImageClick, [item])}
+								target="_self" // to prevent FlowRouter from working on this link
                                 data-open-image
 							>
 								{

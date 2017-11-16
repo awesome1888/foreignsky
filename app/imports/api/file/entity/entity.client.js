@@ -33,6 +33,11 @@ export default class File extends mix(BaseEntity).with(Entity)
 
     static makePublicUrl(url, tail = '')
     {
+        if (!_.isStringNotEmpty(url))
+        {
+            return '';
+        }
+
         url = `${url}${_.isStringNotEmpty(tail) ? `/${tail}` : ''}`;
 
         if (Meteor.isDevelopment)

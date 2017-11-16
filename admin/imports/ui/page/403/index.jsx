@@ -9,7 +9,7 @@ export default class ForbiddenPage extends BasePage
 {
     getPageTitle()
     {
-        return 'Forbidden';
+        return '403';
     }
 
     render()

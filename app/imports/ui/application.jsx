@@ -1,7 +1,7 @@
 import React from 'react';
 
 import HomePage from '../ui/page/home/index.jsx';
-import NotFoundPage from '../ui/page/not-found/index.jsx';
+import NotFoundPage from './page/404/index.jsx';
 
 import Application from '../lib/base/application/application.jsx';
 import DefaultLayout from './component/application-layout/default/index.jsx';
@@ -33,10 +33,5 @@ export default class FrontApplication extends Application
         };
 
         return routes;
-    }
-
-    getMainTitle()
-    {
-        return 'Nachberlin';
     }
 }

@@ -3,10 +3,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import BaseComponent from '../../../../lib/base/component/component.jsx';
 
 import './style.less';
 
-export default class ImageViewComponent extends React.Component {
+export default class ImageViewer extends BaseComponent {
 
 	static propTypes = {
 		// label: PropTypes.shape({
@@ -33,9 +34,18 @@ export default class ImageViewComponent extends React.Component {
 		};
 	}
 
+    componentWillMount()
+    {
+        super.componentWillMount();
+
+        this.on('open-image', (e, url) => {
+            this.open(url);
+        });
+    }
+
 	open(url)
 	{
-		if(_.isString(url) && url.length)
+		if(_.isStringNotEmpty(url))
 		{
 			// todo: some loading
 			this.setState({

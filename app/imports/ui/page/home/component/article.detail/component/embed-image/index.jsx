@@ -3,13 +3,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import BaseComponent from '../../../../../../../lib/base/component/component.jsx';
+
 import File from '../../../../../../../api/file/entity/entity.client.js';
 import Embed from '../../../../../../../api/embed/entity/entity.client.js';
-import Util from '../../../../../../../lib/util.js';
 
 //import './style.less';
 
-export default class EmbedImageComponent extends React.Component {
+export default class EmbedImageComponent extends BaseComponent {
 
 	static propTypes = {
 		item: PropTypes.arrayOf(PropTypes.shape({
@@ -37,6 +38,19 @@ export default class EmbedImageComponent extends React.Component {
 	// {
 	// 	return this.props.options || {};
 	// }
+
+    componentWillMount()
+    {
+        super.componentWillMount();
+
+        this.onDocumentClick('a[data-open-image="true"]', this.onImageClick.bind(this));
+    }
+
+    onImageClick(e, node)
+    {
+        this.fire('open-image', [node.getAttribute('href')]);
+        e.preventDefault();
+    }
 
 	getItem()
 	{
@@ -119,16 +133,6 @@ export default class EmbedImageComponent extends React.Component {
         return _.isStringNotEmpty(this.getLabelText()) && !this.isLabelTypeBottom();
     }
 
-    onImageClick(item, e)
-    {
-        e.preventDefault();
-
-        if(item && item.image.url)
-        {
-            App.getInstance().getImageView().open(File.convertToUrl(item.image.path));
-        }
-    }
-
 	render()
 	{
         const options = this.getOptions();
@@ -156,8 +160,8 @@ export default class EmbedImageComponent extends React.Component {
                     href={image.getAbsoluteUrl()}
 					className="embed-image__image embed-image__image_static"
 					style={style}
-                    target="_blank"
-                    onClick={Util.passCtx(this.onImageClick, [this.getItem()])}
+                    target="_self" // to prevent FlowRouter from working on this link
+                    data-open-image
 				>
 					{
 						this.isLabelInside()

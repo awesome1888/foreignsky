@@ -17,7 +17,7 @@ export default class Util
 
 	static loadJs(src)
 	{
-		let d = document;
+	    let d = document;
 
 		if(!d || !src)
 		{

@@ -7,11 +7,10 @@ import GlobalOverlay from '../../general/etc/global-overlay/index.jsx';
 import GlobalLoadProgress from '../../general/etc/global-load-progress/index.jsx';
 
 import ArticleListComponent from '../component/article.list/index.jsx';
-import ImageViewComponent from '../component/image-view/index.jsx';
+import ImageViewer from '../../general/image-viewer/index.jsx';
 import Map from '../component/map/index.jsx';
 
 // import PreRender from '../lib/prerender.js';
-// import {DocHead} from 'meteor/kadira:dochead';
 
 // import './style.less';
 
@@ -54,9 +53,6 @@ export default class DefaultApplicationLayout extends BaseComponent
 
     render(props)
     {
-        const title = this.getTitle();
-        const backUrl = this.props.backUrl;
-
         return (
             <div
                 className="layout tall"
@@ -86,68 +82,13 @@ export default class DefaultApplicationLayout extends BaseComponent
                 </div>
 
                 <Map
-                    // ref={(instance) => {this.setMap(instance)}}
                     center={{lat: 52.520764, lng: 13.409161}}
                     zoom={15}
-                    //useFakeMap={PreRender.isCrawler}
+                    // useFakeMap={PreRender.isCrawler}
                 />
 
-                <ImageViewComponent
-                    //ref={(instance) => {this.setImageView(instance)}}
-                />
+                <ImageViewer />
             </div>
         );
     }
-
-    // renderExtras()
-    // {
-    //     return [
-    //     ];
-    // }
-
-    // setMap(ref)
-    // {
-    // if(!this._map)
-    // {
-    // 	this._map = ref;
-    // }
-    // }
-    //
-    // getImageView()
-    // {
-    // if(!this._imageView)
-    // {
-    // 	return {
-    // 		open: Util.noop,
-    // 	};
-    // }
-    //
-    // return this._imageView;
-    // }
-    //
-    // setImageView(ref)
-    // {
-    // if(!this._imageView)
-    // {
-    // 	this._imageView = ref;
-    // }
-    // }
-    //
-    // toggleMap(way)
-    // {
-    //    if(this.map)
-    //    {
-    //        this.map.toggleBlock(way);
-    //     }
-    // }
-    //
-    // showOverlay()
-    // {
-    //     return !PreRender.isCrawler;
-    // }
-    //
-    // showIndicator()
-    // {
-    //     return !PreRender.isCrawler;
-    // }
 }

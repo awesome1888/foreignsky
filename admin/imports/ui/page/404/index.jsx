@@ -9,7 +9,7 @@ export default class NotFoundPage extends BasePage
 {
     getPageTitle()
     {
-        return 'Page not found';
+        return '404';
     }
 
 	render()

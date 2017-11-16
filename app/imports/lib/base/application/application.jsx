@@ -283,18 +283,6 @@ export default class Application extends BaseComponent
         window.__application = this;
     }
 
-    getGlobalSelectorMap()
-    {
-        return [
-//         {
-//             selector: '[data-save-scroll="true"]',
-//             callback: () => {
-//                 console.dir('hello there!');
-//             },
-//         },
-        ];
-    }
-
     componentWillMount()
     {
         this.constructor._instance = this;
@@ -304,19 +292,6 @@ export default class Application extends BaseComponent
             this.processSecurity();
         }
     }
-
-    // componentDidMount()
-    // {
-    //     /**
-    //      * Have to use native JS to avoid problems with FlowRouter when clicking on href-s.
-    //      * We use capturing to prevent being affected with cancelBubble.
-    //      */
-    //     if (this._appContainer && _.isArrayNotEmpty(this.getGlobalSelectorMap()))
-    //     {
-    //         this.onGlobalClick = this.onGlobalClick.bind(this);
-    //         this._appContainer.addEventListener('click', this.onGlobalClick, true);
-    //     }
-    // }
 
     componentWillReceiveProps(props)
     {
@@ -400,17 +375,6 @@ export default class Application extends BaseComponent
     static getDefaultPageSecurityPolicy()
     {
         return SecurityProvider.getOpenGatePolicy();
-    }
-
-    onGlobalClick(e)
-    {
-        let node;
-        this.getGlobalSelectorMap().forEach((item) => {
-            node = Util.findClosestParent(e.target, item.selector);
-            if (node) {
-                item.callback(node);
-            }
-        });
     }
 
     getQuery()

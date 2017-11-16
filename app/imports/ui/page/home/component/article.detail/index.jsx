@@ -4,6 +4,7 @@ import React from 'react';
 import {createQueryContainer} from 'meteor/cultofcoders:grapher-react';
 import {TAPi18n} from 'meteor/tap:i18n';
 import classnames from 'classnames';
+import Util from '../../../../../lib/util.js';
 
 import BaseComponent from '../../../../../lib/base/component/component.jsx';
 import Article from '../../../../../api/article/entity/entity.client.js';
@@ -28,12 +29,19 @@ export default class ArticleDetailComponent extends BaseComponent
 	componentDidMount()
 	{
 		this.handleIdUpdate(this.props.id);
+
+		this.onDocumentClick('a[data-open-image="true"]', this.onImageClick.bind(this));
 	}
 
 	componentWillReceiveProps(next)
 	{
 		this.handleIdUpdate(next.id);
 	}
+
+    onImageClick(e, node)
+    {
+        console.dir(node);
+    }
 
 	handleIdUpdate(id)
 	{
@@ -101,7 +109,6 @@ export default class ArticleDetailComponent extends BaseComponent
                 article,
             });
 
-            console.dir(article);
             // App.getInstance().toggleMap(true);
             this.setTitle(article.getTitle());
         });

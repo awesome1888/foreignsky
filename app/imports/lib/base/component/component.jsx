@@ -126,6 +126,20 @@ export default class BaseComponent extends Component
         EventEmitter.getInstance().fire(event, args);
     }
 
+    onDocumentClick(selector, callback)
+    {
+        if (_.isStringNotEmpty(selector) && _.isFunction(callback))
+        {
+            this.on('document-click', (e) => {
+                const node = Util.findClosestParent(e.target, selector);
+                if (node)
+                {
+                    callback(e, node);
+                }
+            });
+        }
+    }
+
     getId()
     {
         if (this._id === null)

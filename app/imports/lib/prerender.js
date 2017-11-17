@@ -28,7 +28,7 @@ export default class PreRender
      * Returns true, if google/yandex/prerender/... is visiting the app at the moment
      * @returns {boolean}
      */
-    static get isCrawler()
+    static isCrawler()
     {
         if(!Meteor.isClient)
         {

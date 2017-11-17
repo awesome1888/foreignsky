@@ -92,12 +92,6 @@ export default class Map extends BaseComponent {
 
 	initializeMap()
 	{
-		// if(!Meteor.isClient || PreRender.isCrawler)
-		// {
-		//     // do not initialize map if we are not on the client
-         //    // or google/yandex is visiting us
-		// 	return;
-		// }
 		return this.getApplication().wait(new Promise((resolve, reject) => {
 			Util.loadJs(this.getMapUrl()).then(() => {
 				return this.createMapObject();

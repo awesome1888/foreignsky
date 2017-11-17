@@ -37,7 +37,7 @@ export default class LoadOverlay extends BaseComponent {
 
     onApplicationMounted()
 	{
-	    if(PreRender.isCrawler) {
+	    if(PreRender.isCrawler()) {
 	        return; // when crawler do nothing
         }
 

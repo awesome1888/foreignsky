@@ -10,7 +10,7 @@ import ArticleListComponent from '../component/article.list/index.jsx';
 import ImageViewer from '../../general/image-viewer/index.jsx';
 import Map from '../component/map/index.jsx';
 
-// import PreRender from '../lib/prerender.js';
+import PreRender from '../../../../lib/prerender.js';
 
 // import './style.less';
 
@@ -84,7 +84,7 @@ export default class DefaultApplicationLayout extends BaseComponent
                 <Map
                     center={{lat: 52.520764, lng: 13.409161}}
                     zoom={15}
-                    // useFakeMap={PreRender.isCrawler}
+                    useFakeMap={PreRender.isCrawler()}
                 />
 
                 <ImageViewer />

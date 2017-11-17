@@ -9,4 +9,3 @@ ArticleMethods.declare(provider);
 ArticleTagMethods.declare(provider);
 EmbedMethods.declare(provider);
 FileMethods.declare(provider);
-

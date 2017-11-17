@@ -9,6 +9,8 @@ import Map from '../map/index.js';
  */
 export default class BaseEntity
 {
+    static DEFAULT_PAGE_SIZE = 20;
+
     // this is a singleton, use collection.getName() here!
     static _cache = {
         q: {},
@@ -186,6 +188,21 @@ export default class BaseEntity
         {
             translated.$paginate = true;
             translated.$options.skip = parseInt(parameters.offset);
+        }
+        else if ('skip' in parameters) // synonym for "offset"
+        {
+            translated.$paginate = true;
+            translated.$options.skip = parseInt(parameters.skip);
+        }
+        else if ('page' in parameters)
+        {
+            translated.$paginate = true;
+            if (!('limit') in translated.$options)
+            {
+                translated.$options.limit = this.DEFAULT_PAGE_SIZE;
+            }
+
+            translated.$options.skip = translated.$options.limit * (parameters.page - 1);
         }
         
         return translated;

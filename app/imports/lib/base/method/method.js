@@ -40,6 +40,8 @@ export default class Method
                     desc.log = true;
                 }
 
+                console.dir(`Method: ${name}`);
+
                 methods[name] = this.makeBody(desc, name, bodyName);
             });
 

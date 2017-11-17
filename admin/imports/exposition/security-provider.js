@@ -7,3 +7,5 @@ export default class SecurityProvider extends BaseSecurityProvider
         return this.constructor.getAdminOnlyPolicy();
     }
 }
+
+export const provider = new SecurityProvider();

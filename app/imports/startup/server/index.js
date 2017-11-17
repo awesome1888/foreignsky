@@ -1,3 +1,3 @@
-import './../../api/index.server.js';
+import '../../exposition/index.js';
 import './prerender.js';
 import './fixtures.js';

@@ -17,11 +17,20 @@ export default class extends Method
                 body: 'getToken',
                 security: SecurityProvider.getAdminOnlyPolicy(),
             },
+            'articleDraft.token.get': {
+                body: 'getArticleDraftToken',
+                security: SecurityProvider.getAdminOnlyPolicy(),
+            },
         };
     }
 
     getToken()
     {
         return Security.getToken();
+    }
+
+    getArticleDraftToken()
+    {
+        
     }
 }

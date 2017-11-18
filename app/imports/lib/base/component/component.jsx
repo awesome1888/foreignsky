@@ -95,8 +95,10 @@ export default class BaseComponent extends Component
         return Util.execute(name, args).catch((error) => {
             this.showConsoleError(
                 `Error invoking Method '${name}': `,
-                err
+                error
             );
+
+            throw error;
         });
     }
 
@@ -148,6 +150,58 @@ export default class BaseComponent extends Component
         }
 
         return this._id;
+    }
+
+    go(url)
+    {
+        FlowRouter.go(url);
+    }
+
+    goByError(e)
+    {
+        if (!e)
+        {
+            this.go500();
+        }
+        else
+        {
+            if (e.error === 401)
+            {
+                this.go401();
+            }
+            else if (e.error === 403)
+            {
+                this.go403();
+            }
+            else if (e.error === 404)
+            {
+                this.go404();
+            }
+            else
+            {
+                this.go500();
+            }
+        }
+    }
+
+    go401()
+    {
+        FlowRouter.go('/401');
+    }
+
+    go403()
+    {
+        FlowRouter.go('/403');
+    }
+
+    go404()
+    {
+        FlowRouter.go('/404');
+    }
+
+    go500()
+    {
+        FlowRouter.go('/404');
     }
 
     static fire(event, args = [])

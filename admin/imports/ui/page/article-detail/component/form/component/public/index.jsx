@@ -13,19 +13,14 @@ class RendererPublic extends RendererBoolean
 {
     render()
     {
-        console.dir(this.props);
-
-        const form = this.getForm();
-        const model = form.getModel();
-
-        console.dir(model);
+        const item = this.getForm().getItem();
 
         return (
             <Container
                 errorProps={this.props}
                 {...filterDOMProps(this.props)}
             >
-                <div className="content_row">
+                <div className="content_row group_x2">
                     <div className="">
                         {
                             this.hasLabel()
@@ -41,9 +36,19 @@ class RendererPublic extends RendererBoolean
                             this.renderInput()
                         }
                     </div>
-                    <div className="">
-
-                    </div>
+                    {
+                        // todo: get the url from options
+                        !!item
+                        &&
+                        <a
+                            className="icon-label_desktop-windows no-decoration"
+                            href={`http://localhost:3001/${item.getId()}?token=${this.getForm().getToken()}`}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                        >
+                            View article
+                        </a>
+                    }
                 </div>
             </Container>
         );

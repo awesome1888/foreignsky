@@ -64,7 +64,16 @@ export default class ArticleDetailComponent extends BaseComponent
 	    const q = this.getApplication().getQuery();
 	    if (q.token)
         {
-            getPublic = q.token !== await this.execute('article.draftToken.get');
+            let token;
+            try {
+                token = await this.execute('article.draftToken.get');
+            } catch(e) {
+                // todo: NOTIF
+                this.goByError(e); // todo: probably not going anywhere, just show the notification
+                return;
+            }
+
+            getPublic = q.token !== token;
         }
 
         return Article.findOne({
@@ -99,7 +108,7 @@ export default class ArticleDetailComponent extends BaseComponent
         }).then((article) => {
             if(!article)
             {
-                FlowRouter.go('/404');
+                this.go404();
                 return;
             }
 
@@ -111,9 +120,9 @@ export default class ArticleDetailComponent extends BaseComponent
 
             // App.getInstance().toggleMap(true);
             this.setTitle(article.getTitle());
-        }).catch(() => {
+        }).catch((e) => {
 	        // todo: NOTIF
-            FlowRouter.go('/500');
+            this.goByError(e); // todo: probably not going anywhere, just show the notification
         });
 	}
 

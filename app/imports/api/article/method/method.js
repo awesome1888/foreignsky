@@ -7,4 +7,21 @@ export default class extends Method
     {
         return Entity;
     }
+
+    static getExtendedDeclaration(sp = null)
+    {
+        return {
+            getDraftToken: {
+                name: '#ENTITY#.draftToken.get',
+                body: 'getDraftToken',
+                security: null,
+            },
+        };
+    }
+
+    getDraftToken()
+    {
+        // todo: move to options
+        return 'fTKZuZYaEoetGkotd7EbQMokXQJZwg';
+    }
 }

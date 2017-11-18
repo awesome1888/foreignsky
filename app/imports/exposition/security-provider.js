@@ -13,3 +13,5 @@ export default class SecurityProvider extends BaseSecurityProvider
         return this.constructor.getOpenGatePolicy();
     }
 }
+
+export const provider = new SecurityProvider();

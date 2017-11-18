@@ -11,9 +11,27 @@ import GoogleMapRenderer from '../../../../component/general/form/component/rend
 
 export default class ArticleForm extends EntityForm
 {
+    _token = '';
+
     static getEntity()
     {
         return Article;
+    }
+
+    async getModel()
+    {
+        await this.loadToken();
+        await super.getModel();
+    }
+
+    async loadToken()
+    {
+        this._token = await this.execute('article.draftToken.get');
+    }
+
+    getToken()
+    {
+        return this._token;
     }
 
     extractItemTitle(item)

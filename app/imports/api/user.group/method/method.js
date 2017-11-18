@@ -16,6 +16,7 @@ export default class extends Method
             getCodeMap: {
                 body: 'getCodeMap',
                 security: SecurityProvider.getOpenGatePolicy(),
+                name: '#ENTITY#.codeMap.get',
             },
         };
     }

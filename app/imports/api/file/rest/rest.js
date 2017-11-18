@@ -4,7 +4,7 @@ import FileStorage from '../../../lib/util/file-storage/local.js';
 import Security from '../../../lib/util/security/security.server.js';
 import File from '../entity/entity.server.js';
 
-export default class Middleware
+export default class Rest
 {
     static declare(sp = null)
     {

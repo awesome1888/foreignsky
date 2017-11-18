@@ -1,3 +1,3 @@
 import './method.js';
 import './publication.js';
-import './middleware.js';
+import './rest.js';

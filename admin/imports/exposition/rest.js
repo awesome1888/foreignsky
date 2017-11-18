@@ -1,4 +1,4 @@
-import File from './file/middleware.js';
+import File from './file/rest.js';
 
 import {provider} from './security-provider.js';
 

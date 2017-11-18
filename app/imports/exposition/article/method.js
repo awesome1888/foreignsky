@@ -9,4 +9,21 @@ export default class Method extends BaseMethod
             getCount: 1,
         });
     }
+
+    static getExtendedDeclaration(sp = null)
+    {
+        return {
+            getDraftToken: {
+                name: '#ENTITY#.draftToken.get',
+                body: 'getDraftToken',
+                security: sp,
+            },
+        };
+    }
+
+    getDraftToken()
+    {
+        // todo: move to options
+        return 'fTKZuZYaEoetGkotd7EbQMokXQJZwg';
+    }
 }

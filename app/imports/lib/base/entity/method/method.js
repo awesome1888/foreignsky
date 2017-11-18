@@ -17,6 +17,8 @@ export default class Method extends BaseMethod
     {
         const e = this.getEntity();
 
+        // todo: provide "name" key to specify the method name
+        // todo: in the name key provide #ENTITY_NAME# placeholder, to be able to denote the full custom name of a method
         return {
             find: {
                 body: 'find',
@@ -57,18 +59,24 @@ export default class Method extends BaseMethod
         if (_.isObjectNotEmpty(declaration))
         {
             const named = {};
-            _.forEach(declaration, (method, name) => {
-                named[this.makeName(name)] = method;
+            _.forEach(declaration, (method, code) => {
+                named[this.makeName(code, method)] = method;
             });
             
             super.declare(named);
         }
     }
 
-    static makeName(name)
+    static makeName(code, parameters)
     {
         const cId = this.getEntity().getUniqueCode();
-        return `${cId}.${name}`;
+
+        if (_.isStringNotEmpty(parameters.name))
+        {
+            return parameters.name.replace(/#ENTITY#/g, cId).trim();
+        }
+
+        return `${cId}.${code}`;
     }
 
     find(parameters)

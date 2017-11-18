@@ -59,6 +59,14 @@ export default class ArticleDetailComponent extends BaseComponent
 
 	async show(id)
 	{
+	    let getPublic = true;
+
+	    const q = this.getApplication().getQuery();
+	    if (q.token)
+        {
+            getPublic = q.token !== await this.execute('article.draftToken.get');
+        }
+
         return Article.findOne({
             select: {
                 title: 1,
@@ -86,7 +94,7 @@ export default class ArticleDetailComponent extends BaseComponent
             },
             filter: {
                 _id: id,
-                public: true,
+                public: getPublic,
             },
         }).then((article) => {
             if(!article)

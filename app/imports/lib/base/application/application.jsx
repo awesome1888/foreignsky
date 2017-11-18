@@ -336,6 +336,7 @@ export default class Application extends BaseComponent
             this.maybeCheckAccess(() => {
                 this.maybeRouteToError();
             });
+        }).catch(() => {
         });
     }
 

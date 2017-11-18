@@ -69,6 +69,8 @@ export default class GlobalLoadProgress extends BaseComponent {
             this._pool = [];
 
             this.setPercent(100);
+        }).catch(() => {
+            // todo: NOTIF
         });
     }
 

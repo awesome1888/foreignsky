@@ -65,7 +65,6 @@ export default class UI extends BaseComponent
 
         this.setState({loading: true});
         this.execute('shell.execute', [code]).then((res) => {
-            console.dir(res);
             this.setState({
                 loading: false,
                 executed: true,
@@ -74,6 +73,8 @@ export default class UI extends BaseComponent
                 durations: res.durations || {},
                 times: res.times || {},
             });
+        }).catch(() => {
+            // todo: NOTIF
         });
     }
 

@@ -66,6 +66,8 @@ class RendererTagSelector extends RendererLinkList
                 });
 
                 this.closeTagPopup();
+            }).catch(() => {
+                // todo: NOTIF
             });
         }
     }
@@ -194,6 +196,8 @@ class RendererTagSelector extends RendererLinkList
                     const newValue = _.union(this.getValue(), [id]);
                     this.onChange(newValue);
                 }
+            }).catch(() => {
+                // todo: NOTIF
             });
         }
     }
@@ -217,6 +221,8 @@ class RendererTagSelector extends RendererLinkList
             this.setState({
                 tagsReady: true,
             });
+        }).catch(() => {
+            // todo: NOTIF
         });
     }
 

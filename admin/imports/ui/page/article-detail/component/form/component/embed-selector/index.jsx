@@ -45,6 +45,8 @@ class EmbedSelector extends RendererLinkList
         // load images for the first page
         this.loadImagesForPage(this.state.page).then(() => {
             super.setItemsReady();
+        }).catch(() => {
+            // todo: NOTIF
         });
     }
 
@@ -55,6 +57,8 @@ class EmbedSelector extends RendererLinkList
             this.setState({
                 page,
             });
+        }).catch(() => {
+            // todo: NOTIF
         });
     }
 

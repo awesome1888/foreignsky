@@ -111,9 +111,7 @@ class RendererList extends RendererGeneric
                 const onChange = this.getOnChange();
                 const value = this.getValue();
 
-                onChange([]
-                    .concat(value.slice(0,  index))
-                    .concat(value.slice(1 + index)));
+                onChange([].concat(value.slice(0,  index)).concat(value.slice(1 + index)));
             }
         });
     }

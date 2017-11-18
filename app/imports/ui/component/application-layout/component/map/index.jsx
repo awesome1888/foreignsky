@@ -92,15 +92,11 @@ export default class Map extends BaseComponent {
 
 	initializeMap()
 	{
-		return this.getApplication().wait(new Promise((resolve, reject) => {
-			Util.loadJs(this.getMapUrl()).then(() => {
-				return this.createMapObject();
-			}).then(() => {
-				resolve();
-			}).catch(() => {
-				reject();
-			});
-		}));
+		return this.getApplication().wait(Util.loadJs(this.getMapUrl()).then(() => {
+            return this.createMapObject();
+        }).catch(() => {
+            // todo: NOTIF
+        }));
 	}
 
 	render()

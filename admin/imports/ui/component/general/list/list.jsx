@@ -101,6 +101,8 @@ export default class ListGeneric extends BaseComponent {
         this.getQueryParameters().then((parameters) => {
             this._cache.queryParams = parameters;
             this.reLoadData();
+        }).catch(() => {
+            // todo: NOTIF
         });
     }
 
@@ -325,7 +327,8 @@ export default class ListGeneric extends BaseComponent {
             this.getEntity().find(this.mixPageParameters(qParams))
         ).then((res) => {
             this.setData(res);
-        }, (err) => {
+        }).catch((err) => {
+            // todo: NOTIF
             this.showConsoleError('Unable to get items (maybe forgot to expose?)', err);
         });
     }
@@ -359,6 +362,9 @@ export default class ListGeneric extends BaseComponent {
         this.getEntity().getCount(qParams.filter || {}).then((res) => {
             this.setCount(res);
             this.setTitle(this.getTitle());
+        }).catch(() => {
+            // todo: NOTIF
+            this.setCount(0);
         });
     }
 

@@ -79,7 +79,7 @@ export default class FilePicker extends BaseComponent
             this.onChange(ids);
             this.unlockButton();
         }).catch(() => {
-            // todo: show notification here?
+            // todo: show notification here? NOTIF
             this.unlockButton();
         });
     }
@@ -128,6 +128,8 @@ export default class FilePicker extends BaseComponent
                     this.props.onChange(_.difference(this.getValue(), [id]));
                 }
             }
+        }).catch(() => {
+            // todo: NOTIF
         });
 
         e.preventDefault();
@@ -184,11 +186,12 @@ export default class FilePicker extends BaseComponent
             return this.uploadFile(file, this.setPercent.bind(this, i)).then((_id) => {
                 ids.push(_id);
             }).catch((err) => {
-                // todo: notify here
+                // todo: notify here NOTIF
             });
         })).then(() => {
             return ids;
         }).catch((err) => {
+            // todo: NOTIF
             return ids;
         });
     }

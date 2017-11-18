@@ -102,7 +102,7 @@ export default class ArticleListFilterComponent extends BaseComponent {
                 tags: data || [],
             });
         }).catch((err) => {
-		    // todo: show notification here
+		    // todo: show notification here NOTIF
         }));
 	}
 

@@ -40,6 +40,7 @@ export default class Middleware
                         const id = File.save(null, fileStruct);
                         this.finishResponse(res, id);
                     }).catch((err) => {
+                        // todo: NOTIF
                         console.dir(err.stack);
                         this.finishResponse(res, '', err);
                     });

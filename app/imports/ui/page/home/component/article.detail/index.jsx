@@ -111,6 +111,9 @@ export default class ArticleDetailComponent extends BaseComponent
 
             // App.getInstance().toggleMap(true);
             this.setTitle(article.getTitle());
+        }).catch(() => {
+	        // todo: NOTIF
+            FlowRouter.go('/500');
         });
 	}
 

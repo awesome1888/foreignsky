@@ -43,6 +43,7 @@ export default class LoadOverlay extends BaseComponent {
 
 		Promise.all(this.waitPool).then(() => {
 		    this.startUnlocking();
+        }).catch(() => {
         });
 	}
 

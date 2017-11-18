@@ -57,7 +57,7 @@ export default class ArticleListComponent extends BaseComponent
                 data: data || [],
             });
         }).catch((err) => {
-		    // todo: show the notification here
+		    // todo: show the notification here NOTIF
         }));
 	}
 

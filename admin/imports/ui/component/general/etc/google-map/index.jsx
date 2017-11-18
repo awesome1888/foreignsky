@@ -51,6 +51,8 @@ export default class GoogleMap extends BaseComponent
             return this.createMapObject();
         }).then(() => {
             this.updateMarkers(this.props.markers);
+        }).catch(() => {
+            // todo: NOTIF
         });
     }
 

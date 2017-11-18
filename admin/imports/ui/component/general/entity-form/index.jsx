@@ -101,6 +101,7 @@ export default class EntityForm extends Form
                     return {};
                 }
             }).catch((err) => {
+                // todo: show notification here NOTIF
                 this.setItem(item);
                 this.setState({
                     error: err && err.reason ? err.reason : 'error occurred',
@@ -167,7 +168,7 @@ export default class EntityForm extends Form
                 this.goBackPath();
             }
         }).catch((error) => {
-            // todo: better use notifications here
+            // todo: better use notifications here NOTIF
             this.setState({
                 error: `save failed: ${error}`,
             });

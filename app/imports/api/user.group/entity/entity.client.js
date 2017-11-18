@@ -16,13 +16,14 @@ export default class UserGroup extends mix(BaseEntity).with(Entity)
     {
         return 'User group';
     }
-    
+
     static loadData()
     {
         return this.executeMethod('getCodeMap').then((map) => {
             ConsoleOutput.dir('Groups data loaded...');
 
             this._id2code = map;
+        }).catch(() => {
         });
     }
 

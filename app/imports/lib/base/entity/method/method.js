@@ -27,6 +27,7 @@ export default class Method extends BaseMethod
             getCount: {
                 body: 'getCount',
                 security: sp ? sp.getMethodPolicy(e, 'getCount') : SecurityProvider.getOpenGatePolicy(),
+                name: '#ENTITY#.count.get',
             },
             save: {
                 body: 'save',

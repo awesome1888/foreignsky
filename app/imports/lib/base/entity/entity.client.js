@@ -68,7 +68,7 @@ export default class BaseEntity extends Entity
 
     static async getCount(filter = {})
     {
-        let count = parseInt(await this.executeMethod('getCount', [filter]));
+        let count = parseInt(await this.executeMethod('count.get', [filter]));
         if (isNaN(count))
         {
             return 0;
@@ -99,6 +99,7 @@ export default class BaseEntity extends Entity
                 if (err)
                 {
                     reject(err);
+                    return;
                 }
 
                 resolve(res);

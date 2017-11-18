@@ -6,6 +6,7 @@ import Article from '../../../../../api/article/entity/entity.client.js';
 import RichRenderer from '../../../../component/general/form/component/renderer/rich/index.jsx';
 import TagSelectorRenderer from './component/tag-selector/index.jsx';
 import EmbedSelectorRenderer from './component/embed-selector/index.jsx';
+import PublicRenderer from './component/public/index.jsx';
 import GoogleMapRenderer from '../../../../component/general/form/component/renderer/google-map/index.jsx';
 
 export default class ArticleForm extends EntityForm
@@ -44,6 +45,7 @@ export default class ArticleForm extends EntityForm
         map.getAttribute('tag').setParameter('renderer', TagSelectorRenderer);
         map.getAttribute('embed').setParameter('renderer', EmbedSelectorRenderer);
         map.getAttribute('location').setParameter('renderer', GoogleMapRenderer);
+        map.getAttribute('public').setParameter('renderer', PublicRenderer);
 
         return map;
     }

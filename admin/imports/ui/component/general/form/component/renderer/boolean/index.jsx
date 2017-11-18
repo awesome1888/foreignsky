@@ -62,3 +62,4 @@ class RendererBoolean extends RendererGeneric
 }
 
 export default connectField(RendererBoolean, {});
+export const ControllerClass = RendererBoolean;

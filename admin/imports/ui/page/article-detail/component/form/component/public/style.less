@@ -1,0 +1,80 @@
+@import (reference) url('/client/style/index.less');
+
+@embed__button-offset: 3px;
+@embed__border-radius: 3px;
+
+.embed__grid {
+}
+
+.embed__grid-inner {
+	._group_x(1.5);
+	._content_v_top_h_left(true);
+}
+
+.embed__grid-item {
+	._size_x(8);
+	._border-rad(@embed__border-radius);
+	._no-overflow();
+	._relative();
+}
+
+.embed__grid-item-image {
+	._image();
+	._tall();
+	._b-color(@color_porcelain);
+	// background-image: url('/asset/exclamation.svg');
+}
+
+.embed__grid-item-mosaic_h {
+
+	height: 100%;
+
+	& > * {
+		height: 50%;
+		._border(@color_white, 0);
+
+		&:not(:last-child) {
+			border-bottom-width: 3px;
+		}
+	}
+}
+
+.embed__grid-item-mosaic_v {
+	._flex();
+	height: 100%;
+
+	& > * {
+		height: 100%;
+		width: 50%;
+		._border(@color_white, 0);
+
+		&:not(:last-child) {
+			border-right-width: 3px;
+		}
+	}
+}
+
+._embed__grid-item-button() {
+	._b-color(@color_white);
+	._border-rad(@embed__border-radius);
+	._hand();
+	._hover-fade();
+}
+
+.embed__grid-item-copy-code {
+	._embed__grid-item-button();
+	._icon_code(15px, 3px);
+	._absolute(auto, auto, @embed__button-offset, @embed__button-offset);
+}
+
+.embed__grid-item-edit {
+	._embed__grid-item-button();
+	._icon_mode-edit(15px, 3px);
+	._absolute(auto, @embed__button-offset, @embed__button-offset);
+}
+
+.embed__grid-item-delete {
+	._embed__grid-item-button();
+	._icon_clear(15px, 3px);
+	._absolute(auto, @embed__button-offset, 28px);
+}

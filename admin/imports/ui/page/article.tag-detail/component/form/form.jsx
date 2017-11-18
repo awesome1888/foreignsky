@@ -9,7 +9,7 @@ export default class ArticleTagEntityForm extends EntityForm
         return ArticleTagEntity;
     }
 
-    getItemTitle(item)
+    extractItemTitle(item)
     {
         return item.getTitle();
     }

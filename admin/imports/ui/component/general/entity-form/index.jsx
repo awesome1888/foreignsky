@@ -11,6 +11,7 @@ import { Button } from 'semantic-ui-react';
 export default class EntityForm extends Form
 {
     _whichButton = null;
+    _item = null;
 
     static getEntity()
     {
@@ -30,7 +31,7 @@ export default class EntityForm extends Form
         });
     }
 
-    getItemTitle(item)
+    extractItemTitle(item)
     {
         return 'untitled';
     }
@@ -40,7 +41,7 @@ export default class EntityForm extends Form
         let title = 'new';
         if (item)
         {
-            const itemTitle = this.getItemTitle(item);
+            const itemTitle = this.extractItemTitle(item);
             if (_.isStringNotEmpty(itemTitle))
             {
                 title = itemTitle;
@@ -58,6 +59,16 @@ export default class EntityForm extends Form
         return this.props.id;
     }
 
+    getItem()
+    {
+        return this._item || null;
+    }
+
+    setItem(item)
+    {
+        this._item = item;
+    }
+
     isNewItem()
     {
         return !this.getItemId() || this.getItemId().toString() === '0';
@@ -69,30 +80,33 @@ export default class EntityForm extends Form
 
         if (_.isStringNotEmpty(id) && id !== '0')
         {
-            return new Promise((resolve, reject) => {
+            // wait for the data, tell the app to show the loader, if any
+            return this.getApplication().wait(
+                this.getEntity().findById(id, {select: '#'})
+            ).then((item) => {
+                if (item)
+                {
+                    this.setItem(item);
+                    this.setTitle(item);
 
-                // wait for the data, tell the app to show the loader, if any
-                this.getApplication().wait(
-                    this.getEntity().findById(id, {select: '#'})
-                ).then((item) => {
-                    if (item)
-                    {
-                        this.setTitle(item);
-                        resolve(item.getData());
-                    }
-                    else
-                    {
-                        this.setState({
-                            error: 'element not found',
-                        });
-                        resolve({});
-                    }
-                }, (err) => {
+                    return item.getData();
+                }
+                else
+                {
+                    this.setItem(null);
                     this.setState({
-                        error: err && err.reason ? err.reason : 'error occurred',
+                        error: 'element not found',
                     });
-                    resolve({});
+
+                    return {};
+                }
+            }).catch((err) => {
+                this.setItem(item);
+                this.setState({
+                    error: err && err.reason ? err.reason : 'error occurred',
                 });
+
+                return {};
             });
         }
 

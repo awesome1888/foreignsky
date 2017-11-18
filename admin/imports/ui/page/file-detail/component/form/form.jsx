@@ -9,7 +9,7 @@ export default class FileEntityForm extends EntityForm
         return FileEntity;
     }
 
-    getItemTitle(item)
+    extractItemTitle(item)
     {
         return item.getData().name || '';
     }

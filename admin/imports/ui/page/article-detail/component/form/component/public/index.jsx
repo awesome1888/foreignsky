@@ -1,5 +1,6 @@
 import React from 'react';
 import connectField from 'uniforms/connectField';
+import filterDOMProps from 'uniforms/filterDOMProps';
 
 // https://github.com/vazco/uniforms/blob/master/INTRODUCTION.md#autofield-algorithm
 // https://github.com/vazco/uniforms/blob/master/API.md#connectfield
@@ -12,6 +13,13 @@ class RendererPublic extends RendererBoolean
 {
     render()
     {
+        console.dir(this.props);
+
+        const form = this.getForm();
+        const model = form.getModel();
+
+        console.dir(model);
+
         return (
             <Container
                 errorProps={this.props}

@@ -9,7 +9,7 @@ export default class EmbedEntityForm extends EntityForm
         return EmbedEntity;
     }
 
-    getItemTitle(item)
+    extractItemTitle(item)
     {
         return item.getData().string || '';
     }

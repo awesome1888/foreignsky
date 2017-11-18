@@ -9,7 +9,7 @@ export default class UserGroupForm extends EntityForm
         return UserGroupEntity;
     }
 
-    getItemTitle(item)
+    extractItemTitle(item)
     {
         return item.getData().name || '';
     }

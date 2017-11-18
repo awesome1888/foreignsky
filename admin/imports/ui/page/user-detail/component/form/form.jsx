@@ -12,7 +12,7 @@ export default class UserForm extends EntityForm
         return UserEntity;
     }
 
-    getItemTitle(item)
+    extractItemTitle(item)
     {
         return item.getData().name || '';
     }

@@ -16,7 +16,7 @@ export default class ArticleForm extends EntityForm
         return Article;
     }
 
-    getItemTitle(item)
+    extractItemTitle(item)
     {
         return item.getTitle();
     }

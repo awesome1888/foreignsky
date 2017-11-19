@@ -196,6 +196,16 @@ export default class BaseEntity
         }
         else if ('page' in parameters)
         {
+            parameters.page = parseInt(parameters.page);
+            if (isNaN(parameters.page))
+            {
+                throw new TypeError('Illegal page');
+            }
+            else if (parameters.page <= 0)
+            {
+                throw new TypeError('Page number should start from 1');
+            }
+
             translated.$paginate = true;
             if (!('limit') in translated.$options)
             {

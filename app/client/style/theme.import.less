@@ -1,4 +1,5 @@
 @import (reference) './api/palette.import.less';
+@import (reference) './rem-mastered/index.less';
 
 @color-text-normal: @color_expensive-cloth;
 @color-text-dark: @color_asphalt;
@@ -14,3 +15,13 @@
 @offset_half: .5rem;
 @offset_3-of-4: .75rem;
 @offset_quarter: .25rem;
+
+.page-content {
+	ul, ol {
+		._group_x(0.5);
+	}
+
+	h2 {
+		._margin-b_x(1);
+	}
+}

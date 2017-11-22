@@ -71,9 +71,7 @@ export default class Form extends BaseComponent
 
     componentDidMount()
     {
-        this.getModel().then((
-            model
-        ) => {
+        this.getModel().then((model) => {
             this.setState({
                 model
             });

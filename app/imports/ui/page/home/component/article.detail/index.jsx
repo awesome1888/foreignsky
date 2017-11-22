@@ -151,7 +151,7 @@ export default class ArticleDetailComponent extends BaseComponent
 		return (
 			<div
 				className={classnames(
-					'article-detail',
+					'article-detail page-content',
 					{'no-display': !this.state.opened},
 					`article-detail_${article.getHeaderColor()}`
 				)}

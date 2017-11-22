@@ -21,7 +21,7 @@ export default class ArticleForm extends EntityForm
     async getModel()
     {
         await this.loadToken();
-        await super.getModel();
+        return await super.getModel();
     }
 
     async loadToken()

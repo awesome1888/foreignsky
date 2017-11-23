@@ -21,8 +21,22 @@ export default class BaseCollection
             this._collection = collection;
         }
 
-        // this.createIndexes();
+        this.createIndexes();
         this.applyHooks();
+    }
+
+    getIndexes()
+    {
+        return [
+            // {
+            //     fields: {
+            //         search: "text",
+            //     },
+            //     options: {
+            //         name: 'search',
+            //     },
+            // }
+        ];
     }
 
     initialize(map)
@@ -49,6 +63,38 @@ export default class BaseCollection
         // });
         // this.getCollection().before.update((id, data, fieldNames, modifier) => {
         // });
+    }
+
+    createIndexes()
+    {
+        if (Meteor.isServer)
+        {
+            const rc = this.getRawCollection();
+            this.getIndexes().forEach((index) => {
+                if (_.isObject(index.fields) && Object.keys(index.fields).length)
+                {
+                    const options = index.options || {};
+                    if (!_.isStringNotEmpty(options))
+                    {
+                        options.name = this.makeIndexName(index);
+                    }
+
+                    rc.createIndex(
+                        index.fields,
+                        options,
+                    );
+                }
+            });
+        }
+    }
+
+    makeIndexName(index) {
+        const name = [];
+        _.forEach(index.fields, (way, field) => {
+            name.push(`${field}_${way}`);
+        });
+
+        return name.join('_');
     }
 
     // getSchema()
@@ -80,20 +126,6 @@ export default class BaseCollection
     {
         return this._initialized;
     }
-
-    // getIndexes()
-    // {
-    //     return [
-    //         {
-    //             fields: {
-    //                 search: "text",
-    //             },
-    //             options: {
-    //                 name: 'search',
-    //             },
-    //         }
-    //     ];
-    // }
 
     getName()
     {
@@ -180,5 +212,23 @@ export default class BaseCollection
     findOne(...args)
     {
         return this.getCollection().findOne(...args);
+    }
+
+    async truncate()
+    {
+        if (Meteor.isServer)
+        {
+            const rc = this.getRawCollection();
+            return rc.drop().then(() => {
+                return rc.insert({foo: 'bar'});
+            }).then(() => {
+                this.createIndexes();
+                return rc.deleteMany({});
+            });
+        }
+        else
+        {
+            return true;
+        }
     }
 }

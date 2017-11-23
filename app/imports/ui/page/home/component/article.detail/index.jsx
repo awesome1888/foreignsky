@@ -59,7 +59,7 @@ export default class ArticleDetailComponent extends BaseComponent
 
 	async show(id)
 	{
-	    let getPublic = true;
+	    let getOnlyPublic = true;
 
 	    const q = this.getApplication().getQuery();
 	    if (q.token)
@@ -73,7 +73,15 @@ export default class ArticleDetailComponent extends BaseComponent
                 return;
             }
 
-            getPublic = q.token !== token;
+            getOnlyPublic = q.token !== token;
+        }
+
+        const filter = {
+            _id: id,
+        };
+	    if (getOnlyPublic)
+        {
+            filter.public = true;
         }
 
         return Article.findOne({
@@ -101,10 +109,7 @@ export default class ArticleDetailComponent extends BaseComponent
                     options: 1,
                 },
             },
-            filter: {
-                _id: id,
-                public: getPublic,
-            },
+            filter,
         }).then((article) => {
             if(!article)
             {

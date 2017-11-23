@@ -77,33 +77,37 @@ export default class BulkContext
         this._count = 0;
     }
 
-    getStream()
-    {
-        if (!this._stream)
-        {
-            this._stream = new Writable({
-                objectMode: true,
-                write: (op, encoding, callback) => {
-                    if (_.isObjectNotEmpty(op))
-                    {
-                        op.operation = op.operation || {};
-                        if (op.type === 'update')
-                        {
-                            this.update(op.operation.filter, op.operation.data);
-                        }
-                        else
-                        {
-                            // todo
-                        }
-                    }
-
-                    callback();
-                }
-            });
-            // todo:
-            // stream.on('finish', () => {this.flush()})
-        }
-
-        return this._stream;
-    }
+    /**
+     * Probably slow on huge collection
+     * @returns {Writable|*}
+     */
+    // getStream()
+    // {
+    //     if (!this._stream)
+    //     {
+    //         this._stream = new Writable({
+    //             objectMode: true,
+    //             write: (op, encoding, callback) => {
+    //                 if (_.isObjectNotEmpty(op))
+    //                 {
+    //                     op.operation = op.operation || {};
+    //                     if (op.type === 'update')
+    //                     {
+    //                         this.update(op.operation.filter, op.operation.data);
+    //                     }
+    //                     else
+    //                     {
+    //                         // todo
+    //                     }
+    //                 }
+    //
+    //                 callback();
+    //             }
+    //         });
+    //         // todo:
+    //         // stream.on('finish', () => {this.flush()})
+    //     }
+    //
+    //     return this._stream;
+    // }
 }

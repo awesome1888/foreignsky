@@ -9,6 +9,7 @@ import GlobalLoadProgress from '../../general/etc/global-load-progress/index.jsx
 import ArticleListComponent from '../component/article.list/index.jsx';
 import ImageViewer from '../../general/image-viewer/index.jsx';
 import Map from '../component/map/index.jsx';
+import PPNotification from '../component/privacy-policy-notification/index.jsx';
 
 import PreRender from '../../../../lib/prerender.js';
 
@@ -88,6 +89,7 @@ export default class DefaultApplicationLayout extends BaseComponent
                 />
 
                 <ImageViewer />
+                <PPNotification />
             </div>
         );
     }

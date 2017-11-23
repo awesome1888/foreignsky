@@ -11,6 +11,7 @@
     "clone": "^2.1.1",
     "cpy": "^6.0.0",
     "formidable": "^1.1.1",
+    "js-cookie": "^2.2.0",
     "meteor-node-stubs": "~0.2.4",
     "moment": "^2.18.1",
     "mongo-dot-notation": "^1.2.0",

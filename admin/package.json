@@ -24,6 +24,7 @@
     "react-mounter": "^1.2.0",
     "react-router": "^4.0.0",
     "react-tinymce": "^0.6.0",
+    "rem-bem": "^1.0.0",
     "sceditor": "^1.5.2",
     "semantic-ui-react": "^0.71.5",
     "tinymce": "^4.6.7",

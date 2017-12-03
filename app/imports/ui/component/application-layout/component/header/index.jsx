@@ -16,14 +16,13 @@ export default class Header extends React.Component {
 								<a
 									href="/"
 									className="header__logo-img"
-								    title="Однажды тут будет красивый логотип"
-								>
-									B_
-								</a>
+								/>
 								<div className="header__logo-text">
-                                    Дождь и готика
-									<div className="header__logo-funny-desc">
-										Блог семьи, переехавшей в Германию
+                                    <div className="header__logo-title">
+                                        Чужое небо
+                                    </div>
+									<div className="header__logo-subtitle">
+										Блог одной русской семьи, переехавшей в Германию
 									</div>
 								</div>
 							</div>

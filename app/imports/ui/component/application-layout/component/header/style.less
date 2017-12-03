@@ -20,27 +20,29 @@
 }
 
 .header__logo-img {
-	height: 30px;
-	width: 30px;
-	border: 1px solid gray;
+	height: 50px;
+	width: 50px;
 	position: absolute;
-	color: gray !important;
-
 	text-decoration: none !important;
+	._image_logo();
+	._background_cover();
 }
 
 .header__logo-text {
-	margin-left: 45px;
-	min-height: 30px;
+	margin-left: 65px;
+	min-height: 50px;
 	vertical-align: bottom;
-	line-height: 14px;
+}
+
+.header__logo-title {
+	._text_size-big();
 	._text_color-dark();
 }
 
-.header__logo-funny-desc {
+.header__logo-subtitle {
   ._margin-top(0.25);
 	color: #979797;
-	font-size: 12px;
+	._text_size-small();
 }
 
 .header__buttons {

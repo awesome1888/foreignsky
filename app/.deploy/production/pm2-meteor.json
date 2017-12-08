@@ -1,0 +1,29 @@
+{
+  "appName": "foreignsky",
+  "appLocation": {
+    "local": "../../"
+  },
+  "meteorSettingsLocation": "./settings.json",
+  "meteorSettingsInRepo": false,
+  "prebuildScript": "",
+  "meteorBuildFlags": "--architecture os.linux.x86_64",
+  "env": {
+    "ROOT_URL": "https://foreignsky.ru",
+    "PORT": "11001",
+    "MONGO_URL": "mongodb://localhost:27017/foreignsky"
+  },
+  "server": {
+    "host": "188.120.248.41",
+    "port": "55332",
+    "username": "foreignsky",
+    "deploymentDir": "/home/foreignsky",
+    "loadProfile": "",
+    "nvm": {
+      "bin": "",
+      "use": ""
+    },
+    "exec_mode": "cluster_mode",
+    "instances": "2",
+    "pem": "/home/sergey/.ssh/id_rsa"
+  }
+}

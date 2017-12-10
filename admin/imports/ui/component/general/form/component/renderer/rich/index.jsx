@@ -47,7 +47,7 @@ class RichRenderer extends RendererGeneric
                             // toolbar: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
                             themes: "modern",
                             // theme_url: '/tinymce/theme/theme.min.js',
-                            skin_url: '/tinymce/skin/lightgray/',
+                            skin_url: '/tinymce/skin/lightgray',
                             height: 300,
                         }}
                         onChange={this.onContentChange.bind(this)}

@@ -27,43 +27,25 @@ else
 }
 
 // create admin user
-if (aGroupId)
-{
-    const aUser = User.findOne({
-        filter: {'profile.groupId': aGroupId},
-    });
-
-    if (!aUser)
-    {
-        if(!User.save(null, {
-            email: 'admin@nachberlin.ru',
-            password: '123', // change later!!!
-            profile: {
-                firstName: 'Fat',
-                lastName: 'Admin',
-                groupId: [aGroupId],
-            },
-        }))
-        {
-            console.dir('Unable to create an administrator');
-        }
-    }
-}
-
-const uUser = User.findOne({
-    filter: {'emails.address': 'simple-mortal@nachberlin.ru'},
-});
-if (!uUser)
-{
-    if(!User.save(null, {
-        email: 'simple-mortal@nachberlin.ru',
-        password: '123', // change later!!!
-        profile: {
-            firstName: 'Simple',
-            lastName: 'Mortal',
-        },
-    }))
-    {
-        console.dir('Unable to create a simple mortal');
-    }
-}
+// if (aGroupId)
+// {
+//     const aUser = User.findOne({
+//         filter: {'profile.groupId': aGroupId},
+//     });
+//
+//     if (!aUser)
+//     {
+//         if(!User.save(null, {
+//             email: 'admin@nachberlin.ru',
+//             password: '123', // change later!!!
+//             profile: {
+//                 firstName: 'Fat',
+//                 lastName: 'Admin',
+//                 groupId: [aGroupId],
+//             },
+//         }))
+//         {
+//             console.dir('Unable to create an administrator');
+//         }
+//     }
+// }

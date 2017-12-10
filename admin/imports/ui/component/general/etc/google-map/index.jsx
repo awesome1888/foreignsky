@@ -63,7 +63,7 @@ export default class GoogleMap extends BaseComponent
 
     getMapUrl()
     {
-        const key = Meteor.settings.public['google-maps_key'];
+        const key = 'AIzaSyDV90oJprjrtNbo3ASxmvFObr05jiC-0WI'; // Meteor.settings.public['google-maps_key'];
         return `https://maps.googleapis.com/maps/api/js?v=3&key=${key}&libraries=geometry,drawing,places&language=de`;
     }
 

@@ -53,25 +53,6 @@ export default class Util
 		return p;
 	}
 
-    /**
-     * @deprecated use _.debounce() instead
-     * @param fn
-     * @param timeout
-     * @returns {function(...[*]=)}
-     */
-    static debounce(fn, timeout = 100)
-    {
-        let timer = 0;
-
-        return (...args) => {
-            clearTimeout(timer);
-
-            timer = Meteor.setTimeout(() => {
-                fn(args);
-            }, timeout || 100);
-        };
-    }
-
 	static noop()
 	{
 		return function(){};
@@ -83,34 +64,17 @@ export default class Util
 		};
 	}
 
-	static getProjectFolder() {
-        const path = Npm.require('path');
-        let pPath = path.resolve('.').split('.meteor')[0];
-
-        if (pPath.charAt(pPath.length - 1) !== '/')
-        {
-            pPath = pPath + '/';
-        }
-
-        return pPath;
-    }
-
-    static getAssetFolder() {
-	    const project = this.getProjectFolder();
-	    if (Meteor.isDevelopment)
-	    {
-	        return project+'public/';
-        }
-
-        return project+'../web.browser/app/';
-    }
-
     /**
      * Returns an absolute path to the upload folder
      * @returns {string}
      */
     static getUploadFolder()
     {
+        // todo: use options here!!!
+        if (Meteor.isProduction)
+        {
+            return '/home/imageserver/upload/';
+        }
         return `/home/sergey/upload/`;
     }
 

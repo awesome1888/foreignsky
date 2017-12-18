@@ -4,6 +4,7 @@ import EmbedMethods from './embed/method.js';
 import FileMethods from './file/method.js';
 import UserMethods from './user/method.js';
 import UserGroupMethods from './user.group/method.js';
+import OptionMethods from './option/method.js';
 
 import {provider} from './security-provider.js';
 
@@ -13,3 +14,4 @@ EmbedMethods.declare(provider);
 FileMethods.declare(provider);
 UserMethods.declare(provider);
 UserGroupMethods.declare(provider);
+OptionMethods.declare(provider);

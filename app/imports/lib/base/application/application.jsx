@@ -227,13 +227,23 @@ export default class Application extends BaseComponent
 
     static areRouterConditionsReady()
     {
+        console.dir('test?');
+
+        Meteor.subscribe('option.main');
+
         if (this.useAccounts())
         {
-            return Accounts.isSubscriptionReady();
+            if(!Accounts.isSubscriptionReady())
+            {
+                return false;
+            }
         }
 
+        const o = Meteor.subscribe('option.main').ready();
+        console.dir(o);
+
         // wait for other publications
-        return Meteor.subscribe('user-supplementary').ready();
+        return o;
     }
 
     /**

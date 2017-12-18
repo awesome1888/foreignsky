@@ -168,6 +168,15 @@ export default class BaseCollection
         return this.getCollection().rawCollection();
     }
 
+    getMongoCollection()
+    {
+        return this._collection;
+    }
+
+    /**
+     * @deprecated
+     * @returns {*}
+     */
     getCollection()
     {
         return this._collection;
@@ -213,6 +222,16 @@ export default class BaseCollection
     {
         return this.getCollection().findOne(...args);
     }
+
+    deny(...args)
+    {
+        return this.getMongoCollection().deny(...args);
+    }
+
+    // allow(...args)
+    // {
+    //     return this.getMongoCollection().allow(...args);
+    // }
 
     async truncate()
     {

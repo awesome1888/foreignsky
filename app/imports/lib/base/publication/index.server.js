@@ -18,8 +18,11 @@ export default class Publication
     static make(sp)
     {
         const entity = this.getEntity();
+        const name = `${entity.getUniqueCode()}.main`;
 
-        Meteor.publish(entity.getUniqueCode(), () => {
+        console.dir(`Publication: ${name}`);
+
+        Meteor.publish(name, () => {
             const cursor = entity.getCollection().find(this.getFilter(), {
                 fields: this.getFields(),
             });

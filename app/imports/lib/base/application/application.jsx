@@ -1,5 +1,5 @@
 import React from 'react';
-import Util from '../../util.js';
+// import Util from '../../util.js';
 import BaseComponent from '../component/component.jsx';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import {createRouter} from 'meteor/cultofcoders:meteor-react-routing';
@@ -232,7 +232,8 @@ export default class Application extends BaseComponent
             return Accounts.isSubscriptionReady();
         }
 
-        return true;
+        // wait for other publications
+        return Meteor.subscribe('user-supplementary').ready();
     }
 
     /**

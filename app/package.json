@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "start": "MONGO_URL=mongodb://localhost:27017/indaberlin meteor run --port 3001 --settings=.deploy/combat/settings.json"
+    "start": "MONGO_URL=mongodb://localhost:27017/indaberlin meteor run --port 3001 --settings=.deployment/production/settings.json"
   },
   "dependencies": {
     "babel-runtime": "^6.23.0",

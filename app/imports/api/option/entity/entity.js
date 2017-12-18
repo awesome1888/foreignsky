@@ -6,7 +6,7 @@ import Collection from '../config/collection.js';
  */
 const M = (superclass) =>  class Option extends superclass
 {
-    static get collection() {
+    static getCollectionInstance() {
         return Collection;
     }
 };

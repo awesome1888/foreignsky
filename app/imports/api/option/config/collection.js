@@ -6,7 +6,7 @@ export default new class extends Collection
 {
     constructor()
     {
-        super('options');
+        super('option');
     }
 
     getSchema()
@@ -29,7 +29,7 @@ export default new class extends Collection
                 regEx: SimpleSchema.RegEx.Id,
                 optional: true,
             },
-            // future-reserved, to expose only "non-private" client-side
+            // to expose only "non-private" client-side
             isPrivate: {
                 type: Boolean,
                 optional: true,

@@ -40,4 +40,49 @@ export default class Option extends mix(BaseEntity).with(Entity)
 
         return undefined;
     }
+
+    static getIncrementalCounter(name, start = 0/* , userId = '' */)
+    {
+        let value = parseInt(this.get(name), 10);
+        if (isNaN(value))
+        {
+            value = start;
+        }
+
+        this.set(name, value + 1);
+
+        return value;
+    }
+
+    static togglePublicMode(name, way/* , userId = '' */)
+    {
+        if (!_.isStringNotEmpty(name))
+        {
+            return false;
+        }
+
+        return this.getCollection().update({
+            name,
+        }, {
+            $set: {
+                public: !!way
+            },
+        });
+    }
+
+    static isDefined(name/* , userId = '' */)
+    {
+        if (!_.isStringNotEmpty(name))
+        {
+            return false;
+        }
+
+        const item = this.collection.findOne({
+            name,
+        }, {
+            name: 1,
+        });
+
+        return _.isObjectNotEmpty(item);
+    }
 }

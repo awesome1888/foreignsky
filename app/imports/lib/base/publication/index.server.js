@@ -1,15 +1,17 @@
 export default class Publication
 {
-    getEntity()
+    static getEntity()
     {
         throw new Error('Not implemented: getEntity()');
     }
 
-    static getFilter() {
+    static getFilter()
+    {
         return {};
     }
 
-    static getFields() {
+    static getFields()
+    {
         return {_id: 1};
     }
 
@@ -29,7 +31,9 @@ export default class Publication
     static denyAll()
     {
         this.getEntity().getCollection().deny({
-            update() { return true; }
+            insert() { return true; },
+            update() { return true; },
+            remove() { return true; },
         });
     }
 

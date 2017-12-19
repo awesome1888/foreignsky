@@ -3,6 +3,8 @@ import BaseComponent from '../component/component.jsx';
 import PropTypes from 'prop-types';
 import {DocHead} from 'meteor/kadira:dochead';
 
+import Option from '../../../api/option/entity/entity.client.js';
+
 export default class BasePage extends BaseComponent
 {
     static propTypes = {
@@ -26,6 +28,9 @@ export default class BasePage extends BaseComponent
 
     getApplicationTitle()
     {
+        const res = Option.getCollection().getMongoCollection().find().fetch();
+        console.dir(res);
+
         // todo: get page postfix from options
         return 'New application';
     }

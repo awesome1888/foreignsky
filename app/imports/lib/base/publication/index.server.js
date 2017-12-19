@@ -28,8 +28,13 @@ export default class Publication
             const cursor = entity.getCollection().find(self.getFilter(), {
                 fields: self.getFields(),
             });
-            this.ready();
+
+            // console.dir(cursor.fetch());
+
             return cursor;
+
+            // this.ready();
+            // return cursor;
         });
     }
 

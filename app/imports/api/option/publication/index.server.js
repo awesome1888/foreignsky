@@ -12,11 +12,12 @@ export default class Publication extends PublicationBase
     {
         return {
             public: true,
+            // todo: userIs is null or equals to the current one
         };
     }
 
     static getFields()
     {
-        return {_id: 1, name: 1, value: 1};
+        return {_id: 1, name: 1, value: 1, public: 1, userId: 1};
     }
 }

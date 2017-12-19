@@ -10,7 +10,7 @@ const M = (superclass) => class extends superclass
             },
             {
                 code: 'value',
-                type: String,
+                type: Object,
                 optional: false,
                 blackbox: true,
             },
@@ -21,10 +21,10 @@ const M = (superclass) => class extends superclass
                 regEx: SimpleSchema.RegEx.Id,
             },
             {
-                code: 'isPrivate',
+                code: 'public',
                 type: Boolean,
                 optional: true,
-                defaultValue: true,
+                defaultValue: false,
             },
         ]);
     }

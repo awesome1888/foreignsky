@@ -13,16 +13,25 @@ export default class Option extends mix(BaseEntity).with(Entity)
 
     static set(name, value/* , userId = '' */)
     {
-        return this.getCollection().update({
-            name,
-        }, {
-            $set: {
+        // do not use upsert, simple schema fails on it
+
+        if (this.isDefined(name)) {
+            return this.getCollection().update({
                 name,
-                value: {value},
-            },
-        }, {
-            upsert: true,
-        });
+            }, {
+                $set: {
+                    value: {value},
+                },
+            });
+        } else {
+            if (this.getCollection().insert({
+                    name,
+                    value: {value},
+                    public: false, // important, new options are private by default
+                })) {
+                return true;
+            }
+        }
     }
 
     static unSet(name/* , userId = '' */)
@@ -60,7 +69,7 @@ export default class Option extends mix(BaseEntity).with(Entity)
         return value;
     }
 
-    static togglePublicMode(name, way/* , userId = '' */)
+    static setPublic(name, way/* , userId = '' */)
     {
         if (!_.isStringNotEmpty(name))
         {
@@ -71,7 +80,23 @@ export default class Option extends mix(BaseEntity).with(Entity)
             name,
         }, {
             $set: {
-                public: !!way
+                public: true,
+            },
+        });
+    }
+
+    static setPrivate(name, way/* , userId = '' */)
+    {
+        if (!_.isStringNotEmpty(name))
+        {
+            return false;
+        }
+
+        return this.getCollection().update({
+            name,
+        }, {
+            $set: {
+                public: false,
             },
         });
     }
@@ -83,7 +108,7 @@ export default class Option extends mix(BaseEntity).with(Entity)
             return false;
         }
 
-        const item = this.collection.findOne({
+        const item = this.getCollection().findOne({
             name,
         }, {
             name: 1,

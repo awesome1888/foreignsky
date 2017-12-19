@@ -24,7 +24,7 @@ export default class BasePage extends BaseComponent
         this.setKeywords(this.getPageKeywords());
     }
 
-    getDocumentTitlePostfix()
+    getApplicationTitle()
     {
         // todo: get page postfix from options
         return 'New application';
@@ -59,10 +59,9 @@ export default class BasePage extends BaseComponent
 
     setDocumentTitle(title = '')
     {
-        let titlePostfix = this.getDocumentTitlePostfix();
         if (title.length > 0)
         {
-            title = `${title} – ${titlePostfix}`;
+            title = `${title} – ${this.getApplicationTitle()}`;
         }
 
         DocHead.setTitle(title);
@@ -99,10 +98,5 @@ export default class BasePage extends BaseComponent
         }
 
         return '';
-    }
-
-    getQueryParameter(name)
-    {
-        return FlowRouter.getQueryParam(name);
     }
 }

@@ -13,46 +13,17 @@ import PPNotification from '../component/privacy-policy-notification/index.jsx';
 
 import PreRender from '../../../../lib/prerender.js';
 
-// import './style.less';
-
 export default class DefaultApplicationLayout extends BaseComponent
 {
     static propTypes = {
-        central: PropTypes.object,
-        title: PropTypes.string,
-        backUrl: PropTypes.string,
+        ready: PropTypes.bool,
     };
 
     static defaultProps = {
-        central: null,
-        title: '',
-        backUrl: '',
+        ready: false,
     };
 
-    _title = null;
-
-    constructor(props)
-    {
-        super(props);
-        this.on('set-title', (e, title) => {
-            if (this._title)
-            {
-                this._title.innerHTML = title;
-            }
-        });
-    }
-
-    componentDidMount()
-    {
-        this.fire('application-layout-mounted');
-    }
-
-    getTitle()
-    {
-        return _.isStringNotEmpty(this.props.title) ? this.props.title : '';
-    }
-
-    render(props)
+    render()
     {
         return (
             <div
@@ -60,33 +31,46 @@ export default class DefaultApplicationLayout extends BaseComponent
             >
                 <GlobalOverlay
                     text="Типичный текст, который вы читаете, пока ждете загрузку Ж)"
+                    ready={this.isReady()}
                 />
 
                 <div className="layout__header">
-                    <Header />
-                    <GlobalLoadProgress />
+                    <Header
+                        ready={this.isReady()}
+                    />
+                    <GlobalLoadProgress
+                        ready={this.isReady()}
+                    />
                 </div>
 
-                <div className="layout-map-full__central layout-map-full__central-body container tall">
-                    <div className="layout-map-full__central-row row tall">
-                        <div className="layout-map-full__central-body-left col-xs-3">
-                            <div className="layout-map-full__side">
-                                <ArticleListComponent />
+                {
+                    this.isReady()
+                    &&
+                    <div className="layout-map-full__central layout-map-full__central-body container tall">
+                        <div className="layout-map-full__central-row row tall">
+                            <div className="layout-map-full__central-body-left col-xs-3">
+                                <div className="layout-map-full__side">
+                                    <ArticleListComponent />
+                                </div>
                             </div>
-                        </div>
-                        <div className="layout-map-full__central-body-right col-xs-9 tall">
-                            <div className="layout-map-full__central tall">
-                                {this.props.children}
+                            <div className="layout-map-full__central-body-right col-xs-9 tall">
+                                <div className="layout-map-full__central tall">
+                                    {this.props.children}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
 
-                <Map
-                    center={{lat: 52.520764, lng: 13.409161}}
-                    zoom={15}
-                    useFakeMap={PreRender.isCrawler()}
-                />
+                {
+                    this.isReady()
+                    &&
+                    <Map
+                        center={{lat: 52.520764, lng: 13.409161}}
+                        zoom={15}
+                        useFakeMap={PreRender.isCrawler()}
+                    />
+                }
 
                 <ImageViewer />
                 <PPNotification />

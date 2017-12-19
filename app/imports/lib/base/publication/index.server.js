@@ -19,12 +19,14 @@ export default class Publication
     {
         const entity = this.getEntity();
         const name = `${entity.getUniqueCode()}.main`;
+        const self = this;
 
         console.dir(`Publication: ${name}`);
 
-        Meteor.publish(name, () => {
-            const cursor = entity.getCollection().find(this.getFilter(), {
-                fields: this.getFields(),
+        // DO NOT replace function() with arrow declaration, because we need to keep this.ready() working
+        Meteor.publish(name, function () {
+            const cursor = entity.getCollection().find(self.getFilter(), {
+                fields: self.getFields(),
             });
             this.ready();
             return cursor;

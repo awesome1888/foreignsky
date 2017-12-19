@@ -8,57 +8,31 @@ import GlobalLoadProgress from '../component/global-load-progress/index.jsx';
 import Navigation from '../../navigation/navigation.jsx';
 import GoUp from '../../../component/general/etc/go-up/index.jsx';
 
-// import './style.less';
-
 export default class DefaultApplicationLayout extends BaseComponent
 {
     static propTypes = {
-        central: PropTypes.object,
-        title: PropTypes.string,
-        backUrl: PropTypes.string,
+        ready: PropTypes.bool,
     };
 
     static defaultProps = {
-        central: null,
-        title: '',
-        backUrl: '',
+        ready: false,
     };
 
-    _title = null;
-
-    constructor(props)
+    render()
     {
-        super(props);
-        this.on('set-title', (e, title) => {
-            if (this._title)
-            {
-                this._title.innerHTML = title;
-            }
-        });
-    }
-
-    componentDidMount()
-    {
-        this.fire('application-layout-mounted');
-    }
-
-    getTitle()
-    {
-        return _.isStringNotEmpty(this.props.title) ? this.props.title : '';
-    }
-
-    render(props)
-    {
-        const title = this.getTitle();
-        const backUrl = this.props.backUrl;
-
         return (
             <div
                 className="layout"
             >
-                <GlobalOverlay />
-                <Header />
-                <GlobalLoadProgress />
+                <GlobalOverlay
+                    ready={this.isReady()}
+                />
+                <Header
+                    ready={this.isReady()}
+                />
+                <GlobalLoadProgress
+                    ready={this.isReady()}
+                />
 
                 <div className="ui container">
                     <div className="ui equal width grid">
@@ -69,9 +43,13 @@ export default class DefaultApplicationLayout extends BaseComponent
                                 column
                                 layout__side
                             ">
-                                <Navigation
-                                    className="margin-bottom"
-                                />
+                                {
+                                    this.isReady()
+                                    &&
+                                    <Navigation
+                                        className="margin-bottom"
+                                    />
+                                }
                             </div>
                             <div className="
                                 twelve wide computer
@@ -81,24 +59,12 @@ export default class DefaultApplicationLayout extends BaseComponent
                                 column
                             ">
                                 {
-                                    !!title
+                                    this.isReady()
                                     &&
-                                    <h1
-                                        className="ui dividing header layout__header"
-                                    >
-                                        <span ref={(ref) => {this._title = ref;}}>{title}</span>
-                                        {
-                                            _.isStringNotEmpty(backUrl)
-                                            &&
-                                            <a href={backUrl} className="layout__header-back" title="Back">
-                                                <span className="layout__header-back-icon" />
-                                            </a>
-                                        }
-                                    </h1>
+                                    <div className="layout__central-container">
+                                        {this.props.children}
+                                    </div>
                                 }
-                                <div className="layout__central-container">
-                                    {this.props.children}
-                                </div>
                             </div>
                         </div>
                     </div>

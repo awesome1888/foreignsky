@@ -32,20 +32,19 @@ export default class LoadOverlay extends BaseComponent {
 		this.waitPool = [];
 
 		this.on('wait', this.onWait.bind(this));
-		this.on('application-layout-mounted', this.onApplicationMounted.bind(this));
 	}
 
-    onApplicationMounted()
-	{
-	    if(PreRender.isCrawler()) {
-	        return; // when crawler do nothing
+	// todo: move this to componentWillReceiveProps and when ready switched to true, wait 200 ms and only then start unlocking
+	componentDidMount()
+    {
+        if(PreRender.isCrawler()) {
+            return; // when crawler do nothing
         }
 
-		Promise.all(this.waitPool).then(() => {
-		    this.startUnlocking();
-        }).catch(() => {
-        });
-	}
+        Promise.all(this.waitPool).then(() => {
+            this.startUnlocking();
+        }).catch(() => {});
+    }
 
     onWait(promise)
 	{

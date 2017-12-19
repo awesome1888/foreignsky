@@ -1,12 +1,11 @@
 import UserGroup from '../../../../api/user.group/entity/entity.client.js';
 import User from '../../../../api/user/entity/entity.client.js';
-// import ConsoleOutput from '../../../util/console-output/index.js';
 
 export default class Accounts
 {
-    static isSubscriptionReady()
+    static getSubscription()
     {
-        return User.isSupplementarySubscriptionReady();
+        return Meteor.subscribe('user-supplementary');
     }
 
     static isUserAuthorized()

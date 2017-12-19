@@ -128,6 +128,7 @@ export default class BaseComponent extends Component
         EventEmitter.getInstance().fire(event, args);
     }
 
+    // todo: unused? really?
     onDocumentClick(selector, callback)
     {
         if (_.isStringNotEmpty(selector) && _.isFunction(callback))
@@ -202,6 +203,23 @@ export default class BaseComponent extends Component
     go500()
     {
         FlowRouter.go('/404');
+    }
+
+    isReady()
+    {
+        return !!this.props.ready;
+    }
+
+    getBackUrl()
+    {
+        if (_.isStringNotEmpty(this.props.backUrl))
+        {
+            return this.props.backUrl;
+        }
+
+        // else try to get from the path
+
+        return '';
     }
 
     static fire(event, args = [])

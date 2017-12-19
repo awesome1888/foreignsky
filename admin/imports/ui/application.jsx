@@ -56,7 +56,7 @@ export default class AdminApplication extends Application
                 security: this.getDefaultPageSecurityPolicy(),
             },
         };
-        
+
         return routes;
     }
 
@@ -108,10 +108,5 @@ export default class AdminApplication extends Application
         }
 
         return '';
-    }
-
-    getMainTitle()
-    {
-        return 'Admin';
     }
 }

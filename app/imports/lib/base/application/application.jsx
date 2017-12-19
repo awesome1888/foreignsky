@@ -1,5 +1,4 @@
 import React from 'react';
-// import Util from '../../util.js';
 import BaseComponent from '../component/component.jsx';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import {createRouter} from 'meteor/cultofcoders:meteor-react-routing';
@@ -227,23 +226,29 @@ export default class Application extends BaseComponent
 
     static areRouterConditionsReady()
     {
-        console.dir('test?');
+        const subs = this.getSubscriptions();
+        let ready = true;
+        subs.forEach((sub) => {
+            if (!sub.ready())
+            {
+                ready = false;
+            }
+        });
 
-        Meteor.subscribe('option.main');
+        return ready;
+    }
 
+    static getSubscriptions()
+    {
+        const subscriptions = [
+            Meteor.subscribe('option.main'),
+        ];
         if (this.useAccounts())
         {
-            if(!Accounts.isSubscriptionReady())
-            {
-                return false;
-            }
+            subscriptions.push(Accounts.getSubscription());
         }
 
-        const o = Meteor.subscribe('option.main').ready();
-        console.dir(o);
-
-        // wait for other publications
-        return o;
+        return subscriptions;
     }
 
     /**
@@ -291,7 +296,10 @@ export default class Application extends BaseComponent
             this.on('router-go', this.onRouteChange.bind(this));
         }
 
-        window.__application = this;
+        if (Meteor.isDevelopment)
+        {
+            window.__application = this;
+        }
     }
 
     componentWillMount()
@@ -315,17 +323,6 @@ export default class Application extends BaseComponent
                 // resolve user data promise
                 this.getAccountController().informAccountsReady();
             }
-        }
-    }
-
-    /**
-     * That will never happen, but anyway :)
-     */
-    componentWillUnMount()
-    {
-        if (this._appContainer)
-        {
-            this._appContainer.removeEventListener('click', this.onGlobalClick, true);
         }
     }
 
@@ -499,15 +496,7 @@ export default class Application extends BaseComponent
     }
 
     render() {
-        const PageController = this.props.main;
         const rProps = this.getRouteProps();
-
-        // if we use accounts and we are waiting for user data from the database,
-        // we render as null to avoid unnecessary code to run
-        if (!this.userDataReady())
-        {
-            return null;
-        }
 
         let Layout = this.constructor.getDefaultApplicationLayoutController();
         if ('layout' in rProps)
@@ -520,11 +509,14 @@ export default class Application extends BaseComponent
                 className="application"
                 ref={(ref) => { this._appContainer = ref; }}
             >
-                <Layout className="application__layout">
+                <Layout
+                    className="application__layout"
+                    ready={this.isReady()}
+                >
                     {
                         this.isReady()
                         &&
-                        React.createElement(PageController, this.transformPageParameters({
+                        React.createElement(this.props.main, this.transformPageParameters({
                             route: rProps,
                         }))
                     }

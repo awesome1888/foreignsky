@@ -12,7 +12,10 @@ export default class EventEmitter
         if (!this._instance)
         {
             this._instance = new this();
-            window.__emitter = this._instance; // tmp
+            if (Meteor.isDevelopment)
+            {
+                window.__emitter = this._instance;
+            }
         }
 
         return this._instance;

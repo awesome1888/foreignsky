@@ -23,6 +23,12 @@ export default class BaseCollection
 
         this.createIndexes();
         this.applyHooks();
+
+        if (Meteor.isDevelopment && Meteor.isClient)
+        {
+            window.__collections = window.__collections || {};
+            window.__collections[this.getName()] = this;
+        }
     }
 
     getIndexes()

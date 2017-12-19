@@ -3,17 +3,19 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
 import User from '../../../api/user/entity/entity.client.js';
+import BaseComponent from '../../../lib/base/component/component.jsx';
+import PropTypes from 'prop-types';
 
 import './style.less';
 
-export default class Header extends React.Component
+export default class Header extends BaseComponent
 {
 	static propTypes = {
-		//appLoaded: PropTypes.boolean,
+		ready: PropTypes.bool,
 	};
 
 	static defaultProps = {
-		//appLoaded: false
+        ready: false
 	};
 
 	render()
@@ -43,42 +45,46 @@ export default class Header extends React.Component
                             </a>
 
                         </div>
-                        <div
-                            className="
+                        {
+                            this.isReady()
+                            &&
+                            <div
+                                className="
                                 right floated five wide column
                             "
-                        >
-                            {
-                                ready
-                                &&
-                                <div
-                                    className="header__buttons"
-                                >
-                                    <div className="header__whoami">
+                            >
+                                {
+                                    ready
+                                    &&
+                                    <div
+                                        className="header__buttons"
+                                    >
+                                        <div className="header__whoami">
+                                            {
+                                                authorzed
+                                                &&
+                                                <a href={`/entity/user/${User.getId()}/`}>{user.getFullName()}</a>
+                                            }
+                                            {
+                                                !authorzed
+                                                &&
+                                                <span className="f-color_red-orange">Guest User</span>
+                                            }
+                                        </div>
                                         {
                                             authorzed
                                             &&
-                                            <a href={`/entity/user/${User.getId()}/`}>{user.getFullName()}</a>
-                                        }
-                                        {
-                                            !authorzed
-                                            &&
-                                            <span className="f-color_red-orange">Guest User</span>
+                                            <Button
+                                                size={'mini'}
+                                                href="/logout"
+                                            >
+                                                Logout
+                                            </Button>
                                         }
                                     </div>
-                                    {
-                                        authorzed
-                                        &&
-                                        <Button
-                                            size={'mini'}
-                                            href="/logout"
-                                        >
-                                            Logout
-                                        </Button>
-                                    }
-                                </div>
-                            }
-                        </div>
+                                }
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

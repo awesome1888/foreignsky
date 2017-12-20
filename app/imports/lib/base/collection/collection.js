@@ -201,32 +201,36 @@ export default class BaseCollection
      */
     createQuery(...args)
     {
-        return this.getCollection().createQuery(...args);
+        return this.getMongoCollection().createQuery(...args);
     }
 
     insert(...args)
     {
-        return this.getCollection().insert(...args);
+        return this.getMongoCollection().insert(...args);
     }
 
     update(...args)
     {
-        return this.getCollection().update(...args);
+        return this.getMongoCollection().update(...args);
     }
 
     remove(...args)
     {
-        return this.getCollection().remove(...args);
+        return this.getMongoCollection().remove(...args);
     }
 
+    /**
+     * @param args
+     * @return Cursor
+     */
     find(...args)
     {
-        return this.getCollection().find(...args);
+        return this.getMongoCollection().find(...args);
     }
 
     findOne(...args)
     {
-        return this.getCollection().findOne(...args);
+        return this.getMongoCollection().findOne(...args);
     }
 
     deny(...args)

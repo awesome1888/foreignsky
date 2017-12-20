@@ -5,7 +5,8 @@ export default class Accounts
 {
     static getSubscription()
     {
-        return Meteor.subscribe('user-supplementary');
+        return {name: 'user-supplementary'};
+        // return Meteor.subscribe('user-supplementary');
     }
 
     static isUserAuthorized()

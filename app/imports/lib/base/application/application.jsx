@@ -14,6 +14,7 @@ export default class Application extends BaseComponent
     static _router = null;
     static _instance = null;
     static _routerController = null;
+    static _subscriptions = null;
 
     /**
      * Application initialization entry point
@@ -31,6 +32,7 @@ export default class Application extends BaseComponent
             this._routerController = this;
         }
 
+        this.prepareRouter();
         this.registerRoutes();
     }
 
@@ -179,8 +181,6 @@ export default class Application extends BaseComponent
 
     static registerRoutes()
     {
-        this.prepareRouter();
-
         Object.values(this.getRouteMap()).forEach((route) => {
             this.addRoute(route.path, route.controller, route.params || {}, route.options || {});
         });
@@ -205,7 +205,7 @@ export default class Application extends BaseComponent
                     return;
                 }
 
-                if (this.areRouterConditionsReady())
+                if (this.subscriptionsReady())
                 {
                     c.stop();
                     FlowRouter.initialize();
@@ -221,12 +221,12 @@ export default class Application extends BaseComponent
 
     static needPostponeRouterInit()
     {
-        return this.useAccounts();
+        return this.getSubscriptions().length > 0;
     }
 
-    static areRouterConditionsReady()
+    static subscriptionsReady()
     {
-        const subs = this.getSubscriptions();
+        const subs = this.subscribe();
         let ready = true;
         subs.forEach((sub) => {
             if (!sub.ready())
@@ -238,10 +238,22 @@ export default class Application extends BaseComponent
         return ready;
     }
 
+    static subscribe()
+    {
+        if (this._subscriptions === null)
+        {
+            this._subscriptions = this.getSubscriptions().map((sub) => {
+                return Meteor.subscribe(sub.name);
+            });
+        }
+
+        return this._subscriptions;
+    }
+
     static getSubscriptions()
     {
         const subscriptions = [
-            Meteor.subscribe('option.main'),
+            {name: 'option.main'},
         ];
         if (this.useAccounts())
         {

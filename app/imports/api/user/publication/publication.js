@@ -5,11 +5,11 @@ export default class Publication
      * is provided by the standard mechanism. This data will be also accessible
      * via Meteor.user()
      */
-    static makeSupplementaryPublication(userId)
+    static makeSupplementaryPublication()
     {
         // todo: currently not working
         Meteor.publish('user-supplementary', function () {
-            const cursor = Meteor.users.find({_id: userId}, {
+            const cursor = Meteor.users.find({_id: this.userId}, {
                 fields: {
                     profile: 1,
                     createdAt: 1,

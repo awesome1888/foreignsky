@@ -28,8 +28,8 @@ export default class BasePage extends BaseComponent
 
     getApplicationTitle()
     {
-        const res = Option.getCollection().getMongoCollection().find().fetch();
-        console.dir(res);
+        const res = Option.getCollection().getMongoCollection().find();
+        console.dir(res.fetch());
 
         // todo: get page postfix from options
         return 'New application';

@@ -19,7 +19,7 @@ describe('Article entity', () => {
         // return utilUser.logout();
     });
 
-    it('has code', () => {
+    it('has correct code', () => {
         const code = Article.getUniqueCode();
         console.dir(code);
         // expect(1).to.exist;

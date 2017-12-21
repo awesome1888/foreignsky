@@ -4,4 +4,4 @@ node_modules/
 .idea/
 .meteor/local/
 local-script/
-*/.deployment/
+pm2-meteor.json

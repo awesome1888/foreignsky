@@ -13,6 +13,7 @@ export default class Publication extends PublicationBase
         return {
             public: true,
             // todo: userIs is null or equals to the current one
+            // todo: appId is null or equals to the current app id
         };
     }
 

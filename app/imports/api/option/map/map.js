@@ -15,16 +15,23 @@ const M = (superclass) => class extends superclass
                 blackbox: true,
             },
             {
-                code: 'userId',
-                type: String,
-                optional: true,
-                regEx: SimpleSchema.RegEx.Id,
-            },
-            {
                 code: 'public',
                 type: Boolean,
                 optional: true,
                 defaultValue: false,
+            },
+            {
+                code: 'userId',
+                type: String,
+                optional: true,
+                defaultValue: null,
+                regEx: SimpleSchema.RegEx.Id,
+            },
+            {
+                code: 'appId',
+                type: String,
+                optional: true,
+                defaultValue: null,
             },
         ]);
     }

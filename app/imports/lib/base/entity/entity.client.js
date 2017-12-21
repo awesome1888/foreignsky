@@ -1,5 +1,7 @@
 import Side from './../../util/side.js';
 import Entity from './entity.js';
+import clone from 'clone';
+import minimongo from 'meteor/minimongo';
 
 Side.ensureOnClient();
 
@@ -112,15 +114,49 @@ export default class BaseEntity extends Entity
         return `${this.getUniqueCode()}.${name}`;
     }
 
+    static findPublished(condition = {})
+    {
+        let items = this.getReactiveVar().get();
+        if (_.isArrayNotEmpty(items))
+        {
+            if (_.isObjectNotEmpty(condition))
+            {
+                // filter!
+                const m = new minimongo.Minimongo.Matcher(condition);
+                items = items.filter((item) => {
+                    return m._docMatcher(item).result;
+                });
+            }
+
+            return items.map((item) => {
+                return new this(clone(item, false));
+            });
+        }
+
+        return [];
+    }
+
+    static findOnePublished(condition = {})
+    {
+        return this.findPublished(condition)[0];
+    }
+
     static reloadPublished()
     {
-        window.__t = new ReactiveVar();
-        window.__t.set(Option.find().fetch());
+        const rv = this.getReactiveVar();
+        const items = this.getCollection().find().fetch();
+        rv.set(items);
     }
 
     static getReactiveVar()
     {
-        
+        this._publishedVars = this._publishedVars || {};
+        const code = this.getUniqueCode();
+        if (!this._publishedVars[code]) {
+            this._publishedVars[code] = new ReactiveVar(null);
+        }
+
+        return this._publishedVars[code];
     }
 
     async save(id, data)

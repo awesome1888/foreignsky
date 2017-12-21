@@ -11,24 +11,38 @@ export default class Option extends mix(BaseEntity).with(Entity)
         return map;
     }
 
-    static set(name, value/* , userId = '' */)
+    static set(name, value, parameters = {})
     {
+        const data = {
+            value: {value},
+        };
+
+        parameters = parameters || {};
+        if ('public' in parameters) {
+            data.public = !!parameters.public;
+        }
+        if ('userId' in parameters) {
+            data.userId = parameters.userId;
+        }
+        if ('appId' in parameters) {
+            data.appId = parameters.appId;
+        }
+
         // do not use upsert, simple schema fails on it
 
-        if (this.isDefined(name)) {
+        if (this.isDefined(name))
+        {
             return this.getCollection().update({
                 name,
             }, {
-                $set: {
-                    value: {value},
-                },
+                $set: data,
             });
-        } else {
-            if (this.getCollection().insert({
-                    name,
-                    value: {value},
-                    public: false, // important, new options are private by default
-                })) {
+        }
+        else
+        {
+            data.name = name;
+            if (this.getCollection().insert(data))
+            {
                 return true;
             }
         }

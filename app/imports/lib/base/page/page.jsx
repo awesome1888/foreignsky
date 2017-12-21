@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import {DocHead} from 'meteor/kadira:dochead';
 
 import Option from '../../../api/option/entity/entity.client.js';
-import OptionC from '../../../api/option/config/collection.js';
 
 export default class BasePage extends BaseComponent
 {
@@ -29,10 +28,11 @@ export default class BasePage extends BaseComponent
 
     getApplicationTitle()
     {
-        const res = OptionC.find({public: true});
-        console.dir(res.fetch());
+        const title = Option.findOnePublished({name: 'application.title'});
+        if (title) {
+            return title.getValue();
+        }
 
-        // todo: get page postfix from options
         return 'New application';
     }
 

@@ -7,6 +7,8 @@ import Security from '../../util/security/security.client.js';
 import SecurityProvider from '../../util/security/provider.js';
 import ConsoleOutput from '../../util/console-output/index.js';
 
+import Option from '../../../api/option/entity/entity.client.js';
+
 import Accounts from './accounts/index.js';
 
 export default class Application extends BaseComponent
@@ -199,23 +201,15 @@ export default class Application extends BaseComponent
         {
             // we need to wait for accounts to get ready...
             FlowRouter.wait();
-            Tracker.autorun((c) => {
-                if (FlowRouter._initialized)
-                {
-                    return;
-                }
-
+            Tracker.autorun(() => {
                 if (this.subscriptionsReady())
                 {
-                    c.stop();
-                    FlowRouter.initialize();
-                    this.actAfterRouterReady();
+                    if (!FlowRouter._initialized)
+                    {
+                        FlowRouter.initialize();
+                    }
                 }
             });
-        }
-        else
-        {
-            this.actAfterRouterReady();
         }
     }
 
@@ -243,7 +237,7 @@ export default class Application extends BaseComponent
         if (this._subscriptions === null)
         {
             this._subscriptions = this.getSubscriptions().map((sub) => {
-                return Meteor.subscribe(sub.name);
+                return Meteor.subscribe(sub.name, sub.cb || undefined);
             });
         }
 
@@ -253,7 +247,12 @@ export default class Application extends BaseComponent
     static getSubscriptions()
     {
         const subscriptions = [
-            {name: 'option.main'},
+            {name: 'option.main', cb: () => {
+                // todo: extremely stupid spike, but I got no idea
+                // todo: how to make this woodoo magic of DDP work outside
+                // todo: of this callback. srsly
+                Option.reloadPublished();
+            }},
         ];
         if (this.useAccounts())
         {
@@ -261,13 +260,6 @@ export default class Application extends BaseComponent
         }
 
         return subscriptions;
-    }
-
-    /**
-     * Executes additional actions after the router is ready
-     */
-    static actAfterRouterReady()
-    {
     }
 
     /**
@@ -408,10 +400,6 @@ export default class Application extends BaseComponent
         // inform possible overlays and progress bars that we have the promise to wait for
         this.fire('wait', [p]);
         return p;
-    }
-
-    getRouter()
-    {
     }
 
     transformPageParameters(params)

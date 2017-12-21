@@ -9,7 +9,7 @@ export default class Publication
     {
         // todo: currently not working
         Meteor.publish('user-supplementary', function () {
-            const cursor = Meteor.users.find({_id: this.userId}, {
+            return Meteor.users.find({_id: this.userId}, {
                 fields: {
                     profile: 1,
                     createdAt: 1,
@@ -18,8 +18,9 @@ export default class Publication
                 },
                 limit: 1
             });
-            this.ready();
-            return cursor;
+            //
+            // this.ready();
+            // return cursor;
         });
     }
 

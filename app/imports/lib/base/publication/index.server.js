@@ -25,19 +25,9 @@ export default class Publication
 
         // DO NOT replace function() with arrow declaration, because we need to keep this.ready() working
         Meteor.publish(name, function () {
-            console.dir(self.getFilter());
-            console.dir(self.getFields());
             return entity.getCollection().find(self.getFilter(), {
                 fields: self.getFields(),
             });
-            // this.ready();
-            //
-            // // console.dir(cursor.fetch());
-            //
-            // return cursor;
-
-            // this.ready();
-            // return cursor;
         });
     }
 

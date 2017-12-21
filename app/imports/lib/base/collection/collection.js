@@ -52,7 +52,7 @@ export default class BaseCollection
             throw new Error('The collection was already initialized');
         }
 
-        const collection = this.getCollection();
+        const collection = this.getMongoCollection();
 
         collection.attachSchema(map.getSchema());
         collection.addLinks(map.getLinks());

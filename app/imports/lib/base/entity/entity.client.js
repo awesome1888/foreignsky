@@ -112,6 +112,17 @@ export default class BaseEntity extends Entity
         return `${this.getUniqueCode()}.${name}`;
     }
 
+    static reloadPublished()
+    {
+        window.__t = new ReactiveVar();
+        window.__t.set(Option.find().fetch());
+    }
+
+    static getReactiveVar()
+    {
+        
+    }
+
     async save(id, data)
     {
         throw new Error('Not implemened: save()');

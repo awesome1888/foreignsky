@@ -4,3 +4,4 @@ node_modules/
 .idea/
 .meteor/local/
 local-script/
+*/.deployment/

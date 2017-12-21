@@ -46,7 +46,7 @@ export default class File extends mix(BaseEntity).with(Entity)
         }
 
         // todo: use the domain name from settings here!
-        return `https://images.nachberlin.ru/${url}`;
+        return `https://images.foreignsky.ru/${url}`;
     }
 
     static async save(id, data, parameters = {})

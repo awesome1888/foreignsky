@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-expressions */
 
 import React from 'react';
-import expect from '../../../../lib/util/test-env/index.server.js';
+// import expect from '../../../../lib/util/test-env/index.server.js';
 
 // import Article from '../entity.server.js';
 
@@ -22,6 +22,6 @@ describe('Article entity', () => {
     it('has smth', () => {
         // global.window = { location : { host : 'example.com' } };
         // const page = mount(<Header />);
-        expect(1).to.exist;
+        // expect(1).to.exist;
     });
 });

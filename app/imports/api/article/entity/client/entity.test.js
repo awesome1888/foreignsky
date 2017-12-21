@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-expressions */
 
 import React from 'react';
-import expect from '../../../../lib/util/test-env/index.server.js';
+// import expect from '../../../../lib/util/test-env/index.client.js';
 
 import Article from '../entity.client.js';
 
@@ -22,6 +22,6 @@ describe('Article entity', () => {
     it('has code', () => {
         const code = Article.getUniqueCode();
         console.dir(code);
-        expect(1).to.exist;
+        // expect(1).to.exist;
     });
 });

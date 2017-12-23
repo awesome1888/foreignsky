@@ -14,6 +14,33 @@ export default new (class extends Migration {
 
     up()
     {
+        Option.set('application.title', 'Admin', {
+            appId: 'admin',
+            public: true,
+        });
+        Option.set('application.front-app.url', 'https://foreignsky.ru', {
+            appId: 'admin',
+            public: true,
+        });
 
+        Option.set('application.title', 'Чужое небо', {
+            appId: 'app',
+            public: true,
+        });
+        Option.set('application.description', 'Блог одной русской семьи, переехавшей в Германию', {
+            appId: 'app',
+            public: true,
+        });
+        Option.set('application.keywords', [
+            'германия',
+            'европа',
+            'блог',
+            'русские',
+            'путешествия',
+            'переезд',
+        ], {
+            appId: 'app',
+            public: true,
+        });
     }
 })();

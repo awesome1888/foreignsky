@@ -30,7 +30,7 @@ export default class Option extends mix(BaseEntity).with(Entity)
 
         // do not use upsert, simple schema fails on it
 
-        if (this.isDefined(name))
+        if (this.isDefined(name, parameters))
         {
             return this.getCollection().update({
                 name,
@@ -48,14 +48,14 @@ export default class Option extends mix(BaseEntity).with(Entity)
         }
     }
 
-    static unSet(name/* , userId = '' */)
+    static unSetAll(name)
     {
         return this.getCollection().remove({
             name
         });
     }
 
-    static get(name/* , userId = '' */)
+    static getValueOne(name)
     {
         const item = this.getCollection().findOne({
             name,
@@ -70,20 +70,20 @@ export default class Option extends mix(BaseEntity).with(Entity)
         return undefined;
     }
 
-    static getIncrementalCounter(name, start = 0/* , userId = '' */)
-    {
-        let value = parseInt(this.get(name), 10);
-        if (isNaN(value))
-        {
-            value = start;
-        }
+    // static getIncrementalCounter(name, start = 0)
+    // {
+    //     let value = parseInt(this.getValueOne(name), 10);
+    //     if (isNaN(value))
+    //     {
+    //         value = start;
+    //     }
+    //
+    //     this.set(name, value + 1);
+    //
+    //     return value;
+    // }
 
-        this.set(name, value + 1);
-
-        return value;
-    }
-
-    static setPublic(name, way/* , userId = '' */)
+    static makePublic(name)
     {
         if (!_.isStringNotEmpty(name))
         {
@@ -99,7 +99,7 @@ export default class Option extends mix(BaseEntity).with(Entity)
         });
     }
 
-    static setPrivate(name, way/* , userId = '' */)
+    static makePrivate(name)
     {
         if (!_.isStringNotEmpty(name))
         {
@@ -115,17 +115,30 @@ export default class Option extends mix(BaseEntity).with(Entity)
         });
     }
 
-    static isDefined(name/* , userId = '' */)
+    static isDefined(name, parameters = {})
     {
         if (!_.isStringNotEmpty(name))
         {
             return false;
         }
 
-        const item = this.getCollection().findOne({
+        const filter = {
             name,
-        }, {
-            name: 1,
+        };
+
+        parameters = parameters || {};
+        if ('public' in parameters) {
+            filter.public = !!parameters.public;
+        }
+        if ('userId' in parameters) {
+            filter.userId = parameters.userId;
+        }
+        if ('appId' in parameters) {
+            filter.appId = parameters.appId;
+        }
+
+        const item = this.getCollection().findOne(filter, {
+            _id: 1,
         });
 
         return _.isObjectNotEmpty(item);

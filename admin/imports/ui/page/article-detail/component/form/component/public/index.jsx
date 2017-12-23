@@ -1,6 +1,7 @@
 import React from 'react';
 import connectField from 'uniforms/connectField';
 import filterDOMProps from 'uniforms/filterDOMProps';
+import Option from '../../../../../../../api/option/entity/entity.client.js';
 
 // https://github.com/vazco/uniforms/blob/master/INTRODUCTION.md#autofield-algorithm
 // https://github.com/vazco/uniforms/blob/master/API.md#connectfield
@@ -11,6 +12,22 @@ import {ControllerClass as RendererBoolean} from '../../../../../../component/ge
 
 class RendererPublic extends RendererBoolean
 {
+    getFrontAppUrl()
+    {
+        if (Meteor.isDevelopment)
+        {
+            return 'http://localhost:3001';
+        }
+
+        const url = Option.findOnePublished({name: 'application.front-app.url'});
+        if (url && _.isStringNotEmpty(url.getValue()))
+        {
+            return url.getValue();
+        }
+
+        return '';
+    }
+
     render()
     {
         const item = this.getForm().getItem();
@@ -37,12 +54,11 @@ class RendererPublic extends RendererBoolean
                         }
                     </div>
                     {
-                        // todo: get the url from options
                         !!item
                         &&
                         <a
                             className="icon-label_desktop-windows no-decoration"
-                            href={`http://localhost:3001/${item.getId()}?token=${this.getForm().getToken()}`}
+                            href={`${this.getFrontAppUrl()}/${item.getId()}?token=${this.getForm().getToken()}`}
                             target="_blank"
                             rel="noreferrer noopener"
                         >

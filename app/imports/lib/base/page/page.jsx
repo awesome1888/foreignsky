@@ -29,7 +29,7 @@ export default class BasePage extends BaseComponent
     getApplicationTitle()
     {
         const title = Option.findOnePublished({name: 'application.title'});
-        if (title)
+        if (title && _.isStringNotEmpty(title.getValue()))
         {
             return title.getValue();
         }
@@ -50,7 +50,7 @@ export default class BasePage extends BaseComponent
     getPageDescription()
     {
         const description = Option.findOnePublished({name: 'application.description'});
-        if (description)
+        if (description && _.isStringNotEmpty(description.getValue()))
         {
             return description.getValue();
         }
@@ -61,7 +61,7 @@ export default class BasePage extends BaseComponent
     getPageKeywords()
     {
         const keywords = Option.findOnePublished({name: 'application.keywords'});
-        if (_.isArrayNotEmpty(keywords))
+        if (keywords && _.isArrayNotEmpty(keywords.getValue()))
         {
             return keywords.getValue();
         }

@@ -3,3 +3,4 @@
 import '../../exposition/index.js';
 import './fixtures/index.js';
 import './routine/index.js';
+import './migration/index.js';

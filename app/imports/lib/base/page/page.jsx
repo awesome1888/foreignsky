@@ -29,7 +29,8 @@ export default class BasePage extends BaseComponent
     getApplicationTitle()
     {
         const title = Option.findOnePublished({name: 'application.title'});
-        if (title) {
+        if (title)
+        {
             return title.getValue();
         }
 
@@ -48,14 +49,24 @@ export default class BasePage extends BaseComponent
 
     getPageDescription()
     {
-        // todo: get default page description from options
+        const description = Option.findOnePublished({name: 'application.description'});
+        if (description)
+        {
+            return description.getValue();
+        }
+
         return 'My brand new application';
     }
 
     getPageKeywords()
     {
-        // todo: get default page keywords from options
-        return ['application', 'new'];
+        const keywords = Option.findOnePublished({name: 'application.keywords'});
+        if (_.isArrayNotEmpty(keywords))
+        {
+            return keywords.getValue();
+        }
+
+        return [];
     }
 
     onSetTitle(e, title)

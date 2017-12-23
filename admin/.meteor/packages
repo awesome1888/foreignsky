@@ -36,3 +36,4 @@ accounts-base
 accounts-password
 accounts-google
 practicalmeteor:mocha
+percolate:migrations

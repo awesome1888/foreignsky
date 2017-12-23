@@ -29,11 +29,11 @@ export default class Option extends mix(BaseEntity).with(Entity)
         }
 
         // do not use upsert, simple schema fails on it
-
-        if (this.isDefined(name, parameters))
+        const id = this.getIdOne(name, parameters);
+        if (_.isStringNotEmpty(id))
         {
             return this.getCollection().update({
-                name,
+                _id: id,
             }, {
                 $set: data,
             });
@@ -115,11 +115,11 @@ export default class Option extends mix(BaseEntity).with(Entity)
         });
     }
 
-    static isDefined(name, parameters = {})
+    static getIdOne(name, parameters = {})
     {
         if (!_.isStringNotEmpty(name))
         {
-            return false;
+            return '';
         }
 
         const filter = {
@@ -141,6 +141,11 @@ export default class Option extends mix(BaseEntity).with(Entity)
             _id: 1,
         });
 
-        return _.isObjectNotEmpty(item);
+        if (_.isObjectNotEmpty(item))
+        {
+            return item._id;
+        }
+
+        return '';
     }
 }

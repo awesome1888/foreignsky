@@ -4,6 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Util from '../../../../../lib/util.js';
 import BaseComponent from '../../../../../lib/base/component/component.jsx';
+import Option from '../../../../../api/option/entity/entity.client.js';
 
 import './style.less';
 
@@ -49,9 +50,20 @@ export default class Map extends BaseComponent {
         }
 	}
 
+	getKey()
+    {
+        const key = Option.findOnePublished({name: 'vendor.google.map.key'});
+        if (key && _.isStringNotEmpty(key.getValue()))
+        {
+            return key.getValue();
+        }
+
+        return '';
+    }
+
 	getMapUrl()
 	{
-	    const key = 'AIzaSyDV90oJprjrtNbo3ASxmvFObr05jiC-0WI'; // Meteor.settings.public['google-maps_key'];
+	    const key = this.getKey();
 		return `https://maps.googleapis.com/maps/api/js?v=3&key=${key}&libraries=geometry,drawing,places`;
 	}
 

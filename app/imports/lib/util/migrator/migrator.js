@@ -96,6 +96,7 @@ export default class Migrator
         }
 
         Migrations.migrateTo('latest');
+        this.toggleLock(false); // successful or not, turn that damn lock back off
     }
 
     toggleLock(way)

@@ -32,6 +32,7 @@ export default class BaseMigration
         catch(e)
         {
             failed = true;
+            console.dir(e);
             // this.saveLogItem(Shell.console.getData(), e);
         }
 

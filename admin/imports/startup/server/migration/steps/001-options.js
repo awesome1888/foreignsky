@@ -42,5 +42,9 @@ export default new (class extends Migration {
             appId: 'app',
             public: true,
         });
+
+        Option.set('vendor.google.map.key', 'AIzaSyDV90oJprjrtNbo3ASxmvFObr05jiC-0WI', {
+            public: true,
+        });
     }
 })();

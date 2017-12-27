@@ -15,43 +15,42 @@ export default class Util
         });
     }
 
-	static loadJs(src)
-	{
-	    let d = document;
+    static loadJs(src)
+    {
+        const d = document;
 
-		if(!d || !src)
-		{
-			return null;
-		}
+        if (!d || !src)
+        {
+            return null;
+        }
 
-		src = src.toString().trim();
+        src = src.toString().trim();
 
-		if (this._loadedJs[src]) {
+        if (this._loadedJs[src])
+        {
             return new Promise((resolve) => {
                 resolve();
             });
         }
 
-		let node = d.createElement('script');
-		let p = new Promise((resolve) => {
-			node.addEventListener ("load", () => {
-
+        const node = d.createElement('script');
+        const p = new Promise((resolve) => {
+            node.addEventListener('load', () => {
                 this._loadedJs[src] = true;
-				resolve();
+                resolve();
+            }, false);
+        });
 
-			}, false);
-		});
+        node.type = 'text/javascript';
+        node.setAttribute('async', 'async');
+        node.setAttribute('defer', 'defer');
+        node.src = src;
 
-		node.type = "text/javascript";
-		node.setAttribute('async', 'async');
-		node.setAttribute('defer', 'defer');
-		node.src = src;
+        const ctx = d.getElementsByTagName('head')[0] || d.body || d.documentElement;
+        ctx.appendChild(node);
 
-		let ctx = d.getElementsByTagName('head')[0] || d.body || d.documentElement;
-		ctx.appendChild(node);
-
-		return p;
-	}
+        return p;
+    }
 
 	static noop()
 	{

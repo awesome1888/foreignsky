@@ -3,7 +3,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import classnames from 'classnames';
-import PreRender from '../../../../../lib/prerender.js';
+import Crawler from '../../../../../lib/crawler.js';
 import BaseComponent from '../../../../../lib/base/component/component.jsx';
 
 import './style.less';
@@ -37,7 +37,8 @@ export default class LoadOverlay extends BaseComponent {
 	// todo: move this to componentWillReceiveProps and when ready switched to true, wait 200 ms and only then start unlocking
 	componentDidMount()
     {
-        if(PreRender.isCrawler()) {
+        if(Crawler.isCrawler())
+        {
             return; // when crawler do nothing
         }
 
@@ -73,7 +74,7 @@ export default class LoadOverlay extends BaseComponent {
     unLock()
     {
         this.setState({shown: false});
-        PreRender.unLock();
+        Crawler.setReady();
     }
 
 	render()

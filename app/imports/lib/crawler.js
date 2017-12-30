@@ -9,7 +9,9 @@ export default class Crawler
      */
     static setReady()
     {
-        // fire event!
+        // tell crawler we are ready (it will catch the console output)
+        // DO NOT modify this message, crawler wont able to decode it otherwise
+        console.log('CRAWLER_PAGE_READY');
     }
 
     /**

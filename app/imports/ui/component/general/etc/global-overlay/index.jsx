@@ -37,13 +37,17 @@ export default class LoadOverlay extends BaseComponent {
 	// todo: move this to componentWillReceiveProps and when ready switched to true, wait 200 ms and only then start unlocking
 	componentDidMount()
     {
-        if(Crawler.isCrawler())
-        {
-            return; // when crawler do nothing
-        }
-
         Promise.all(this.waitPool).then(() => {
-            this.startUnlocking();
+            Crawler.setReady();
+
+            if(Crawler.isCrawler())
+            {
+                this.setState({shown: false});
+            }
+            else
+            {
+                this.startUnlocking();
+            }
         }).catch(() => {});
     }
 
@@ -74,7 +78,6 @@ export default class LoadOverlay extends BaseComponent {
     unLock()
     {
         this.setState({shown: false});
-        Crawler.setReady();
     }
 
 	render()

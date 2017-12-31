@@ -65,9 +65,12 @@ export default class ArticleDetailComponent extends BaseComponent
 	    if (q.token)
         {
             let token;
-            try {
+            try
+            {
                 token = await this.execute('article.draftToken.get');
-            } catch(e) {
+            }
+            catch(e)
+            {
                 // todo: NOTIF
                 this.goByError(e); // todo: probably not going anywhere, just show the notification
                 return;
@@ -117,14 +120,16 @@ export default class ArticleDetailComponent extends BaseComponent
                 return;
             }
 
-            this.setState({
-                opened: true,
-                data: article.data,
-                article,
+            return new Promise((resolve) => {
+                this.setTitle(article.getTitle());
+                this.setState({
+                    opened: true,
+                    data: article.data,
+                    article,
+                }, () => {
+                    resolve();
+                });
             });
-
-            // App.getInstance().toggleMap(true);
-            this.setTitle(article.getTitle());
         }).catch((e) => {
 	        // todo: NOTIF
             this.goByError(e); // todo: probably not going anywhere, just show the notification

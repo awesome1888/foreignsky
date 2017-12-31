@@ -326,7 +326,11 @@ export default class ListGeneric extends BaseComponent {
         this.getApplication().wait(
             this.getEntity().find(this.mixPageParameters(qParams))
         ).then((res) => {
-            this.setData(res);
+            return new Promise((resolve) => {
+                this.setData(res, () => {
+                    resolve();
+                });
+            });
         }).catch((err) => {
             // todo: NOTIF
             this.showConsoleError('Unable to get items (maybe forgot to expose?)', err);

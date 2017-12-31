@@ -98,8 +98,12 @@ export default class ArticleListFilterComponent extends BaseComponent {
             ],
             limit: 3,
         }).then((data) => {
-            this.setState({
-                tags: data || [],
+            return new Promise((resolve) => {
+                this.setState({
+                    tags: data || [],
+                }, () => {
+                    resolve();
+                });
             });
         }).catch((err) => {
 		    // todo: show notification here NOTIF

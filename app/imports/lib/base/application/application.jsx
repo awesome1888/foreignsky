@@ -6,6 +6,7 @@ import {createContainer} from 'meteor/react-meteor-data';
 import Security from '../../util/security/security.client.js';
 import SecurityProvider from '../../util/security/provider.js';
 import ConsoleOutput from '../../util/console-output/index.js';
+import Crawler from '../../crawler.js';
 
 import Option from '../../../api/option/entity/entity.client.js';
 
@@ -290,6 +291,7 @@ export default class Application extends BaseComponent
     _lastRouteChecked = null;
     _waitPool = [];
     _waitLock = false;
+    _firstLoad = true;
 
     constructor(props)
     {
@@ -342,6 +344,7 @@ export default class Application extends BaseComponent
             if (!this._waitPool.length)
             {
                 // tell all components to start showing loader indicator, if any
+                console.dir('>>> Load start!');
                 this.fire('load-start');
             }
 
@@ -369,9 +372,16 @@ export default class Application extends BaseComponent
 
     endWait()
     {
+        console.dir('>>> Load end!');
         this.fire('load-end');
+        if (this._firstLoad)
+        {
+            Crawler.setReady();
+        }
+
         this._waitPool = [];
         this._waitLock = false;
+        this._firstLoad = false;
     }
 
     onRouteChange()

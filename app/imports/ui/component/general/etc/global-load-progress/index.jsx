@@ -24,7 +24,8 @@ export default class GlobalLoadProgress extends BaseComponent {
             percent: 0,
         };
 
-        // this.on('wait', this.onWait.bind(this));
+        this.on('load-start', this.onLoadStart.bind(this));
+        this.on('load-end', this.onLoadEnd.bind(this));
     }
 
     componentDidMount()
@@ -33,6 +34,17 @@ export default class GlobalLoadProgress extends BaseComponent {
         // this.onWait(new Promise((resolve) => {
         //     resolve();
         // }));
+    }
+
+    onLoadStart()
+    {
+        this.runProgress();
+    }
+
+    onLoadEnd()
+    {
+        Meteor.clearTimeout(this._timer);
+        this.setPercent(100);
     }
 
     // onWait(p)
@@ -75,18 +87,8 @@ export default class GlobalLoadProgress extends BaseComponent {
 
     runProgress()
     {
-        if (this._active)
-        {
-            // already running
-            return;
-        }
-
         this._steps = this.getRandomPoints();
-
         this._step = 0;
-        this._active = true;
-        this._locked = false;
-        this._pool = [];
 
         this.setPercent(0);
         this.goNextStep();

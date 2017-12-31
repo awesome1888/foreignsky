@@ -288,6 +288,8 @@ export default class Application extends BaseComponent
 
     _appContainer = null;
     _lastRouteChecked = null;
+    _waitPool = [];
+    _waitLock = false;
 
     constructor(props)
     {
@@ -304,6 +306,8 @@ export default class Application extends BaseComponent
         {
             window.__application = this;
         }
+
+        this.startWait = _.debounce(this.startWait.bind(this), 100);
     }
 
     componentWillMount()
@@ -330,12 +334,48 @@ export default class Application extends BaseComponent
         }
     }
 
+    wait(p)
+    {
+        // check if we can accept new promises, or the process was already started
+        if(!this._waitLock)
+        {
+            if (!this._waitPool.length)
+            {
+                // tell all components to start showing loader indicator, if any
+                this.fire('load-start');
+            }
+
+            // save the next promise to the list of "to-wait"
+            this._waitPool.push(p);
+
+            // try to start the process (this function is de-bounced)
+            this.startWait();
+        }
+
+        return p;
+    }
+
+    startWait()
+    {
+        this._waitLock = true;
+
+        // wait for all promises, then set the percentage to 100
+        Promise.all(this._waitPool).then(() => {
+            this.endWait();
+        }).catch(() => {
+            this.endWait();
+        });
+    }
+
+    endWait()
+    {
+        this.fire('load-end');
+        this._waitPool = [];
+        this._waitLock = false;
+    }
+
     onRouteChange()
     {
-        // console.dir('Reset last route');
-        // this.setState({
-        //     lastRoute: null,
-        // });
     }
 
     processSecurity()
@@ -393,13 +433,6 @@ export default class Application extends BaseComponent
     getQuery()
     {
         return FlowRouter.current().queryParams;
-    }
-
-    wait(p)
-    {
-        // inform possible overlays and progress bars that we have the promise to wait for
-        this.fire('wait', [p]);
-        return p;
     }
 
     transformPageParameters(params)

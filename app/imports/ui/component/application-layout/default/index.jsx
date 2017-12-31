@@ -70,10 +70,10 @@ export default class DefaultApplicationLayout extends BaseComponent
                 <ImageViewer />
                 <PPNotification />
 
-                <GlobalOverlay
-                    text="Типичный текст, который вы читаете, пока ждете загрузку Ж)"
-                    ready={this.isReady()}
-                />
+                {/*<GlobalOverlay*/}
+                    {/*text="Типичный текст, который вы читаете, пока ждете загрузку Ж)"*/}
+                    {/*ready={this.isReady()}*/}
+                {/*/>*/}
             </div>
         );
     }

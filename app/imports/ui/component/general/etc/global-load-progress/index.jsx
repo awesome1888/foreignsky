@@ -24,55 +24,54 @@ export default class GlobalLoadProgress extends BaseComponent {
             percent: 0,
         };
 
-        this.startWaitAll = _.debounce(this.startWaitAll.bind(this), 100);
-        this.on('wait', this.onWait.bind(this));
+        // this.on('wait', this.onWait.bind(this));
     }
 
     componentDidMount()
     {
         // on each page, newly-opened, we need something to wait
-        this.onWait(new Promise((resolve) => {
-            resolve();
-        }));
+        // this.onWait(new Promise((resolve) => {
+        //     resolve();
+        // }));
     }
 
-    onWait(p)
-    {
-        // we do not accept new promises anymore, because we already started to indicate progress
-        if(this._locked)
-        {
-            return false;
-        }
-
-        // if the progress was not started before, start it now
-        this.runProgress();
-
-        // save the next promise to the list of "to-wait"
-        this._pool.push(p);
-
-        // as soon as there is no incoming promises to wait, the debounce timeout will expire and
-        // the pool will get locked
-        this.startWaitAll();
-    }
-
-    startWaitAll()
-    {
-        this._locked = true;
-        
-        // wait for all promises, then set the percentage to 100
-        Promise.all(this._pool).then(() => {
-
-            Meteor.clearTimeout(this._timer);
-
-            this._active = false;
-            this._locked = false;
-            this._pool = [];
-
-            this.setPercent(100);
-        }).catch(() => {
-            // todo: NOTIF
-        });
-    }
+    // onWait(p)
+    // {
+    //     // we do not accept new promises anymore, because we already started to indicate progress
+    //     if(this._locked)
+    //     {
+    //         return false;
+    //     }
+    //
+    //     // if the progress was not started before, start it now
+    //     this.runProgress();
+    //
+    //     // save the next promise to the list of "to-wait"
+    //     this._pool.push(p);
+    //
+    //     // as soon as there is no incoming promises to wait, the debounce timeout will expire and
+    //     // the pool will get locked
+    //     this.startWaitAll();
+    // }
+    //
+    // startWaitAll()
+    // {
+    //     this._locked = true;
+    //
+    //     // wait for all promises, then set the percentage to 100
+    //     Promise.all(this._pool).then(() => {
+    //
+    //         Meteor.clearTimeout(this._timer);
+    //
+    //         this._active = false;
+    //         this._locked = false;
+    //         this._pool = [];
+    //
+    //         this.setPercent(100);
+    //     }).catch(() => {
+    //         // todo: NOTIF
+    //     });
+    // }
 
     runProgress()
     {

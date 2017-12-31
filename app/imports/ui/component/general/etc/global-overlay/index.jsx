@@ -30,7 +30,6 @@ export default class LoadOverlay extends BaseComponent {
 		};
 
 		this.waitPool = [];
-
 		this.on('wait', this.onWait.bind(this));
 	}
 
@@ -38,6 +37,7 @@ export default class LoadOverlay extends BaseComponent {
 	componentDidMount()
     {
         Promise.all(this.waitPool).then(() => {
+            console.dir('ready!!!!');
             Crawler.setReady();
 
             if(Crawler.isCrawler())
@@ -55,8 +55,13 @@ export default class LoadOverlay extends BaseComponent {
 	{
 		if(this.state.shown && promise)
 		{
+		    console.dir('Okay');
 			this.waitPool.push(promise);
 		}
+		else
+        {
+            console.dir('Ставки сделаны, ставок больше не принимаем');
+        }
 	}
 
     /**

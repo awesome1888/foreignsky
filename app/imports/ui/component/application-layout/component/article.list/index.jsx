@@ -52,13 +52,27 @@ export default class ArticleListComponent extends BaseComponent
 			}
 		}
 
-		return this.getApplication().wait(Article.find({filter, select: ['title']}).then((data) => {
-            this.setState({
-                data: data || [],
+        return this.getApplication().wait(Article.find({filter, select: ['title']}).then((data) => {
+            return new Promise((resolve) => {
+                this.setState({
+                    data: data || [],
+                }, () => {
+                    console.dir('Loaded list!');
+                    resolve();
+                });
             });
         }).catch((err) => {
-		    // todo: show the notification here NOTIF
+            // todo: show the notification here NOTIF
         }));
+
+        // return this.getApplication().wait(Article.find({filter, select: ['title']}).then((data) => {
+		 //    console.dir('Loaded list!');
+        //     this.setState({
+        //         data: data || [],
+        //     });
+        // }).catch((err) => {
+		 //    // todo: show the notification here NOTIF
+        // }));
 	}
 
 	hasData() {

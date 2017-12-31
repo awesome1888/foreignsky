@@ -29,11 +29,6 @@ export default class DefaultApplicationLayout extends BaseComponent
             <div
                 className="layout tall"
             >
-                <GlobalOverlay
-                    text="Типичный текст, который вы читаете, пока ждете загрузку Ж)"
-                    ready={this.isReady()}
-                />
-
                 <div className="layout__header">
                     <Header
                         ready={this.isReady()}
@@ -74,6 +69,11 @@ export default class DefaultApplicationLayout extends BaseComponent
 
                 <ImageViewer />
                 <PPNotification />
+
+                <GlobalOverlay
+                    text="Типичный текст, который вы читаете, пока ждете загрузку Ж)"
+                    ready={this.isReady()}
+                />
             </div>
         );
     }

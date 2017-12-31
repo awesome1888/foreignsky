@@ -33,14 +33,14 @@ export default class Map extends BaseComponent {
 		};
 	}
 
-    /**
-     * Toggles map overlay
-     * @param way
-     */
-	toggleBlock(way)
-	{
-		this.setState({blocked: !!way});
-	}
+    // /**
+     // * Toggles map overlay
+     // * @param way
+     // */
+	// toggleBlock(way)
+	// {
+	// 	this.setState({blocked: !!way});
+	// }
 
 	componentDidMount()
 	{
@@ -91,8 +91,23 @@ export default class Map extends BaseComponent {
 				center: this.props.center,
 			});
 
+			let resolved = false;
+
+			// resolve either by timeout
+			const timer = setTimeout(() => {
+			    if (!resolved)
+                {
+                    resolve();
+                }
+            }, 3000);
+
+            // or by the event
 			this.getMap().addListener('tilesloaded', () => {
-				resolve();
+                if (!resolved)
+                {
+                    resolve();
+                }
+                clearTimeout(timer);
 			});
 
 			// const marker = new google.maps.Marker({

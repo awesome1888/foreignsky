@@ -29,40 +29,13 @@ export default class LoadOverlay extends BaseComponent {
 			transparent: false,
 		};
 
-		this.waitPool = [];
-		this.on('wait', this.onWait.bind(this));
+        this.on('load-end', this.onLoadEnd.bind(this));
 	}
 
-	// todo: move this to componentWillReceiveProps and when ready switched to true, wait 200 ms and only then start unlocking
-	componentDidMount()
+    onLoadEnd()
     {
-        Promise.all(this.waitPool).then(() => {
-            console.dir('ready!!!!');
-            Crawler.setReady();
-
-            if(Crawler.isCrawler())
-            {
-                this.setState({shown: false});
-            }
-            else
-            {
-                this.startUnlocking();
-            }
-        }).catch(() => {});
+        this.startUnlocking();
     }
-
-    onWait(promise)
-	{
-		if(this.state.shown && promise)
-		{
-		    console.dir('Okay');
-			this.waitPool.push(promise);
-		}
-		else
-        {
-            console.dir('Ставки сделаны, ставок больше не принимаем');
-        }
-	}
 
     /**
      * This method starts page unlocking

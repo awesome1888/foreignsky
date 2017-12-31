@@ -57,22 +57,12 @@ export default class ArticleListComponent extends BaseComponent
                 this.setState({
                     data: data || [],
                 }, () => {
-                    console.dir('Loaded list!');
                     resolve();
                 });
             });
         }).catch((err) => {
             // todo: show the notification here NOTIF
         }));
-
-        // return this.getApplication().wait(Article.find({filter, select: ['title']}).then((data) => {
-		 //    console.dir('Loaded list!');
-        //     this.setState({
-        //         data: data || [],
-        //     });
-        // }).catch((err) => {
-		 //    // todo: show the notification here NOTIF
-        // }));
 	}
 
 	hasData() {

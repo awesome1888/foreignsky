@@ -444,4 +444,14 @@ export default class BaseEntity
     {
         return arg instanceof this.constructor;
     }
+
+    getCreationDate()
+    {
+        return this.getData().creationDate || null;
+    }
+
+    getUpdateDate()
+    {
+        return this.getData().updateDate || null;
+    }
 }

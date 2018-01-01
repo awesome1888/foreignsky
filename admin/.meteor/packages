@@ -37,3 +37,4 @@ accounts-password
 accounts-google
 practicalmeteor:mocha
 percolate:migrations
+zimme:collection-timestampable

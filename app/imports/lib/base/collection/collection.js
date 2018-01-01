@@ -57,6 +57,11 @@ export default class BaseCollection
         collection.attachSchema(map.getSchema());
         collection.addLinks(map.getLinks());
 
+        if (this.useTimestamps())
+        {
+            this.attachTimestamps();
+        }
+
         this.setInitialized();
     }
 
@@ -69,6 +74,20 @@ export default class BaseCollection
         // });
         // this.getCollection().before.update((id, data, fieldNames, modifier) => {
         // });
+    }
+
+    useTimestamps()
+    {
+        return true;
+    }
+
+    attachTimestamps()
+    {
+        this.getMongoCollection().attachBehaviour('timestampable', {
+            createdAt: 'creationDate',
+            updatedAt: 'updateDate',
+            //createdBy: true,
+        });
     }
 
     createIndexes()

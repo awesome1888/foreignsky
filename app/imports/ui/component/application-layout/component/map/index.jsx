@@ -13,7 +13,7 @@ export default class Map extends BaseComponent {
 	static propTypes = {
 		center: PropTypes.object,
 		zoom: PropTypes.number,
-        useFakeMap: PropTypes.boolean,
+        useFakeMap: PropTypes.bool,
 	};
 
 	static defaultProps = {
@@ -32,15 +32,6 @@ export default class Map extends BaseComponent {
 			blocked: false,
 		};
 	}
-
-    // /**
-     // * Toggles map overlay
-     // * @param way
-     // */
-	// toggleBlock(way)
-	// {
-	// 	this.setState({blocked: !!way});
-	// }
 
 	componentDidMount()
 	{

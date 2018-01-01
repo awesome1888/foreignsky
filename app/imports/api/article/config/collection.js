@@ -6,4 +6,9 @@ export default new class Collection extends BaseCollection
     {
         super('article');
     }
+
+    useTimestamps()
+    {
+        return true;
+    }
 }

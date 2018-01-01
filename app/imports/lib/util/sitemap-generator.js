@@ -16,7 +16,7 @@ export default class SiteMapGenerator
 
             pageList.push({
                 page: '/'+article.getId(),
-                lastmod: article.getDate(),
+                lastmod: article.getUpdateDate() || article.getCreationDate() || article.getDate(),
             });
             return pageList;
 

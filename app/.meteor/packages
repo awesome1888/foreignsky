@@ -33,3 +33,4 @@ kadira:dochead
 gadicohen:sitemaps
 percolate:migrations
 accounts-base
+zimme:collection-timestampable

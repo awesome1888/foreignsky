@@ -10,9 +10,6 @@ import './style.less';
 export default class GlobalLoadProgress extends BaseComponent {
 
     _timer = null;
-    _pool = [];
-    _locked = false;
-    _active = false;
     _steps = null;
     _step = 0;
 

@@ -65,6 +65,7 @@ export default class UI extends BaseComponent
 
         this.setState({loading: true});
         this.execute('shell.execute', [code]).then((res) => {
+            throw new Error('fuck');
             this.setState({
                 loading: false,
                 executed: true,
@@ -73,8 +74,12 @@ export default class UI extends BaseComponent
                 durations: res.durations || {},
                 times: res.times || {},
             });
-        }).catch(() => {
-            // todo: NOTIF
+        }).catch((e) => {
+            this.fire('notify', [e]);
+            this.setState({
+                loading: false,
+                executed: true,
+            });
         });
     }
 

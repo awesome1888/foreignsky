@@ -7,6 +7,7 @@ import GlobalOverlay from '../../general/etc/global-overlay/index.jsx';
 import GlobalLoadProgress from '../component/global-load-progress/index.jsx';
 import Navigation from '../../navigation/navigation.jsx';
 import GoUp from '../../../component/general/etc/go-up/index.jsx';
+import Notification from '../../../component/general/etc/notification/index.jsx';
 
 export default class DefaultApplicationLayout extends BaseComponent
 {
@@ -73,6 +74,7 @@ export default class DefaultApplicationLayout extends BaseComponent
                 <GoUp
                     hAlignRelativeTo=".layout__side"
                 />
+                <Notification />
             </div>
         );
     }

@@ -3,8 +3,13 @@
 .notification {
 	._fixed(auto, 0, 20px);
 	._stratosphere();
-	background-color: @color_white;
+	background-color: @color_cararra;
 	._padding_x();
-	._width_btw_x(1, 25);
+	width: 25 * @offset;
+	// ._width_x(25);
 	border-left: @offset / 3 solid @color_edward;
+}
+
+.notification__error {
+	border-left-color: @color_red-orange;
 }

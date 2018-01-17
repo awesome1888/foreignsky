@@ -52,13 +52,10 @@ export default class Notification extends BaseComponent
                 )}
             >
                 <div
-                    className="notification"
+                    className="notification notification__error"
                 >
                     <div className="margin-b_x">
-                        <div className="margin-b_x0p5">
-                            Пссст! Этот веб-сайт использует Cookie.
-                        </div>
-                        Вы даете свое согласие на использование Cookie, закрывая данное сообщение и оставаясь на нашем веб-сайте :)
+                        Error occured
                     </div>
                 </div>
             </div>

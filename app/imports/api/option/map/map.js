@@ -1,3 +1,5 @@
+import {SimpleSchema} from 'meteor/aldeed:simple-schema';
+
 const M = (superclass) => class extends superclass
 {
     constructor(definition)

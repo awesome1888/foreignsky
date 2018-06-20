@@ -23,7 +23,7 @@
     "react-google-maps": "^4.11.0",
     "react-mounter": "^1.2.0",
     "react-router": "^4.0.0",
-    "rem-bem": "^1.0.0"
+    "rem-bem": "1.0.0"
   },
   "devDependencies": {
     "babel-plugin-transform-class-properties": "^6.24.1"

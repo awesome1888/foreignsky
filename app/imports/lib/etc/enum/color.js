@@ -85,5 +85,4 @@ export default new Enum([
     {value: 'Edward', key: 'EDWARD', keyLess: 'edward', hex: 'abb7b7'},
     {value: 'Lynch', key: 'LYNCH', keyLess: 'lynch', hex: '6c7a89'},
     {value: 'Cascade', key: 'CASCADE', keyLess: 'cascade', hex: '95a5a6'},
-
 ]);

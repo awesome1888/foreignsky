@@ -1,5 +1,5 @@
 /**
- * todo: possible move to immutable.js?
+ * todo: possible move to immutable.js?GoogleMap
  */
 
 export default class Enum
